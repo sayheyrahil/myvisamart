@@ -38,7 +38,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white">
-      <header className="bg-sky-400 text-white">
+      <header className="bg-sky-400 text-white hidden">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <nav className="hidden md:flex gap-8 text-sm">
             <a href="#" className="hover:text-sky-100 transition-colors">Discover</a>
@@ -58,7 +58,7 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="border-b-4 border-sky-400">
+      <div className="border-b-4 border-sky-400 hidden">
         <div className="container mx-auto px-4 py-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <ShoppingBag className="w-8 h-8 text-sky-500" />
@@ -94,7 +94,7 @@ export default function Home() {
       <main className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-block mb-8">
-            <div className="bg-sky-500 text-white px-6 py-2 rounded-full text-sm font-medium shadow-lg">
+            <div className="bg-sky-500 text-white  rounded-full p-3 text-xl md:p-10 md:text-8xl  font-medium shadow-lg">
               Coming Soon
             </div>
           </div>
@@ -156,7 +156,7 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="bg-gray-900 text-white py-8 mt-20">
+      <footer className="bg-gray-900 text-white py-8 mt-20 hidden">
         <div className="container mx-auto px-4 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
             <ShoppingBag className="w-6 h-6 text-sky-400" />
