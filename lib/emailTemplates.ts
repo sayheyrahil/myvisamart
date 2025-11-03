@@ -13,7 +13,7 @@ export function buildWelcomeEmail({ email }: WelcomeEmailParams): string {
       <div style="text-align: center; margin-bottom: 40px;">
         <div style="margin-bottom: 20px;">
           <!-- Try to load the actual logo first -->
-          <img src="${logoUrl}" alt="My Visa Mart Logo" style="max-width: 520px; height: auto; display: block; margin: 0 auto; border: none;" />
+          <img src="${logoUrl}" alt="My Visa Mart Logo" style="max-width:320px; height: auto; display: block; margin: 0 auto; border: none;" />
           <!-- Always show text logo as backup since email clients are unpredictable -->
          
         </div>

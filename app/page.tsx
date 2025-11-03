@@ -14,6 +14,7 @@ export default function Home() {
   });
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const targetDate = new Date('2025-12-31T23:59:59').getTime();
@@ -40,6 +41,7 @@ export default function Home() {
 
   const handleSubmit = async () => {
     if (email) {
+      setIsLoading(true);
       try {
         // Option 1: Using EmailJS (you'll need to install emailjs-com and configure it)
         // import emailjs from 'emailjs-com';
@@ -76,6 +78,8 @@ export default function Home() {
       } catch (error) {
         console.error('Error sending email:', error);
         alert('Sorry, there was an error sending the email. Please try again.');
+      } finally {
+        setIsLoading(false);
       }
     } else {
       alert('Please enter a valid email address.');
@@ -204,9 +208,10 @@ export default function Home() {
                 />
                 <Button
                   onClick={handleSubmit}
-                  className="bg-sky-500 hover:bg-sky-600 h-12 px-8"
+                  disabled={isLoading}
+                  className="bg-sky-500 hover:bg-sky-600 h-12 px-8 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Notify Me
+                  {isLoading ? 'Sending...' : 'Notify Me'}
                 </Button>
               </div>
             )}
