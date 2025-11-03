@@ -12,6 +12,8 @@ export default function Home() {
     minutes: 0,
     seconds: 0
   });
+  const [email, setEmail] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     const targetDate = new Date('2025-12-31T23:59:59').getTime();
@@ -35,6 +37,50 @@ export default function Home() {
 
     return () => clearInterval(interval);
   }, []);
+
+  const handleSubmit = async () => {
+    if (email) {
+      try {
+        // Option 1: Using EmailJS (you'll need to install emailjs-com and configure it)
+        // import emailjs from 'emailjs-com';
+        // await emailjs.send(
+        //   'YOUR_SERVICE_ID',
+        //   'YOUR_TEMPLATE_ID',
+        //   {
+        //     to_email: email,
+        //     subject: 'Thank you for subscribing!',
+        //     message: 'Thank you for subscribing to Visamart! We will notify you when we launch.'
+        //   },
+        //   'YOUR_USER_ID'
+        // );
+
+        // Option 2: Send to your own API endpoint
+        const response = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            subject: 'Thank you for subscribing to Visamart!',
+            message: `Hi there! Thank you for subscribing to Visamart with email: ${email}. We'll notify you as soon as we launch!`
+          }),
+        });
+
+        if (response.ok) {
+          setIsSubmitted(true);
+          setEmail('');
+        } else {
+          throw new Error('Failed to send email');
+        }
+      } catch (error) {
+        console.error('Error sending email:', error);
+        alert('Sorry, there was an error sending the email. Please try again.');
+      }
+    } else {
+      alert('Please enter a valid email address.');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white">
@@ -142,16 +188,28 @@ export default function Home() {
             <p className="text-gray-600 mb-6">
               Be the first to know when we go live. Enter your email below.
             </p>
-            <div className="flex gap-3">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 h-12 border-2 border-gray-200 focus:border-sky-400"
-              />
-              <Button className="bg-sky-500 hover:bg-sky-600 h-12 px-8">
-                Notify Me
-              </Button>
-            </div>
+            {isSubmitted ? (
+              <div className="text-center py-4">
+                <div className="text-green-600 font-semibold mb-2">✓ Thank you!</div>
+                <p className="text-gray-600">We'll notify you when we launch.</p>
+              </div>
+            ) : (
+              <div className="flex gap-3">
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="flex-1 h-12 border-2 border-gray-200 focus:border-sky-400"
+                />
+                <Button
+                  onClick={handleSubmit}
+                  className="bg-sky-500 hover:bg-sky-600 h-12 px-8"
+                >
+                  Notify Me
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </main>
