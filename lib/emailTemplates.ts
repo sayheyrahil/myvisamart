@@ -13,11 +13,9 @@ export function buildWelcomeEmail({ email }: WelcomeEmailParams): string {
       <div style="text-align: center; margin-bottom: 40px;">
         <div style="margin-bottom: 20px;">
           <!-- Try to load the actual logo first -->
-          <img src="${logoUrl}" alt="My Visa Mart Logo" style="max-width: 120px; height: auto; display: block; margin: 0 auto; border: none;" />
+          <img src="${logoUrl}" alt="My Visa Mart Logo" style="max-width: 520px; height: auto; display: block; margin: 0 auto; border: none;" />
           <!-- Always show text logo as backup since email clients are unpredictable -->
-          <div style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: white; padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 20px; margin: 10px auto 0 auto; max-width: 200px; text-align: center; letter-spacing: 0.5px;">
-            MY VISA MART
-          </div>
+         
         </div>
         <p style="color: #9CA3AF; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; margin: 0; font-weight: 500;">
           SMARTER, SIMPLER, AND SMOOTHER VISA<br>EXPERIENCE
