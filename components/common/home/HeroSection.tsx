@@ -35,60 +35,16 @@ const HeroSection = () => {
         </div>
 
         {/* Right Section (Image Grid) */}
-        <div className="flex-1 grid grid-cols-2 gap-6 relative">
-          {/* Animated plane icons */}
-          <div className="absolute -top-6 left-16 animate-bounce">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="#1E88E5"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="none"
-              className="w-6 h-6 rotate-45"
-            >
-              <path d="M2.5 19.5L21.5 12 2.5 4.5 3.5 11 14 12 3.5 13z" />
-            </svg>
-          </div>
-
-          <div className="absolute top-1/2 right-2 animate-pulse">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="#1E88E5"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="none"
-              className="w-6 h-6 -rotate-45"
-            >
-              <path d="M2.5 19.5L21.5 12 2.5 4.5 3.5 11 14 12 3.5 13z" />
-            </svg>
-          </div>
+        <div className="flex   ">
+       
 
           {/* Image cards */}
           <img
-            src="https://images.unsplash.com/photo-1549887534-3db1bd59dcca?auto=format&fit=crop&w=600&q=60"
+            src="./hero.png"
             alt="Beach"
-            className="rounded-2xl object-cover w-full h-48 shadow-md"
+            className="rounded-2xl object-cover w-full h-full shadow-md"
           />
-          <img
-            src="https://images.unsplash.com/photo-1586769852836-bc069f19e1b3?auto=format&fit=crop&w=600&q=60"
-            alt="Temple"
-            className="rounded-2xl object-cover w-full h-48 shadow-md"
-          />
-          <img
-            src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=600&q=60"
-            alt="City Night"
-            className="rounded-2xl object-cover w-full h-48 shadow-md"
-          />
-          <div className="relative">
-            <img
-              src="https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=600&q=60"
-              alt="Mosque"
-              className="rounded-2xl object-cover w-full h-48 shadow-md"
-            />
-            <div className="absolute bottom-3 right-3 bg-blue-500 p-2 rounded-full shadow-md">
-              <MapPin size={16} color="white" />
-            </div>
-          </div>
+          
         </div>
       </div>
     </section>

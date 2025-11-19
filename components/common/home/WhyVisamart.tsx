@@ -58,9 +58,9 @@ const WhyVisamart = () => {
         {/* Right Section (Illustration) */}
         <div className="flex justify-center items-center">
           <img
-            src="https://cdn-icons-png.flaticon.com/512/616/616408.png"
+            src="./Frame1100377394.png"
             alt="World map"
-            className="w-72 h-72 object-contain opacity-90"
+            className="w-full h-full object-contain opacity-90"
           />
         </div>
       </div>

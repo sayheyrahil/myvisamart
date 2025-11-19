@@ -32,30 +32,34 @@ const HowItWorks = () => {
   return (
     <section className="py-20 bg-[#F8FBFF]">
       <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
+        <h2 className="text-4xl font-bold text-gray-900 mb-0 text-center">
           How It Works
         </h2>
 
         <div className="relative flex flex-col md:flex-row items-center justify-between gap-10">
           {/* Dotted line connector */}
-          <div className="hidden md:block absolute top-1/2 left-[10%] right-[10%] border-t-2 border-dotted border-blue-200 z-0"></div>
+          {/* <div className="hidden md:block absolute top-1/2 left-[10%] right-[10%] border-t-2 border-dotted border-blue-200 z-0"></div> */}
 
-          {steps.map((step) => (
-            <div
-              key={step.id}
-              className={`${step.bgColor} relative z-10 p-8 rounded-3xl shadow-sm w-full md:w-1/3 text-center md:text-left transition hover:shadow-md`}
-            >
+          {steps.map((step, index) => {
+            // Dynamic margin top for staggered effect
+            const marginTops = ["mt-[190px]", "mt-[100px]", "mt-[10px]"];
+            return (
               <div
-                className={`${step.iconBg} w-12 h-12 flex items-center justify-center rounded-xl mb-6 mx-auto md:mx-0`}
+                key={step.id}
+                className={`${step.bgColor} ${marginTops[index] || ""}   w-[300px] h-[300px]  relative  p-8 rounded-3xl shadow-lg  md:w-1/3   transition hover:shadow-md`}
               >
-                {step.icon}
+                <div
+                  className={`${step.iconBg} w-12 h-12  flex items-center justify-center rounded-xl mb-20 mx-auto md:mx-0`}
+                >
+                  {step.icon}
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  {step.title}  
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{step.desc}</p>
               </div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                {step.title}
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{step.desc}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
