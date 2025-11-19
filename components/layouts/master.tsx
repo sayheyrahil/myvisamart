@@ -1,0 +1,19 @@
+import React from "react";
+import Header from "./header";
+import Footer from "./footer";
+
+interface MasterPageProps {
+    title: string;
+    children: React.ReactNode;
+}
+
+const MasterPage: React.FC<MasterPageProps> = ({ title, children }) => (
+    <div className="bg-[#f4f8fc]">
+        <Header title={title} />
+
+        <main>{children}</main>
+        <Footer />
+    </div>
+);
+
+export default MasterPage;

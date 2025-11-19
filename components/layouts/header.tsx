@@ -1,9 +1,10 @@
 import React from "react";
 
-const Navbar = () => {
+const Navbar = ({ title }: { title: string }) => {
   return (
     <header className="w-full shadow-sm">
       {/* Top Banner */}
+      <title>{title}</title>
       <div className="bg-[#0047AB] text-white flex items-center justify-center px-6 py-0">
         <div className="container flex items-center justify-between mx-auto">
 
