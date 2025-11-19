@@ -4,9 +4,12 @@ const Navbar = () => {
   return (
     <header className="w-full shadow-sm">
       {/* Top Banner */}
-      <div className="bg-[#0047AB] text-white flex items-center justify-center px-6 py-2">
-        <div className="container flex">
+      <div className="bg-[#0047AB] text-white flex items-center justify-center px-6 py-0">
+        <div className="container flex items-center justify-between mx-auto">
 
+          <div className="flex items-center gap-3 justify-center">
+          
+          </div>
           <div className="flex items-center gap-3 justify-center">
             <img
               src="./banner.png"

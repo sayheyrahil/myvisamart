@@ -3,25 +3,26 @@ import { Plus, Minus } from "lucide-react";
 
 const faqData = [
   "Lorem ipsum dolor sit amet consectetur",
-  "Blandit quis suspendisse aliquet nisl sodales",
-  "Cras eleifend turpis fermentum vulputate ornare sagittis",
-  "Sem placerat in id cursus pretium quam",
+  "Blandit quis suspendisse aliquet nisi sodales",
+  "Cras eleifend turpis fames primis vulputate ornare sagittis.",
+  "Sem placerat in id cursus mi pretium",
   "Orci varius natoque penatibus et magnis",
-  "Proin libero feugiat tristique accumsan nec ornare",
-  "Sed diam urna tempor pulvinar vivamus fringilla lacus",
+  "Proin libero feugiat tristique accumsan maecenas",
+  "Sed diam urna tempor pulvinar vivamus fringilla lacus.",
   "Eros lobortis nulla molestie mattis scelerisque",
 ];
 
 const WhyVisamart = () => {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const toggleFAQ = (index:any) => {
+  const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <section className="min-h-screen bg-[#f5f9ff] px-8 py-16 flex flex-col items-center">
-      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <section className="min-h-screen bg-[#f5f9ff] flex flex-col items-center justify-center px-0 py-0">
+      {/* Why Visamart Section */}
+      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10 py-16">
         {/* Left Section */}
         <div>
           <h2 className="text-3xl font-semibold text-gray-900 mb-4">
@@ -66,36 +67,58 @@ const WhyVisamart = () => {
       </div>
 
       {/* FAQ Section */}
-      <div className="max-w-6xl w-full mt-20">
-        <h3 className="text-2xl font-semibold text-gray-900 mb-6">
-          Frequently Asked Questions
-        </h3>
-        <div className="space-y-3">
-          {faqData.map((item, index) => (
-            <div
-              key={index}
-              className="bg-white border border-gray-200 rounded-lg overflow-hidden"
+      <div className="w-full flex justify-center items-start mt-0 min-h-screen">
+        <div className="flex w-full max-w-6xl ">
+          {/* Sidebar Title */}
+          <div className="flex flex-col justify-start items-start w-1/2 pl-12 pr-8">
+            <h3
+              className="font-[Wix_Madefor_Display]   text-[48px] leading-[60px] mb-2 text-black"
+              style={{
+                fontFamily: "'Wix Madefor Display', sans-serif",
+                fontWeight: 600,
+                fontStyle: "normal",
+                letterSpacing: "-0.02em",
+              }}
             >
-              <button
-                onClick={() => toggleFAQ(index)}
-                className="w-full flex justify-between items-center text-left px-5 py-4 hover:bg-gray-50 transition"
-              >
-                <span className="text-gray-700 font-medium">{item}</span>
-                {openIndex === index ? (
-                  <Minus className="w-5 h-5 text-blue-600" />
-                ) : (
-                  <Plus className="w-5 h-5 text-gray-500" />
-                )}
-              </button>
-
-              {openIndex === index && (
-                <div className="px-5 pb-4 text-gray-500 text-sm border-t border-gray-100">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                  Voluptatum incidunt omnis eveniet pariatur neque autem.
+              Frequently Asked
+              <br />
+              Questions
+            </h3>
+          </div>
+          {/* FAQ List */}
+          <div className="w-1/2 flex flex-col items-center py-2 pl-8">
+            <div className="w-full max-w-xl space-y-3">
+              {faqData.map((item, index) => (
+                <div
+                  key={index}
+                   style={{
+                    border: "1px solid transparent",
+                    borderRadius: "12px",
+                    background:
+                      "linear-gradient(white, white) padding-box, linear-gradient(90.91deg, #0A509F -0.28%, #FFFFFF 100%) border-box",
+                  }}
+                >
+                  <button
+                    onClick={() => toggleFAQ(index)}
+                    className="w-full flex justify-between items-center text-left px-6 py-4 hover:bg-[#f5f9ff] hover:rounded-xl transition focus:outline-none"
+                  >
+                    <span className="text-gray-700 font-medium">{item}</span>
+                    {openIndex === index ? (
+                      <Minus className="w-5 h-5 text-[#3b82f6]" />
+                    ) : (
+                      <Plus className="w-5 h-5 text-[#b0b8c1]" />
+                    )}
+                  </button>
+                  {openIndex === index && (
+                    <div className="px-6 pb-4 text-gray-500 text-sm border-t border-[#f0f4fa]">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Voluptatum incidunt omnis eveniet pariatur neque autem.
+                    </div>
+                  )}
                 </div>
-              )}
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>

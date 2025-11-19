@@ -42,7 +42,7 @@ const HeroSection = () => {
           <img
             src="./hero.png"
             alt="Beach"
-            className="rounded-2xl object-cover w-full h-full shadow-md"
+            className="rounded-2xl object-cover w-full h-full "
           />
           
         </div>
