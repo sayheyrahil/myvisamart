@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Navbar = ({ title }: { title: string }) => {
   return (
@@ -29,7 +30,7 @@ const Navbar = ({ title }: { title: string }) => {
             <button className="bg-[#FFB800] text-sm font-medium px-4 py-1.5 rounded-full hover:bg-yellow-500 transition">
               Join Free
             </button>
-            <button className="text-xl font-bold">✕</button>
+            {/* <button className="text-xl font-bold">✕</button> */}
           </div>
         </div>
       </div>
@@ -47,10 +48,18 @@ const Navbar = ({ title }: { title: string }) => {
 
         {/* Navigation Links */}
         <ul className="flex gap-8 text-gray-700 text-sm font-medium">
-          <li className="text-[#007BFF] cursor-pointer">Home</li>
-          <li className="hover:text-[#007BFF] cursor-pointer">Discover</li>
-          <li className="hover:text-[#007BFF] cursor-pointer">Special Deals</li>
-          <li className="hover:text-[#007BFF] cursor-pointer">Support</li>
+          <li className="text-[#007BFF] cursor-pointer">
+            <Link href="/">Home</Link>
+          </li>
+          <li className="hover:text-[#007BFF] cursor-pointer">
+            <Link href="/discover">Discover</Link>
+          </li>
+          <li className="hover:text-[#007BFF] cursor-pointer">
+            <Link href="/aboutus">About Us</Link>
+          </li>
+          <li className="hover:text-[#007BFF] cursor-pointer">
+            <Link href="/contactus">Support</Link>
+          </li>
         </ul>
 
         {/* Buttons */}
