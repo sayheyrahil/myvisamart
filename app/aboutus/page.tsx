@@ -128,21 +128,21 @@ const SocialProofSection: React.FC = () => {
           <div className="flex gap-8 items-start w-full max-md:flex-wrap max-md:justify-center max-sm:flex-col max-sm:gap-6">
             <CompanyLogo>
               <img
-                src="https://api.builder.io/api/v1/image/assets/TEMP/7a8e4e6f7e6a4b3e8f3e8f3e8f3e8f3e8f3e8f3e8f3e8f3e8f3e8f3e8?width=200"
+                src="https://placehold.co/120x48?text=Logo+1"
                 alt="Company Logo"
                 className="object-contain h-full"
               />
             </CompanyLogo>
             <CompanyLogo>
               <img
-                src="https://api.builder.io/api/v1/image/assets/TEMP/7a8e4e6f7e6a4b3e8f3e8f3e8f3e8f3e8f3e8f3e8f3e8f3e8f3e8f3e8?width=200"
+                src="https://placehold.co/120x48?text=Logo+2"
                 alt="Company Logo"
                 className="object-contain h-full"
               />
             </CompanyLogo>
             <CompanyLogo>
               <img
-                src="https://api.builder.io/api/v1/image/assets/TEMP/7a8e4e6f7e6a4b3e8f3e8f3e8f3e8f3e8f3e8f3e8f3e8f3e8f3e8f3e8?width=200"
+                src="https://placehold.co/120x48?text=Logo+3"
                 alt="Company Logo"
                 className="object-contain h-full"
               />
@@ -253,7 +253,7 @@ function AboutUs() {
     <main className="flex flex-col items-center w-full bg-slate-50">
       <HeaderSection />
       <MetricsSection />
-      <SocialProofSection />
+      {/* <SocialProofSection /> */}
       <DividerSection />
       <FeaturesSection />
     </main>

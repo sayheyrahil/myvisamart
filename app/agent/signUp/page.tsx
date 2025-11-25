@@ -1,3 +1,4 @@
+import SocialLoginButtons from "@/components/SocialLoginButtons";
 import React from "react";
 
 export default function Page() {
@@ -7,7 +8,7 @@ export default function Page() {
                 {/* LEFT SIDE IMAGE */}
                 <div className="hidden md:block md:w-1/2 relative">
                     <img
-                        src="./Frame427321840.png"
+                        src="/Frame427321840.png"
                         alt="Signup Visual"
                         className="w-full h-screen object-cover"
                     />
@@ -78,26 +79,13 @@ export default function Page() {
                             <span className="text-gray-500 text-xs sm:text-base">Or</span>
                             <div className="flex-1 h-px bg-gray-300" />
                         </div>
-                        {/* SOCIAL LOGIN */}
-                        <div className="flex justify-center gap-4 sm:gap-6 text-xl sm:text-2xl">
-                            <button className="border border-gray-300 p-2 sm:p-3 rounded-md">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg"
-                                    className="w-5 sm:w-6" />
-                            </button>
-                            <button className="border border-gray-300 p-2 sm:p-3 rounded-md">
-                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg"
-                                    className="w-5 sm:w-6" />
-                            </button>
-                            <button className="border border-gray-300 p-2 sm:p-3 rounded-md">
-                                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111432.png"
-                                    className="w-5 sm:w-6" />
-                            </button>
-                        </div>
+                                           <SocialLoginButtons />
+                   
                     </div>
                     {/* Responsive image: static and centered on mobile, absolute on md+ */}
                     <div className="w-16 h-16 mx-auto mt-6 md:w-28 md:h-28 md:absolute md:bottom-14 md:right-0 md:mt-0 md:mx-0">
                         <img
-                            src="./sidebgBg.png"
+                            src="/sidebgBg.png"
                             alt="Signup Visual"
                             className="w-full h-full object-cover"
                         />

@@ -25,7 +25,7 @@ export default function Page() {
                 {/* LEFT SIDE IMAGE */}
                 <div className="w-full md:w-1/2 relative h-60 md:h-auto">
                     <img
-                        src="./Frame427321840.png"
+                        src="/Frame427321840.png"
                         alt="Signup Visual"
                         className="w-full h-full object-cover"
                     />
@@ -94,7 +94,7 @@ export default function Page() {
 
                     <div className="w-16 h-16 md:w-28 md:h-28 absolute bottom-4 right-0 md:bottom-14">
                         <img
-                            src="./sidebgBg.png"
+                            src="/sidebgBg.png"
                             alt="Signup Visual"
                             className="w-full h-full object-cover"
                         />

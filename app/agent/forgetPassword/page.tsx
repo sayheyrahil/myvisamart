@@ -10,7 +10,7 @@ export default function Page() {
                 {/* LEFT SIDE IMAGE */}
                 <div className="hidden md:block md:w-1/2 relative">
                     <img
-                        src="./Frame427321840.png"
+                        src="/Frame427321840.png"
                         alt="Signup Visual"
                         className="w-full h-screen object-cover"
                     />
@@ -36,12 +36,12 @@ export default function Page() {
                                     type="button"
                                     onClick={() => setSelected("sms")}
                                     className={`flex items-center w-full border rounded-lg px-4 py-4 gap-4 transition ${selected === "sms"
-                                            ? "border-blue-700 bg-blue-50"
-                                            : "border-blue-200 bg-white"
+                                        ? "border-blue-700 bg-blue-50"
+                                        : "border-blue-200 bg-white"
                                         }`}
                                 >
                                     <img
-                                        src="https://cdn-icons-png.flaticon.com/512/726/726623.png"
+                                        src="/image8.png"
                                         alt="sms"
                                         className="w-8 h-8"
                                     />
@@ -55,12 +55,12 @@ export default function Page() {
                                     type="button"
                                     onClick={() => setSelected("email")}
                                     className={`flex items-center w-full border rounded-lg px-4 py-4 gap-4 transition ${selected === "email"
-                                            ? "border-blue-700 bg-blue-50"
-                                            : "border-blue-200 bg-white"
+                                        ? "border-blue-700 bg-blue-50"
+                                        : "border-blue-200 bg-white"
                                         }`}
                                 >
                                     <img
-                                        src="https://cdn-icons-png.flaticon.com/512/726/726623.png"
+                                        src="/image8.png"
                                         alt="email"
                                         className="w-8 h-8"
                                     />
