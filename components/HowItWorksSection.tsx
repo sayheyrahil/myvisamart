@@ -15,9 +15,9 @@ interface HowItWorksSectionProps {
 }
 
 const HowItWorksSection: React.FC<HowItWorksSectionProps> = ({ steps, title }) => {
-  const marginTops = ["mt-[90px]", "mt-[50px]", "mt-[0px]"];
+  const marginTops = ["mt-[150px]", "mt-[50px]", "mt-[0px]"];
   return (
-    <section className="py-20  ">
+    <section className="py-5  ">
       <div className="max-w-6xl mx-auto px-6">
         {title && (
           <div

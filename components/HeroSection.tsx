@@ -15,10 +15,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   imageSrc,
   imageAlt,
 }) => (
-  <section className="max-w-screen-xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
+  <section className="max-w-screen-xl mx-auto px-2 py-10 grid md:grid-cols-2 gap-12 items-center">
     <div className="space-y-8">
       <div
-        className="text-gray-900 font-bold font-[Wix_Madefor_Display] text-[72px] leading-[90px] tracking-[-0.02em]"
+        className="text-gray-900 font-bold   text-[72px] leading-[90px] tracking-[-0.02em]"
       >
         {title}
       </div>
