@@ -7,6 +7,7 @@ import HowItWorksSection from "@/components/HowItWorksSection";
 import * as TbIcons from "react-icons/tb";
 import Image from "next/image";
 import SectionIcon from "@/components/SectionIcon";
+import { TbArrowBadgeRightFilled } from "react-icons/tb";
 
 
 export default function Page() {
@@ -199,13 +200,17 @@ export default function Page() {
           {/* Schengen Invitation Letter Info Box */}
           <div className=" pt-8">
             <div
+
               className="py-6 rounded-xl not-italic text-[16px] leading-[22px] tracking-[0] text-[#5B5F62]  "
             >
-              When applying for a Schengen visa, you must submit several important documents, one of the most crucial of which is the cover letter. <br />
+              When applying for a Schengen visa, you must submit several important
+              documents, one of the most crucial of which is the cover letter. <br />
               <br />
               Addressed to the embassy of your visiting country,
-              the Schengen cover letter serves as a formal introduction to your visa application. It outlines your intent to travel to a Schengen country(s),
-              travel plans, and other key details that help visa officers understand the context of your visit and assess your case.
+              the Schengen cover letter serves as a formal introduction to
+              your visa application. It outlines your intent to travel to a Schengen country(s),
+              travel plans, and other key details that help visa officers
+              understand the context of your visit and assess your case.
             </div>
           </div>
 
@@ -219,7 +224,9 @@ export default function Page() {
                   What is a passport-size photo?
                 </div>
                 <p className="text-[#5B5F62] text-[16px] leading-[24px]  ">
-                  There are two primary ways to write a cover letter for your Schengen visa application: using the Atlys Schengen visa cover letter creator or writing yourself.
+                  There are two primary ways to write a cover letter for your Schengen
+                  visa application: using the Atlys Schengen visa cover letter creator or
+                  writing yourself.
                   <br />
                   We have discussed both ways in detail below:
                 </p>
@@ -284,471 +291,278 @@ export default function Page() {
             </div>
 
             {/* DESIGN 2: Write the Schengen cover letter by yourself */}
-            <ul className="  py-10 px-4 md:px-10 rounded-2xl mb-10">
-              <div className="">
-                <div>
-                  <span className="font-semibold">Ties to home country:</span>
-                  <span className="block">Emphasize your strong ties to your home country, such as family, property or other
-                    commitments and convey your intention to return after the trip.</span>
+            <div className="  py-10 px-4 md:px-10 rounded-2xl mb-10">
+              <div className=" ">
+                <h2 className="text-xl md:text-2xl font-semibold text-[#23272E] mb-3">
+                  2. Write the Schengen cover letter by yourself
+                </h2>
+                <div className="text-[#5B5F62] text-base md:text-lg leading-7 mb-4">
+                  If you prefer to write the Schengen visa cover letter yourself, it’s essential to ensure it is clear, detailed and well-structured. Moreover, a well-written cover letter should provide the embassy with all the necessary information needed to process your visa application smoothly.
+                  <br />
+                  Here’s what to include in your Schengen visa cover letter (in the same order given below):
                 </div>
-              </div>
+                <ul className="list-disc pl-6 text-[#23272E] text-base md:text-lg leading-7 space-y-2 mb-6">
+                  {[
+                    {
+                      title: "Introduction:",
+                      desc: "Briefly introduce yourself, including your name, nationality, and passport number."
+                    },
+                    {
+                      title: "Purpose of the trip:",
+                      desc: "Clearly state the reason for your visit, whether for tourism, business, family visit, etc., along with the start and end dates."
+                    },
+                    {
+                      title: "Itinerary:",
+                      desc: "Briefly and neatly outline your travel itinerary, specifying the countries you plan to visit, accommodation and the duration of your stay in each country."
+                    },
+                    {
+                      title: "Additional documents:",
+                      desc: "State that you have attached all necessary supporting documents, such as flight reservations, hotel bookings, proof of funds, and any other required paperwork."
+                    },
+                    {
+                      title: "Financial means:",
+                      desc: "Provide information about your current professional status (for example, employed or self-employed) and declare the means for funding your trip."
+                    },
+                    {
+                      title: "Ties to home country:",
+                      desc: "Emphasize your strong ties to your home country, such as family, property or other commitments and convey your intention to return after the trip."
+                    },
+                    {
+                      title: "Polite closing:",
+                      desc: "Conclude the letter with a polite request for the visa and express gratitude for considering your application."
+                    },
+                    {
+                      title: "Embassy address:",
+                      desc: "Include the address of the embassy or consulate you are applying to."
+                    },
+                    {
+                      title: "Applicant’s address:",
+                      desc: "Provide your own address and contact details."
+                    },
+                    {
+                      title: "Travel dates:",
+                      desc: "Clearly mention your intended travel dates."
+                    },
+                    {
+                      title: "Signature:",
+                      desc: "Sign the letter at the end (if submitting a physical copy)."
+                    },
+                    {
+                      title: "Sample cover letter:",
+                      desc: "Attach or refer to a sample cover letter for reference."
+                    }
+                  ].map((item, index) => (
+                    <div key={index} className="flex justify-start  gap-4">
+                      <TbArrowBadgeRightFilled color="0A509F" size={30} />
+                      <div>
+                        <span className="font-semibold">{item.title}</span> {item.desc}
+                      </div>
+                    </div>
+                  ))}
+                </ul>
 
-
-              <li className="flex items-start">
-                <span className="mr-3 mt-[2px] text-[#0A509F] text-[20px]">
-                  <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-
-                </span>
-                <div>
-                  <span className="font-semibold">Polite closing:</span>
-                  <span className="block">Conclude the letter with a polite request for the visa and express gratitude for considering your application.</span>
+                <div className="mb-6">
+                  <div className="text-[#23272E] text-base font-semibold mb-2">
+                    Here is a sample cover letter for Schengen visa (template):
+                  </div>
+                  <div className="flex justify-center">
+                    <img
+                      src="/tools/image57.png"
+                      alt="Sample Schengen Cover Letter"
+                      className="rounded-lg border border-[#E0E7EF] max-w-full w-[350px] md:w-[420px] shadow"
+                    />
+                  </div>
                 </div>
-              </li>
-
-
-              <li className="flex items-start">
-                <span className="mr-3 mt-[2px] text-[#0A509F] text-[20px]">
-                  <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-
-                </span>
-                <div>
-                  <span className="font-semibold">Embassy address:</span>
-                  <span className="block">Include the address of the embassy or consulate you are applying to.</span>
+                <div className="bg-[#E6F4EA] border border-[#A7F3D0] rounded-xl p-4 flex items-start gap-2 mt-4">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="mt-1">
+                    <circle cx="11" cy="11" r="11" fill="#BBF7D0" />
+                    <path d="M11 6.5V12.5" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
+                    <circle cx="11" cy="15.5" r="1" fill="#22C55E" />
+                  </svg>
+                  <span className="text-[#15803D] text-[15px] leading-[22px]">
+                    <span className="font-semibold">Note:</span> Depending on the special circumstances of your visit (for example, if your trip is sponsored), you must incorporate specific information in the cover letter.
+                  </span>
                 </div>
-              </li>
-
-
-              <li className="flex items-start">
-                <span className="mr-3 mt-[2px] text-[#0A509F] text-[20px]">
-                  <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-
-                </span>
-                <div>
-                  <span className="font-semibold">Applicant’s address:</span>
-                  <span className="block">Provide your own address and contact details.</span>
-                </div>
-              </li>
-
-
-              <li className="flex items-start">
-                <span className="mr-3 mt-[2px] text-[#0A509F] text-[20px]">
-                  <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-
-                </span>
-                <div>
-                  <span className="font-semibold">Travel dates:</span>
-                  <span className="block">Clearly mention your intended travel dates.</span>
-                </div>
-              </li>
-
-
-              <li className="flex items-start">
-                <span className="mr-3 mt-[2px] text-[#0A509F] text-[20px]">
-                  <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-
-                </span>
-                <div>
-                  <span className="font-semibold">Signature:</span>
-                  <span className="block">Sign the letter at the end (if submitting a physical copy).</span>
-                </div>
-              </li>
-
-
-              <li className="flex items-start">
-                <span className="mr-3 mt-[2px] text-[#0A509F] text-[20px]">
-                  <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-
-                </span>
-                <div>
-                  <span className="font-semibold">Sample cover letter:</span>
-                  <span className="block">Attach or refer to a sample cover letter for reference.</span>
-                </div>
-              </li>
-            </ul>
-
-
-            <div className="mb-6">
-              <div className="text-[#23272E] text-base font-semibold mb-2">
-                Here is a sample cover letter for Schengen visa (template):
-              </div>
-
-
-              <div className="flex justify-center">
-                <img
-                  src="/tools/sample-schengen-cover-letter.png"
-                  alt="Sample Schengen Cover Letter"
-                  className="rounded-lg border border-[#E0E7EF] max-w-full w-[350px] md:w-[420px] shadow"
-                />
               </div>
             </div>
+          </div>
 
+          {/* Tips to create a Schengen visa cover letter */}
+          <div className=" rounded-2xl px-4 md:px-10 py-10 mb-10">
+            <div className=" ">
+              <div className="flex items-center gap-2 mb-3">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <circle cx="11" cy="11" r="11" fill="#D1FAE5" />
+                  <path d="M11 6v5" stroke="#10B981" strokeWidth="1.5" strokeLinecap="round" />
+                  <circle cx="11" cy="15" r="1" fill="#10B981" />
+                </svg>
+                <h2 className="text-lg md:text-xl font-semibold text-[#059669]">
+                  Tips to create a Schengen visa cover letter
+                </h2>
+              </div>
+              <div className="text-[#5B5F62] text-base md:text-lg leading-7 mb-6">
+                Whether you’re travelling for tourism, business, or family visits, here are some tips to help you create a well-written cover letter for your Schengen visa application:
+              </div>
+              <div className="flex flex-col md:flex-row gap-8 mb-6">
+                {/* Do's */}
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[#059669] font-semibold">Do’s</span>
+                  </div>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-2">
+                      <TbArrowBadgeRightFilled color="#059669" size={22} className="mt-1" />
+                      <span>
+                        <b>Use a formal tone:</b> Keep the language professional and respectful throughout the letter.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <TbArrowBadgeRightFilled color="#059669" size={22} className="mt-1" />
+                      <span>
+                        <b>Tailor the letter to your situation:</b> Customize your cover letter based on your specific background (employment, student, etc.).
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <TbArrowBadgeRightFilled color="#059669" size={22} className="mt-1" />
+                      <span>
+                        <b>Provide supporting documents:</b> Remember to mention all the supporting documents in your letter, as it gives the visa officer an idea of all the attached documents.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <TbArrowBadgeRightFilled color="#059669" size={22} className="mt-1" />
+                      <span>
+                        <b>Type the letter:</b> A typed letter is clearer and more readable than a handwritten one, ensuring a polished presentation.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+                {/* Don'ts */}
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[#EF4444] font-semibold">Don’ts</span>
+                  </div>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-2">
+                      <TbArrowBadgeRightFilled color="#EF4444" size={22} className="mt-1" />
+                      <span>
+                        <b>Don’t include unnecessary details:</b> Avoid irrelevant information that may confuse or clutter your letter.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <TbArrowBadgeRightFilled color="#EF4444" size={22} className="mt-1" />
+                      <span>
+                        <b>Don’t leave out essential information:</b> Missing key details, like your return plan, can lead to rejection.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <TbArrowBadgeRightFilled color="#EF4444" size={22} className="mt-1" />
+                      <span>
+                        <b>Don’t exaggerate:</b> Stick to facts and avoid embellishing your circumstances.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <TbArrowBadgeRightFilled color="#EF4444" size={22} className="mt-1" />
+                      <span>
+                        <b>Don’t forget to sign the letter:</b> After taking the printout, sign the cover letter to validate your application.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <div className="bg-[#E6F4EA] border border-[#A7F3D0] rounded-xl p-4 flex items-start gap-2 mt-4">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="mt-1">
-                <circle cx="11" cy="11" r="11" fill="#BBF7D0" />
-                <path d="M11 6.5V12.5" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
-                <circle cx="11" cy="15.5" r="1" fill="#22C55E" />
-              </svg>
-              <span className="text-[#15803D] text-[15px] leading-[22px]">
-                <span className="font-semibold">Note:</span> Depending on the special circumstances of your visit (for example, if your trip is sponsored), you must incorporate specific information in the cover letter.
-              </span>
+          {/* FAQ Section */}
+          <div className=" rounded-2xl px-4 md:px-10 py-10 mb-10">
+            <div className=" ">
+              <h2 className="text-lg md:text-xl font-semibold text-[#23272E] mb-4">
+                Frequently Asked Questions
+              </h2>
+              <div className="divide-y divide-[#E5E7EB] border rounded-xl bg-white">
+                {[
+                  "Is the Atlys Schengen cover letter creator free?",
+                  "Is it safe to use the Atlys Schengen cover letter creator?",
+                  "Is a cover letter required for each Schengen visa application?",
+                  "How long should my Schengen visa cover letter be?",
+                  "Can I submit a handwritten cover letter?",
+                  "I am planning to visit multiple Schengen countries. Do I need separate cover letters for each country?",
+                  "How can I mention the travel itinerary in the cover letter?",
+                  "What are the supporting documents that I need to submit with a cover letter for a Schengen visa?",
+                  "How can I demonstrate proof of ties to my home country in the cover letter?",
+                  "What sponsor information should I include in my cover letter if my trip to the Schengen Area is sponsored?",
+                  "If my friend/partner and I are applying for a Schengen visa together, do we need to submit separate cover letters?",
+                  "How long will the cover letter be valid?",
+                ].map((q, i) => (
+                  <details key={i} className="group">
+                    <summary className="flex justify-between items-center cursor-pointer px-5 py-4 text-[16px] text-[#23272E] select-none group-open:text-[#0A509F]">
+                      {q}
+                      <span className="ml-2 transition-transform group-open:rotate-90">
+                        <svg width="18" height="18" fill="none"><path d="M7 6l4 3-4 3" stroke="#0A509F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                      </span>
+                    </summary>
+                    {/* Add answer content here if needed */}
+                  </details>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* How we reviewed this tool */}
+          <div className=" rounded-2xl px-4 md:px-10 py-10 mb-10">
+            <div className="max-w-6xl mx-auto">
+              <div className="flex items-center gap-2 mb-2">
+                 <SectionIcon />
+                <h2 className="text-lg md:text-xl font-semibold text-[#23272E]">
+                  How we reviewed this tool:
+                </h2>
+              </div>
+              <div className="text-[#5B5F62] text-base md:text-lg leading-7 mb-4">
+                Our experts continually monitor the official sources for any changes, and we update our articles when new information becomes available.
+              </div>
+              {/* History Tab */}
+              <div className="flex items-center gap-2 mb-6">
+                <button className="flex items-center gap-2 px-3 py-1 border-b-2 border-[#0EA5E9] text-[#0EA5E9] font-medium bg-transparent focus:outline-none">
+                  <svg width="22" height="22" fill="none" className="text-[#0EA5E9]"><path d="M11 2v18M2 11h18" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  History
+                </button>
+              </div>
+              <div className="text-[#23272E] text-[16px] font-semibold mb-4">
+                Current Version
+              </div>
+              {/* Cards Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                {[
+                  { date: "30 Jan 2025", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
+                  { date: "22 Nov 2024", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
+                  { date: "22 Oct 2024", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
+                  { date: "26 Jun 2024", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
+                  { date: "25 Jun 2024", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
+                  { date: "14 May 2024", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
+                  { date: "09 May 2024", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="border border-[#E0E7EF] rounded-xl bg-white p-5 flex flex-col gap-2 min-h-[120px]"
+                  >
+                    <div className="text-[#23272E] font-semibold text-[16px] mb-2">{item.date}</div>
+                    <div className="text-[#5B5F62] text-[14px]">
+                      <div>
+                        <span className="font-semibold">Written By:</span><br />
+                        <span className="font-medium">{item.writer}</span>
+                      </div>
+                      <div className="mt-1">
+                        <span className="font-semibold">Edited By:</span><br />
+                        <span className="font-medium">{item.editor}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
 
-      </div>
-
-      {/* More Invitation Letter Types */}
-      <div className=" pb-16">
-        {/* 2. Business Invitation Letter for Schengen */}
-        <div className="mb-8">
-          <div className="  text-[22px] md:text-[22px] leading-[30px] font-semibold text-[#23272E] mb-2">
-            2. Business Invitation Letter for Schengen
-          </div>
-          <div className="text-[#5B5F62] text-[16px] leading-[24px]   mb-2">
-            This is for applicants visiting a Schengen country for business purposes, such as attending meetings, conferences, or training. This letter is written by a company or organisation in the Schengen zone inviting the applicant for business reasons.
-          </div>
-          <ul className="space-y-1 pl-1">
-            <li className="flex items-start gap-2">
-              <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-              <span>It should outline the business relationship between the applicant and the inviting company.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-              <span>The dates of the business trip.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-              <span>The purpose of the visit (e.g., meetings, contract negotiations).</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-              <span>The company may also take responsibility for the applicant’s accommodation and expenses.</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      {/* 3. Invitation Letter for Medical Treatment */}
-      <div className="mb-8">
-        <div className="  text-[22px] md:text-[22px] leading-[30px] font-semibold text-[#23272E] mb-2">
-          3. Invitation Letter for Medical Treatment
-        </div>
-        <div className="text-[#5B5F62] text-[16px] leading-[24px]   mb-2">
-          This type of letter is needed for applicants seeking medical treatment in a Schengen country. It is usually written by the medical institution (e.g., hospital or clinic) where the treatment will take place. The letter should contain details about the applicant’s:
-        </div>
-        <ul className="space-y-1 pl-1">
-          <li className="flex items-start gap-2">
-            <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-            <span>Medical condition.</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-            <span>The type of treatment.</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-            <span>The estimated duration of stay for medical care.</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-            <span>The confirmation of appointments or treatment plans.</span>
-          </li>
-        </ul>
-        <div className="text-[#5B5F62] text-[15px] leading-[22px]   mt-2">
-          <span className="font-semibold">Note:</span> An invitation letter is mandatory for medical visits and must be signed by the doctor.
-        </div>
-      </div>
-      {/* 4. Invitation Letter for Cultural, Sports, or Religious Events */}
-      <div>
-        <div className="  text-[22px] md:text-[22px] leading-[30px] font-semibold text-[#23272E] mb-2">
-          4. Invitation Letter for Cultural, Sports, or Religious Events
-        </div>
-        <div className="text-[#5B5F62] text-[16px] leading-[24px]   mb-2">
-          This letter is for individuals invited to attend cultural events, sporting activities, or religious ceremonies in a Schengen country. The organising institution or event organiser should issue the invitation letter. It should include
-        </div>
-        <ul className="space-y-1 pl-1">
-          <li className="flex items-start gap-2">
-            <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-            <span>Information about the event.</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-            <span>The applicant’s role or participation.</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-            <span>The dates of the event.</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-            <span>Details about accommodation arrangements, if applicable.</span>
-          </li>
-        </ul>
-      </div>
-      {/* 5. Invitation Letter for Training, Internships, or Educational Visits */}
-      <div className="my-8">
-        <div className="  text-[22px] leading-[30px] font-semibold text-[#23272E] mb-2">
-          5. Invitation Letter for Training, Internships, or Educational Visits
-        </div>
-        <div className="text-[#5B5F62] text-[16px] leading-[24px]   mb-2">
-          This is for applicants visiting a Schengen country for training programs, internships, or educational purposes. The educational institution or training organisation usually writes this letter and should outline the details of the program, the duration of the stay, and the financial arrangements.
-        </div>
-        <ul className="space-y-1 pl-1">
-          <li className="flex items-start gap-2">
-            <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-            <span>
-              <b>Enter details:</b> Start by entering the following details one by one, including: current date (date), Personal details (full name), travel details (destination country, departure date), and invite details (name or hotel name, email address line 1, city).
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-            <span>
-              <b>Generate:</b> Press the "Generate Invitation Letter".
-            </span>
-          </li>
-          <li className="flex items-start gap-2">
-            <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
-            <span>
-              <b>Download:</b> After completing the details and pressing the generation button, you can download the invitation letter for Schengen visa pdf and save it.
-            </span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-        {/* How can I get an invitation letter for a Schengen visa? */ }
-  <div className=" pb-8">
-    <div className="flex items-center gap-2 mb-2">
-      <SectionIcon />
-      <h2 className="  text-[22px] leading-[30px] font-semibold text-[#22C55E]">
-        How can I get an invitation letter for a Schengen visa?
-      </h2>
-    </div>
-    <div className="text-[#5B5F62] text-[16px] leading-[24px]   mb-4">
-      You can easily generate your Schengen visa application invitation letter using Atlys by following the below-mentioned steps:
-    </div>
-    {/* Info Box */}
-    <div className="bg-[#F1F5F9] border border-[#E0E7EF] rounded-xl p-6 mb-8">
-      <div className="  text-[18px] font-semibold text-[#23272E] mb-2">
-        Why use our Atlys Schengen invitation letter generator?
-      </div>
-      <div className="text-[#5B5F62] text-[15px] leading-[22px]  ">
-        Our Schengen invitation letter generator can help you with the following:
-      </div>
-      <ul className="space-y-1 mt-2 pl-1">
-        <li className="flex items-start gap-2">
-          <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[18px] mt-[2px]" />
-          <span>
-            <b>Convenience:</b> The tool allows you to complete the invitation letter for a Schengen visa in 2 minutes, reducing the time required to gather all the required documents.
-          </span>
-        </li>
-        <li className="flex items-start gap-2">
-          <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[18px] mt-[2px]" />
-          <span>
-            <b>Accuracy:</b> You won’t have to type or write the letter or worry about whether it’s in the correct format.
-          </span>
-        </li>
-        <li className="flex items-start gap-2">
-          <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[18px] mt-[2px]" />
-          <span>
-            <b>Compliance:</b> The generator/letter is designed to comply with the requirements of Schengen visa authorities. This increases the likelihood of your invitation letter being accepted without issues.
-          </span>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  {/* How to write an invitation letter for Schengen visa */ }
-  <div className=" pb-8">
-    <div className="flex items-center gap-2 mb-2">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="14" fill="#DCFCE7" />
-        <path d="M14 8v6" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="14" cy="18" r="1" fill="#22C55E" />
-      </svg>
-      <h2 className="  text-[22px] leading-[30px] font-semibold text-[#22C55E]">
-        How to write an invitation letter for Schengen visa
-      </h2>
-    </div>
-    <div className="text-[#5B5F62] text-[16px] leading-[24px]   mb-4">
-      If you are planning to write the Schengen invitation letter by yourself, then here is some important information that should be present in any type of invitation letter:
-    </div>
-    <ul className="list-disc pl-6 text-[#23272E] text-[16px] leading-[24px]   mb-4">
-      <li>
-        <b>Host’s information:</b> Full name, address, contact details, and legal status in the Schengen country (e.g., citizen, resident).
-      </li>
-      <li>
-        <b>Applicant’s information:</b> Full name, passport number, address, relationship with the host, and details about the purpose of the visit.
-      </li>
-      <li>
-        <b>Duration:</b> Exact dates of the intended visit.
-      </li>
-      <li>
-        <b>Financial support:</b> Information about who will cover the expenses during the visit (if the host sponsors the trip).
-      </li>
-      <li>
-        <b>Proof of accommodation:</b> Mention whether the guest will stay with the host or elsewhere.
-      </li>
-    </ul>
-    <div className="text-[#5B5F62] text-[16px] leading-[24px]   mb-2">
-      Here is a simple invitation letter for a Schengen visa application:
-    </div>
-    <div className="text-[#0A509F] underline text-[16px] leading-[24px]   cursor-pointer">
-      Invitation letter for visiting Friends and Family
-    </div>
-  </div>
-
-  {/* What are some key mistakes to avoid... */ }
-  <div className=" pb-8">
-    <div className="flex items-center gap-2 mb-2">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="14" fill="#DCFCE7" />
-        <path d="M14 8v6" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="14" cy="18" r="1" fill="#22C55E" />
-      </svg>
-      <h2 className="  text-[22px] leading-[30px] font-semibold text-[#22C55E]">
-        What are some key mistakes to avoid when preparing a Schengen visa invitation letter?
-      </h2>
-    </div>
-    <div className="text-[#5B5F62] text-[16px] leading-[24px]   mb-4">
-      Precision and clarity are essential to avoid delays or refusals when preparing an invitation letter for a Schengen visa application. Here are some key mistakes to steer clear of:
-    </div>
-    <ul className="list-disc pl-6 text-[#23272E] text-[16px] leading-[24px]   mb-4">
-      <li>
-        <b>Only complete or correct information:</b> Ensure all essential details are included, such as the full names of both the host and guest, specific dates of stay, and the precise purpose of the visit.
-      </li>
-      <li>
-        <b>Vague purposes:</b> Clearly state the reason for the visit (e.g., tourism, business, family visit). Avoid vague terms like “visit” without specifying the nature.
-      </li>
-      <li>
-        <b>Inconsistent dates:</b> Use consistent dates throughout your application, ensuring they match the invitation letter, flight itinerary, and hotel reservations.
-      </li>
-      <li>
-        <b>Financial responsibility:</b> Indicate who will pay for the visitor’s trip, accommodation, and other expenses.
-      </li>
-      <li>
-        <b>Host’s legal status:</b> Specify the host’s legal status within the Schengen country (e.g., citizen, permanent resident).
-      </li>
-      <li>
-        <b>Accommodation details:</b> Provide clear information about the applicant’s accommodation during their stay, ensuring consistency with other documents.
-      </li>
-      <li>
-        <b>Clarity and conciseness:</b> Use clear, concise language and avoid overly complex sentences or grammar errors that could hinder understanding.
-      </li>
-    </ul>
-    <div className="bg-[#F0FDF4] border border-[#BBF7D0] rounded-lg p-4 text-[#15803D] text-[15px] leading-[22px]   flex items-start gap-2">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="mt-1">
-        <circle cx="11" cy="11" r="11" fill="#BBF7D0" />
-        <path d="M11 6.5V12.5" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="11" cy="15.5" r="1" fill="#22C55E" />
-      </svg>
-      <span>
-        <span className="font-semibold">Note:</span> Choose the Atlys Schengen invitation letter tool to avoid such mistakes and increase your chances of getting a visa approval.
-      </span>
-    </div>
-  </div>
-
-  {/* Who doesn't need a Schengen invitation letter? */ }
-  <div className=" pb-12">
-    <div className="flex items-center gap-2 mb-2">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="14" fill="#E0F2FE" />
-        <path d="M14 8v6" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="14" cy="18" r="1" fill="#0EA5E9" />
-      </svg>
-      <h2 className="  text-[22px] leading-[30px] font-semibold text-[#0EA5E9]">
-        Who doesn’t need a Schengen invitation letter?
-      </h2>
-    </div>
-    <div className="text-[#5B5F62] text-[16px] leading-[24px]   mb-2">
-      An invitation letter is sometimes required for a Schengen visa but not always mandatory. If you’re traveling for tourism, it is not needed. However, if you’re visiting friends or family and staying with a host, it will be required. It’s essential to know the specific requirements before submitting your application.
-    </div>
-    <div className="text-[#23272E] text-[16px] leading-[24px]   mb-2">
-      An invitation letter is often needed in the following cases:
-    </div>
-    <ul className="space-y-1 pl-1 mb-4">
-      <li className="flex items-start gap-2">
-        <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[18px] mt-[2px]" />
-        <span>Business</span>
-      </li>
-      <li className="flex items-start gap-2">
-        <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[18px] mt-[2px]" />
-        <span>Official invitations</span>
-      </li>
-      <li className="flex items-start gap-2">
-        <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[18px] mt-[2px]" />
-        <span>Visiting relatives and friends</span>
-      </li>
-      <li className="flex items-start gap-2">
-        <TbIcons.TbArrowBadgeRightFilled className="text-[#0A509F] text-[18px] mt-[2px]" />
-        <span>To attend cultural, scientific, religious, sporting, political, or other gatherings and activities</span>
-      </li>
-    </ul>
-
-    {/* FAQ Accordion */}
-    <div className="divide-y divide-[#E5E7EB] border rounded-xl bg-white">
-      {[
-        "Is the Schengen invitation letter generator free?",
-        "Is an invitation letter required for a Schengen tourist visa?",
-        "Is it safe to use the Schengen invitation letter generator?",
-        "What inspired us to create the Schengen invitation letter generator?",
-        "What is the purpose of the Schengen invitation letter?",
-        "How long is the Schengen invitation letter valid?",
-      ].map((q, i) => (
-        <details key={i} className="group">
-          <summary className="flex justify-between items-center cursor-pointer px-5 py-4   text-[16px] text-[#23272E] select-none group-open:text-[#0A509F]">
-            {q}
-            <span className="ml-2 transition-transform group-open:rotate-90">
-              <svg width="18" height="18" fill="none"><path d="M7 6l4 3-4 3" stroke="#0A509F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </span>
-          </summary>
-          {/* You can add answer content here if needed */}
-        </details>
-      ))}
-    </div>
-  </div>
-
-  {/* How we reviewed this tool */ }
-  <div className=" pb-16">
-    <div className="flex items-center gap-2 mb-2">
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="14" fill="#E0F2FE" />
-        <path d="M14 8v6" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="14" cy="18" r="1" fill="#0EA5E9" />
-      </svg>
-      <h2 className="  text-[22px] leading-[30px] font-semibold text-[#0EA5E9]">
-        How we reviewed this tool:
-      </h2>
-    </div>
-    <div className="text-[#5B5F62] text-[16px] leading-[24px]   mb-4">
-      Our experts continually monitor the official sources for any changes, and we update our articles when new information becomes available.
-    </div>
-    <button className="flex items-center gap-2 px-4 py-2 mb-6 bg-[#F1F5F9] border border-[#E0E7EF] rounded-lg text-[#0A509F]   text-[15px] font-medium">
-      <svg width="18" height="18" fill="none"><path d="M9 2v14M2 9h14" stroke="#0A509F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-      History
-    </button>
-    {/* History Cards */}
-    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {[
-        { date: "30 Jan 2025", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
-        { date: "22 Nov 2024", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
-        { date: "22 Oct 2024", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
-        { date: "26 Jun 2024", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
-        { date: "25 Jun 2024", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
-        { date: "14 May 2024", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
-        { date: "09 May 2024", writer: "Satish Ramcharan", editor: "Arun Kumar Gundu" },
-      ].map((item, idx) => (
-        <div key={idx} className="bg-[#F8FAFC] border border-[#E0E7EF] rounded-xl p-4 flex flex-col gap-2">
-          <div className="text-[#23272E]   text-[16px] font-semibold">{item.date}</div>
-          <div className="text-[#5B5F62]   text-[14px]">
-            <div>Written By:<br /><span className="font-medium">{item.writer}</span></div>
-            <div className="mt-1">Edited By:<br /><span className="font-medium">{item.editor}</span></div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
 
       </div >
 
