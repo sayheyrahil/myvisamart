@@ -1,6 +1,8 @@
 import React from "react";
 
 const Footer = () => {
+  // Add font weight and style variants to the class string as needed
+  const allSubTitle = 'text-sm font-[Wix_Madefor_Display] font-medium text-[16px] leading-[24px] tracking-normal align-middle text-[#9E9E9E] hover:text-brand cursor-pointer';
   return (
     <>
       <footer className="bg-white border-t border-gray-200">
@@ -9,62 +11,57 @@ const Footer = () => {
           {/* Logo */}
           <div className="flex flex-col items-center md:items-start justify-center">
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+              src="/logo.png"
               alt="My Visa Mart"
-              className="w-16 h-16 mb-4"
+              className="w-28 h-28 mb-4"
             />
-            <h2 className="font-extrabold text-gray-800 text-2xl leading-tight text-center md:text-left tracking-wide uppercase">
-              MY VISA
-              <br />
-              MART
-            </h2>
           </div>
 
           {/* About, Products, Other */}
           <div className="flex flex-col justify-center">
             <div>
-              <h3 className="text-blue-700 font-semibold text-sm mb-1 uppercase tracking-wide">
+              <h3 className="text-[#0A509F] font-semibold text-sm mb-1 uppercase tracking-wide ">
                 About
               </h3>
-              <ul className="flex flex-wrap gap-x-6 gap-y-1 text-gray-600 text-sm mb-4">
-                <li className="hover:text-blue-600 hover:underline cursor-pointer">
+              <ul className="flex flex-wrap gap-x-6 gap-y-1   mb-8">
+                <li className={allSubTitle}>
                   How to Book
                 </li>
-                <li className="hover:text-blue-600 hover:underline cursor-pointer">
+                <li className={allSubTitle}>
                   Contact Us
                 </li>
-                <li className="hover:text-blue-600 hover:underline cursor-pointer">
+                <li className={allSubTitle}>
                   Help Center
                 </li>
-                <li className="hover:text-blue-600 hover:underline cursor-pointer">
+                <li className={allSubTitle}>
                   Career
                 </li>
               </ul>
-              <h3 className="text-blue-700 font-semibold text-sm mb-1 mt-4 uppercase tracking-wide">
+              <h3 className="text-[#0A509F] font-semibold text-sm mb-1 mt-4 uppercase tracking-wide">
                 Products
               </h3>
-              <ul className="flex flex-wrap gap-x-6 gap-y-1 text-gray-600 text-sm mb-4">
-                <li className="hover:text-blue-600 hover:underline cursor-pointer">
+              <ul className="flex flex-wrap gap-x-6 gap-y-1  mb-8">
+                <li className={allSubTitle}>
                   Flights
                 </li>
-                <li className="hover:text-blue-600 hover:underline cursor-pointer">
+                <li className={allSubTitle}>
                   Hotels
                 </li>
-                <li className="hover:text-blue-600 hover:underline cursor-pointer">
+                <li className={allSubTitle}>
                   Trains
                 </li>
-                <li className="hover:text-blue-600 hover:underline cursor-pointer">
+                <li className={allSubTitle}>
                   Villas
                 </li>
               </ul>
-              <h3 className="text-blue-700 font-semibold text-sm mb-1 mt-4 uppercase tracking-wide">
+              <h3 className="text-[#0A509F] font-semibold text-sm mb-1 mt-4 uppercase tracking-wide">
                 Other
               </h3>
-              <ul className="flex flex-wrap gap-x-6 gap-y-1 text-gray-600 text-sm">
-                <li className="hover:text-blue-600 hover:underline cursor-pointer">
+              <ul className="flex flex-wrap gap-x-6 gap-y-1 ">
+                <li className={allSubTitle}>
                   Blog
                 </li>
-                <li className="hover:text-blue-600 hover:underline cursor-pointer">
+                <li className={allSubTitle}>
                   Privacy Notice
                 </li>
               </ul>
@@ -73,18 +70,17 @@ const Footer = () => {
 
           {/* Contact */}
           <div className="flex flex-col justify-center">
-            <h3 className="text-blue-700 font-semibold text-sm mb-1 uppercase tracking-wide">
+            <h3 className="text-[#0A509F] font-semibold text-sm mb-1 uppercase tracking-wide">
               Contact
             </h3>
-            <p className="text-sm text-gray-600 leading-relaxed mb-3">
+            <p className={allSubTitle + " mb-5"} >
               Lorem Ipsum is simply dummy text the printing and typeset industry.
               Lorem Ipsum has been the industry’s standard dummy text ever
             </p>
-            <p className="text-sm text-gray-700 mb-1">+91 98765 43210</p>
+            <p className={allSubTitle + " mb-5"}>+91 98765 43210</p>
             <a
               href="mailto:example@gmail.com"
-              className="text-sm text-blue-700 underline hover:text-blue-900"
-            >
+              className={allSubTitle}>
               example@gmail.com
             </a>
           </div>
@@ -102,24 +98,24 @@ const Footer = () => {
             </button>
           </div>
           <div className="flex gap-8 justify-center text-gray-600">
-            <span className="hover:text-blue-600 hover:underline cursor-pointer">
+            <span className={allSubTitle}>
               Instagram
             </span>
-            <span className="hover:text-blue-600 hover:underline cursor-pointer">
+            <span className={allSubTitle}>
               Youtube
             </span>
-            <span className="hover:text-blue-600 hover:underline cursor-pointer">
+            <span className={allSubTitle}>
               WhatsApp
             </span>
           </div>
-          <div className="text-gray-500 text-sm text-center md:text-right">
+          <div className={allSubTitle }>
             © 2025 Visamart
           </div>
         </div>
       </footer>
       <div className="w-full h-48">
         <img
-          src="./Rectangle4353.png"
+          src="/Rectangle4353.png"
           alt="Mountain view"
           className="w-full h-full object-cover"
         />
