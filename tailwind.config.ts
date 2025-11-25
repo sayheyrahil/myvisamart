@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        wix: ['"Wix Madefor Display"', 'sans-serif'],
+        wix: ["Wix Madefor Display"],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

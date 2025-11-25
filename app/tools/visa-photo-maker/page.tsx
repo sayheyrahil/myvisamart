@@ -5,17 +5,18 @@ import HeroSection from "@/components/HeroSection";
 import { Map, FileText, Truck } from "lucide-react";
 import HowItWorksSection from "@/components/HowItWorksSection";
 import { TbArrowBadgeRightFilled } from "react-icons/tb";
+import SectionIcon from "@/components/SectionIcon";
 
 
 export default function Page() {
   return (
-    <MasterPage title="About Us">
+    <MasterPage title="Visa Photo Maker - Create Passport Size Photos Online">
       <div className="w-full min-h-screen bg-white text-gray-900">
         {/* Hero Section */}
         <HeroSection
           title={
             <div
-             >
+            >
               Transform your <br /> selfie into a <br /> <span className="text-brand">visa photo</span>
             </div>
           }
@@ -86,12 +87,7 @@ export default function Page() {
           {/* What is a passport-size photo? */}
           <div className="flex flex-col gap-8 items-center w-full max-md:gap-6 max-sm:gap-5">
             <div className="flex gap-2.5 items-center w-full max-sm:flex-col max-sm:gap-4 max-sm:items-start">
-              <img
-                alt="Frame 1272632106"
-                className="h-5 w-[22px]"
-                loading="lazy"
-                src="https://api.builder.io/api/v1/image/assets/TEMP/d8bbdc33d3850907db2e516e823b977337e6b902?width=43"
-              />
+              <SectionIcon />
               <div
                 layer-name="Heading 2 → Dubai Visa Information"
                 className="text-3xl font-semibold leading-9 text-teal-950 max-md:text-2xl max-md:leading-8 max-sm:text-xl max-sm:leading-7"
@@ -115,12 +111,7 @@ export default function Page() {
           {/* How to create the perfect passport-size photo? */}
           <div className="flex flex-col gap-8 items-center w-full max-md:gap-6 max-sm:gap-5">
             <div className="flex gap-2.5 items-center w-full max-sm:flex-col max-sm:gap-4 max-sm:items-start">
-              <img
-                alt="Frame 1272632106"
-                className="h-5 w-[22px]"
-                loading="lazy"
-                src="https://api.builder.io/api/v1/image/assets/TEMP/d8bbdc33d3850907db2e516e823b977337e6b902?width=43"
-              />
+              <SectionIcon />
               <div
                 layer-name="Heading 2 → Dubai Visa Information"
                 className="text-3xl font-semibold leading-9 text-teal-950 max-md:text-2xl max-md:leading-8 max-sm:text-xl max-sm:leading-7"
@@ -137,9 +128,7 @@ export default function Page() {
                 requirements using passport photo maker:
               </div>
               <div className="flex gap-3 items-center pl-5 w-full max-sm:gap-2 max-sm:pl-2.5">
-                <TbArrowBadgeRightFilled color="0A509F" />
-
-
+                <TbArrowBadgeRightFilled color="0A509F" size={30} />
                 <div
                   className="text-base leading-6 text-zinc-600 max-md:text-base max-md:leading-5 max-sm:text-sm max-sm:leading-5"
                 >
@@ -147,8 +136,7 @@ export default function Page() {
                 </div>
               </div>
               <div className="flex gap-3 items-center pl-5 w-full max-sm:gap-2 max-sm:pl-2.5">
-                <TbArrowBadgeRightFilled />
-
+                <TbArrowBadgeRightFilled color="0A509F" size={30} />
                 <div
                   className="text-base leading-6 text-zinc-600 max-md:text-base max-md:leading-5 max-sm:text-sm max-sm:leading-5"
                 >
@@ -156,9 +144,7 @@ export default function Page() {
                 </div>
               </div>
               <div className="flex gap-3 items-center pl-5 w-full max-sm:gap-2 max-sm:pl-2.5">
-                <TbArrowBadgeRightFilled />
-
-
+                <TbArrowBadgeRightFilled color="0A509F" size={30} />
                 <div
                   className="text-base leading-6 text-zinc-600 max-md:text-base max-md:leading-5 max-sm:text-sm max-sm:leading-5"
                 >
@@ -171,25 +157,26 @@ export default function Page() {
           {/* Why use the Atlys passport size photo maker? */}
           <div className="bg-white rounded-2xl   p-6  ">
             <div className="flex items-center gap-3 mb-4">
-              <img
-                alt="icon"
-                className="h-5 w-5"
-                src="https://api.builder.io/api/v1/image/assets/TEMP/d8bbdc33d3850907db2e516e823b977337e6b902?width=43"
-              />
+              <SectionIcon />
               <h3 className="text-2xl font-bold text-teal-950">Why use the Atlys passport size photo maker?</h3>
             </div>
             <ul className="space-y-2">
-              <li><span className="font-bold">Quick and easy:</span> Convert your photo into the perfect passport size, all for free, without the hassle of visiting a photo studio or booth.</li>
-              <li><span className="font-bold">Perfectly prepared:</span> Your photo will be automatically adjusted to meet official visa requirements, ensuring a smooth application process.</li>
-              <li><span className="font-bold">Reliable accuracy:</span> Our tool is regularly updated with the latest guidelines, so your photo always meets the necessary standards.</li>
-              <li><span className="font-bold">Easy access:</span> Adjust your selfie photo anytime and anywhere directly from your tablet, laptop, or smartphone.</li>
-              <li><span className="font-bold">Get two ready-to-use photos:</span> Our free visa photo tool will automatically provide you with two passport-sized photos to use for your visa application.</li>
+              <li className="flex items-center gap-3 "><span className="font-bold flex"> <TbArrowBadgeRightFilled color="0A509F" size={30} />
+                Quick and easy:</span> Convert your photo into the perfect passport size, all for free, without the hassle of visiting a photo studio or booth.</li>
+              <li className="flex items-center gap-3 "><span className="font-bold flex"> <TbArrowBadgeRightFilled color="0A509F" size={30} />
+                Perfectly prepared:</span> Your photo will be automatically adjusted to meet official visa requirements, ensuring a smooth application process.</li>
+              <li className="flex items-center gap-3 "><span className="font-bold flex"> <TbArrowBadgeRightFilled color="0A509F" size={30} />
+                Reliable accuracy:</span> Our tool is regularly updated with the latest guidelines, so your photo always meets the necessary standards.</li>
+              <li className="flex items-center gap-3 "><span className="font-bold flex"> <TbArrowBadgeRightFilled color="0A509F" size={30} />
+                Easy access:</span> Adjust your selfie photo anytime and anywhere directly from your tablet, laptop, or smartphone.</li>
+              <li className="flex items-center gap-3 "><span className="font-bold flex"> <TbArrowBadgeRightFilled color="0A509F" size={30} />
+                Get two ready-to-use photos:</span> Our free visa photo tool will automatically provide you with two passport-sized photos to use for your visa application.</li>
             </ul>
             <div className="mt-6 flex justify-center">
               <img
                 alt="passport photo example"
                 className="rounded-3xl h-[340px] w-[604px] max-w-full object-cover"
-                src="https://api.builder.io/api/v1/image/assets/TEMP/286985eb8d90be0bd8ae4ae2a85ae96f308fb196?width=1208"
+                src="/tools/Frame1272632106.png"
               />
             </div>
           </div>
@@ -198,24 +185,20 @@ export default function Page() {
           {/* General passport-size visa photo requirements */}
           <div className="bg-white rounded-2xl   p-6 ">
             <div className="flex items-center gap-3 mb-4">
-              <img
-                alt="icon"
-                className="h-5 w-5"
-                src="https://api.builder.io/api/v1/image/assets/TEMP/d8bbdc33d3850907db2e516e823b977337e6b902?width=43"
-              />
+              <SectionIcon />
               <h3 className="text-2xl font-bold text-teal-950">General passport-size visa photo requirements</h3>
             </div>
             <p className="mb-4 text-gray-700">Here are the general visa photo requirements that most countries follow:</p>
             <ul className="list-disc pl-6 space-y-2 text-gray-700">
-              <li><span className="font-bold">Size:</span> 35mm x 45mm (general size, some countries may differ)</li>
-              <li><span className="font-bold">Background:</span> Plain white or light-coloured, no patterns or shadows</li>
-              <li><span className="font-bold">Facial expression:</span> Neutral, mouth closed, looking directly at camera</li>
-              <li><span className="font-bold">Lighting:</span> Even, no shadows, reflections, or red-eye</li>
-              <li><span className="font-bold">Head position:</span> Face centered, 70-80% of frame</li>
-              <li><span className="font-bold">Photo quality:</span> Clean, undamaged, high-quality paper, 600 dpi</li>
-              <li><span className="font-bold">Glasses:</span> Allowed if eyes visible, no glare</li>
-              <li><span className="font-bold">Head coverings:</span> Religious coverings allowed if face visible, hats not permitted</li>
-              <li><span className="font-bold">Accessories:</span> No jewelry/headphones that obscure face</li>
+              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Size:</span> 35mm x 45mm (general size, some countries may differ)</li>
+              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Background:</span> Plain white or light-coloured, no patterns or shadows</li>
+              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Facial expression:</span> Neutral, mouth closed, looking directly at camera</li>
+              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Lighting:</span> Even, no shadows, reflections, or red-eye</li>
+              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Head position:</span> Face centered, 70-80% of frame</li>
+              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Photo quality:</span> Clean, undamaged, high-quality paper, 600 dpi</li>
+              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Glasses:</span> Allowed if eyes visible, no glare</li>
+              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Head coverings:</span> Religious coverings allowed if face visible, hats not permitted</li>
+              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Accessories:</span> No jewelry/headphones that obscure face</li>
             </ul>
             {/* Example requirements table */}
             <div className="overflow-x-auto mt-6">
@@ -247,25 +230,24 @@ export default function Page() {
 
           {/* FAQ Section */}
           <div className="bg-white rounded-2xl   p-6  ">
-            <h3 className="text-2xl font-bold mb-4">Frequently Asked Questions</h3>
             <div className="divide-y">
-              <div className="py-3 flex justify-between items-center">
+              <div className="py-4 flex justify-between items-center">
                 <span>Is the Atlys visa photo maker free?</span>
                 <span className="text-gray-400">&#9660;</span>
               </div>
-              <div className="py-3 flex justify-between items-center">
+              <div className="py-4 flex justify-between items-center">
                 <span>Can I convert a selfie into a visa photo using Atlys free online visa photo editor?</span>
                 <span className="text-gray-400">&#9660;</span>
               </div>
-              <div className="py-3 flex justify-between items-center">
+              <div className="py-4 flex justify-between items-center">
                 <span>How recent should my visa photo be?</span>
                 <span className="text-gray-400">&#9660;</span>
               </div>
-              <div className="py-3 flex justify-between items-center">
+              <div className="py-4 flex justify-between items-center">
                 <span>Why can't I upload my photo to the Atlys visa photo maker?</span>
                 <span className="text-gray-400">&#9660;</span>
               </div>
-              <div className="py-3 flex justify-between items-center">
+              <div className="py-4 flex justify-between items-center">
                 <span>Can my visa get rejected if I submit the incorrect photo?</span>
                 <span className="text-gray-400">&#9660;</span>
               </div>
@@ -274,50 +256,55 @@ export default function Page() {
 
 
           {/* How we reviewed this tool */}
-          <div className="bg-white rounded-2xl   p-6  ">
-            <div className="flex items-center gap-3 mb-4">
-              <img
-                alt="icon"
-                className="h-5 w-5"
-                src="https://api.builder.io/api/v1/image/assets/TEMP/d8bbdc33d3850907db2e516e823b977337e6b902?width=43"
-              />
-              <h3 className="text-2xl font-bold text-teal-950">How we reviewed this tool:</h3>
-            </div>
-            <p className="mb-4 text-gray-700">
-              Our experts continually monitor the official sources for any changes, and we update our articles when new information becomes available.
-            </p>
-            <div className="grid md:grid-cols-3 gap-4">
-              <div className="border rounded-xl p-4">
-                <div className="font-bold text-lg mb-2">30 Jan 2025</div>
-                <div className="text-sm"><span className="font-bold">Written By:</span> Sathish Ramcharan</div>
-                <div className="text-sm"><span className="font-bold">Edited By:</span> Arun Kumar Gundu</div>
+          <div className="  rounded-2xl p-0 pt-8 pb-12">
+            <div className="max-w-screen-xl mx-auto px-6">
+              <div className="flex items-center gap-2 mb-2">
+                <SectionIcon />
+                <h3 className="text-[22px] leading-[30px] text-[#0EA5E9]  ">
+                  How we reviewed this tool:
+                </h3>
               </div>
-              <div className="border rounded-xl p-4">
-                <div className="font-bold text-lg mb-2">22 Nov 2024</div>
-                <div className="text-sm"><span className="font-bold">Written By:</span> Sathish Ramcharan</div>
-                <div className="text-sm"><span className="font-bold">Edited By:</span> Arun Kumar Gundu</div>
+              <p className="mb-4 text-[#5B5F62] text-[16px] leading-[24px]  ">
+                Our experts continually monitor the official sources for any changes, and we update our articles when new information becomes available.
+              </p>
+              {/* History Tab */}
+              <div className="flex items-center gap-2 mb-6">
+                <button className="flex items-center gap-2 px-3 py-1 border-b-2 border-[#0EA5E9] text-[#0EA5E9] font-medium bg-transparent focus:outline-none">
+                  <svg width="22" height="22" fill="none" className="text-[#0EA5E9]"><path d="M11 2v18M2 11h18" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  History
+                </button>
               </div>
-              <div className="border rounded-xl p-4">
-                <div className="font-bold text-lg mb-2">22 Oct 2024</div>
-                <div className="text-sm"><span className="font-bold">Written By:</span> Sathish Ramcharan</div>
-                <div className="text-sm"><span className="font-bold">Edited By:</span> Arun Kumar Gundu</div>
+              <div className="text-[#23272E] text-[16px] font-semibold mb-4  ">
+                Current Version
               </div>
-            </div>
-            <div className="grid md:grid-cols-3 gap-4 mt-4">
-              <div className="border rounded-xl p-4">
-                <div className="font-bold text-lg mb-2">26 Jun 2024</div>
-                <div className="text-sm"><span className="font-bold">Written By:</span> Sathish Ramcharan</div>
-                <div className="text-sm"><span className="font-bold">Edited By:</span> Arun Kumar Gundu</div>
-              </div>
-              <div className="border rounded-xl p-4">
-                <div className="font-bold text-lg mb-2">25 Jun 2024</div>
-                <div className="text-sm"><span className="font-bold">Written By:</span> Sathish Ramcharan</div>
-                <div className="text-sm"><span className="font-bold">Edited By:</span> Arun Kumar Gundu</div>
-              </div>
-              <div className="border rounded-xl p-4">
-                <div className="font-bold text-lg mb-2">14 May 2024</div>
-                <div className="text-sm"><span className="font-bold">Written By:</span> Sathish Ramcharan</div>
-                <div className="text-sm"><span className="font-bold">Edited By:</span> Arun Kumar Gundu</div>
+              {/* Cards Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                {[
+                  { date: "30 Jan 2025", writer: "Sathish Ramcharan", editor: "Arun Kumar Gundu" },
+                  { date: "22 Nov 2024", writer: "Sathish Ramcharan", editor: "Arun Kumar Gundu" },
+                  { date: "22 Oct 2024", writer: "Sathish Ramcharan", editor: "Arun Kumar Gundu" },
+                  { date: "26 Jun 2024", writer: "Sathish Ramcharan", editor: "Arun Kumar Gundu" },
+                  { date: "25 Jun 2024", writer: "Sathish Ramcharan", editor: "Arun Kumar Gundu" },
+                  { date: "14 May 2024", writer: "Sathish Ramcharan", editor: "Arun Kumar Gundu" },
+                  { date: "09 May 2024", writer: "Sathish Ramcharan", editor: "Arun Kumar Gundu" },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="border border-[#E0E7EF] rounded-xl bg-white p-5 flex flex-col gap-2 min-h-[140px]"
+                  >
+                    <div className="text-[#23272E]   text-[16px] font-semibold mb-2">{item.date}</div>
+                    <div className="text-[#5B5F62]   text-[14px]">
+                      <div>
+                        <span className="font-semibold">Written By:</span><br />
+                        <span className="font-medium">{item.writer}</span>
+                      </div>
+                      <div className="mt-1">
+                        <span className="font-semibold">Edited By:</span><br />
+                        <span className="font-medium">{item.editor}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

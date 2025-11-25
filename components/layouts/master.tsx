@@ -8,7 +8,7 @@ interface MasterPageProps {
 }
 
 const MasterPage: React.FC<MasterPageProps> = ({ title, children }) => (
-    <div className="bg-[#f4f8fc]">
+    <div className="bg-[#f4f8fc]11">
         <Header title={title} />
 
         <main>{children}</main>
