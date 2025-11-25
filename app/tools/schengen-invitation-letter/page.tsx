@@ -2,15 +2,16 @@
 import React from "react";
 import MasterPage from "@/components/layouts/master";
 import HeroSection from "@/components/HeroSection";
-import { Map, FileText, Truck } from "lucide-react";
-import HowItWorksSection from "@/components/HowItWorksSection";
+ import HowItWorksSection from "@/components/HowItWorksSection";
 import * as TbIcons from "react-icons/tb";
 import Image from "next/image";
+import SectionIcon from "@/components/SectionIcon";
+import { TbArrowBadgeRightFilled } from "react-icons/tb";
 
 
 export default function Page() {
   return (
-    <MasterPage title=" Schengen Visa Cover Letter Generator - Atlys" >
+    <MasterPage title="Schengen Visa Invitation Letter" >
       <div className="max-w-6xl mx-auto bg-white">
         <div className="w-full min-h-screen  text-gray-900">
           {/* Hero Section */}
@@ -18,7 +19,7 @@ export default function Page() {
             title={
               <div
               >
-                Cover Letter for  <br /> <span className="text-brand">Schengen Visa</span>
+                Invitation Letter  <br />  <span className="text-brand">Schengen Visa</span>
               </div>
             }
             description="Your dream destination is just an e-visa away. Let's make it happen."
@@ -61,7 +62,7 @@ export default function Page() {
 
 
           {/* Selector Section */}
-          <section className="max-w-screen-xl mx-auto px-6 py-12">
+          <section className="  px-6 py-12">
             <div className="border rounded-2xl p-8 shadow-sm">
               {/* Tabs */}
               <div className="flex items-center border-b mb-8">
@@ -114,25 +115,6 @@ export default function Page() {
                         className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
                       />
                     </div>
-                    <div>
-                      <label className="block mb-2 font-medium">Passport Number*</label>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          className="w-full border border-[#dbeafe] rounded-lg p-3 pr-10 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
-                        />
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                          <svg width="20" height="20" fill="none"><rect x="3.5" y="3.5" width="13" height="13" rx="2.5" stroke="#9ca3af" strokeWidth="1.5" /><path d="M7 7h6v6H7V7Z" stroke="#9ca3af" strokeWidth="1.5" /></svg>
-                        </span>
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block mb-2 font-medium">Occupation*</label>
-                      <input
-                        type="text"
-                        className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
-                      />
-                    </div>
                   </div>
                 </div>
 
@@ -172,11 +154,40 @@ export default function Page() {
                         </span>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                {/* Invitee Details */}
+                <div>
+                  <div className="text-lg font-semibold mb-4">Invitee Details</div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="md:col-span-2">
+                      <label className="block mb-2 font-medium">Name or Hotel Name*</label>
+                      <input
+                        type="text"
+                        className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block mb-2 font-medium">Address Line 1*</label>
+                      <input
+                        type="text"
+                        className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                      />
+                    </div>
                     <div>
-                      <label className="block mb-2 font-medium">Purpose*</label>
-                      <select className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100">
-                        <option value="">Select purpose</option>
-                      </select>
+                      <label className="block mb-2 font-medium">Email*</label>
+                      <input
+                        type="email"
+                        className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                      />
+                    </div>
+                    <div>
+                      <label className="block mb-2 font-medium">City*</label>
+                      <input
+                        type="text"
+                        className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                      />
                     </div>
                   </div>
                 </div>
@@ -187,7 +198,7 @@ export default function Page() {
                     type="submit"
                     className="px-8 py-3 bg-blue-600 text-white rounded-full text-lg font-medium shadow hover:bg-blue-700 transition"
                   >
-                    Generate Cover Letter
+                    Generate Invitation Letter
                   </button>
                 </div>
               </form>
@@ -196,7 +207,7 @@ export default function Page() {
 
 
           {/* Schengen Invitation Letter Info Box */}
-          <div className="max-w-screen-xl mx-auto px-6 pt-8">
+          <div className="  px-6 pt-8">
             <div
               className="p-6 rounded-xl not-italic text-[16px] leading-[22px] tracking-[0] text-[#5B5F62]  "
             >
@@ -206,15 +217,10 @@ export default function Page() {
           </div>
 
           {/* Schengen Invitation Letter Info Sections */}
-          <div className="max-w-screen-xl mx-auto px-6 pt-8 pb-16">
+          <div className="  px-6 pt-8 pb-16">
             {/* Section 1 */}
             <div className="flex items-start gap-3 mb-6">
-              <img
-                alt="Frame 1272632106"
-                className="h-5 w-[22px]"
-                loading="lazy"
-                src="https://api.builder.io/api/v1/image/assets/TEMP/d8bbdc33d3850907db2e516e823b977337e6b902?width=43"
-              />
+              <SectionIcon />
               <div>
                 <h2 className="  text-[24px] leading-[32px] font-semibold text-[#23272E] mb-2">
                   What is the invitation letter for a Schengen visa?
@@ -226,12 +232,7 @@ export default function Page() {
             </div>
             {/* Section 2 */}
             <div className="flex items-start gap-3 mb-4">
-             <img
-                alt="Frame 1272632106"
-                className="h-5 w-[22px]"
-                loading="lazy"
-                src="https://api.builder.io/api/v1/image/assets/TEMP/d8bbdc33d3850907db2e516e823b977337e6b902?width=43"
-              />
+             <SectionIcon />
               <div>
                 <h2 className="  text-[24px] leading-[32px] font-semibold text-[#23272E] mb-2">
                   What are the types of invitation letters for a Schengen visa?
@@ -249,27 +250,28 @@ export default function Page() {
                   </div>
                   <ul className="space-y-1 pl-1">
                     <li className="flex items-start gap-2">
-                      <TbIcons.TbArrowBadgeRightFilled className="text-[#2563eb] text-[20px] mt-[2px]" />
-                      <span>Residency status.</span>
+
+                      <TbArrowBadgeRightFilled color="0A509F" size={30} />
+                       <span>Residency status.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <TbIcons.TbArrowBadgeRightFilled className="text-[#2563eb] text-[20px] mt-[2px]" />
+                      <TbArrowBadgeRightFilled color="0A509F" size={30} />
                       <span>Relationship with the applicant.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <TbIcons.TbArrowBadgeRightFilled className="text-[#2563eb] text-[20px] mt-[2px]" />
+                      <TbArrowBadgeRightFilled color="0A509F" size={30} />
                       <span>The reason for the visit.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <TbIcons.TbArrowBadgeRightFilled className="text-[#2563eb] text-[20px] mt-[2px]" />
+                      <TbArrowBadgeRightFilled color="0A509F" size={30} />
                       <span>The intended duration of stay.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <TbIcons.TbArrowBadgeRightFilled className="text-[#2563eb] text-[20px] mt-[2px]" />
+                      <TbArrowBadgeRightFilled color="0A509F" size={30} />
                       <span>The host's contact information.</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <TbIcons.TbArrowBadgeRightFilled className="text-[#2563eb] text-[20px] mt-[2px]" />
+                      <TbArrowBadgeRightFilled color="0A509F" size={30} />
                       <span>If the host is sponsoring the trip, this should also be mentioned.</span>
                     </li>
                   </ul>
@@ -280,15 +282,9 @@ export default function Page() {
           {/* END: Schengen Invitation Letter Info Sections */}
 
           {/* Important Notice */}
-          <div className="max-w-screen-xl mx-auto px-6 pb-8">
+          <div className="   pb-8">
             <div className="flex items-start gap-3 bg-[#F0FDF4] border border-[#BBF7D0] rounded-lg p-4 text-[#15803D] text-[15px] leading-[22px]  ">
-              <span className="mt-1">
-                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <circle cx="11" cy="11" r="11" fill="#BBF7D0" />
-                  <path d="M11 6.5V12.5" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
-                  <circle cx="11" cy="15.5" r="1" fill="#22C55E" />
-                </svg>
-              </span>
+             <SectionIcon />
               <span>
                 <span className="font-semibold">Important Notice:</span> For visits to family or friends in certain countries, the invitation must be notarised and issued by the relevant authority.<br />
                 This applies to the Netherlands, Austria, Czechia, Portugal, and France. In these cases, the Atlys Invitation Letter Generator cannot be used.
@@ -297,7 +293,7 @@ export default function Page() {
           </div>
 
           {/* More Invitation Letter Types */}
-          <div className="max-w-screen-xl mx-auto px-6 pb-16">
+          <div className="  pb-8">
             {/* 2. Business Invitation Letter for Schengen */}
             <div className="mb-8">
               <div className="  text-[22px] md:text-[22px] leading-[30px] font-semibold text-[#23272E] mb-2">
@@ -415,7 +411,7 @@ export default function Page() {
         </div>
 
         {/* How can I get an invitation letter for a Schengen visa? */}
-        <div className="max-w-screen-xl mx-auto px-6 pb-8">
+        <div className="  px-6 pb-8">
           <div className="flex items-center gap-2 mb-2">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
               <circle cx="14" cy="14" r="14" fill="#DCFCE7" />
@@ -461,13 +457,9 @@ export default function Page() {
         </div>
 
         {/* How to write an invitation letter for Schengen visa */}
-        <div className="max-w-screen-xl mx-auto px-6 pb-8">
+        <div className="  px-6 pb-8">
           <div className="flex items-center gap-2 mb-2">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <circle cx="14" cy="14" r="14" fill="#DCFCE7" />
-              <path d="M14 8v6" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="14" cy="18" r="1" fill="#22C55E" />
-            </svg>
+          <SectionIcon />
             <h2 className="  text-[22px] leading-[30px] font-semibold text-[#22C55E]">
               How to write an invitation letter for Schengen visa
             </h2>
@@ -501,7 +493,7 @@ export default function Page() {
         </div>
 
         {/* What are some key mistakes to avoid... */}
-        <div className="max-w-screen-xl mx-auto px-6 pb-8">
+        <div className="  px-6 pb-8">
           <div className="flex items-center gap-2 mb-2">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
               <circle cx="14" cy="14" r="14" fill="#DCFCE7" />
@@ -551,7 +543,7 @@ export default function Page() {
         </div>
 
         {/* Who doesn't need a Schengen invitation letter? */}
-        <div className="max-w-screen-xl mx-auto px-6 pb-12">
+        <div className="  px-6 pb-12">
           <div className="flex items-center gap-2 mb-2">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
               <circle cx="14" cy="14" r="14" fill="#E0F2FE" />
@@ -611,7 +603,7 @@ export default function Page() {
         </div>
 
         {/* How we reviewed this tool */}
-        <div className="max-w-screen-xl mx-auto px-6 pb-16">
+        <div className="  px-6 pb-16">
           <div className="flex items-center gap-2 mb-2">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
               <circle cx="14" cy="14" r="14" fill="#E0F2FE" />
