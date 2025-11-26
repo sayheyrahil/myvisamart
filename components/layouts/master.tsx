@@ -11,7 +11,7 @@ const MasterPage: React.FC<MasterPageProps> = ({ title, children }) => (
     <div className="bg-[#f4f8fc]11">
         <Header title={title} />
 
-        <main>{children}</main>
+        <div className="w-full max-w-7xl mx-auto">{children}</div>
         <Footer />
     </div>
 );

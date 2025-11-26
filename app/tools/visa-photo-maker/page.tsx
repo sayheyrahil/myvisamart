@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import MasterPage from "@/components/layouts/master";
-import HeroSection from "@/components/HeroSection";
+import HeroSection from "@/components/tools/HeroSection";
 import { Map, FileText, Truck } from "lucide-react";
-import HowItWorksSection from "@/components/HowItWorksSection";
+import HowItWorksSection from "@/components/tools/HowItWorksSection";
 import { TbArrowBadgeRightFilled } from "react-icons/tb";
-import SectionIcon from "@/components/SectionIcon";
+import SectionIcon from "@/components/tools/SectionIcon";
 
 
 export default function Page() {

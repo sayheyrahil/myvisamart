@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import MasterPage from "@/components/layouts/master";
-import HeroSection from "@/components/HeroSection";
-import HowItWorksSection from "@/components/HowItWorksSection";
+import HeroSection from "@/components/tools/HeroSection";
+import HowItWorksSection from "@/components/tools/HowItWorksSection";
 import Image from "next/image";
-import SectionIcon from "@/components/SectionIcon";
+import SectionIcon from "@/components/tools/SectionIcon";
 import { TbArrowBadgeRightFilled } from "react-icons/tb";
 
 

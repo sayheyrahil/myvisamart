@@ -1,11 +1,13 @@
 "use client";
 import React from "react";
 import MasterPage from "@/components/layouts/master";
-import HeroSection from "@/components/HeroSection";
+import HeroSection from "@/components/tools/HeroSection";
 import { Map, FileText, Truck } from "lucide-react";
-import HowItWorksSection from "@/components/HowItWorksSection";
+import HowItWorksSection from "@/components/tools/HowItWorksSection";
 import { TbArrowBadgeRightFilled } from "react-icons/tb";
-import SectionIcon from "@/components/SectionIcon";
+import SectionIcon from "@/components/tools/SectionIcon";
+import SectionHeading from "@/components/tools/SectionHeading";
+import SectionDescription from "@/components/tools/SectionDescription";
 
 
 export default function Page() {
@@ -39,7 +41,7 @@ export default function Page() {
               title: "Select Destination & Speed",
               desc: "Tell us where and how fast you need it.",
             },
-             
+
           ]}
         />
 
@@ -54,7 +56,7 @@ export default function Page() {
                 style={{ background: "transparent" }}
                 disabled
               >
-                <svg width="18" height="18" fill="none"><path d="M13.5 4.5l-6 6-3-3" stroke="#1566C0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg width="18" height="18" fill="none"><path d="M13.5 4.5l-6 6-3-3" stroke="#1566C0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 Enter details
               </button>
               <button
@@ -62,7 +64,7 @@ export default function Page() {
                 style={{ background: "transparent" }}
                 disabled
               >
-                <svg width="18" height="18" fill="none"><circle cx="9" cy="9" r="8" stroke="#A0AEC0" strokeWidth="1.5"/><path d="M6 9l2 2 4-4" stroke="#A0AEC0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <svg width="18" height="18" fill="none"><circle cx="9" cy="9" r="8" stroke="#A0AEC0" strokeWidth="1.5" /><path d="M6 9l2 2 4-4" stroke="#A0AEC0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 View status
               </button>
             </div>
@@ -114,7 +116,7 @@ export default function Page() {
                     placeholder="dd-mm-YYYY"
                   />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A0AEC0] pointer-events-none">
-                    <svg width="20" height="20" fill="none"><path d="M7 2v2M13 2v2M3 7h14M5 4h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="#A0AEC0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    <svg width="20" height="20" fill="none"><path d="M7 2v2M13 2v2M3 7h14M5 4h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="#A0AEC0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   </span>
                 </div>
               </div>
@@ -133,32 +135,26 @@ export default function Page() {
 
         {/* Info Section */}
         <section className="max-w-screen-xl mx-auto px-6 py-12 space-y-10">
-           <div className="flex flex-col gap-8 items-center w-full max-md:gap-6 max-sm:gap-5">
+          <div className="flex flex-col gap-8 items-center w-full max-md:gap-6 max-sm:gap-5">
             <div className="flex gap-2.5 items-center w-full max-sm:flex-col max-sm:gap-4 max-sm:items-start">
               <SectionIcon />
-              <div
-                layer-name="Heading 2 → Dubai Visa Information"
-                className="text-3xl font-semibold leading-9 text-teal-950 max-md:text-2xl max-md:leading-8 max-sm:text-xl max-sm:leading-7"
-              >
-               How to check UAE/Dubai visa status by passport number?
-              </div>
+              <SectionHeading>
+                How to check UAE/Dubai visa status by passport number?
+              </SectionHeading>
             </div>
-            <div
-              layer-name="A passport-size photo is a small, standardised photo that's required for most visa applications. It helps immigration officials verify your identity. Different countries have different rules when it comes to photo size, background colours, and other specifications. Following these specific requirements is important to ensure a successful visa application."
-              className="w-full text-base leading-6 text-zinc-600 max-md:text-base max-md:leading-5 max-sm:text-sm max-sm:leading-5   p-5 rounded-xl"
-            >
+            <SectionDescription className="p-5 rounded-xl">
               Here’s a step-by-step guide to check the UAE/Dubai visa status by passport number:
               <ul className="mt-2 space-y-1">
                 <li className="flex items-start gap-2">
-                <TbArrowBadgeRightFilled color="0A509F" size={30} />
+                  <TbArrowBadgeRightFilled color="0A509F" size={30} />
                   <span>Select your nationality from the dropdown list.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                 <TbArrowBadgeRightFilled color="0A509F" size={30} />
+                  <TbArrowBadgeRightFilled color="0A509F" size={30} />
                   <span>Enter your passport number and select its validity.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                 <TbArrowBadgeRightFilled color="0A509F" size={30} />
+                  <TbArrowBadgeRightFilled color="0A509F" size={30} />
                   <span>Click ‘Check Status’ for immediate updates on your visa application status.</span>
                 </li>
               </ul>
@@ -166,126 +162,150 @@ export default function Page() {
                 <span className="font-semibold">Disclaimer:</span>
                 <span> The information provided by our tool is sourced directly from immigration authorities. Actual processing times may vary.</span>
               </div>
-            </div>
+            </SectionDescription>
           </div>
-
-          {/* How to create the perfect passport-size photo? */}
           <div className="flex flex-col gap-8 items-center w-full max-md:gap-6 max-sm:gap-5">
-            <div className="flex gap-2.5 items-center w-full max-sm:flex-col max-sm:gap-4 max-sm:items-start">
-              <SectionIcon />
-              <div
-                layer-name="Heading 2 → Dubai Visa Information"
-                className="text-3xl font-semibold leading-9 text-teal-950 max-md:text-2xl max-md:leading-8 max-sm:text-xl max-sm:leading-7"
-              >
-                How to create the perfect passport-size photo for your visa?
+
+            <SectionDescription className="rounded-xl">
+              {/* UAE visa status using ICP */}
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <SectionIcon />
+                  <SectionHeading>
+                    How to check the UAE visa status using ICP?
+                  </SectionHeading>
+                </div>
+                <div className="mb-2">
+                  If you have applied for a visa to Abu Dhabi, Sharjah, Ajman, Umm AL Quwain, Ras Al Khaimah, and Fujairah,
+                  here’s how to check the UAE visa status using ICP smart services:
+                </div>
+                <ul className="list-none pl-0 space-y-1">
+                  <li className="flex items-start gap-2">
+                    <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
+                    <span>
+                      Go to <a href="https://smartservices.icp.gov.ae/echannels/web/client/default.html#/fileValidity"
+                        target="_blank" rel="noopener noreferrer" className="text-[#1566C0] underline">
+                        https://smartservices.icp.gov.ae/echannels/web/client/default.html#/fileValidity</a>
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
+                    <span>
+                      Choose search by: <b>Passport Information</b>, and select the type: <b>Visa</b>
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
+                    <span>
+                      Now enter passport no., passport expiry date and your Nationality
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
+                    <span>
+                      Click on 'Search', and you can now check and validate the application status.
+                    </span>
+                  </li>
+                </ul>
               </div>
-            </div>
-            <div className="flex flex-col gap-2.5 items-start w-full">
-              <div
-                layer-name="Steps to create and adjust your passport-size photo to meet visa requirements using passport photo maker:"
-                className="w-full text-base leading-6 text-zinc-600 max-md:text-base max-md:leading-5 max-sm:text-sm max-sm:leading-5"
-              >
-                Steps to create and adjust your passport-size photo to meet visa
-                requirements using passport photo maker:
-              </div>
-              <div className="flex gap-3 items-center pl-5 w-full max-sm:gap-2 max-sm:pl-2.5">
-                <TbArrowBadgeRightFilled color="0A509F" size={30} />
-                <div
-                  className="text-base leading-6 text-zinc-600 max-md:text-base max-md:leading-5 max-sm:text-sm max-sm:leading-5"
-                >
-                  Upload your photo in JPEG, JPG, or PNG format.
+              {/* Dubai visa status using GDRFA */}
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <SectionIcon />
+                  <SectionHeading>
+                    How to check the Dubai visa status using GDRFA?
+                  </SectionHeading>
+                </div>
+                <div className="mb-2">
+                  Here’s how you can also check your Dubai visa status using the GDRFA website:
+                </div>
+                <ul className="list-none pl-0 space-y-1">
+                  <li className="flex items-start gap-2">
+                    <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
+                    <span>
+                      Go to <a href="https://smart.gdrfad.gov.ae/Public_Th/StatusInquiry_New.aspx" target="_blank" rel="noopener noreferrer"
+                        className="text-[#1566C0] underline">https://smart.gdrfad.gov.ae/Public_Th/StatusInquiry_New.aspx</a>
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
+                    <span>
+                      Enter order number, transaction number and visa applied date
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
+                    <span>
+                      Check the captcha and click on search
+                    </span>
+                  </li>
+                </ul>
+                <div className="mt-2">
+                  That’s it! This should display the status of your Dubai visa application.
                 </div>
               </div>
-              <div className="flex gap-3 items-center pl-5 w-full max-sm:gap-2 max-sm:pl-2.5">
-                <TbArrowBadgeRightFilled color="0A509F" size={30} />
-                <div
-                  className="text-base leading-6 text-zinc-600 max-md:text-base max-md:leading-5 max-sm:text-sm max-sm:leading-5"
-                >
-                  Click 'Transform' to resize and adjust your photo.
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <SectionIcon />
+                  <SectionHeading>
+                    You can check your visa status for Dubai offline in different ways, but it can take longer.
+                  </SectionHeading>
+                </div>
+                <div className="mb-2">
+                  Here’s how you can also check your Dubai visa status using the GDRFA website:
+                </div>
+                <ul className="list-none pl-0 space-y-1">
+                  <li className="flex items-start gap-2">
+                    <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
+                    <span>
+                      You can call the Federal Authority for Identity, Citizenship, Customs and Port Security (ICP)
+                      helpline number and ask for your visa status
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
+                    <span>
+                      You can visit the UAE embassy near you, show your documents to the helpdesk and ask for assistance.
+                    </span>
+                  </li>
+                </ul>
+                <div className="mt-2">
+                  Please note that the tracking time of your visa application status extends if you are
+                  using offline methods. Use the Atlys Dubai visa status tool for instant results.
                 </div>
               </div>
-              <div className="flex gap-3 items-center pl-5 w-full max-sm:gap-2 max-sm:pl-2.5">
-                <TbArrowBadgeRightFilled color="0A509F" size={30} />
-                <div
-                  className="text-base leading-6 text-zinc-600 max-md:text-base max-md:leading-5 max-sm:text-sm max-sm:leading-5"
-                >
-                  Download your ready-to-use passport-size photo.
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-2">
+                  <SectionIcon />
+                  <SectionHeading>
+                    Why choose Atlys' UAE visa status checker?
+                  </SectionHeading>
                 </div>
+                <div className="mb-2">
+                  Atlys' visa status checker tool can help you with the following:
+                </div>
+                <ul className="list-none pl-0 space-y-1">
+                  <li className="flex items-start gap-2">
+                    <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
+                    <span>
+                      Real-time updates on your Dubai visa application status.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
+                    <span>
+                      User-friendly interface for a seamless experience.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
+                    <span>
+                      Secure and reliable handling of your information.
+                    </span>
+                  </li>
+                </ul>
               </div>
-            </div>
-          </div>
-
-          {/* Why use the Atlys passport size photo maker? */}
-          <div className="bg-white rounded-2xl   p-6  ">
-            <div className="flex items-center gap-3 mb-4">
-              <SectionIcon />
-              <h3 className="text-2xl font-bold text-teal-950">Why use the Atlys passport size photo maker?</h3>
-            </div>
-            <ul className="space-y-2">
-              <li className="flex items-center gap-3 "><span className="font-bold flex"> <TbArrowBadgeRightFilled color="0A509F" size={30} />
-                Quick and easy:</span> Convert your photo into the perfect passport size, all for free, without the hassle of visiting a photo studio or booth.</li>
-              <li className="flex items-center gap-3 "><span className="font-bold flex"> <TbArrowBadgeRightFilled color="0A509F" size={30} />
-                Perfectly prepared:</span> Your photo will be automatically adjusted to meet official visa requirements, ensuring a smooth application process.</li>
-              <li className="flex items-center gap-3 "><span className="font-bold flex"> <TbArrowBadgeRightFilled color="0A509F" size={30} />
-                Reliable accuracy:</span> Our tool is regularly updated with the latest guidelines, so your photo always meets the necessary standards.</li>
-              <li className="flex items-center gap-3 "><span className="font-bold flex"> <TbArrowBadgeRightFilled color="0A509F" size={30} />
-                Easy access:</span> Adjust your selfie photo anytime and anywhere directly from your tablet, laptop, or smartphone.</li>
-              <li className="flex items-center gap-3 "><span className="font-bold flex"> <TbArrowBadgeRightFilled color="0A509F" size={30} />
-                Get two ready-to-use photos:</span> Our free visa photo tool will automatically provide you with two passport-sized photos to use for your visa application.</li>
-            </ul>
-            <div className="mt-6 flex justify-center">
-              <img
-                alt="passport photo example"
-                className="rounded-3xl h-[340px] w-[604px] max-w-full object-cover"
-                src="/tools/Frame1272632106.png"
-              />
-            </div>
-          </div>
-
-
-          {/* General passport-size visa photo requirements */}
-          <div className="bg-white rounded-2xl   p-6 ">
-            <div className="flex items-center gap-3 mb-4">
-              <SectionIcon />
-              <h3 className="text-2xl font-bold text-teal-950">General passport-size visa photo requirements</h3>
-            </div>
-            <p className="mb-4 text-gray-700">Here are the general visa photo requirements that most countries follow:</p>
-            <ul className="list-disc pl-6 space-y-2 text-gray-700">
-              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Size:</span> 35mm x 45mm (general size, some countries may differ)</li>
-              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Background:</span> Plain white or light-coloured, no patterns or shadows</li>
-              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Facial expression:</span> Neutral, mouth closed, looking directly at camera</li>
-              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Lighting:</span> Even, no shadows, reflections, or red-eye</li>
-              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Head position:</span> Face centered, 70-80% of frame</li>
-              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Photo quality:</span> Clean, undamaged, high-quality paper, 600 dpi</li>
-              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Glasses:</span> Allowed if eyes visible, no glare</li>
-              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Head coverings:</span> Religious coverings allowed if face visible, hats not permitted</li>
-              <li className="flex items-center gap-3 "> <TbArrowBadgeRightFilled color="0A509F" size={30} /> <span className="font-bold">Accessories:</span> No jewelry/headphones that obscure face</li>
-            </ul>
-            {/* Example requirements table */}
-            <div className="overflow-x-auto mt-6">
-              <table className="min-w-full border text-sm">
-                <thead>
-                  <tr className="bg-gray-100">
-                    <th className="border px-3 py-2">Size</th>
-                    <th className="border px-3 py-2">Background</th>
-                    <th className="border px-3 py-2">Expression</th>
-                    <th className="border px-3 py-2">Lighting</th>
-                    <th className="border px-3 py-2">Glasses</th>
-                    <th className="border px-3 py-2">Head Covering</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="border px-3 py-2">35x45mm</td>
-                    <td className="border px-3 py-2">White/Light</td>
-                    <td className="border px-3 py-2">Neutral</td>
-                    <td className="border px-3 py-2">No shadows</td>
-                    <td className="border px-3 py-2">Allowed (no glare)</td>
-                    <td className="border px-3 py-2">Religious only</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            </SectionDescription>
           </div>
 
 
@@ -293,23 +313,24 @@ export default function Page() {
           <div className="bg-white rounded-2xl   p-6  ">
             <div className="divide-y">
               <div className="py-4 flex justify-between items-center">
-                <span>Is the Atlys visa photo maker free?</span>
+                <span>Why is it important to check the status of a UAE visa?</span>
                 <span className="text-gray-400">&#9660;</span>
               </div>
               <div className="py-4 flex justify-between items-center">
-                <span>Can I convert a selfie into a visa photo using Atlys free online visa photo editor?</span>
+                <span>Can I check the UAE Dubai visa status if I have applied from 
+                  the govemment website?</span>
                 <span className="text-gray-400">&#9660;</span>
               </div>
               <div className="py-4 flex justify-between items-center">
-                <span>How recent should my visa photo be?</span>
+                <span>What information do I need to check my Dubai visa status online?</span>
                 <span className="text-gray-400">&#9660;</span>
               </div>
               <div className="py-4 flex justify-between items-center">
-                <span>Why can't I upload my photo to the Atlys visa photo maker?</span>
+                <span>Is there a fee for checking UAE visa status online?</span>
                 <span className="text-gray-400">&#9660;</span>
               </div>
               <div className="py-4 flex justify-between items-center">
-                <span>Can my visa get rejected if I submit the incorrect photo?</span>
+                <span>How long does it take to process an online UAE visa status check?</span>
                 <span className="text-gray-400">&#9660;</span>
               </div>
             </div>
