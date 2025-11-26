@@ -18,11 +18,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   <section className="px-2 grid md:grid-cols-2 gap-12 items-center">
     <div className="space-y-8">
       <div
-        className="text-gray-900 font-bold text-[72px] leading-[90px] tracking-[-0.02em]"
+        className="text-gray-900 font-bold text-[36px] leading-[44px] tracking-[-0.02em] md:text-[72px] md:leading-[90px]"
       >
         {title}
       </div>
-      <div className="text-[18px] leading-[28px] tracking-normal text-[#A8A8A8]"
+      <div className="text-[16px] leading-[24px] tracking-normal text-[#A8A8A8] md:text-[18px] md:leading-[28px]"
       >
         {description}
       </div>
