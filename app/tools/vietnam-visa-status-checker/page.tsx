@@ -9,6 +9,7 @@ import SectionDescription from "@/components/tools/SectionDescription";
 import HistorySection from "@/components/tools/HistorySection";
 import FaqSection from "@/components/tools/FaqSection";
 import Image from "next/image";
+import WhyUseAtlysPhotoMaker from "@/components/tools/WhyUseAtlysPhotoMaker";
 export default function Page() {
   return (
     <MasterPage title="Vietnam Visa Status Checker - Track Your E-Visa Application Online">
@@ -208,6 +209,59 @@ export default function Page() {
           <SectionDescription>
             Here is a sample of the Vietnam e-visa:
           </SectionDescription>
+          <Image
+            src="/tools/image151558.png"
+            alt="Vietnam e-visa sample"
+            width={600}
+            height={400}
+            className="my-4 border"
+          />
+
+
+             <div className="bg-[#E6F4EA] border border-[#BBF7D0] rounded-xl p-4 flex items-start gap-2 mt-4">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="mt-1">
+              <circle cx="11" cy="11" r="11" fill="#BBF7D0" />
+              <path d="M11 6.5V12.5" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="11" cy="15.5" r="1" fill="#22C55E" />
+            </svg>
+            <span className="text-[#15803D] text-[15px] leading-[22px]">
+              <span className="font-semibold">Tip:</span> Once you receive it, make sure to print it out and carry it with you to present upon arrival in Vietnam.
+            </span>
+          </div>
+        </div>
+
+        <div className="my-5">
+          <SectionHeading>
+            My Vietnam e-visa status shows "rejected." What should I do?
+          </SectionHeading>
+          <SectionDescription>
+            If your Vietnam visa application status shows <b>"rejected"</b>, understand and address the reasons for rejection before reapplying. Some of the most common rejection reasons for a Vietnam visa include:
+          </SectionDescription>
+          <WhyUseAtlysPhotoMaker
+            points={[
+              {
+                title: "Incomplete or inaccurate application:",
+                desc: "Missing or mismatching information on your visa form can often lead to visa rejection.",
+              },
+              {
+                title: "Invalid passport:",
+                desc: "Having a passport with a validity of less than six months (at least) from the arrival date in Vietnam.",
+              },
+              {
+                title: "Incorrect photographs:",
+                desc: "Submitting photos that do not meet the visa photo requirements (e.g., must be clear, unedited, and not older than 6 months) can cause issues.",
+              },
+              {
+                title: "Missing surname:",
+                desc: "A surname is mandatory when applying for a Vietnam e-visa. Applying without a surname on the government website will result in rejection.",
+              },
+            ]}
+          />
+          <div className="bg-[#E6F4EA] border border-[#BBF7D0] rounded-xl p-4 flex items-start gap-2 mt-4">
+            <span className="text-[#15803D] text-[15px] leading-[22px]">
+              Worried about another visa rejection? <a href="#" className="text-[#2563eb] underline">Apply with Atlys</a>, and let our experts ensure that nothing stops you from getting a Vietnam visa this time!
+            </span>
+          </div>
         </div>
 
         <FaqSection
@@ -218,6 +272,21 @@ export default function Page() {
             "Can I check my Vietnam visa application status offline?",
           ]}
         />
+
+
+        <div className="my-8">
+          <div className="bg-[#E6F4EA] border border-[#BBF7D0] rounded-xl p-4 flex items-start gap-2">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" className="mt-1">
+              <circle cx="11" cy="11" r="11" fill="#BBF7D0" />
+              <path d="M11 6.5V12.5" stroke="#22C55E" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="11" cy="15.5" r="1" fill="#22C55E" />
+            </svg>
+            <span className="text-[#15803D] text-[15px] leading-[22px]">
+              <span className="font-semibold">Got further questions?</span> Reach out to the Atlys support team at <a href="mailto:support@atlys.com" className="underline text-[#15803D]">support@atlys.com</a> or the Vietnamese government's e-visa support team at <a href="mailto:foreigners@immigration.gov.vn" className="underline text-[#15803D]">foreigners@immigration.gov.vn</a> (Global Hotline +8424-382-64026).
+            </span>
+          </div>
+        </div>
+        
         {/* How we reviewed this tool */}
         <HistorySection
           title="How we reviewed this tool:"

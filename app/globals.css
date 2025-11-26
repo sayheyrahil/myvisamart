@@ -81,5 +81,12 @@
     color: hsl(var(--foreground));
     /* font-family: 'Wix Madefor Display', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; */
   }
+  .font-wix-heading {
+    font-family: 'Wix Madefor Display', sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 48px;
+    line-height: 60px;
+    letter-spacing: -0.02em;
+  }
 }
- 
