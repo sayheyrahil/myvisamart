@@ -1,17 +1,18 @@
 import React from "react";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 interface FaqSectionProps {
   faqs: string[];
 }
 
 const FaqSection: React.FC<FaqSectionProps> = ({ faqs }) => (
-  <div className="rounded-2xl p-6">
+  <div className="">
     <div className="divide-y">
       {faqs.map((q, i) => (
         <div key={i} className="py-4 flex justify-between items-center">
           <span>{q}</span>
-          <span className="text-gray-400">&#9660;</span>
-        </div>
+             <MdKeyboardArrowDown  size={30}/>
+         </div>
       ))}
     </div>
   </div>

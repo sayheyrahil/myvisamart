@@ -8,7 +8,7 @@ import SectionHeading from "@/components/tools/SectionHeading";
 import SectionDescription from "@/components/tools/SectionDescription";
 import HistorySection from "@/components/tools/HistorySection";
 import FaqSection from "@/components/tools/FaqSection";
-
+import Image from "next/image";
 export default function Page() {
   return (
     <MasterPage title="Vietnam Visa Status Checker - Track Your E-Visa Application Online">
@@ -25,19 +25,20 @@ export default function Page() {
           imageAlt="Visa Preview"
         />
 
-        <HowItWorksSection
+           <HowItWorksSection
+          title="How It Works"
           steps={[
             {
               id: 1,
+              icon: <Image src="/tools/Frame1272632083.png" width={58} height={58} alt="2-minute process" />,
               bgColor: "bg-[#EDE7F6]",
               iconBg: "bg-[#7E57C2]",
-              title: "Select Destination & Speed",
-              desc: "Tell us where and how fast you need it.",
+              title: "2-minute process",
+              desc: "Fill in the fields and submit.",
             },
-
+            
           ]}
         />
-
         {/* Selector Section */}
         <section className="max-w-screen-xl mx-auto px-6 py-12">
           <div className="border rounded-2xl p-8 shadow-sm relative  "

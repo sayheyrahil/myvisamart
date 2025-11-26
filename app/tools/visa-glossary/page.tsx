@@ -2,11 +2,9 @@
 import React from "react";
 import MasterPage from "@/components/layouts/master";
 import HeroSection from "@/components/tools/HeroSection";
-import HowItWorksSection from "@/components/tools/HowItWorksSection";
-import Image from "next/image";
 import SectionIcon from "@/components/tools/SectionIcon";
-import { TbArrowBadgeRightFilled } from "react-icons/tb";
-
+import SectionHeading from "@/components/tools/SectionHeading";
+import SectionDescription from "@/components/tools/SectionDescription";
 
 export default function Page() {
   // Glossary data grouped by letter
@@ -97,101 +95,90 @@ export default function Page() {
   ];
 
   return (
-    <MasterPage title="Visa Glossary " >
-      <div className="max-w-6xl mx-auto bg-white">
-        <div className="w-full min-h-screen  text-gray-900">
-          {/* Hero Section */}
-          <HeroSection
-            title={
-              <div
+    <MasterPage title="Visa Glossary">
+      <div className="w-full min-h-screen bg-white text-gray-900">
+        {/* Hero Section */}
+        <HeroSection
+          title={<div>Visa Glossary</div>}
+          description="Your dream destination is just a visa away – let’s make it happen."
+          buttonText="Check my visa photo"
+          imageSrc="/tools/3765832_19797631.png"
+          imageAlt="3765832_19797631 Preview"
+        />
+
+        {/* Alphabet Nav & Search */}
+        <div className="py-8 mb-8 rounded-2xl">
+          <div className="flex justify-center gap-4 mb-8 flex-wrap">
+            {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((char, idx) => (
+              <span
+                key={char}
+                className={`text-[30px] font-medium cursor-pointer ${idx === 0 ? "text-brand" : "text-[#23272E] hover:text-[#2563eb]"}`}
               >
-                Visa Glossary
-              </div>
-            }
-            description="Your dream destination is just a visa away – let’s make it happen."
-            buttonText="Check my visa photo"
-            imageSrc="/tools/3765832_19797631.png"
-            imageAlt="3765832_19797631 Preview"
-          />
-
-
-          {/* Alphabet Nav & Search */}
-          <div className=" py-8 mb-8 rounded-2xl">
-            <div className="flex justify-center gap-4 mb-8 flex-wrap">
-              {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((char, idx) => (
-                <span
-                  key={char}
-                  className={`text-[30px] font-medium cursor-pointer ${idx === 0 ? "text-brand" : "text-[#23272E] hover:text-[#2563eb]"
-                    }`}
-                >
-                  {char}
+                {char}
+              </span>
+            ))}
+          </div>
+          <div className="flex justify-center">
+            <div className="w-full max-w-md">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search countries, visas, placeholder"
+                  className="w-full border border-[#E5E7EB] rounded-lg px-5 py-3 text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                />
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                  <svg width="20" height="20" fill="none"><path d="M19 19l-4-4M9 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Glossary Section */}
+        <div className="pt-8 pb-16">
+          <SectionHeading>Visa Glossary Terms</SectionHeading>
+          <SectionDescription>
+            Find definitions for common visa and immigration terms, organized alphabetically for your convenience.
+          </SectionDescription>
+          <div className="max-w-6xl mx-auto flex mt-8">
+            {/* Timeline column */}
+            <div className="w-2/12 relative flex flex-col items-center">
+              <div className="absolute left-1/2 top-0 -translate-x-1/2 h-full w-px bg-[#0A509F] opacity-20 z-0" />
+              {glossaryData.map(({ letter }, idx) => (
+                <div
+                  key={letter}
+                  className="relative z-10 flex items-start justify-center"
+                  style={{
+                    height: `calc(100% / ${glossaryData.length})`
+                  }}
+                >
+                  <span className="text-[44px] font-bold text-brand bg-white px-2">{letter}</span>
+                </div>
               ))}
             </div>
-            <div className="flex justify-center">
-              <div className="w-full max-w-md">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search countries, visas, placeholder"
-                    className="w-full border border-[#E5E7EB] rounded-lg px-5 py-3 text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
-                  />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
-                    <svg width="20" height="20" fill="none"><path d="M19 19l-4-4M9 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Glossary Section */}
-          <div className="pt-8 pb-16">
-            <div className="max-w-6xl mx-auto flex">
-              {/* Timeline column */}
-              <div className="w-2/12 relative flex flex-col items-center">
-                {/* Vertical line: absolute, full height */}
-                <div className="absolute left-1/2 top-0 -translate-x-1/2 h-full w-px bg-[#0A509F] opacity-20 z-0" />
-                {/* Letters: render all at once, spaced by section */}
-                {glossaryData.map(({ letter }, idx) => (
-                  <div
-                    key={letter}
-                    className="relative z-10 flex items-start justify-center"
-                    style={{
-                      height: `calc(100% / ${glossaryData.length})`
-                    }}
-                  >
-                    <span className="text-[44px] font-bold text-brand bg-white px-2">{letter}</span>
-                  </div>
-                ))}
-              </div>
-              {/* Glossary content */}
-              <div className="w-10/12">
-                {glossaryData.map(({ letter, items }) => (
-                  <div className="mb-8" key={letter}>
-                    <div className="space-y-6">
-                      {items.map(({ term, desc }) => (
-                        <div key={term}>
-                          <div className="flex items-center gap-2">
-                            <SectionIcon />
-                            <span className="font-semibold text-[#23272E]">{term}</span>
-                          </div>
-                          <div className="text-[#5B5F62] text-[15px] ml-6">
-                            {desc}
-                          </div>
+            {/* Glossary content */}
+            <div className="w-10/12">
+              {glossaryData.map(({ letter, items }) => (
+                <div className="mb-8" key={letter}>
+                  <div className="space-y-6">
+                    {items.map(({ term, desc }) => (
+                      <div key={term}>
+                        <div className="flex items-center gap-2">
+                          <SectionIcon />
+                          <span className="font-semibold text-[#23272E]">{term}</span>
                         </div>
-                      ))}
-                    </div>
+                        <div className="text-[#5B5F62] text-[15px] ml-6">
+                          {desc}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
-
-
-
-        </div >
-
+        </div>
       </div>
-    </MasterPage >
+    </MasterPage>
   );
 }

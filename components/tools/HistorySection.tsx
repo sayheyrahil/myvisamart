@@ -19,8 +19,8 @@ const HistorySection: React.FC<HistorySectionProps> = ({
   description,
   history,
 }) => (
-  <div className="rounded-2xl p-0 pt-8 pb-12">
-    <div className="max-w-screen-xl mx-auto px-6">
+  <div className="p-0 pt-8 pb-12">
+    <div className="">
       <div className="flex items-center gap-2 mb-2">
         <SectionIcon />
         <h3
@@ -39,7 +39,7 @@ const HistorySection: React.FC<HistorySectionProps> = ({
       <p className="mb-4 text-[#5B5F62] text-[16px] leading-[24px]">{description}</p>
       <div className="flex items-center gap-2 mb-6">
         <button className="flex items-center gap-2 px-3 py-1 border-b-2 border-brand text-brand font-medium bg-transparent focus:outline-none">
-          <FaHistory color="brand"  size={20}/>
+          <FaHistory color="brand" size={20} />
 
           History
         </button>
