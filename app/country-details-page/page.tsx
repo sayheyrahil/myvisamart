@@ -344,7 +344,7 @@ export default function Page() {
                 <SectionHeading>
                   Your Transit Timeline
                 </SectionHeading>
-                  <div className="bg-white rounded-2xl shadow p-6">
+                <div className="bg-white rounded-2xl shadow p-6">
                   <div className="flex flex-col md:flex-row gap-8">
                     {/* Timeline */}
                     <div className="relative flex flex-col items-center md:w-1/4">
@@ -429,9 +429,67 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-
+              <div className="mt-10">
+                <SectionHeading>
+                  Reviews
+                </SectionHeading>
+                <div className="flex gap-6 overflow-x-auto pb-4">
+                  {/* Review Card 1 */}
+                  <div className="bg-white rounded-2xl shadow p-5 min-w-[320px] max-w-xs flex-shrink-0">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white font-bold text-lg">
+                        A
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-semibold text-[#1A355A]">Adhyayan Gupta</div>
+                        <div className="flex items-center gap-1 mt-1">
+                          {[...Array(5)].map((_, i) => (
+                            <svg key={i} width="16" height="16" fill="none" viewBox="0 0 24 24">
+                              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" fill="#FFC107" />
+                            </svg>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-gray-500 text-sm mb-2">
+                      Ut aliqua occaecat cum quibus vero sagittis, saepe no sum sum sed ocsal ad adipisicing sed nostrer ullamco in voluptatum semper porttitor, e porttitor est quod ea fugiat voluptate eu sapiente maximus no sum
+                    </div>
+                    <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" className="text-blue-700 text-xs font-semibold underline">
+                      Read more on Trustpilot
+                    </a>
+                  </div>
+                  {/* Review Card 2 */}
+                  <div className="bg-white rounded-2xl shadow p-5 min-w-[320px] max-w-xs flex-shrink-0">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white font-bold text-lg">
+                        A
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-semibold text-[#1A355A]">Alex Dsouza</div>
+                        {/* No stars for this review */}
+                      </div>
+                    </div>
+                    <div className="text-gray-500 text-sm mb-2">
+                      Ut aliqua occaecat cum quibus vero sagittis, saepe no sum sum sed ocsal ad adipisicing sed nostrer ullamco in voluptatum semper porttitor, e porttitor est quod ea fugiat voluptate eu sapiente maximus no sum
+                    </div>
+                    <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" className="text-blue-700 text-xs font-semibold underline">
+                      Read more on Trustpilot
+                    </a>
+                  </div>
+                  {/* Add more review cards as needed */}
+                </div>
+                {/* Carousel Controls */}
+                <div className="flex gap-3 mt-4">
+                  <button className="w-10 h-10 rounded-full border border-blue-200 flex items-center justify-center text-blue-700 hover:bg-blue-50 transition">
+                    <span className="text-lg">&lt;</span>
+                  </button>
+                  <button className="w-10 h-10 rounded-full border border-blue-200 flex items-center justify-center text-blue-700 hover:bg-blue-50 transition">
+                    <span className="text-lg">&gt;</span>
+                  </button>
+                </div>
+              </div>
               <Image src="/Frame1991425186.png" alt="Appointment Centers" width={1200} height={400}
-                  className="w-full h-auto rounded-2xl  " />
+                className="w-full h-auto rounded-2xl  " />
               <div>
                 <SectionHeading>
                   Check Serviceability
@@ -473,9 +531,9 @@ export default function Page() {
             <PriceCard />
           </div>
         </div>
+        {/* Reviews Section */}
 
       </div>
-
     </div>
   );
 }
