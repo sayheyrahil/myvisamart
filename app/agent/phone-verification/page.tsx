@@ -1,23 +1,84 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import {  useRouter } from "next/navigation";
+import { axiosInstance } from "@/utils/axios-instance";
+import { handleAxiosError } from "@/utils/common";
+import Link from "next/dist/client/link";
 
 export default function Page() {
+    const [otp, setOtp] = useState(["", "", "", ""]);
+    const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState<string | null>(null);
 
-    const [otp, setOtp] = useState(["", "", "", "", ""]);
+    const router = useRouter();
 
-    const handleChange = (value: any, index: any) => {
+    const handleChange = (value: string, index: number) => {
         if (/^\d?$/.test(value)) {
             const newOtp = [...otp];
             newOtp[index] = value;
             setOtp(newOtp);
 
             // Auto-focus next box
-            if (value && index < 4) {
-                // @ts-ignore
-                document.getElementById(`otp-${index + 1}`).focus();
+            if (value && index < otp.length - 1) {
+                inputRefs.current[index + 1]?.focus();
+            }
+            // If deleting, focus previous
+            if (!value && index > 0) {
+                inputRefs.current[index - 1]?.focus();
             }
         }
     };
+
+    const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+        const pasted = e.clipboardData.getData("text").replace(/\D/g, "");
+        if (pasted.length === otp.length) {
+            setOtp(pasted.split(""));
+            // Focus last input
+            inputRefs.current[otp.length - 1]?.focus();
+        }
+    };
+
+    const [userData, setUserData] = React.useState<string | null>(null);
+
+    React.useEffect(() => {
+        if (typeof window !== "undefined") {
+            setUserData(localStorage.getItem("userData"));
+        }
+    }, []);
+
+    const handleContinue = async () => {
+        setError(null);
+        setSuccess(null);
+        setLoading(true);
+        try {
+            let payload: any = {
+                otp: otp.join(""),
+                email: userData ? JSON.parse(userData).email : undefined,
+                phone: userData ? JSON.parse(userData).phone : undefined
+            };
+
+            await axiosInstance.post("/forget-password-otp-verify", payload)
+                .then((response) => {
+                    localStorage.setItem("resetPasswordToken", response.data.data.token);
+                })
+                .catch((err) => {
+                    setError("Failed to send OTP.");
+                    handleAxiosError(err);
+                })
+                .finally(() => {
+                    setLoading(false);
+                    router.push('/agent/set-password');
+                });
+
+        } catch (err: any) {
+            setError("Failed to send OTP.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="min-h-screen w-full flex items-center justify-center bg-white">
             <div className="flex flex-col md:flex-row w-full h-auto md:h-screen shadow-xl rounded-lg overflow-hidden">
@@ -54,25 +115,42 @@ export default function Page() {
                                 <input
                                     key={index}
                                     id={`otp-${index}`}
+                                    // ref={el => inputRefs.current[index] = el}
                                     maxLength={1}
                                     value={value}
                                     onChange={(e) => handleChange(e.target.value, index)}
+                                    onPaste={index === 0 ? handlePaste : undefined}
+                                    type="tel"
+                                    inputMode="numeric"
+                                    pattern="[0-9]*"
                                     className="w-10 h-10 md:w-14 md:h-14 border border-blue-400 rounded-md text-center text-2xl focus:outline-none focus:border-blue-600"
                                 />
                             ))}
                         </div>
 
+                        {/* Error/Success Message */}
+                        {error && (
+                            <div className="text-red-500 text-sm mt-4">{error}</div>
+                        )}
+                        {success && (
+                            <div className="text-green-600 text-sm mt-4">{success}</div>
+                        )}
+
                         {/* Button */}
-                        <button className="mt-8 md:mt-10 w-full md:w-80 bg-brand text-white py-3 rounded-full text-lg hover:bg-blue-800 transition">
-                            Sign Up
+                        <button
+                            className="mt-8 md:mt-10 w-full md:w-80 bg-brand text-white py-3 rounded-full text-lg hover:bg-blue-800 transition"
+                            onClick={handleContinue}
+                            disabled={loading}
+                        >
+                            {loading ? "Verifying..." : "Verify OTP"}
                         </button>
 
                         {/* Footer */}
                         <p className="mt-6 text-gray-500 text-center w-full">
                             Already have an account?{" "}
-                            <span className="text-blue-600 cursor-pointer hover:underline">
+                            <Link href='/agent/signin' className="text-brand cursor-pointer hover:underline">
                                 Sign in
-                            </span>
+                            </Link>
                         </p>
                     </div>
 

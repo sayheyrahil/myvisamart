@@ -202,12 +202,12 @@ export default function Home() {
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 h-12 border-2 border-gray-200 focus:border-sky-400"
+                  className="flex-1 h-12 border-2 border-gray-200 focus:border-sky-400 px-4"
                 />
                 <button
                   onClick={handleSubmit}
                   disabled={isLoading}
-                  className="bg-sky-500 hover:bg-sky-600 h-12 px-8 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-sky-500 text-white hover:bg-sky-600 h-12 px-8 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
                 >
                   {isLoading ? 'Sending...' : 'Notify Me'}
                 </button>
@@ -219,8 +219,8 @@ export default function Home() {
 
       <footer className="bg-gray-900 text-white py-8 mt-20 hidden">
         <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <ShoppingBag className="w-6 h-6 text-sky-400" />
+          <div className="flex items-center justify-center gap-3 mb-4 rounded-lg">
+            <ShoppingBag className="w-6 h-6 text-brand" />
             <span className="text-xl font-bold">Visamart</span>
           </div>
           <p className="text-gray-400 text-sm">

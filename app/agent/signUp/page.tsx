@@ -3,14 +3,14 @@ import SocialLoginButtons from "@/components/SocialLoginButtons";
 import React, { useState } from "react";
 import { axiosInstance } from "@/utils/axios-instance"
 import { handleAxiosError, handleAxiosSuccess } from "@/utils/common"
- import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import Link from "next/link";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+// import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Page() {
- 
+
     const [form, setForm] = useState({
         name: "",
         email: "",
@@ -23,8 +23,8 @@ export default function Page() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    // const [showPassword, setShowPassword] = useState(false);
+    // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const router = useRouter()
 
     const classAdd = `w-full border border-[#578BCC] rounded-lg px-4 py-2 sm:py-3 focus:ring-2 focus:ring-blue-500 outline-none text-sm sm:text-base`;
@@ -58,12 +58,7 @@ export default function Page() {
         if (!form.email.trim()) errors.email = "Email is required.";
         if (!form.phone || form.phone.trim().length < 8) errors.phone = "Valid phone number is required.";
         if (!form.gender) errors.gender = "Gender is required.";
-        if (!form.password) errors.password = "Password is required.";
-        if (!form.confirmPassword) errors.confirmPassword = "Confirm Password is required.";
         if (!form.terms) errors.terms = "You must agree to the Terms of service and Privacy policy.";
-        if (form.password && form.confirmPassword && form.password !== form.confirmPassword) {
-            errors.confirmPassword = "Passwords do not match.";
-        }
 
         setFieldErrors(errors);
 
@@ -74,23 +69,24 @@ export default function Page() {
 
         setLoading(true);
 
-        await axiosInstance.post("/signup", {
-            name: form.name,
-            email: form.email,
-            phone: form.phone,
-            gender: form.gender,
-            password: form.password,
-        })
-            .then((response:any) => {
-                handleAxiosSuccess(response, form)
-            })
-            .catch((error: any) => {
-                handleAxiosError(error)
-            })
-            .finally(() => {
-                router.push("/agent/signIn");
-            })
+        try {
+            const response = await axiosInstance.post("/signup", {
+                name: form.name,
+                email: form.email,
+                phone: form.phone,
+                gender: form.gender,
+            });
+            const data = response?.data?.data;
+            localStorage.setItem("userData", JSON.stringify(data.user));
 
+            router.push(`/agent/phone-verification?token=${encodeURIComponent(data.token)}&phone=${encodeURIComponent(form.phone)}`);
+
+        } catch (error: any) {
+            handleAxiosError(error);
+            setError(error?.response?.data?.message || "Signup failed. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     // Helper for error border
@@ -172,7 +168,7 @@ export default function Page() {
                                 {fieldErrors.gender && <div className="text-red-500 text-xs mt-1">{fieldErrors.gender}</div>}
                             </div>
                             {/* Password */}
-                            <div>
+                            {/* <div>
                                 <div className="relative">
                                     <input
                                         className={`${classAdd} pr-12 ${fieldErrors.password ? errorClass : ""}`}
@@ -195,9 +191,9 @@ export default function Page() {
                                     )}
                                 </div>
                                 {fieldErrors.password && <div className="text-red-500 text-xs mt-1">{fieldErrors.password}</div>}
-                            </div>
+                            </div> */}
                             {/* Confirm Password */}
-                            <div>
+                            {/* <div>
                                 <div className="relative">
                                     <input
                                         className={`${classAdd} pr-12 ${fieldErrors.confirmPassword ? errorClass : ""}`}
@@ -220,7 +216,7 @@ export default function Page() {
                                     )}
                                 </div>
                                 {fieldErrors.confirmPassword && <div className="text-red-500 text-xs mt-1">{fieldErrors.confirmPassword}</div>}
-                            </div>
+                            </div> */}
                             {/* Terms */}
                             <div className="flex items-start gap-2 text-xs sm:text-sm text-gray-600">
                                 <input

@@ -64,12 +64,13 @@ export default function Page() {
 
             await axiosInstance.post("/set-password", payload)
                 .then((response) => {
-                    //  handleAxiosSuccess(response, {});
+                    setSuccess("Password set successfully.");
+                    handleAxiosSuccess(response, {});
                     localStorage.removeItem("forgetPasswordData");
                     localStorage.removeItem("resetPasswordToken");
 
                     // Optionally redirect to login or success page
-                    router.push('/agent/create-profile');
+                    router.push('/agent/congratulations');
                 })
                 .catch((err) => {
                     setError("Failed to set password.");
