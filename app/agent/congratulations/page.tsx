@@ -41,7 +41,7 @@ export default function Page() {
                             </p>
                             {/* Continue Button */}
                             <button
-                                className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-full font-medium transition text-base"
+                                className="w-full bg-brand hover:bg-blue-800 text-white py-3 rounded-full font-medium transition text-base"
                                 onClick={() => window.location.href = '/'}
                             >
                                 Continue to Home

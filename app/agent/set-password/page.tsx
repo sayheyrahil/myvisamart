@@ -1,11 +1,36 @@
 "use client";
 import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { axiosInstance } from "@/utils/axios-instance";
+import { handleAxiosError, handleAxiosSuccess } from "@/utils/common";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-
     const [otp, setOtp] = useState(["", "", "", "", ""]);
+    const [form, setForm] = useState({ password: "", confirmPassword: "" });
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [fieldErrors, setFieldErrors] = useState<{ password?: string; confirmPassword?: string }>({});
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState<string | null>(null);
+    const router = useRouter();
+    const [forgetPasswordData, setForgetPasswordData] = useState<string | null>(null);
+    const classAdd = "w-full border border-blue-300 rounded-lg py-4 px-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200";
+    const errorClass = "border-red-500 focus:ring-red-200";
 
-    const handleChange = (value: any, index: any) => {
+    React.useEffect(() => {
+        if (typeof window !== "undefined") {
+            setForgetPasswordData(localStorage.getItem("forgetPasswordData"));
+        }
+    }, []);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+        setFieldErrors({ ...fieldErrors, [e.target.name]: undefined });
+    };
+
+    const handleOtpChange = (value: any, index: any) => {
         if (/^\d?$/.test(value)) {
             const newOtp = [...otp];
             newOtp[index] = value;
@@ -18,6 +43,48 @@ export default function Page() {
             }
         }
     };
+
+    const handleSave = async () => {
+        setError(null);
+        setSuccess(null);
+        setLoading(true);
+        try {
+            let payload: any = {};
+            const parsedData = forgetPasswordData ? JSON.parse(forgetPasswordData) : {};
+            // You may need to get the token from localStorage or previous API response
+            const token = localStorage.getItem("resetPasswordToken");
+            if (parsedData.phone) {
+                payload = { phone: parsedData.phone };
+            } else if (parsedData.email) {
+                payload = { email: parsedData.email };
+            }
+            payload.password = form.password;
+            payload.confirmPassword = form.confirmPassword;
+            payload.token = token;
+
+            await axiosInstance.post("/set-password", payload)
+                .then((response) => {
+                    setSuccess("Password set successfully.");
+                    handleAxiosSuccess(response, {});
+                    localStorage.removeItem("forgetPasswordData");
+                    localStorage.removeItem("resetPasswordToken");
+
+                    // Optionally redirect to login or success page
+                    router.push('/agent/congratulations');
+                })
+                .catch((err) => {
+                    setError("Failed to set password.");
+                    handleAxiosError(err);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        } catch (err: any) {
+            setError("Failed to set password.");
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="min-h-screen w-full flex items-center justify-center bg-white">
             <div className="flex flex-col md:flex-row w-full h-auto md:h-screen shadow-xl rounded-lg overflow-hidden">
@@ -47,35 +114,55 @@ export default function Page() {
                             </h1>
                             {/* Password Fields */}
                             <div className="w-full mt-8 flex flex-col gap-6">
-                                {/* Password Input */}
-                                <div className="relative">
-                                    <input
-                                        type="password"
-                                        placeholder="Enter Your Password"
-                                        className="w-full border border-blue-300 rounded-lg py-4 px-4 pr-12 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200"
-                                    />
-                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer">
-                                        {/* Eye icon (SVG) */}
-                                        <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </span>
+                                {/* Password */}
+                                <div>
+                                    <div className="relative">
+                                        <input
+                                            className={`${classAdd} pr-12 ${fieldErrors.password ? errorClass : ""}`}
+                                            type={showPassword ? "text" : "password"}
+                                            placeholder="Password"
+                                            name="password"
+                                            value={form.password}
+                                            onChange={handleChange}
+                                        />
+                                        {showPassword ? (
+                                            <FaEyeSlash
+                                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
+                                                onClick={() => setShowPassword(false)}
+                                            />
+                                        ) : (
+                                            <FaEye
+                                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
+                                                onClick={() => setShowPassword(true)}
+                                            />
+                                        )}
+                                    </div>
+                                    {fieldErrors.password && <div className="text-red-500 text-xs mt-1">{fieldErrors.password}</div>}
                                 </div>
-                                {/* Confirm Password Input */}
-                                <div className="relative">
-                                    <input
-                                        type="password"
-                                        placeholder="Confirm Password"
-                                        className="w-full border border-blue-300 rounded-lg py-4 px-4 pr-12 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-200"
-                                    />
-                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer">
-                                        {/* Eye icon (SVG) */}
-                                        <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                    </span>
+                                {/* Confirm Password */}
+                                <div>
+                                    <div className="relative">
+                                        <input
+                                            className={`${classAdd} pr-12 ${fieldErrors.confirmPassword ? errorClass : ""}`}
+                                            type={showConfirmPassword ? "text" : "password"}
+                                            placeholder="Confirm Password"
+                                            name="confirmPassword"
+                                            value={form.confirmPassword}
+                                            onChange={handleChange}
+                                        />
+                                        {showConfirmPassword ? (
+                                            <FaEyeSlash
+                                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
+                                                onClick={() => setShowConfirmPassword(false)}
+                                            />
+                                        ) : (
+                                            <FaEye
+                                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer"
+                                                onClick={() => setShowConfirmPassword(true)}
+                                            />
+                                        )}
+                                    </div>
+                                    {fieldErrors.confirmPassword && <div className="text-red-500 text-xs mt-1">{fieldErrors.confirmPassword}</div>}
                                 </div>
                                 {/* Helper Text */}
                                 <span className="text-gray-400 text-sm mt-1 ml-1">
@@ -85,8 +172,13 @@ export default function Page() {
                          </div>
  
                         {/* Button */}
-                        <button className="mt-8 md:mt-10 w-full md:w-80 bg-brand text-white py-3 rounded-full text-lg hover:bg-blue-800 transition">
-                        Register
+                        <button
+                            className="mt-8 md:mt-10 w-full md:w-80 bg-brand text-white py-3 rounded-full text-lg hover:bg-blue-800 transition"
+                            type="button"
+                            onClick={handleSave}
+                            disabled={loading}
+                        >
+                            {loading ? "Saving..." : "Save"}
                         </button>
 
                         
