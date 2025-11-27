@@ -7,7 +7,7 @@ const Footer = () => {
     <>
       <footer className="bg-white border-t border-gray-200">
         {/* Top section */}
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 px-6 py-12">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 px-6 py-12">
           {/* Logo */}
           <div className="flex flex-col items-center md:items-start justify-center">
             <img
@@ -15,6 +15,63 @@ const Footer = () => {
               alt="My Visa Mart"
               className="w-28 h-28 mb-4"
             />
+          </div>
+          <div className="flex flex-col items-center md:items-start justify-center">
+            <h3 className="text-[#0A509F] font-semibold text-sm mb-1 mt-4 uppercase tracking-wide">
+                Tools
+              </h3>
+              <ul className="flex flex-col gap-y-1 mb-8">
+                <li>
+                  <a className={allSubTitle} href="/tools/ds-160" target="_blank" rel="noopener noreferrer">
+                    DS-160
+                  </a>
+                </li>
+                <li>
+                  <a className={allSubTitle} href="/tools/schengen-appointment-checker" target="_blank" rel="noopener noreferrer">
+                    Schengen Appointment Checker
+                  </a>
+                </li>
+                <li>
+                  <a className={allSubTitle} href="/tools/schengen-cover-letter" target="_blank" rel="noopener noreferrer">
+                    Schengen Cover Letter
+                  </a>
+                </li>
+                <li>
+                  <a className={allSubTitle} href="/tools/schengen-invitation-letter" target="_blank" rel="noopener noreferrer">
+                    Schengen Invitation Letter
+                  </a>
+                </li>
+                <li>
+                  <a className={allSubTitle} href="/tools/uae-visa-status-online" target="_blank" rel="noopener noreferrer">
+                    UAE Visa Status Online
+                  </a>
+                </li>
+                <li>
+                  <a className={allSubTitle} href="/tools/vietnam-visa-status-checker" target="_blank" rel="noopener noreferrer">
+                    Vietnam Visa Status Checker
+                  </a>
+                </li>
+                <li>
+                  <a className={allSubTitle} href="/tools/visa-eligibility-quiz" target="_blank" rel="noopener noreferrer">
+                    Visa Eligibility Quiz
+                  </a>
+                </li>
+                <li>
+                  <a className={allSubTitle} href="/tools/visa-glossary" target="_blank" rel="noopener noreferrer">
+                    Visa Glossary
+                  </a>
+                </li>
+                <li>
+                  <a className={allSubTitle} href="/tools/visa-glossary-adjustment-of-status" target="_blank" rel="noopener noreferrer">
+                    Visa Glossary Adjustment of Status
+                  </a>
+                </li>
+                <li>
+                  <a className={allSubTitle} href="/tools/visa-photo-maker" target="_blank" rel="noopener noreferrer">
+                    Visa Photo Maker
+                  </a>
+                </li>
+              </ul>
           </div>
 
           {/* About, Products, Other */}
