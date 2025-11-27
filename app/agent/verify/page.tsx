@@ -2,13 +2,11 @@
 import React, { useState } from "react";
 import { axiosInstance } from "@/utils/axios-instance";
 import { handleAxiosError, handleAxiosSuccess } from "@/utils/common";
-import { useToast } from "@/components/ui/use-toast";
- 
+  
 import { useRouter } from "next/navigation"
 
 export default function Page() {
-    const { toast } = useToast();
-    const router = useRouter()
+     const router = useRouter()
 
     const [identifier, setIdentifier] = useState("");
     const [loading, setLoading] = useState(false);
@@ -40,13 +38,13 @@ export default function Page() {
         setLoading(true);
 
         await axiosInstance.post("/verify", { identifier })
-            .then((response) => {
+            .then((response: any) => {
                 setSuccess("OTP sent successfully.");
                 const userData = response?.data?.data;
                 localStorage.setItem("forgetPasswordData", JSON.stringify(userData));
                 handleAxiosSuccess(response, { identifier });
             })
-            .catch((err) => {
+            .catch((err: any) => {
                 setError("Failed to send OTP.");
                 handleAxiosError(err);
             })

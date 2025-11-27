@@ -3,16 +3,14 @@ import SocialLoginButtons from "@/components/SocialLoginButtons";
 import React, { useState } from "react";
 import { axiosInstance } from "@/utils/axios-instance"
 import { handleAxiosError, handleAxiosSuccess } from "@/utils/common"
-import { useToast } from "@/components/ui/use-toast"
-import { useRouter } from "next/navigation"
+ import { useRouter } from "next/navigation"
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import Link from "next/link";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Page() {
-    const { toast } = useToast()
-
+ 
     const [form, setForm] = useState({
         name: "",
         email: "",
@@ -83,10 +81,10 @@ export default function Page() {
             gender: form.gender,
             password: form.password,
         })
-            .then((response) => {
+            .then((response:any) => {
                 handleAxiosSuccess(response, form)
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 handleAxiosError(error)
             })
             .finally(() => {

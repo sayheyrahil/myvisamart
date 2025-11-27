@@ -1,7 +1,7 @@
- import './globals.css';
+import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-  import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -12,14 +12,12 @@ const faviconSvg = encodeURIComponent(
 export const metadata: Metadata = {
   title: 'Visamart — Coming Soon',
   description: 'Be the first to know when we go live.',
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-  },
-  themeColor: '#0ea5e9',
-  icons: {
-    icon: `data:image/svg+xml;charset=UTF-8,${faviconSvg}`,
-  },
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#ffffff", // or your color
 };
 
 export default function RootLayout({
@@ -35,9 +33,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-       <ToastContainer />
-
-      <body className={`${inter.className} font-wix`}>{children}</body>
+      <body className={`${inter.className} font-wix`}>
+        <ToastContainer />
+        {children}
+      </body>
     </html>
   );
 }

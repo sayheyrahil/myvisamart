@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Mail, Phone, ShoppingBag } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-
+ 
 export default function Home() {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -117,7 +115,7 @@ export default function Home() {
 
           <div className="hidden lg:flex flex-1 max-w-2xl mx-8">
             <div className="relative w-full">
-              <Input
+              <input
                 type="search"
                 placeholder="Search"
                 className="w-full pr-12 h-12 rounded-full border-2 border-gray-200 focus:border-sky-400"
@@ -131,12 +129,12 @@ export default function Home() {
           </div>
 
           <div className="flex gap-3">
-            <Button variant="outline" className="rounded-full border-2 border-sky-400 text-sky-500 hover:bg-sky-50">
+            <button   className="rounded-full border-2 border-sky-400 text-sky-500 hover:bg-sky-50">
               Login
-            </Button>
-            <Button className="rounded-full bg-sky-500 hover:bg-sky-600 text-white">
+            </button>
+            <button className="rounded-full bg-sky-500 hover:bg-sky-600 text-white">
               Sign Up
-            </Button>
+            </button>
           </div>
         </div>
       </div>
@@ -199,20 +197,20 @@ export default function Home() {
               </div>
             ) : (
               <div className="flex gap-3">
-                <Input
+                <input
                   type="email"
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 h-12 border-2 border-gray-200 focus:border-sky-400"
                 />
-                <Button
+                <button
                   onClick={handleSubmit}
                   disabled={isLoading}
                   className="bg-sky-500 hover:bg-sky-600 h-12 px-8 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? 'Sending...' : 'Notify Me'}
-                </Button>
+                </button>
               </div>
             )}
           </div>

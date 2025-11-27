@@ -3,14 +3,12 @@ import SocialLoginButtons from "@/components/SocialLoginButtons";
 import React, { useState } from "react";
 import { axiosInstance } from "@/utils/axios-instance";
 import { handleAxiosError, handleAxiosSuccess } from "@/utils/common";
-import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
+ import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Link from "next/link";
 
 export default function Page() {
-    const { toast } = useToast();
-    const router = useRouter();
+     const router = useRouter();
 
     const [form, setForm] = useState({
         identifier: "",
@@ -39,14 +37,14 @@ export default function Page() {
             email: form.identifier,
             password: form.password,
         })
-            .then((response) => {
+            .then((response: any) => {
                 // Store user data in localStorage
                 if (response?.data?.data) {
                     localStorage.setItem("user", JSON.stringify(response.data.data));
                 }
                 handleAxiosSuccess(response, form);
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 handleAxiosError(error);
             })
             .finally(() => {
