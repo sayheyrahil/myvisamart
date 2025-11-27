@@ -6,6 +6,7 @@ import { handleAxiosError, handleAxiosSuccess } from "@/utils/common";
  import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Link from "next/link";
+import { ENDPOINTS } from "@/utils/constants";
 
 export default function Page() {
      const router = useRouter();
@@ -33,7 +34,7 @@ export default function Page() {
         setLoading(true);
         setError(null);
 
-        await axiosInstance.post("/login", {
+        await axiosInstance.post(ENDPOINTS.login, {
             email: form.identifier,
             password: form.password,
         })

@@ -4,6 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { axiosInstance } from "@/utils/axios-instance";
 import { handleAxiosError, handleAxiosSuccess } from "@/utils/common";
 import { useRouter } from "next/navigation";
+import { ENDPOINTS } from "@/utils/constants";
 
 export default function Page() {
     const [otp, setOtp] = useState(["", "", "", "", ""]);
@@ -62,7 +63,7 @@ export default function Page() {
             payload.confirmPassword = form.confirmPassword;
             payload.token = token;
 
-            await axiosInstance.post("/set-password", payload)
+            await axiosInstance.post(ENDPOINTS.set_password, payload)
                 .then((response) => {
                     setSuccess("Password set successfully.");
                     handleAxiosSuccess(response, {});

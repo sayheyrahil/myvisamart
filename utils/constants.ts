@@ -12,14 +12,19 @@ export const adminKey = "admin/";
 export const ENDPOINTS = {
   login: "login",
   logout: "logout",
-  forget_password: "forget_password",
+  forget_password: "forget-password",
   image_upload: BASE_API_URL + "image_upload",
   get_profile: "profile",
-  update_profile: "profile_update",
-  
+  update_profile: "/user/update-profile",
+  set_password: "set-password",
+  forget_password_otp_verify: 'forget-password-otp-verify',
+  signup: "signup",
+
+  verify: "verify",
   change_password: adminKey + "change_password",
- 
-  
+
+
+
 }
 
 

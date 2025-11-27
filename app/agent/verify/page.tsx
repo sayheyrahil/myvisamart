@@ -4,6 +4,7 @@ import { axiosInstance } from "@/utils/axios-instance";
 import { handleAxiosError, handleAxiosSuccess } from "@/utils/common";
   
 import { useRouter } from "next/navigation"
+import { ENDPOINTS } from "@/utils/constants";
 
 export default function Page() {
      const router = useRouter()
@@ -37,7 +38,7 @@ export default function Page() {
 
         setLoading(true);
 
-        await axiosInstance.post("/verify", { identifier })
+        await axiosInstance.post(ENDPOINTS.verify, { identifier })
             .then((response: any) => {
                 setSuccess("OTP sent successfully.");
                 const userData = response?.data?.data;

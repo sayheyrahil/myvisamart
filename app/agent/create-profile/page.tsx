@@ -8,6 +8,7 @@ import { axiosInstance } from "@/utils/axios-instance";
 import { handleAxiosError, handleAxiosSuccess } from "@/utils/common";
 import { useRouter } from "next/navigation";
 import ProfileImageUpload from "@/components/ProfileImageUpload";
+import { ENDPOINTS } from "@/utils/constants";
 
 export default function Page() {
     const [userData, setUserData] = React.useState<any>(null);
@@ -144,7 +145,7 @@ export default function Page() {
                 user_id: userData?.id || null,
             };
 
-            await axiosInstance.post("/user/update-profile", payload)
+            await axiosInstance.post(ENDPOINTS.update_profile, payload)
                 .then((response) => {
                     handleAxiosSuccess(response, payload);
                 })

@@ -3,6 +3,7 @@ import { axiosInstance } from "@/utils/axios-instance";
 import { handleAxiosError, handleAxiosSuccess } from "@/utils/common";
 import React from "react";
 import { useRouter } from "next/navigation"
+import { ENDPOINTS } from "@/utils/constants";
 
 export default function Page() {
     const [forgetPasswordData, setForgetPasswordData] = React.useState<string | null>(null);
@@ -74,7 +75,7 @@ export default function Page() {
             } else if (selected === "email") {
                 payload = { email: parsedData?.email };
             }
-            await axiosInstance.post("/forget-password", payload)
+            await axiosInstance.post(ENDPOINTS.forget_password, payload)
                 .then((response) => {
                     setSuccess("OTP sent successfully.");
                     handleAxiosSuccess(response, { identifier: parsedData?.email || parsedData?.phone });

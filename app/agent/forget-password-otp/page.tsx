@@ -3,6 +3,7 @@ import { axiosInstance } from "@/utils/axios-instance";
 import { handleAxiosError, handleAxiosSuccess } from "@/utils/common";
 import React from "react";
 import { useRouter } from "next/navigation"
+import { ENDPOINTS } from "@/utils/constants";
 
 
 export default function Page() {
@@ -67,7 +68,7 @@ export default function Page() {
                 phone: forgetPasswordData ? JSON.parse(forgetPasswordData).phone : undefined
             };
 
-            await axiosInstance.post("/forget-password-otp-verify", payload)
+            await axiosInstance.post(ENDPOINTS.forget_password_otp_verify, payload)
                 .then((response) => {
                     setSuccess("OTP sent successfully.");
                     handleAxiosSuccess(response, { identifier: "" });
@@ -103,7 +104,7 @@ export default function Page() {
             } else if (parsedData.email) {
                 payload = { email: parsedData.email };
             }
-            await axiosInstance.post("/forget-password", payload)
+            await axiosInstance.post(ENDPOINTS.forget_password, payload)
                 .then((response) => {
                     setSuccess("OTP resent successfully.");
                     handleAxiosSuccess(response, { identifier: parsedData.email || parsedData.phone });

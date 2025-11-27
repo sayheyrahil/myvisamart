@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import Link from "next/link";
+import { ENDPOINTS } from "@/utils/constants";
 // import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Page() {
@@ -70,7 +71,7 @@ export default function Page() {
         setLoading(true);
 
         try {
-            const response = await axiosInstance.post("/signup", {
+            const response = await axiosInstance.post(ENDPOINTS.signup, {
                 name: form.name,
                 email: form.email,
                 phone: form.phone,

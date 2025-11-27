@@ -4,6 +4,7 @@ import {  useRouter } from "next/navigation";
 import { axiosInstance } from "@/utils/axios-instance";
 import { handleAxiosError } from "@/utils/common";
 import Link from "next/dist/client/link";
+import { ENDPOINTS } from "@/utils/constants";
 
 export default function Page() {
     const [otp, setOtp] = useState(["", "", "", ""]);
@@ -59,7 +60,7 @@ export default function Page() {
                 phone: userData ? JSON.parse(userData).phone : undefined
             };
 
-            await axiosInstance.post("/forget-password-otp-verify", payload)
+            await axiosInstance.post(ENDPOINTS.forget_password_otp_verify, payload)
                 .then((response) => {
                     localStorage.setItem("resetPasswordToken", response.data.data.token);
                 })
