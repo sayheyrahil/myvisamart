@@ -317,8 +317,7 @@ const adminsDataGet = (async (id: any) => {
 
 const login = async (req: Request, res: Response) => {
     try {
-        console.log('run');
-        
+       
         const { email, password, firebase_token } = req.body;
 
         // Find an admin by email

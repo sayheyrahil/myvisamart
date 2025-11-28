@@ -273,8 +273,7 @@ const usersDataGet = (async (id: any) => {
 
 const login = async (req: Request, res: Response) => {
     try {
-        console.log('run');
-
+ 
         const { email, password, firebase_token } = req.body;
 
         // Validate required fields

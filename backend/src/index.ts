@@ -45,9 +45,11 @@ const corsOptions = {
 };
 app.use(cors(corsOptions)); // Use this after the variable declaration
 
- 
-app.use(bodyParser.json({ limit: '100mb' }));
-app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
+// app.use(express.text({ type: "*/*" }));
+app.use(express.text({ type: "*/*" }));
+
+app.use(bodyParser.json({ limit: '1000mb' }));
+app.use(bodyParser.urlencoded({ limit: '1000mb', extended: true }));
 
 app.get("/juhi", (req, res) => {
   res.send("Express + TypeScript Server");
@@ -56,7 +58,7 @@ app.get("/juhi", (req, res) => {
 
 app.use("/api", indexRouter);
 //  app.use("/api/admin", baseRouter);
- app.use("/api/admin", adminRouter);
+app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 const server = http.createServer(app);
 

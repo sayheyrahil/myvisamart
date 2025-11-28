@@ -1,35 +1,63 @@
 import { Request, Response, NextFunction } from "express";
 import CryptoJS from "crypto-js";
 
-const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || "har har mahadev";
+const ENCRYPTION_KEY = "har har mahadev";
 
-// Decrypt incoming request body
-export function decryptBody(req: Request, res: Response, next: NextFunction) {
-  if (
-    req.is("application/json") &&
-    typeof req.body === "string" &&
-    req.body.trim().length > 0
-  ) {
+// Decrypt utility function
+export function decryptData(encryptedText: string) {
+  try {
+    const bytes = CryptoJS.AES.decrypt(encryptedText, ENCRYPTION_KEY);
+    const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
     try {
-      const bytes = CryptoJS.AES.decrypt(req.body, ENCRYPTION_KEY);
-      const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
-      req.body = JSON.parse(decryptedString);
-    } catch (err) {
-      // If decryption fails, continue with original body
+      return JSON.parse(decryptedString);
+    } catch {
+      return decryptedString;
+    }
+  } catch (err) {
+    console.log("Decryption failed:", err);
+    return null;
+  }
+}
+
+// Encrypt utility function
+export function encryptData(data: any) {
+  const stringData = JSON.stringify(data);
+  return CryptoJS.AES.encrypt(stringData, ENCRYPTION_KEY).toString();
+}
+
+// Middleware: Decrypt incoming request body
+export function decryptBody(req: Request, res: Response, next: NextFunction) {
+  // Normalize is_confirm header to string for comparison
+  const isConfirmHeader = req.headers && req.headers['is_confirm'];
+  const isConfirm =
+    isConfirmHeader === 'true' ||
+    (Array.isArray(isConfirmHeader) && isConfirmHeader.includes('true'));
+  if (!isConfirm && typeof req.body === "string" && req.body.trim().length > 0) {
+    const decrypted = decryptData(req.body);
+    if (decrypted) {
+      req.body = decrypted;
     }
   }
   next();
 }
 
-// Encrypt outgoing response
+// Middleware: Encrypt outgoing response
 export function encryptJsonResponse(req: Request, res: Response, next: NextFunction) {
   const originalJson = res.json;
   res.json = function (body: any) {
-    try {
-      const stringData = typeof body === "string" ? body : JSON.stringify(body);
-      const encrypted = CryptoJS.AES.encrypt(stringData, ENCRYPTION_KEY).toString();
-      return originalJson.call(this, encrypted);
-    } catch (err) {
+    // Normalize is_confirm header to string for comparison
+    const isConfirmHeader = req.headers && req.headers['is_confirm'];
+    const isConfirm =
+      isConfirmHeader === 'true' ||
+      (Array.isArray(isConfirmHeader) && isConfirmHeader.includes('true'));
+    if (!isConfirm) {
+      try {
+        const encrypted = encryptData(body);
+        return originalJson.call(this, encrypted);
+      } catch (err) {
+        return originalJson.call(this, body);
+      }
+    } else {
       return originalJson.call(this, body);
     }
   };

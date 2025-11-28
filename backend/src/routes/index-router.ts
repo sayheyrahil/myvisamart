@@ -59,9 +59,7 @@ indexRouter.post(`/contact`, userCommonService.contactUsStore);
 
 // --- Grouped encrypted routes ---
 const encryptedRouter = Router();
-
-// Use body-parser.text for encrypted routes to get raw string
-encryptedRouter.use(bodyParser.text({ type: "*/*" })); // <--- Change here
+ 
 
 encryptedRouter.use(decryptBody, encryptJsonResponse);
 
