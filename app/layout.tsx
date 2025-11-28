@@ -33,7 +33,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${inter.className} font-wix`}>
+      <body className={`${inter.className} font-wix. bg-[#f6fafd]`}>
         <ToastContainer />
         {children}
       </body>

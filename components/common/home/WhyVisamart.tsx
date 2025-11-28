@@ -20,7 +20,7 @@ const WhyVisamart = () => {
   };
 
   return (
-    <section className="min-h-screen bg-[#f5f9ff] flex flex-col items-center justify-center px-0 py-0">
+    <section className="min-h-screen   flex flex-col items-center justify-center px-0 py-0">
       {/* Why Visamart Section */}
       <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10 py-16">
         {/* Left Section */}
@@ -59,7 +59,7 @@ const WhyVisamart = () => {
         {/* Right Section (Illustration) */}
         <div className="flex justify-center items-center">
           <img
-            src="./Frame1100377394.png"
+            src="/Frame1100377394.png"
             alt="World map"
             className="w-full h-full object-contain opacity-90"
           />
