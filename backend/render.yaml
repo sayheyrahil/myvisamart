@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: backend
+    env: node
+    buildCommand: npm install && npm run build:tsc
+    startCommand: node dist/index.ts
+    envVars:
+      - key: NODE_ENV
+        value: development
+    rootDir: backend
