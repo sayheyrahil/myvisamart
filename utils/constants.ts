@@ -13,7 +13,7 @@ export const adminKey = "admin/";
 // API endpoints
 export const ENDPOINTS = {
   login: "login",
-  logout: "logout",
+  logout: "user/logout",
   forget_password: "forget-password",
   image_upload: BASE_API_URL + "image_upload",
   get_profile: "/user/profile",
@@ -23,7 +23,7 @@ export const ENDPOINTS = {
   signup: "signup",
 
   verify: "verify",
-  change_password: adminKey + "change_password",
+  change_password: "/user/change-password",
 }
 
 
