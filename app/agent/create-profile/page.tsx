@@ -130,6 +130,7 @@ export default function Page() {
 
         setLoading(true);
         try {
+  
             // Prepare payload as a plain object (not FormData)
             const payload = {
                 name,
@@ -137,10 +138,10 @@ export default function Page() {
                 email,
                 street,
                 country: selectedCountry?.label || "",
-                region: selectedRegion?.label || "",
-                pan,
-                aadhaar,
-                gst,
+                state: selectedRegion?.label || "",
+                panNumber:pan,
+                aadharNumber:aadhaar,
+                gstNumber:gst,
                 profile_pic: imageUpload.store_url || "",
                 user_id: userData?.id || null,
             };

@@ -1,3 +1,5 @@
+import { profile } from "console";
+
 // local
 export const WEB_URL = "http://localhost:2003";
 export const BASE_API_URL = `${WEB_URL}/api/`;
@@ -14,7 +16,7 @@ export const ENDPOINTS = {
   logout: "logout",
   forget_password: "forget-password",
   image_upload: BASE_API_URL + "image_upload",
-  get_profile: "profile",
+  get_profile: "/user/profile",
   update_profile: "/user/update-profile",
   set_password: "set-password",
   forget_password_otp_verify: 'forget-password-otp-verify',
@@ -22,9 +24,6 @@ export const ENDPOINTS = {
 
   verify: "verify",
   change_password: adminKey + "change_password",
-
-
-
 }
 
 

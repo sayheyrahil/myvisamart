@@ -5,7 +5,7 @@ const BASE_URL = BASE_API_URL // Replace with your actual API base URL
 
 let tokenPass = "";
 if (typeof window !== "undefined") {
-  tokenPass = "Bearer " + localStorage.getItem("j_access_token");
+  tokenPass = "Bearer " + localStorage.getItem("token");
   axios.defaults.headers.common["J-authorization"] = tokenPass;
 }
 
@@ -35,6 +35,12 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
+    if (error?.response?.status === 401 && typeof window !== "undefined") {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      window.location.href = "/home";
+      return; // Prevent further error handling
+    }
 
     return Promise.reject(error);
     console.log(

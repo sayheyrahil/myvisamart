@@ -42,6 +42,7 @@ export default function Page() {
                 // Store user data in localStorage
                 if (response?.data?.data) {
                     localStorage.setItem("user", JSON.stringify(response.data.data));
+                    localStorage.setItem("token", response.data.data.access_token);
                 }
                 handleAxiosSuccess(response, form);
             })
