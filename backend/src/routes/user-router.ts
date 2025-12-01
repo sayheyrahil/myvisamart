@@ -12,6 +12,9 @@ userRouter.use(encryptJsonResponse);
 userRouter.use(auth);
 
 
+
+
+
 userRouter.post(`/update-profile`,  baseController.updateProfile);
 userRouter.post(`/profile`,  baseController.getProfile);
 userRouter.post(`/change-password`,  baseController.changePassword);

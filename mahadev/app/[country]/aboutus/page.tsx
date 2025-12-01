@@ -81,7 +81,7 @@ const MetricsSection: React.FC = () => {
     <section className="flex flex-col gap-16 items-center px-0 py-24 w-full bg-white max-sm:px-0 max-sm:py-16">
       <div className="flex gap-24 items-center px-8 py-0 w-full max-w-screen-xl max-md:flex-col max-md:gap-12 max-md:px-6 max-md:py-0 max-sm:px-4 max-sm:py-0">
         <img
-          src="./aboutUs.png"
+          src="/aboutUs.png"
           alt=""
           className="object-cover flex-[1_0_0] h-[560px] rounded-[80px_0] max-md:w-full max-md:h-[400px] max-sm:h-[300px] max-sm:rounded-[40px_0]"
         />
@@ -173,42 +173,42 @@ const FeaturesSection: React.FC = () => {
   const features = [
     {
       icon: (
-        <img src="./feature/team1.png" alt="Care about our team" className="w-full h-full" />
+        <img src="/feature/team1.png" alt="Care about our team" className="w-full h-full" />
       ),
       title: "Care about our team",
       description: "Understand what matters to our employees. Give them what they need to do their best work.",
     },
     {
       icon: (
-        <img src="./feature/Featuredicon.png" alt="Be excellent to each other" className="w-full h-full" />
+        <img src="/feature/Featuredicon.png" alt="Be excellent to each other" className="w-full h-full" />
       ),
       title: "Be excellent to each other",
       description: "No games. No bullshit. We rely on our peers to improve. Be open, honest and kind.",
     },
     {
       icon: (
-        <img src="./feature/Featuredcon.png" alt="Pride in what we do" className="w-full h-full" />
+        <img src="/feature/Featuredcon.png" alt="Pride in what we do" className="w-full h-full" />
       ),
       title: "Pride in what we do",
       description: "Value quality and integrity in everything we do. At all times. No exceptions.",
     },
     {
       icon: (
-        <img src="./feature/smile.png" alt="Don't the customer" className="w-full h-full" />
+        <img src="/feature/smile.png" alt="Don't the customer" className="w-full h-full" />
       ),
       title: "Don't the customer",
       description: "Understand customers' stated and unstated needs. Make them wildly successful.",
     },
     {
       icon: (
-        <img src="./feature/imposssible.png" alt="Do the impossible" className="w-full h-full" />
+        <img src="/feature/imposssible.png" alt="Do the impossible" className="w-full h-full" />
       ),
       title: "Do the impossible",
       description: "Be energized by difficult problems. Revel in unknowns. Ask \"Why?\", but always question, \"Why not?\"",
     },
     {
       icon: (
-        <img src="./feature/sweat.png" alt="Sweat the small stuff" className="w-full h-full" />
+        <img src="/feature/sweat.png" alt="Sweat the small stuff" className="w-full h-full" />
       ),
       title: "Sweat the small stuff",
       description: "We believe the best products come from the best attention to detail. Sweat the small stuff.",

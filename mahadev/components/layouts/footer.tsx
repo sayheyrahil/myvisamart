@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Footer = () => {
   // Add font weight and style variants to the class string as needed
@@ -22,54 +23,54 @@ const Footer = () => {
               </h3>
               <ul className="flex flex-col gap-y-1 mb-8">
                 <li>
-                  <a className={allSubTitle} href="/tools/ds-160" target="_blank" rel="noopener noreferrer">
+                  <Link className={allSubTitle} href="/tools/ds-160" target="_blank" rel="noopener noreferrer">
                     DS-160
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className={allSubTitle} href="/tools/schengen-appointment-checker" target="_blank" rel="noopener noreferrer">
+                  <Link className={allSubTitle} href="/tools/schengen-appointment-checker" target="_blank" rel="noopener noreferrer">
                     Schengen Appointment Checker
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className={allSubTitle} href="/tools/schengen-cover-letter" target="_blank" rel="noopener noreferrer">
+                  <Link className={allSubTitle} href="/tools/schengen-cover-letter" target="_blank" rel="noopener noreferrer">
                     Schengen Cover Letter
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className={allSubTitle} href="/tools/schengen-invitation-letter" target="_blank" rel="noopener noreferrer">
+                  <Link className={allSubTitle} href="/tools/schengen-invitation-letter" target="_blank" rel="noopener noreferrer">
                     Schengen Invitation Letter
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className={allSubTitle} href="/tools/uae-visa-status-online" target="_blank" rel="noopener noreferrer">
+                  <Link className={allSubTitle} href="/tools/uae-visa-status-online" target="_blank" rel="noopener noreferrer">
                     UAE Visa Status Online
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className={allSubTitle} href="/tools/vietnam-visa-status-checker" target="_blank" rel="noopener noreferrer">
+                  <Link className={allSubTitle} href="/tools/vietnam-visa-status-checker" target="_blank" rel="noopener noreferrer">
                     Vietnam Visa Status Checker
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className={allSubTitle} href="/tools/visa-eligibility-quiz" target="_blank" rel="noopener noreferrer">
+                  <Link className={allSubTitle} href="/tools/visa-eligibility-quiz" target="_blank" rel="noopener noreferrer">
                     Visa Eligibility Quiz
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className={allSubTitle} href="/tools/visa-glossary" target="_blank" rel="noopener noreferrer">
+                  <Link className={allSubTitle} href="/tools/visa-glossary" target="_blank" rel="noopener noreferrer">
                     Visa Glossary
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className={allSubTitle} href="/tools/visa-glossary-adjustment-of-status" target="_blank" rel="noopener noreferrer">
+                  <Link className={allSubTitle} href="/tools/visa-glossary-adjustment-of-status" target="_blank" rel="noopener noreferrer">
                     Visa Glossary Adjustment of Status
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className={allSubTitle} href="/tools/visa-photo-maker" target="_blank" rel="noopener noreferrer">
+                  <Link className={allSubTitle} href="/tools/visa-photo-maker" target="_blank" rel="noopener noreferrer">
                     Visa Photo Maker
-                  </a>
+                  </Link>
                 </li>
               </ul>
           </div>

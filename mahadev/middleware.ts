@@ -1,27 +1,37 @@
 import { NextResponse } from "next/server";
 
-export function middleware(req:any) {
-  const pathname = req.nextUrl.pathname;
+export function middleware(req) {
+  const url = req.nextUrl;
+  const { pathname } = url;
 
-//   // Allow static files, APIs, and existing pages
-//   if (
-//     pathname.startsWith("/api") ||
-//     pathname.startsWith("/_next") ||
-//     pathname.startsWith("/favicon") ||
-//     pathname.match(/\.(png|jpg|jpeg|svg|css|js)$/)
-//   ) {
-//     return NextResponse.next();
-//   }
+  // Allow static assets and tools
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
+    pathname.startsWith("/favicon") ||
+    pathname.startsWith("/images") ||
+    pathname.startsWith("/company") ||
+    pathname.startsWith("/feature") ||
+    pathname.startsWith("/tools/*") ||   // <-- ALLOW TOOLS ROUTES
+    pathname.match(/\.(png|jpg|jpeg|gif|svg|webp|ico)$/)
+  ) {
+    return NextResponse.next();
+  }
 
-//   // Local development mock
-//   let country =
-//     process.env.NODE_ENV === "development"
-//       ? process.env.DEV_COUNTRY?.toLowerCase()
-//       : req.geo?.country?.toLowerCase();
+  // Split URL like "/home" -> ["", "home"]
+  const segments = pathname.split("/");
+  const first = segments[1];
 
-//   if (country && !pathname.startsWith(`/${country}`)) {
-//     return NextResponse.redirect(`${req.nextUrl.origin}/${country}`);
-//   }
+  // Validate 2-letter country code
+  const isCountry = /^[A-Za-z]{2}$/.test(first);
+
+  // If URL does NOT start with a country (example: /home)
+  if (!isCountry) {
+    const defaultCountry = "IN";
+    const newUrl = req.nextUrl.clone();
+    newUrl.pathname = `/${defaultCountry}${pathname}`; // <-- FIXED
+    return NextResponse.redirect(newUrl);
+  }
 
   return NextResponse.next();
 }
