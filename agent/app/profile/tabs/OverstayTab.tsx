@@ -15,7 +15,7 @@ export default function OverstayTab() {
         </div>
       </div>
       <div className="flex flex-col items-center justify-center py-16">
-        <img src="/hot-air-balloon.png" alt="No Data" className="w-40 h-40 mb-4" />
+        <img src="/img/hot-air-balloon.png" alt="No Data" className="w-40 h-40 mb-4" />
         <div className="text-[#101828] text-lg font-medium">Data not Found</div>
       </div>
     </div>

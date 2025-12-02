@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import { buildWelcomeEmail } from '../../../lib/emailTemplates';
+import { buildWelcomeEmail } from '@/utils/emailTemplates';
 
 export async function POST(request: NextRequest) {
 

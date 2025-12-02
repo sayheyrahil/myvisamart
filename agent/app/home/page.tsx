@@ -2,10 +2,8 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import MasterPage from '@/components/layouts/master';
-import HeroSection from "@/components/tools/HeroSection";
-import TrustedByAgents from "@/components/TrustedByAgents";
-import WhyVisamart from "@/components/common/home/WhyVisamart";
-
+import TrustedByAgents from "@/components/common/TrustedByAgents";
+import WhyVisamart from "@/components/common/WhyVisamart";
 export default function Page() {
 
   const [countryCode, setCountryCode] = useState("+880");
@@ -14,58 +12,7 @@ export default function Page() {
 
   return (
     <MasterPage title="MyVisaMart - Your Gateway to Hassle-Free Visa Applications">
-      <HeroSection
-        title={
-          <div className="w-full flex flex-col items-center text-center py-20 px-4 leading-[24px] ">
-            {/* Badge */}
-            <div className="flex justify-start w-full max-w-md mb-6">
-              <div className="px-4 py-1.5 bg-white rounded-full shadow-lg text-sm font-medium flex items-center gap-2">
-                <span className="inline-block w-2 h-2 bg-blue-600 rounded-full"></span>
-                Easy Application
-              </div>
-            </div>
-
-            {/* Heading */}
-            <h1 className="text-4xl md:text-5xl font-bold text-[#101828] leading-tight mb-3 text-left w-full max-w-md">
-              Great Value,<br />Simple Bookings
-            </h1>
-
-            {/* Description */}
-            <div className="text-gray-500 mb-8 text-left w-full max-w-md text-sm font-normal">
-              Velit aliquam imperdiet mollis nullam volutpat porttitor
-            </div>
-
-            {/* Phone Input */}
-            <div className="flex items-center w-full max-w-md border border-gray-300 rounded-xl px-4 py-3 bg-white mb-6 shadow-sm">
-              {/* Flag & Country Code */}
-              <div className="flex items-center gap-2 cursor-pointer select-none">
-                <span className="text-2xl">{flag}</span>
-                <ChevronDown size={18} className="text-gray-500" />
-              </div>
-              <span className="mx-3 text-gray-400 text-sm" >{countryCode}</span>
-              <input
-                type="text"
-                placeholder="Your mobile number"
-                className="flex-1 outline-none text-gray-700 placeholder-gray-400 bg-transparent text-sm"
-              />
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex w-full max-w-md gap-4">
-              <button className="flex-1 px-2 text-sm py-3 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">
-                Sign Up for Free
-              </button>
-              <button className="flex-1 px-2 text-sm py-3 rounded-full border border-gray-300 text-gray-700 font-semibold hover:bg-gray-100 transition">
-                Attend a Demo
-              </button>
-            </div>
-          </div>
-        }
-        description=""
-        buttonText=""
-        imageSrc="/Rectangle14367.png"
-        imageAlt="Visa Preview"
-      />
+    
       {/* Stats Section */}
 
       <TrustedByAgents />
@@ -542,7 +489,7 @@ function TestimonialSlider({ testimonials }: { testimonials: any[] }) {
           </svg>
         </button>
       </div>
-  
+
     </div>
   );
 }

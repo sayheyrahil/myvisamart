@@ -1,3 +1,3 @@
-export default function CountryLayout({ children }) {
+export default function CountryLayout({ children }:any) {
   return <>{children}</>;
 }

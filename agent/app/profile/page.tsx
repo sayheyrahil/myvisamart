@@ -54,7 +54,7 @@ export default function Page() {
             <div className="max-w-6xl mx-auto flex flex-col items-start gap-4 mb-8 px-4">
                 <div className="flex items-center gap-4 mb-10">
                     <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-3xl">
-                        <img src="/user-avatar.png" alt="Avatar" className="w-full h-full rounded-full object-cover" />
+                        <img src="/img/user-avatar.png" alt="Avatar" className="w-full h-full rounded-full object-cover" />
                     </div>
                     <div>
                         <div className="text-2xl font-semibold text-[#101828]">Platinum Tours & Travels</div>

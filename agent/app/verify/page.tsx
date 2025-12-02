@@ -61,7 +61,7 @@ export default function Page() {
                 {/* LEFT SIDE IMAGE */}
                 <div className="hidden md:block md:w-1/2 relative">
                     <img
-                        src="/Frame427321840.png"
+                        src="/img/Frame427321840.png"
                         alt="Signup Visual"
                         className="w-full h-screen object-cover"
                     />

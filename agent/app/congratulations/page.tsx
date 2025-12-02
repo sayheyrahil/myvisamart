@@ -10,7 +10,7 @@ export default function Page() {
                 {/* LEFT SIDE IMAGE */}
                 <div className="hidden md:block md:w-1/2 relative">
                     <img
-                        src="/Frame427321840.png"
+                        src="/img/Frame427321840.png"
                         alt="Signup Visual"
                         className="w-full h-screen object-cover"
                     />
@@ -28,7 +28,7 @@ export default function Page() {
                         <div className="w-full max-w-md mx-auto flex flex-col items-start">
                             {/* Shield Icon */}
                             <img
-                                src="/congratulations.png"
+                                src="/img/congratulations.png"
                                 alt="Success"
                                 className="w-24 h-24 mb-6"
                             />

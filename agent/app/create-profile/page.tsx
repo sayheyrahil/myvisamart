@@ -175,7 +175,7 @@ export default function Page() {
                 {/* LEFT SIDE IMAGE */}
                 <div className="hidden md:block md:w-1/2 relative">
                     <img
-                        src="/Frame427321840.png"
+                        src="/img/Frame427321840.png"
                         alt="Signup Visual"
                         className="w-full h-screen object-cover"
                     />
@@ -312,7 +312,7 @@ export default function Page() {
                     {/* Responsive image: static and centered on mobile, absolute on md+ */}
                     <div className="w-16 h-16 mx-auto mt-6 md:w-28 md:h-28 md:absolute md:bottom-14 md:right-0 md:mt-0 md:mx-0">
                         <img
-                            src="/sidebgBg.png"
+                            src="/img/sidebgBg.png"
                             alt="Signup Visual"
                             className="w-full h-full object-cover"
                         />

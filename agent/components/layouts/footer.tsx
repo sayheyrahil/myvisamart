@@ -12,7 +12,7 @@ const Footer = () => {
           {/* Logo */}
           <div className="flex flex-col items-center md:items-start justify-center">
             <img
-              src="/logo.png"
+              src="/img/logo.png"
               alt="My Visa Mart"
               className="w-28 h-28 mb-4"
             />
@@ -173,7 +173,7 @@ const Footer = () => {
       </footer>
       <div className="w-full h-48">
         <img
-          src="/Rectangle4353.png"
+          src="/img/Rectangle4353.png"
           alt="Mountain view"
           className="w-full h-full object-cover"
         />
