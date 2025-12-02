@@ -116,7 +116,7 @@ const useCrudOperations = (baseUrl: string, endpoints: { delete: string; changeS
                                 <tr key=${index} style="background-color: var(--background, transparent);">
                                     <td class="border px-4 py-2 font-bold" style="width:30%; background-color: var(--background, #f3f4f6);">${row.label}</td>
                                     ${row.isImage
-                    ? `<td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);"><Image src="${displayValue}" alt="${row.label}" /></td>`
+                    ? `<td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);"><Image style=" border-radius: 8px;" src="${displayValue}" alt="${row.label}" /></td>`
                     : `<td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);">${displayValue}</td>`
                 }
                                 </tr>

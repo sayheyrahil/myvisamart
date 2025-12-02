@@ -6,20 +6,20 @@ import { handleAxiosError, handleAxiosSuccess } from "@/lib/common";
 import { ENDPOINTS } from "@/lib/constants";
 import ImageUpload from "@/components/common/image-upload";
 
-type CategoryForm = {
+type DestinationForm = {
   name: string
   description: string
   image: string
 }
 
-const pageTitleName = "Category";
+const pageTitleName = "destination";
 export default function Page({ params: paramsPromise }: { params: any }) {
   const params = React.use(paramsPromise) as { slug?: string[] };
   
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean>(false)
-  const [form, setForm] = useState<CategoryForm>({
+  const [form, setForm] = useState<DestinationForm>({
     name: "",
     description: "",
     image: "",
@@ -34,7 +34,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   const fetchData = useCallback(
     (id: number) => {
      const idpass = { id: id };
-      axiosInstance.post(ENDPOINTS.category_edit , idpass)
+      axiosInstance.post(ENDPOINTS.destination_edit , idpass)
         .then((response: any) => {
           let data = response.data.data;
           setForm({
@@ -64,13 +64,13 @@ export default function Page({ params: paramsPromise }: { params: any }) {
 
   }, [fetchData]);
 
-  const onSubmit = async (data: CategoryForm) => {
+  const onSubmit = async (data: DestinationForm) => {
     setIsLoading(true);
     const submitData: any = { ...data };
     if (id) {
       submitData["id"] = id;
     }
-    await axiosInstance.post(ENDPOINTS.category_store, submitData)
+    await axiosInstance.post(ENDPOINTS.destination_store, submitData)
       .then(async (response: any) => {
         setIsLoading(false);
         handleAxiosSuccess(response);
@@ -132,7 +132,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   return (
     <div className="max-w-xl mx-auto p-6 bg-white rounded-md shadow">
       <h1 className="text-3xl font-bold mb-6">
-        {isEdit ? "Edit Category" : "New Category"}
+        {isEdit ? "Edit Destination" : "New Destination"}
       </h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -143,7 +143,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               name="name"
               value={form.name}
               onChange={handleChange}
-              placeholder="Enter category name"
+              placeholder="Enter Destination name"
               className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
             />
           </label>
@@ -193,7 +193,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           </button>
           <button
             type="button"
-            onClick={() => (window.location.href = "/category")}
+            onClick={() => (window.location.href = "/Destination")}
             className="px-4 py-2 rounded border bg-gray-100 hover:bg-gray-200"
             disabled={isLoading}
           >

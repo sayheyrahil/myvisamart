@@ -28,14 +28,14 @@ export const ENDPOINTS = {
  
 
 
+  destination_get:  adminKey +  "destination/get",
+  destination_delete:  adminKey +  "destination/delete",
+  destination_store:  adminKey +  "destination/store",
+  destination_edit:  adminKey +  "destination/edit_get",
+  destination_change_status:  adminKey +  "destination/change_status",
+ 
 
- our_service_get:  adminKey +  "our_service/get",
- our_service_delete:  adminKey +  "our_service/delete",
- our_service_store:  adminKey +  "our_service/store",
- our_service_edit:  adminKey +  "our_service/edit_get",
- our_service_change_status:  adminKey +  "our_service/change_status",
-
-
+ 
   
 }
 

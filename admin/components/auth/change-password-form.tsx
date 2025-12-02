@@ -51,9 +51,8 @@ export function ChangePasswordForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 400, margin: "0 auto" }}>
-      <h2>Change Password</h2>
-      {error && <div style={{ color: "red", marginBottom: 8 }}>{error}</div>}
+    <form onSubmit={handleSubmit} style={{ maxWidth: 400, margin: "0 auto" }} className="bg-white p-6 rounded-md shadow-md">
+       {error && <div style={{ color: "red", marginBottom: 8 }}>{error}</div>}
       {success && <div style={{ color: "green", marginBottom: 8 }}>{success}</div>}
       <div style={{ marginBottom: 16 }}>
         <label>
@@ -64,20 +63,30 @@ export function ChangePasswordForm() {
               value={currentPassword}
               onChange={e => setCurrentPassword(e.target.value)}
               placeholder="Enter your current password"
-              style={{ width: "100%", paddingRight: 40 }}
+              style={{
+                width: "100%",
+                padding: "10px 40px 10px 10px",
+                borderRadius: 6,
+                border: "1px solid #d1d5db",
+                fontSize: 16,
+                outline: "none",
+                boxSizing: "border-box"
+              }}
             />
             <button
               type="button"
               onClick={() => setShowCurrentPassword(v => !v)}
               style={{
                 position: "absolute",
-                right: 0,
-                top: 0,
-                height: "100%",
-                width: 40,
+                right: 8,
+                top: "50%",
+                transform: "translateY(-50%)",
+                height: 24,
+                width: 24,
                 background: "none",
                 border: "none",
-                cursor: "pointer"
+                cursor: "pointer",
+                padding: 0
               }}
               tabIndex={-1}
             >
@@ -95,20 +104,30 @@ export function ChangePasswordForm() {
               value={newPassword}
               onChange={e => setNewPassword(e.target.value)}
               placeholder="Enter your new password"
-              style={{ width: "100%", paddingRight: 40 }}
+              style={{
+                width: "100%",
+                padding: "10px 40px 10px 10px",
+                borderRadius: 6,
+                border: "1px solid #d1d5db",
+                fontSize: 16,
+                outline: "none",
+                boxSizing: "border-box"
+              }}
             />
             <button
               type="button"
               onClick={() => setShowNewPassword(v => !v)}
               style={{
                 position: "absolute",
-                right: 0,
-                top: 0,
-                height: "100%",
-                width: 40,
+                right: 8,
+                top: "50%",
+                transform: "translateY(-50%)",
+                height: 24,
+                width: 24,
                 background: "none",
                 border: "none",
-                cursor: "pointer"
+                cursor: "pointer",
+                padding: 0
               }}
               tabIndex={-1}
             >
@@ -126,20 +145,30 @@ export function ChangePasswordForm() {
               value={confirmPassword}
               onChange={e => setConfirmPassword(e.target.value)}
               placeholder="Confirm your new password"
-              style={{ width: "100%", paddingRight: 40 }}
+              style={{
+                width: "100%",
+                padding: "10px 40px 10px 10px",
+                borderRadius: 6,
+                border: "1px solid #d1d5db",
+                fontSize: 16,
+                outline: "none",
+                boxSizing: "border-box"
+              }}
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(v => !v)}
               style={{
                 position: "absolute",
-                right: 0,
-                top: 0,
-                height: "100%",
-                width: 40,
+                right: 8,
+                top: "50%",
+                transform: "translateY(-50%)",
+                height: 24,
+                width: 24,
                 background: "none",
                 border: "none",
-                cursor: "pointer"
+                cursor: "pointer",
+                padding: 0
               }}
               tabIndex={-1}
             >
@@ -148,7 +177,7 @@ export function ChangePasswordForm() {
           </div>
         </label>
       </div>
-      <button type="submit" disabled={isLoading} style={{ width: "100%", padding: 8 }}>
+      <button type="submit" disabled={isLoading} style={{ width: "100%", padding: 8 }} className="bg-brand text-white">
         {isLoading ? "Changing password..." : "Change Password"}
       </button>
     </form>
