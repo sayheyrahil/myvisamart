@@ -81,7 +81,7 @@ const MetricsSection: React.FC = () => {
     <section className="flex flex-col gap-16 items-center px-0 py-24 w-full bg-white max-sm:px-0 max-sm:py-16">
       <div className="flex gap-24 items-center px-8 py-0 w-full max-w-screen-xl max-md:flex-col max-md:gap-12 max-md:px-6 max-md:py-0 max-sm:px-4 max-sm:py-0">
         <img
-          src="/aboutUs.png"
+          src="/extra/aboutUs.png"
           alt=""
           className="object-cover flex-[1_0_0] h-[560px] rounded-[80px_0] max-md:w-full max-md:h-[400px] max-sm:h-[300px] max-sm:rounded-[40px_0]"
         />

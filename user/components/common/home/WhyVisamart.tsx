@@ -59,7 +59,7 @@ const WhyVisamart = () => {
         {/* Right Section (Illustration) */}
         <div className="flex justify-center items-center">
           <img
-            src="/Frame1100377394.png"
+            src="/extra/Frame1100377394.png"
             alt="World map"
             className="w-full h-full object-contain opacity-90"
           />

@@ -21,14 +21,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   setUploading,
   preview,
 }) => {
-  React.useEffect(() => {
-    if (typeof onChange !== "function") {
-      throw new Error("ImageUpload: onChange prop must be a function")
-    }
-    if (typeof setUploading !== "function") {
-      throw new Error("ImageUpload: setUploading prop must be a function")
-    }
-  }, [onChange, setUploading])
+ 
 
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const [isDragActive, setIsDragActive] = React.useState(false)
@@ -70,6 +63,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       handleAxiosError(error)
     } finally {
       setUploading(false)
+      e.target.value = "" // Reset file input so same file can be selected again
     }
   }
 

@@ -40,7 +40,7 @@ const HeroSection = () => {
 
           {/* Image cards */}
           <img
-            src="/hero.png"
+            src="/footer/hero.png"
             alt="Beach"
             className="rounded-2xl object-cover w-full h-full "
           />

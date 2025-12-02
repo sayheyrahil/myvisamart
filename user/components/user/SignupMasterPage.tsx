@@ -23,7 +23,7 @@ export default function SignupMasterPage({ children }: { children: React.ReactNo
                 {/* Ribbon */}
                 <div className="flex justify-center h-32 sm:h-44 md:h-52 relative mt-4 mb-4 sm:mb-8">
                     <img
-                        src="/Layer_1.png"
+                        src="/extra/Layer_1.png"
                         alt="Ribbon"
                         className="object-contain h-full w-full"
                     />
@@ -41,7 +41,7 @@ export default function SignupMasterPage({ children }: { children: React.ReactNo
                         <div className="flex justify-center  ">
                             <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg h-[300px] sm:h-[400px] md:h-[500px] lg:h-[550px]">
                                 <img
-                                    src="/Rectangle4411.png"
+                                    src="/extra/Rectangle4411.png"
                                     alt="Switzerland"
                                     className="w-full h-full object-cover z-10 rounded-t-full"
                                 />

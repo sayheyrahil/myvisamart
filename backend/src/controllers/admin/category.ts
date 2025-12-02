@@ -191,7 +191,7 @@ const changeStatus = async (req: Request, res: Response) => {
         if (itemData) {
             itemData.is_active = is_active;
             await itemData.save();
-            const message = `${titleName} status ${is_active === true ? "Approved" : "Rejected"
+            const message = `${titleName} status ${is_active === 1 ? "Approved" : "Rejected"
                 } successfully`;
             const responseData = {
                 message,

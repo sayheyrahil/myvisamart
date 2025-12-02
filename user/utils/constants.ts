@@ -24,6 +24,7 @@ export const ENDPOINTS = {
 
   verify: "verify",
   change_password: "/user/change-password",
+  category_active:  "category-active",
 }
 
 

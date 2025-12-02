@@ -82,15 +82,11 @@ axiosInstance.interceptors.response.use(
       response.config.headers?.is_confirm === true ||
       response.config.headers?.is_confirm === "true";
 
-    console.log("Response received:", response.data);
-
     if (!isConfirm && typeof response.data === "string") {
       if (response.data.startsWith("U2FsdGVk")) {
         response.data = decryptData(response.data);
       }
     }
-
-    console.log("Decrypted response:", response.data);
     return response;
   },
 

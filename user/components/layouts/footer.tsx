@@ -173,7 +173,7 @@ const Footer = () => {
       </footer>
       <div className="w-full h-48">
         <img
-          src="/Rectangle4353.png"
+          src="/footer/Rectangle4353.png"
           alt="Mountain view"
           className="w-full h-full object-cover"
         />

@@ -20,7 +20,7 @@ const useCrudOperations = (baseUrl: string, endpoints: { delete: string; changeS
             if (result.isConfirmed) {
                 setLoading(true);
                 try {
-                    await axiosInstance.delete(`${endpoints.delete}?id=${id}`);
+                    await axiosInstance.post(`${endpoints.delete}`, { id });
                     handleAxiosSuccess({ message: "Deleted successfully!" });
                     refreshCallback();
                 } catch (error: any) {
@@ -67,8 +67,6 @@ const useCrudOperations = (baseUrl: string, endpoints: { delete: string; changeS
                 axiosInstance.post(endpoints.get, options)
                     .then((response: any) => {
                         if (response?.data?.data) {
-
-                            console.log("Fetched data:", response?.data?.data);
                             setDataCallback(response?.data?.data?.desc);
                             setTotalCallback(response?.data?.data?.total);
                         }

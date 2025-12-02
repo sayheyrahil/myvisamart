@@ -2,6 +2,7 @@ import { Router } from "express";
 import adminController from "@controllers/admin/base/auth";
 import baseController from "@controllers/base/auth";
 import userCommonService from "@controllers/user/base";
+import commonService from "@controllers/base/common";
 import { decryptBody, encryptJsonResponse } from "@middleware/crypto-middleware"; // <-- Add this import
 
 
@@ -14,6 +15,12 @@ indexRouter.use(decryptBody, encryptJsonResponse);
 indexRouter.post(`/admin_login`, adminController.login);
 indexRouter.post(`/admin_forget_password`, adminController.forgetPassword);
 indexRouter.post(`/contact`, userCommonService.contactUsStore);
+
+
+
+// get here all router
+indexRouter.post(`/category-active`, commonService.getActiveCategory);
+
 
 
 // --- Grouped encrypted routes ---

@@ -8,7 +8,7 @@ const NewsletterSection = () => {
         className="relative w-full max-w-5xl h-56 rounded-2xl overflow-hidden flex flex-col items-center justify-center text-center bg-cover bg-center"
         style={{
           backgroundImage:
-            "url('./Frame1100377401.png')",
+            "url('/footer/Frame1100377401.png')",
         }}
       >
         {/* Overlay */}

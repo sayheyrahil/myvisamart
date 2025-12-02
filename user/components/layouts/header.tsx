@@ -17,7 +17,7 @@ const Navbar = ({ title }: { title: string }) => {
           </div>
           <div className="flex items-center gap-3 justify-center">
             <img
-              src="/banner.png"
+              src="/extra/banner.png"
               alt="Traveler"
               className="w-[48px] h-[42px] sm:w-[66px] sm:h-[58px]"
             />
@@ -41,7 +41,7 @@ const Navbar = ({ title }: { title: string }) => {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <img
-              src="/logo.png"
+              src="/extra/logo.png"
               alt="Traveler"
               className="w-[48px] h-[48px] sm:w-[70px] sm:h-[70px]"
             />

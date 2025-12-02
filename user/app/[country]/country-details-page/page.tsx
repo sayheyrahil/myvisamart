@@ -157,7 +157,7 @@ export default function Page() {
               <div className="  rounded-2xl   p-6 flex flex-col items-center">
                 <div className="w-full ">
                   <Image
-                    src="/Frame1991424902.png"
+                    src="/extra/Frame1991424902.png"
                     alt="What You Get"
                     width={1200}
                     height={400}
@@ -182,7 +182,7 @@ export default function Page() {
                   </span>
                 </div>
                 <Image
-                  src="/_Navfeatured-card.png"
+                  src="/extra/_Navfeatured-card.png"
                   alt="Statistics Map"
                   width={1200}
                   height={400}
@@ -202,7 +202,7 @@ export default function Page() {
                   </span>
                 </div>
                 <Image
-                  src="/Frame1991424971.png"
+                  src="/extra/Frame1991424971.png"
                   alt="Apply Now Save Later"
                   width={1200}
                   height={400}
@@ -215,7 +215,7 @@ export default function Page() {
                   Appointment Centers & Available Slots
                 </SectionHeading>
                 <Image
-                  src="/_Nav-featured-card.png"
+                  src="/extra/_Nav-featured-card.png"
                   alt="Appointment Centers"
                   width={1200}
                   height={400}
@@ -227,7 +227,7 @@ export default function Page() {
                   We Track Appointment Openings 24/7
                 </SectionHeading>
                 <Image
-                  src="/Frame1272632137.png"
+                  src="/extra/Frame1272632137.png"
                   alt="Appointment Centers"
                   width={1200}
                   height={400}
@@ -239,7 +239,7 @@ export default function Page() {
                   How to Get a UK Visa on Atlys
                 </SectionHeading>
                 <Image
-                  src="/32312312.png"
+                  src="/extra/32312312.png"
                   alt="Appointment Centers"
                   width={1200}
                   height={400}
@@ -251,7 +251,7 @@ export default function Page() {
                   What Documents Do You Need to Submit?
                 </SectionHeading>
                 <Image
-                  src="/qweqeq2323.png"
+                  src="/extra/qweqeq2323.png"
                   alt="Appointment Centers"
                   width={1200}
                   height={400}
@@ -263,7 +263,7 @@ export default function Page() {
                   Appointment Centers in India
                 </SectionHeading>
                 <Image
-                  src="/qeqweqwe45656121.png"
+                  src="/extra/qeqweqwe45656121.png"
                   alt="Appointment Centers"
                   width={1200}
                   height={400}
@@ -275,7 +275,7 @@ export default function Page() {
                   Chances of approval for United Kingdom
                 </SectionHeading>
                 <Image
-                  src="/Frame12726321371.png"
+                  src="/extra/Frame12726321371.png"
                   alt="Appointment Centers"
                   width={1200}
                   height={400}
@@ -287,7 +287,7 @@ export default function Page() {
                   Simplified visas with UK visa
                 </SectionHeading>
                 <Image
-                  src="/Frames1272632137.png"
+                  src="/extra/Frames1272632137.png"
                   alt="Appointment Centers"
                   width={1200}
                   height={400}
@@ -299,7 +299,7 @@ export default function Page() {
                   Delhi Center Security & Inspection Report
                 </SectionHeading>
                 <Image
-                  src="/Frame1991425208.png"
+                  src="/extra/Frame1991425208.png"
                   alt="Appointment Centers"
                   width={1200}
                   height={400}
@@ -311,7 +311,7 @@ export default function Page() {
                   Your Passport's Voyage to Atlys' Fulfillment Center
                 </SectionHeading>
                 <Image
-                  src="/Frame1321316465.png"
+                  src="/extra/Frame1321316465.png"
                   alt="Appointment Centers"
                   width={1200}
                   height={400}
@@ -323,21 +323,21 @@ export default function Page() {
                 <SectionHeading>
                   Statistics on South Korea Visa
                 </SectionHeading>
-                <Image src="/Frame1991425212.png" alt="Appointment Centers" width={1200} height={400}
+                <Image src="/extra/Frame1991425212.png" alt="Appointment Centers" width={1200} height={400}
                   className="w-full h-auto rounded-2xl  " />
               </div>
               <div>
                 <SectionHeading>
                   Statistics on South Korea Visa
                 </SectionHeading>
-                <Image src="/Frame1991425240.png" alt="Appointment Centers" width={1200} height={400}
+                <Image src="/extra/Frame1991425240.png" alt="Appointment Centers" width={1200} height={400}
                   className="w-full h-auto rounded-2xl  " />
               </div>
               <div>
                 <SectionHeading>
                   Delhi Center Visa Experts and Staff
                 </SectionHeading>
-                <Image src="/Frame1991425195.png" alt="Appointment Centers" width={1200} height={400}
+                <Image src="/extra/Frame1991425195.png" alt="Appointment Centers" width={1200} height={400}
                   className="w-full h-auto rounded-2xl  " />
               </div>
               <div>
@@ -488,20 +488,20 @@ export default function Page() {
                   </button>
                 </div>
               </div>
-              <Image src="/Frame1991425186.png" alt="Appointment Centers" width={1200} height={400}
+              <Image src="/extra/Frame1991425186.png" alt="Appointment Centers" width={1200} height={400}
                 className="w-full h-auto rounded-2xl  " />
               <div>
                 <SectionHeading>
                   Check Serviceability
                 </SectionHeading>
-                <Image src="/Frame1991425232.png" alt="Appointment Centers" width={1200} height={400}
+                <Image src="/extra/Frame1991425232.png" alt="Appointment Centers" width={1200} height={400}
                   className="w-full h-auto rounded-2xl  " />
               </div>
               <div>
                 <SectionHeading>
                   Our Fulfillment Center
                 </SectionHeading>
-                <Image src="/Frame1991425207.png" alt="Appointment Centers" width={1200} height={400}
+                <Image src="/extra/Frame1991425207.png" alt="Appointment Centers" width={1200} height={400}
                   className="w-full h-auto rounded-2xl  " />
               </div>
 
@@ -509,20 +509,20 @@ export default function Page() {
                 <SectionHeading>
                   Try our WHAT IF Simulator!
                 </SectionHeading>
-                <Image src="/Frame1991425237.png" alt="Appointment Centers" width={1200} height={400}
+                <Image src="/extra/Frame1991425237.png" alt="Appointment Centers" width={1200} height={400}
                   className="w-full h-auto rounded-2xl  " />
               </div>
               <div>
                 <SectionHeading>
                   How We Reviewed This Page
                 </SectionHeading>
-                <Image src="/Frame1991425234.png" alt="Appointment Centers" width={1200} height={400}
+                <Image src="/extra/Frame1991425234.png" alt="Appointment Centers" width={1200} height={400}
                   className="w-full h-auto rounded-2xl  " />
               </div>
               <div>
                 <SectionHeading>
                   How We Reviewed This Page  </SectionHeading>
-                <Image src="/Frame1991425233.png" alt="Appointment Centers" width={1200} height={400}
+                <Image src="/extra/Frame1991425233.png" alt="Appointment Centers" width={1200} height={400}
                   className="w-full h-auto rounded-2xl  " />
               </div>
             </div>

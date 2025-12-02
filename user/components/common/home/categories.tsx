@@ -1,62 +1,32 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
-
-const categories = [
-	{
-		title: "Beach",
-		image:
-			"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=60",
-	},
-	{
-		title: "Temple",
-		image:
-			"https://images.unsplash.com/photo-1562564055-71e051d33c19?auto=format&fit=crop&w=800&q=60",
-	},
-	{
-		title: "Iceberg",
-		image:
-			"https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=60",
-	},
-	{
-		title: "Mountain",
-		image:
-			"https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=60",
-	},
-	{
-		title: "Desert",
-		image:
-			"https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=60",
-	},
-	{
-		title: "Temple",
-		image:
-			"https://images.unsplash.com/photo-1562564055-71e051d33c19?auto=format&fit=crop&w=800&q=60",
-	},
-	{
-		title: "Iceberg",
-		image:
-			"https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=60",
-	},
-	{
-		title: "Mountain",
-		image:
-			"https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=60",
-	},
-	{
-		title: "Desert",
-		image:
-			"https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=60",
-	},
-	{
-		title: "Forest",
-		image:
-			"https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=60",
-	},
-];
+import { axiosInstance } from "@/utils/axios-instance";
+import { ENDPOINTS, WEB_URL } from "@/utils/constants";
+import { handleAxiosError, handleAxiosSuccess } from "@/utils/common";
 
 const Categories = () => {
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const [activeIdx, setActiveIdx] = useState(0);
+
+	const [categories, setCategories] = useState<any[]>([]);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
+
+	useEffect(() => {
+		setLoading(true);
+		axiosInstance
+			.post(ENDPOINTS.category_active)
+			.then((response: any) => {
+ 				// handleAxiosSuccess(response); // Uncomment if you want a toast
+				setCategories(response?.data?.data || []);
+			})
+			.catch((err: any) => {
+				handleAxiosError(err);
+ 			})
+			.finally(() => {
+				setLoading(false);
+			});
+	}, []);
 
 	const scroll = (direction: any) => {
 		let newIdx = activeIdx;
@@ -111,33 +81,43 @@ const Categories = () => {
 					</div>
 				</div>
 
+				{/* Loading/Error */}
+				{loading && (
+					<div className="text-center py-8 text-gray-500">
+						Loading categories...
+					</div>
+				)}
+				{error && <div className="text-center py-8 text-red-500">{error}</div>}
+
 				{/* Scrollable cards */}
-				<div
-					ref={scrollRef}
-					className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth"
-				>
-					{categories.map((cat, idx) => (
-						<div
-							key={idx}
-							className={`relative ${
-								idx === activeIdx
-									? "min-w-[260px] w-[260px] h-[300px]"
-									: "min-w-[120px] w-[120px] h-[300px]"
-							} rounded-2xl overflow-hidden group flex-shrink-0 transition-all duration-300`}
-						>
-							<img
-								src={cat.image}
-								alt={cat.title}
-								className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-							/>
-							<div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-							<div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-white">
-								<p className="text-lg font-medium">{cat.title}</p>
-								<ArrowUpRight size={18} />
+				{!loading && !error && (
+					<div
+						ref={scrollRef}
+						className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth"
+					>
+						{categories.map((cat, idx) => (
+							<div
+								key={cat.id || idx}
+								className={`relative ${
+									idx === activeIdx
+										? "min-w-[260px] w-[260px] h-[300px]"
+										: "min-w-[120px] w-[150px] h-[300px]"
+								} rounded-2xl overflow-hidden group flex-shrink-0 transition-all duration-300`}
+							>
+								<img
+									src={WEB_URL + cat.image}
+									alt={cat.title}
+									className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+								/>
+								<div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+								<div className="absolute bottom-4 left-4 right-4 flex justify-between items-center text-white">
+									<p className="text-lg font-medium">{cat.name}</p>
+									<ArrowUpRight size={18} />
+								</div>
 							</div>
-						</div>
-					))}
-				</div>
+						))}
+					</div>
+				)}
 			</div>
 		</div>
 	);

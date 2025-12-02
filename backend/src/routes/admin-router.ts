@@ -14,8 +14,8 @@ adminRouter.use(encryptJsonResponse);
 // Gallery routes
 adminRouter.post(`/category/get`, categoryController.get);
 adminRouter.post(`/category/store`, categoryValidation.store, categoryValidation.nameUniquenessMiddleware, categoryController.store);
-adminRouter.get(`/category/edit_get`, commonValidation.idRequired, categoryController.edit);
-adminRouter.delete(`/category/delete`, commonValidation.idRequired, categoryController.destroy);
+adminRouter.post(`/category/edit_get`, commonValidation.idRequired, categoryController.edit);
+adminRouter.post(`/category/delete`, commonValidation.idRequired, categoryController.destroy);
 adminRouter.post(`/category/change_status`, commonValidation.idRequired, categoryController.changeStatus);
 
  

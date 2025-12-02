@@ -108,7 +108,7 @@ const Page = () => {
         getData={getData}
         pageTitleName={pageTitleName}
         setFilterText={setFilterText}
-        filterText={filterText}
+        filterText={filterText}        
         filterComponentHandleChange={filterComponentHandleChange}
       />
     </div>
