@@ -1,342 +1,118 @@
-"use client"
-import Link from "next/link"
-import * as React from "react"
-import { useRouter } from "next/navigation"
-import { ArrowUpDown, PlusCircle } from "lucide-react"
-import { formatDistanceToNow } from "date-fns"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+"use client";
+import DataTable from "@/components/DataTable";
+import useCrudOperations from "@/components/useCrudOperations";
+import { API_URL, ENDPOINTS } from "@/lib/constants";
+import React, { useState, useEffect, useCallback } from "react";
+import ActionButtons from "@/components/ActionButtons";
+import { FaEye } from "react-icons/fa";
+import { FaEarDeaf } from "react-icons/fa6";
 
-import { useToast } from "@/components/ui/use-toast"
-import DataTable from "@/components/ui/data-table"
-import { axiosInstance } from "@/lib/axios-instance"
-import { ENDPOINTS, WEB_URL } from "@/lib/constants"
-import { handleAxiosSuccess, handleAxiosError } from "@/lib/common"
-import { useEffect, useState } from "react"
-import Actions from "@/components/common/Actions"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog"
+const pageTitleName = "category";
 
-type HappyClient = {
-  id: string
-  name: string
-  description: string
-  designation: string
-  image: string
-  star_count: number
-  status: boolean
-  createdAt: Date
-  updatedAt: Date
-}
-
-export default function HappyClientPage() {
-  const [data, setData] = React.useState<HappyClient[]>([])
-  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState<boolean>(false)
-  const [clientToDelete, setClientToDelete] = React.useState<string | null>(null)
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const router = useRouter()
-  const { toast } = useToast()
-  const [items, setItems] = useState<any[]>([]);
-  // Pagination state
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+// Main Page
+const Page = () => {
+  const [dataTableData, setDataTableData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
-  const [viewDialogOpen, setViewDialogOpen] = useState(false);
-  const [selectedClient, setSelectedClient] = useState<any>(null);
+  const [filterText, setFilterText] = useState("");
 
-  // Server-side search and sort state
-  const [search, setSearch] = useState("");
-  const [sort, setSort] = useState([{ id: "createdAt", desc: true }]);
+  const { deleteItem, changeStatus, editItem, fetchData, showRowDataModal } = useCrudOperations(API_URL, {
+    delete: ENDPOINTS.category_delete,
+    changeStatus: ENDPOINTS.category_change_status,
+    get: ENDPOINTS.category_get,
+  });
 
-  const getData = React.useCallback(
-    async (
-      pageParam = page,
-      perPageParam = perPage,
-      sortParam = sort,
-      searchParam = search
-    ) => {
-      setItems([]);
-      // Extract sort field and direction
-      const sortField = sortParam[0]?.id || "createdAt";
-      const sortDirection = sortParam[0]?.desc ? "desc" : "asc";
-      // API query parameters
-      const options = `?page=${pageParam}&per_page=${perPageParam}&delay=1&sort_direction=${sortDirection}&sort_field=${sortField}&search=${encodeURIComponent(searchParam)}`;
-      try {
-        const response: any = await axiosInstance.get(ENDPOINTS.category_get + options)
-        if (response && response.data) {
-          setItems(response.data.data.desc); // Set table data
-          setTotalRows(response.data.data.total || 0); // Set total rows for pagination
-        }
-      } catch (error: any) {
-        handleAxiosError(toast, error)
-      }
-    },
-    [page, perPage, sort, search]
-  );
 
   useEffect(() => {
-    getData(page, perPage, sort, search);
-  }, [page, perPage, sort, search, getData]);
+    getData(1, 10, "createdAt", "desc");
+  }, []);
 
-  // Pagination change handler
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
+  const getData = useCallback(
+    (page = 1, perPage = 10, sortField = "createdAt", sortDirection = "desc") => {
+      const queryParams = {
+        page,
+        per_page: perPage,
+        sort_direction: sortDirection,
+        sort_field: sortField,
+        search: filterText,
+      };
+      setLoading(true);
+      fetchData(queryParams, (data: any) => {
+         setDataTableData(data);
+        setLoading(false);
+      }, setTotalRows);
+    },
+    [filterText, fetchData]
+  );
+
+  const filterComponentHandleChange = (event: any) => {
+    const currentFilterText = event.target.value;
+    setFilterText(currentFilterText);
+    getData();
   };
 
-  const handlePerPageChange = (newPerPage: number) => {
-    setPerPage(newPerPage);
-    setPage(1); // Reset to first page when perPage changes
-  };
+  useEffect(() => {
+    getData(1, 10, "createdAt", "desc");
+    // eslint-disable-next-line
+  }, [filterText, getData]);
 
-  // Server-side search handler
-  const handleSearchChange = (value: string) => {
-    setSearch(value);
-    setPage(1); // Reset to first page on search
-  };
-
-  // Server-side sort handler
-  const handleSortChange = (newSort: any) => {
-    setSort(newSort);
-    setPage(1); // Reset to first page on sort
-  };
-
-  const handleDelete = (id: string) => {
-    setClientToDelete(id)
-    setDeleteDialogOpen(true)
-  }
-
-  const confirmDelete = () => {
-    if (clientToDelete) {
-      setIsLoading(true)
-
-      axiosInstance.delete(`${ENDPOINTS.category_delete}?id=${clientToDelete}`)
-        .then((response) => {
-          handleAxiosSuccess(toast, response)
-          getData(page, perPage) // Refresh data after deletion
-        })
-        .catch((error) => {
-          handleAxiosError(toast, error)
-        })
-        .finally(() => {
-          setDeleteDialogOpen(false)
-          setClientToDelete(null)
-          setIsLoading(false)
-        })
-    }
-  }
-
-  // Open view modal with selected client
-  const handleView = (client: any) => {
-    setSelectedClient(client);
-    setViewDialogOpen(true);
-  };
-
-  const columns = [
+  const columnsAnt = [
     {
-      id: "select",
-      header: ({ table }: any) => (
-        <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && "indeterminate")
-          }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
+      title: "Name",
+      dataIndex: "name",
+      sorter: true,
+    },
+    {
+      title: <div className="flex justify-center">Is Active</div>,
+      dataIndex: "is_active",
+      align: "center",
+      render: (text: any, row: any) => (
+        <div className="flex justify-center items-center w-10 m-auto bg-green-100 rounded-full p-2">
+          {row.is_active ? (
+          <FaEye  className="text-green-600 text-lg" title="Active" />
+          ) : (
+            <FaEarDeaf className="text-red-600 text-lg" title="Inactive" />
+          )}
+        </div>
+      ),
+    },
+    {
+      title: '',
+      dataIndex: 'id',
+      render: (text: any, row: any) => (
+        <ActionButtons
+          row={row}
+          showRowDataModal={() => showRowDataModal([
+            { label: "Id", value: row.id },
+            { label: "Name", value: row.name },
+            {
+              label: "Is Active",
+              value: row.is_active ? "Yes" : "No"
+            },
+          ])}
+          editButtonClick={() => editItem(row.id, pageTitleName)}
+          requestManagerChangeStatus={() => changeStatus(row.id, row.is_active ? 0 : 1, getData)}
+          deleteButtonClick={() => deleteItem(row.id, getData)}
         />
       ),
-      cell: ({ row }: any) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
     },
-    {
-      accessorKey: "name",
-      header: ({ column }: any) => {
-        const isSorted = sort[0]?.id === "name" ? sort[0]?.desc : undefined;
-        return (
-          <Button
-            variant="ghost"
-            onClick={() =>
-              handleSortChange([
-                { id: "name", desc: isSorted === undefined ? false : !isSorted }
-              ])
-            }
-          >
-            Name
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }: any) => <div className="font-medium">{row.getValue("name")}</div>,
-    },
-    {
-      accessorKey: "image",
-      header: "Image",
-      cell: ({ row }: any) => {
-        const img = row.getValue("image") as string
-        return img ? (
-          <img src={`${WEB_URL}${img}`} alt="client" className="w-12 h-12 object-cover rounded" />
-        ) : (
-          <span className="text-xs text-muted-foreground">No Image</span>
-        )
-      },
-    },
-    {
-      accessorKey: "is_active",
-      header: "Status",
-      cell: ({ row }: any) => {
-        const status = row.getValue("is_active") as boolean
-        return (
-          <Badge variant={status ? "default" : "secondary"}>
-            {status ? "Active" : "Inactive"}
-          </Badge>
-        )
-      },
-      filterFn: (row: any, id: any, value: any) => {
-        return value.includes(row.getValue(id))
-      },
-    },
-    {
-      accessorKey: "updatedAt",
-      header: ({ column }: any) => {
-        const isSorted = sort[0]?.id === "updatedAt" ? sort[0]?.desc : undefined;
-        return (
-          <Button
-            variant="ghost"
-            onClick={() =>
-              handleSortChange([
-                { id: "updatedAt", desc: isSorted === undefined ? false : !isSorted }
-              ])
-            }
-          >
-            Last Updated
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
-      cell: ({ row }: any) => {
-        const date = row.getValue("updatedAt") as Date
-        return <div>{formatDistanceToNow(date, { addSuffix: true })}</div>
-      },
-    },
-    {
-      id: "actions",
-      enableHiding: false,
-      cell: ({ row }: any) => {
-        const client = row.original
-        return (
-          <Actions
-            post={client}
-            onView={() => handleView(client)}
-            onEdit={(id) => router.push(`/category/new?id=${id}`)}
-            onDelete={handleDelete}
-            onChangeStatus={async (id: string, is_active: boolean) => {
-              setIsLoading(true)
-              try {
-                const response = await axiosInstance.post(ENDPOINTS.category_change_status, {
-                  id: id.toString(),
-                  is_active: !is_active,
-                })
-                handleAxiosSuccess(toast, response)
-                getData(page, perPage)
-              } catch (error) {
-                handleAxiosError(toast, error)
-              } finally {
-                setIsLoading(false)
-              }
-            }}
-          />
-        )
-      },
-    },
-  ]
+  ];
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight capitalize">category</h1>
-        <Link href="/category/new">
-          <Button className="capitalize">
-            <PlusCircle className="mr-2 h-4 w-4" />
-            New category
-          </Button>
-        </Link>
-      </div>
+    <div className="rounded-sm border shadow-default p-1 bg-white">
       <DataTable
-        columns={columns}
-        data={items}
-        deleteDialogOpen={deleteDialogOpen}
-        setDeleteDialogOpen={setDeleteDialogOpen}
-        confirmDelete={confirmDelete}
-        page={page - 1}
-        perPage={perPage}
+        columnsAnt={columnsAnt}
+        dataTableData={dataTableData}
+        loading={loading}
         totalRows={totalRows}
-        onPageChange={n => setPage(n + 1)}
-        onPerPageChange={handlePerPageChange}
-        search={search}
-        onSearchChange={handleSearchChange}
-        sort={sort}
-        onSortChange={handleSortChange}
+        getData={getData}
+        pageTitleName={pageTitleName}
+        setFilterText={setFilterText}
+        filterText={filterText}
+        filterComponentHandleChange={filterComponentHandleChange}
       />
-      {/* View Modal */}
-      <Dialog open={viewDialogOpen} onOpenChange={setViewDialogOpen}>
-        <DialogContent className="max-w-4xl">
-          <DialogHeader>
-            <DialogTitle>Happy Client Details</DialogTitle>
-          </DialogHeader>
-          {selectedClient && (
-            <table className="min-w-full text-sm">
-              <tbody>
-                <tr className="border-b">
-                  <td className="font-semibold pr-4 py-2">Name:</td>
-                  <td>{selectedClient.name}</td>
-                </tr>
-               
-                <tr className="border-b">
-                  <td className="font-semibold pr-4 py-2 align-top">Image:</td>
-                  <td>
-                    {selectedClient.image ? (
-                      <img src={`${WEB_URL}${selectedClient.image}`} alt="client" className="w-16 h-16 object-cover rounded" />
-                    ) : (
-                      <span className="text-xs text-muted-foreground">No Image</span>
-                    )}
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold pr-4 py-2">Description:</td>
-                  <td>
-                    <div dangerouslySetInnerHTML={{ __html: selectedClient.description }} />
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold pr-4 py-2">Status:</td>
-                  <td>
-                    <Badge variant={selectedClient.status ? "default" : "secondary"}>
-                      {selectedClient.status ? "Active" : "Inactive"}
-                    </Badge>
-                  </td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold pr-4 py-2">Created At:</td>
-                  <td>{selectedClient.createdAt ? new Date(selectedClient.createdAt).toLocaleString() : ""}</td>
-                </tr>
-                <tr className="border-b">
-                  <td className="font-semibold pr-4 py-2">Updated At:</td>
-                  <td>{selectedClient.updatedAt ? new Date(selectedClient.updatedAt).toLocaleString() : ""}</td>
-                </tr>
-              </tbody>
-            </table>
-          )}
-          <DialogClose asChild>
-            <Button variant="secondary" className="mt-4">Close</Button>
-          </DialogClose>
-        </DialogContent>
-      </Dialog>
     </div>
-  )
-}
+  );
+};
+
+export default Page;

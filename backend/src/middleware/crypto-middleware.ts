@@ -44,22 +44,25 @@ export function decryptBody(req: Request, res: Response, next: NextFunction) {
 // Middleware: Encrypt outgoing response
 export function encryptJsonResponse(req: Request, res: Response, next: NextFunction) {
   const originalJson = res.json;
-  res.json = function (body: any) {
-    // Normalize is_confirm header to string for comparison
-    const isConfirmHeader = req.headers && req.headers['is_confirm'];
+
+  res.json = function(body: any) {
+    const isConfirmHeader = req.headers && req.headers["is_confirm"];
     const isConfirm =
-      isConfirmHeader === 'true' ||
-      (Array.isArray(isConfirmHeader) && isConfirmHeader.includes('true'));
+      isConfirmHeader === "true" ||
+      (Array.isArray(isConfirmHeader) && isConfirmHeader.includes("true"));
+
     if (!isConfirm) {
       try {
         const encrypted = encryptData(body);
-        return originalJson.call(this, encrypted);
+        res.setHeader("Content-Type", "text/plain");
+        return res.send(encrypted);  // 👈 FIXED
       } catch (err) {
         return originalJson.call(this, body);
       }
-    } else {
-      return originalJson.call(this, body);
     }
+
+    return originalJson.call(this, body);
   };
+
   next();
 }

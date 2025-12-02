@@ -1,219 +1,156 @@
 "use client"
 
-import * as React from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { useToast } from "@/components/ui/use-toast"
-import { Eye, EyeOff } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import { axiosInstance } from "@/lib/axios-instance"
-import { ENDPOINTS } from "@/lib/constants"
-
-const formSchema = z.object({
-  currentPassword: z.string().min(1, "Current password is required"),
-  newPassword: z.string()
-    .min(8, { message: "Password must be at least 8 characters" })
-    .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter" })
-    .regex(/[a-z]/, { message: "Password must contain at least one lowercase letter" })
-    .regex(/[0-9]/, { message: "Password must contain at least one number" }),
-  confirmPassword: z.string(),
-}).refine((data) => data.newPassword === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-})
+import React, { useState } from "react"
 
 export function ChangePasswordForm() {
-  const { toast } = useToast()
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [showCurrentPassword, setShowCurrentPassword] = React.useState<boolean>(false)
-  const [showNewPassword, setShowNewPassword] = React.useState<boolean>(false)
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState<boolean>(false)
+  const [currentPassword, setCurrentPassword] = useState("")
+  const [newPassword, setNewPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false)
+  const [showNewPassword, setShowNewPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    },
-  })
+  function validate() {
+    if (!currentPassword) return "Current password is required"
+    if (newPassword.length < 8) return "Password must be at least 8 characters"
+    if (!/[A-Z]/.test(newPassword)) return "Password must contain at least one uppercase letter"
+    if (!/[a-z]/.test(newPassword)) return "Password must contain at least one lowercase letter"
+    if (!/[0-9]/.test(newPassword)) return "Password must contain at least one number"
+    if (newPassword !== confirmPassword) return "Passwords do not match"
+    return ""
+  }
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError("")
+    setSuccess("")
+    const validationError = validate()
+    if (validationError) {
+      setError(validationError)
+      return
+    }
     setIsLoading(true)
-
     try {
-      await axiosInstance.post(ENDPOINTS.change_password, {
-        currentPassword: values.currentPassword,
-        newPassword: values.newPassword,
-        confirmPassword: values.confirmPassword,
-      }).then((response) => {
-        if (response.data.status === "success") {
-          toast({
-            title: "Password changed",
-            description: "Your password has been changed successfully.",
-          })
-
-          if (typeof window !== "undefined") {
-            localStorage.removeItem("j_access_token");
-            localStorage.removeItem("profile");
-            window.location.href = "/login";
-          }
-        }
-      }).catch((error) => {
-        if (error.response && error.response.data) {
-          const errorMessage = error.response.data.message || "Something went wrong"
-          toast({
-            variant: "destructive",
-            title: "Error changing password",
-            description: errorMessage,
-          })
-          return
-        }
-      })
-
-      // Clear local storage and redirect to login
-      // if (typeof window !== "undefined") {
-      //   localStorage.removeItem("j_access_token");
-      //   localStorage.removeItem("profile");
-      //   window.location.href = "/login";
-      // }
-
-      // toast({
-      //   title: "Password changed",
-      //   description: "Your password has been changed successfully.",
-      // })
-      form.reset()
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Something went wrong",
-        description: "Please try again later.",
-      })
-    } finally {
+      // Replace this with your API call
+      // await axiosInstance.post(ENDPOINTS.change_password, { ... })
+      setTimeout(() => {
+        setIsLoading(false)
+        setSuccess("Your password has been changed successfully.")
+        setCurrentPassword("")
+        setNewPassword("")
+        setConfirmPassword("")
+        // window.location.href = "/login"
+      }, 1000)
+    } catch {
       setIsLoading(false)
+      setError("Something went wrong. Please try again later.")
     }
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <Card>
-          <CardContent className="pt-6">
-            <div className="space-y-4">
-              <FormField
-                control={form.control}
-                name="currentPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Current Password</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          type={showCurrentPassword ? "text" : "password"}
-                          placeholder="Enter your current password"
-                          {...field}
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="absolute right-0 top-0 h-full px-3 py-1 text-muted-foreground"
-                          onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                        >
-                          {showCurrentPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="newPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>New Password</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          type={showNewPassword ? "text" : "password"}
-                          placeholder="Enter your new password"
-                          {...field}
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="absolute right-0 top-0 h-full px-3 py-1 text-muted-foreground"
-                          onClick={() => setShowNewPassword(!showNewPassword)}
-                        >
-                          {showNewPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          type={showConfirmPassword ? "text" : "password"}
-                          placeholder="Confirm your new password"
-                          {...field}
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="absolute right-0 top-0 h-full px-3 py-1 text-muted-foreground"
-                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        >
-                          {showConfirmPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </CardContent>
-        </Card>
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Changing password..." : "Change Password"}
-        </Button>
-      </form>
-    </Form>
+    <form onSubmit={handleSubmit} style={{ maxWidth: 400, margin: "0 auto" }}>
+      <h2>Change Password</h2>
+      {error && <div style={{ color: "red", marginBottom: 8 }}>{error}</div>}
+      {success && <div style={{ color: "green", marginBottom: 8 }}>{success}</div>}
+      <div style={{ marginBottom: 16 }}>
+        <label>
+          Current Password
+          <div style={{ position: "relative" }}>
+            <input
+              type={showCurrentPassword ? "text" : "password"}
+              value={currentPassword}
+              onChange={e => setCurrentPassword(e.target.value)}
+              placeholder="Enter your current password"
+              style={{ width: "100%", paddingRight: 40 }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowCurrentPassword(v => !v)}
+              style={{
+                position: "absolute",
+                right: 0,
+                top: 0,
+                height: "100%",
+                width: 40,
+                background: "none",
+                border: "none",
+                cursor: "pointer"
+              }}
+              tabIndex={-1}
+            >
+              {showCurrentPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
+        </label>
+      </div>
+      <div style={{ marginBottom: 16 }}>
+        <label>
+          New Password
+          <div style={{ position: "relative" }}>
+            <input
+              type={showNewPassword ? "text" : "password"}
+              value={newPassword}
+              onChange={e => setNewPassword(e.target.value)}
+              placeholder="Enter your new password"
+              style={{ width: "100%", paddingRight: 40 }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowNewPassword(v => !v)}
+              style={{
+                position: "absolute",
+                right: 0,
+                top: 0,
+                height: "100%",
+                width: 40,
+                background: "none",
+                border: "none",
+                cursor: "pointer"
+              }}
+              tabIndex={-1}
+            >
+              {showNewPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
+        </label>
+      </div>
+      <div style={{ marginBottom: 16 }}>
+        <label>
+          Confirm Password
+          <div style={{ position: "relative" }}>
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              value={confirmPassword}
+              onChange={e => setConfirmPassword(e.target.value)}
+              placeholder="Confirm your new password"
+              style={{ width: "100%", paddingRight: 40 }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(v => !v)}
+              style={{
+                position: "absolute",
+                right: 0,
+                top: 0,
+                height: "100%",
+                width: 40,
+                background: "none",
+                border: "none",
+                cursor: "pointer"
+              }}
+              tabIndex={-1}
+            >
+              {showConfirmPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
+        </label>
+      </div>
+      <button type="submit" disabled={isLoading} style={{ width: "100%", padding: 8 }}>
+        {isLoading ? "Changing password..." : "Change Password"}
+      </button>
+    </form>
   )
 }

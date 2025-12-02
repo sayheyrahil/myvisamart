@@ -2,7 +2,6 @@ import * as React from "react"
 import { axiosInstance } from "@/lib/axios-instance"
 import { ENDPOINTS, WEB_URL } from "@/lib/constants"
 import { handleAxiosError } from "@/lib/common"
-import { useToast } from "@/components/ui/use-toast"
 import axios from "axios"
 
 interface ImageUploadProps {
@@ -22,7 +21,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   setUploading,
   preview,
 }) => {
-  // Add runtime checks for required function props
   React.useEffect(() => {
     if (typeof onChange !== "function") {
       throw new Error("ImageUpload: onChange prop must be a function")
@@ -32,7 +30,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     }
   }, [onChange, setUploading])
 
-  const { toast } = useToast()
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const [isDragActive, setIsDragActive] = React.useState(false)
 
@@ -65,15 +62,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         )
-
-
-        console.log("Upload response:", response.data)
         const store_url = response.data.data.store_url
         const image_url = response.data.data.image_url
         onChange(store_url, image_url)
       }
     } catch (error) {
-      handleAxiosError(toast, error)
+      handleAxiosError(error)
     } finally {
       setUploading(false)
     }
@@ -120,14 +114,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     }
   }
 
-  // Helper to prepend WEB_URL if not already present
   function withBaseUrl(url: string) {
     if (!url) return ""
     if (url.startsWith("http")) return url
     return `${WEB_URL}${url}`
   }
 
-  // Render logic for single/multiple images
   const hasImages = multiple
     ? Array.isArray(value) && value.length > 0
     : !!(preview || value)
@@ -137,8 +129,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       <div
         className={`relative flex flex-col items-center justify-center border-2 border-dashed rounded-lg transition-colors cursor-pointer
           ${isDragActive
-            ? "border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-950"
-            : "border-gray-300 bg-gray-50 hover:border-blue-400 dark:border-gray-700 dark:bg-gray-900 dark:hover:border-blue-400"}
+            ? "border-blue-500 bg-blue-50"
+            : "border-gray-300 bg-gray-50 hover:border-blue-400"}
           ${uploading ? "opacity-60 pointer-events-none" : ""}
           py-6 px-4`}
         tabIndex={0}
@@ -160,11 +152,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                   <img
                     src={withBaseUrl(preview[idx] || v)}
                     alt={`Preview ${idx + 1}`}
-                    className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain dark:border-gray-700 dark:bg-gray-800"
+                    className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain"
                   />
                   <button
                     type="button"
-                    className="absolute top-2 right-2 bg-white border border-gray-300 rounded-full p-1 shadow hover:bg-red-500 hover:text-white transition-colors dark:bg-gray-900 dark:border-gray-700"
+                    className="absolute top-2 right-2 bg-white border border-gray-300 rounded-full p-1 shadow hover:bg-red-500 hover:text-white transition-colors"
                     onClick={(e) => {
                       e.stopPropagation()
                       handleRemoveImage(idx)
@@ -198,7 +190,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     key={idx}
                     src={withBaseUrl(p)}
                     alt={`Preview ${idx + 1}`}
-                    className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain dark:border-gray-700 dark:bg-gray-800"
+                    className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain"
                   />
                 ))
               ) : Array.isArray(value) && value.length > 0 ? (
@@ -207,7 +199,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     key={idx}
                     src={withBaseUrl(v)}
                     alt={`Preview ${idx + 1}`}
-                    className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain dark:border-gray-700 dark:bg-gray-800"
+                    className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain"
                   />
                 ))
               ) : (
@@ -220,12 +212,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                       : ""
                   }
                   alt="Preview"
-                  className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain dark:border-gray-700 dark:bg-gray-800"
+                  className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain"
                 />
               )}
               <button
                 type="button"
-                className="absolute top-2 right-2 bg-white border border-gray-300 rounded-full p-1 shadow hover:bg-red-500 hover:text-white transition-colors dark:bg-gray-900 dark:border-gray-700"
+                className="absolute top-2 right-2 bg-white border border-gray-300 rounded-full p-1 shadow hover:bg-red-500 hover:text-white transition-colors"
                 onClick={(e) => {
                   e.stopPropagation()
                   handleRemoveImage()

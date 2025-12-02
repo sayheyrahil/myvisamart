@@ -5,18 +5,8 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { useToast } from "@/components/ui/use-toast"
-import { Eye, EyeOff } from "lucide-react"
+ 
+ import { Eye, EyeOff } from "lucide-react"
 import { axiosInstance } from "@/lib/axios-instance"
 import { ENDPOINTS } from "@/lib/constants"
 import { handleAxiosError } from "@/lib/common"
@@ -31,8 +21,7 @@ const formSchema = z.object({
 
 export function LoginForm() {
   const router = useRouter()
-  const { toast } = useToast()
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [showPassword, setShowPassword] = React.useState<boolean>(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -46,6 +35,7 @@ export function LoginForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true)
 
+    console.log("Submitting login form with values:", values);
     await axiosInstance
       .post(ENDPOINTS.login, values)
       .then(async (response: any) => {
@@ -63,13 +53,10 @@ export function LoginForm() {
         }
 
         window.location.href = '/dashboard'; // Redirect to dashboard after login
-        toast({
-          title: "Login successful",
-          description: "Welcome to the admin panel",
-        });
+       
       })
       .catch((error: any) => {
-        handleAxiosError(toast, error)
+        handleAxiosError( error)
 
       })
       .finally(() => {
@@ -78,57 +65,59 @@ export function LoginForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
+    <form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
+        await onSubmit({ email, password });
+      }}
+      className="space-y-4 bg-white p-6 rounded shadow-md"
+    >
+      <div> 
+        <label htmlFor="email" className="block font-medium mb-1">Email</label>
+        <input
+          id="email"
           name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="name@example.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          type="email"
+          required
+          placeholder="name@example.com"
+          className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
         />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    {...field}
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-1 text-muted-foreground"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button className="w-full" type="submit" disabled={isLoading}>
-          {isLoading ? "Signing in..." : "Sign In"}
-        </Button>
-      </form>
-    </Form>
+      </div>
+      <div>
+        <label htmlFor="password" className="block font-medium mb-1">Password</label>
+        <div className="relative">
+          <input
+            id="password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            required
+            placeholder="Enter your password"
+            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+          />
+          <button
+            type="button"
+            className="absolute right-0 top-0 h-full px-3 py-1 text-gray-400"
+            tabIndex={-1}
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <EyeOff className="h-4 w-4" />
+            ) : (
+              <Eye className="h-4 w-4" />
+            )}
+          </button>
+        </div>
+      </div>
+      <button
+        className="w-full px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
+        type="submit"
+        disabled={isLoading}
+      >
+        {isLoading ? "Signing in..." : "Sign In"}
+      </button>
+    </form>
   )
 }

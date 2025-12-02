@@ -1,40 +1,28 @@
-// import axios from "axios"
-// import { BASE_API_URL } from "./constants"
+import axios from "axios";
+import { BASE_API_URL } from "./constants";
+import CryptoJS from "crypto-js";
 
-// const BASE_URL = BASE_API_URL // Replace with your actual API base URL
+// --------------------------------------------------
+// Encryption Key
+// --------------------------------------------------
+const ENCRYPTION_KEY = "har har mahadev";
 
-// let tokenPass = "";
-// if (typeof window !== "undefined") {
-//   tokenPass = "Bearer " + localStorage.getItem("j_access_token");
-//   axios.defaults.headers.common["J-authorization"] = tokenPass;
-// }
-
-// export const axiosInstance = axios.create({
-//   baseURL: BASE_URL,
-//   headers: {
-//     "Content-Type": "application/json",
-//     "J-authorization": tokenPass,
-//   },
-// })
-
-// // Optionally, add interceptors here if needed
-// // axiosInstance.interceptors.request.use(...)
-// // axiosInstance.interceptors.response.use(...)
-import axios from "axios"
-import { BASE_API_URL } from "./constants"
-import CryptoJS from "crypto-js"
-
-const ENCRYPTION_KEY = 'har har mahadev';
-
-function encryptData(data: any): any {
+// --------------------------------------------------
+// Encrypt Data
+// --------------------------------------------------
+function encryptData(data: any): string {
   const stringData = JSON.stringify(data);
   return CryptoJS.AES.encrypt(stringData, ENCRYPTION_KEY).toString();
 }
 
+// --------------------------------------------------
+// Decrypt Data
+// --------------------------------------------------
 function decryptData(data: any): any {
   try {
     const bytes = CryptoJS.AES.decrypt(data, ENCRYPTION_KEY);
     const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
+
     try {
       return JSON.parse(decryptedString);
     } catch {
@@ -45,76 +33,96 @@ function decryptData(data: any): any {
   }
 }
 
-const BASE_URL = BASE_API_URL
+// --------------------------------------------------
+// Base Config
+// --------------------------------------------------
+const BASE_URL = BASE_API_URL;
 
+// Token Setup
 let tokenPass = "";
 if (typeof window !== "undefined") {
   tokenPass = "Bearer " + localStorage.getItem("token");
   axios.defaults.headers.common["J-authorization"] = tokenPass;
 }
 
+// --------------------------------------------------
+// Axios Instance
+// --------------------------------------------------
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
-    "Content-Type": "text/plain",
+    "Content-Type": "text/plain;charset=utf-8",
     "J-authorization": tokenPass,
   },
-})
+  responseType: "text",               // ensure backend encrypted text arrives as raw string
+  transformRequest: [(data) => data], // stop axios from JSON-parsing encrypted string
+});
 
-// Encrypt request data
+// --------------------------------------------------
+// Encrypt Request Interceptor
+// --------------------------------------------------
 axiosInstance.interceptors.request.use((config) => {
-  // If header is_confirm is present and true, skip encryption
-  const isConfirm = config.headers && (
-    config.headers['is_confirm'] === true ||
-    config.headers['is_confirm'] === 'true'
-  );
+  const isConfirm =
+    config.headers?.is_confirm === true ||
+    config.headers?.is_confirm === "true";
+
   if (!isConfirm && config.data) {
-    config.data = encryptData(config.data);
+    config.data = encryptData(config.data); // final encrypted text
   }
+
   return config;
 });
 
-// Decrypt response data
+// --------------------------------------------------
+// Decrypt Response Interceptor
+// --------------------------------------------------
 axiosInstance.interceptors.response.use(
   (response) => {
-    // If header is_confirm is present and true, skip decryption
-    const isConfirm = response.config.headers && (
-      response.config.headers['is_confirm'] === true ||
-      response.config.headers['is_confirm'] === 'true'
-    );
-    if (!isConfirm && response && response.data) {
-      try {
-        if (typeof response.data === "string" && response.data.startsWith("U2FsdGVk")) {
-          response.data = decryptData(response.data);
-        }
-      } catch {}
+    const isConfirm =
+      response.config.headers?.is_confirm === true ||
+      response.config.headers?.is_confirm === "true";
+
+    console.log("Response received:", response.data);
+
+    if (!isConfirm && typeof response.data === "string") {
+      if (response.data.startsWith("U2FsdGVk")) {
+        response.data = decryptData(response.data);
+      }
     }
+
+    console.log("Decrypted response:", response.data);
     return response;
   },
+
+  // ------------------------
+  // Error Handler
+  // ------------------------
   (error) => {
     if (error.response) {
-      const isConfirm = error.response.config && error.response.config.headers && (
-        error.response.config.headers['is_confirm'] === true ||
-        error.response.config.headers['is_confirm'] === 'true'
-      );
-      if (!isConfirm) {
+      const isConfirm =
+        error.response.config?.headers?.is_confirm === true ||
+        error.response.config?.headers?.is_confirm === "true";
+
+      if (
+        !isConfirm &&
+        typeof error.response.data === "string" &&
+        error.response.data.startsWith("U2FsdGVk")
+      ) {
         try {
-          if (typeof error.response.data === "string" && error.response.data.startsWith("U2FsdGVk")) {
-            error.response.data = decryptData(error.response.data);
-          }
+          error.response.data = decryptData(error.response.data);
         } catch {}
       }
     }
+
+    // Unauthorized → logout user
     if (error?.response?.status === 401 && typeof window !== "undefined") {
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       window.location.href = "/home";
       return;
     }
+
     return Promise.reject(error);
   }
 );
 
-// Optionally, add interceptors here if needed
-// axiosInstance.interceptors.request.use(...)
-// axiosInstance.interceptors.response.use(...)

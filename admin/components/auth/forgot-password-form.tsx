@@ -4,17 +4,7 @@ import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { useToast } from "@/components/ui/use-toast"
+ 
 import { axiosInstance } from "@/lib/axios-instance"
 import { ENDPOINTS } from "@/lib/constants"
 
@@ -23,8 +13,7 @@ const formSchema = z.object({
 })
 
 export function ForgotPasswordForm() {
-  const { toast } = useToast()
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,10 +30,7 @@ export function ForgotPasswordForm() {
       // Call the forgot password API endpoint using axios instance
       await axiosInstance.post(ENDPOINTS.forget_password, { email: values.email })
 
-      toast({
-        title: "Password reset email sent",
-        description: "Check your email for a link to reset your password.",
-      })
+    
       setIsSubmitted(true)
     } catch (error: any) {
 
@@ -57,11 +43,7 @@ export function ForgotPasswordForm() {
           errorMessage = error.response.data?.message || "An unexpected error occurred."
         }
       }
-      toast({
-        variant: "destructive",
-        title: "Something went wrong",
-        description: errorMessage,
-      })
+    
     } finally {
       setIsLoading(false)
     }
@@ -75,37 +57,45 @@ export function ForgotPasswordForm() {
             If an account exists with that email, we've sent instructions to reset your password.
           </p>
         </div>
-        <Button
-          className="w-full"
-          variant="outline"
+        <button
+          className="w-full px-4 py-2 rounded border bg-white hover:bg-gray-100"
+          type="button"
           onClick={() => setIsSubmitted(false)}
         >
           Try with a different email
-        </Button>
+        </button>
       </div>
     )
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
+    <form
+      onSubmit={async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const email = formData.get("email") as string;
+        await onSubmit({ email });
+      }}
+      className="space-y-4 bg-white p-6 rounded shadow-md"
+    >
+      <div>
+        <label htmlFor="email" className="block font-medium mb-1">Email</label>
+        <input
+          id="email"
           name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="name@example.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          type="email"
+          required
+          placeholder="name@example.com"
+          className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
         />
-        <Button className="w-full" type="submit" disabled={isLoading}>
-          {isLoading ? "Sending reset link..." : "Send reset link"}
-        </Button>
-      </form>
-    </Form>
+      </div>
+      <button
+        className="w-full px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
+        type="submit"
+        disabled={isLoading}
+      >
+        {isLoading ? "Sending reset link..." : "Send reset link"}
+      </button>
+    </form>
   )
 }

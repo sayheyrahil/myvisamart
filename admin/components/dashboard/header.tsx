@@ -2,87 +2,117 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, Search, UserCircle } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ModeToggle } from "@/components/mode-toggle"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import { DashboardSidebar } from "./sidebar"
+import React, { useState, useRef, useEffect } from "react"
 
 export function DashboardHeader() {
   const pathname = usePathname()
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const userMenuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false)
+      }
+    }
+    if (userMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside)
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [userMenuOpen])
 
   return (
-    <header className="  z-30 flex h-16 items-center gap-4 border-b bg-muted-500 px-4 md:px-6">
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="shrink-0 md:hidden">
-            <Menu className="h-5 w-5 text-muted-foreground" />
-            <span className="sr-only">Toggle navigation menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="w-72 sm:max-w-sm">
-          <div className="px-2">
-            <DashboardSidebar passData={true} />
-          </div>
-        </SheetContent>
-      </Sheet>
-      <div className="hidden md:flex">
-        <Link href="/dashboard" className="flex items-center gap-2 font-semibold text-muted-foreground">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-6 w-6"
+    <header style={{
+      zIndex: 30,
+      display: "flex",
+      alignItems: "center",
+      gap: 16,
+      height: 64,
+       padding: "0 24px"
+    }}>
+      {/* Sidebar toggle (mobile) */}
+    
+      
+      {/* Right side */}
+      <div style={{ display: "flex", alignItems: "center", gap: 16, justifyContent: "flex-end", flex: 1 }}>
+       
+        {/* User menu */}
+        <div style={{ position: "relative" }} ref={userMenuRef}>
+          <button
+            type="button"
+            style={{
+              border: "1px solid #ccc",
+              borderRadius: "50%",
+              background: "#fff",
+              width: 40,
+              height: 40,
+              cursor: "pointer"
+            }}
+            aria-label="Toggle user menu"
+            onClick={() => setUserMenuOpen(v => !v)}
           >
-            <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-          </svg>
-          <span>Admin Panel</span>
-        </Link>
-      </div>
-  
-      <div className="flex items-center gap-4 justify-end flex-1">
-        <ModeToggle />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="rounded-full">
-              <UserCircle className="h-5 w-5 text-muted-foreground" />
-              <span className="sr-only">Toggle user menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Link href="/dashboard/settings/password" className="flex w-full">
-                Change Password
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/settings/logout" className="flex w-full">
-                Logout
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            <span style={{ fontSize: 22 }}>👤</span>
+          </button>
+          {userMenuOpen && (
+            <div
+              style={{
+                position: "absolute",
+                right: 0,
+                top: 48,
+                minWidth: 180,
+                background: "#fff",
+                border: "1px solid #ccc",
+                borderRadius: 6,
+                boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                zIndex: 100
+              }}
+            >
+              <div style={{ padding: "8px 12px", fontWeight: "bold", borderBottom: "1px solid #eee" }}>
+                My Account
+              </div>
+              <div>
+                <a
+                  href="/dashboard/settings/password"
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    padding: "8px 12px",
+                    background: "none",
+                    border: "none",
+                    textAlign: "left",
+                    textDecoration: "none",
+                    color: "#222",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => setUserMenuOpen(false)}
+                >
+                  Change Password
+                </a>
+                <a
+                  href="/dashboard/settings/logout"
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    padding: "8px 12px",
+                    background: "none",
+                    border: "none",
+                    textAlign: "left",
+                    textDecoration: "none",
+                    color: "#222",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => setUserMenuOpen(false)}
+                >
+                  Logout
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </header>
   )

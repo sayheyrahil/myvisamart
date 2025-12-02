@@ -11,6 +11,8 @@ import adminRouter from "@routes/admin-router";
 import morgan from "morgan";
 
 
+
+
 import '@models/associations';
 import "@models/async";
 import userRouter from "@routes/user-router";
@@ -59,6 +61,9 @@ app.get("/juhi", (req, res) => {
 });
 
 app.use("/api", indexRouter);
+
+app.use(decryptBody);
+app.use(encryptJsonResponse);
 //  app.use("/api/admin", baseRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);

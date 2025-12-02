@@ -9,7 +9,7 @@ const idRequiredQuery = async (req: Request, res: Response, next: NextFunction) 
 }
 const idRequired = async (req: Request, res: Response, next: NextFunction) => {
     const ValidationRule = {
-        "id": "required|string",
+        "id": "required",
     }
     validator.validatorUtilWithCallback(ValidationRule, {}, req, res, next);
 }

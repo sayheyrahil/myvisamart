@@ -1,147 +1,119 @@
 "use client"
 
-import * as React from "react"
-import { useRouter } from "next/navigation"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { useToast } from "@/components/ui/use-toast"
-import { Eye, EyeOff } from "lucide-react"
-
-const formSchema = z.object({
-  password: z.string()
-    .min(8, { message: "Password must be at least 8 characters" })
-    .regex(/[A-Z]/, { message: "Password must contain at least one uppercase letter" })
-    .regex(/[a-z]/, { message: "Password must contain at least one lowercase letter" })
-    .regex(/[0-9]/, { message: "Password must contain at least one number" }),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-})
+import React, { useState } from "react"
 
 export function ResetPasswordForm() {
-  const router = useRouter()
-  const { toast } = useToast()
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [showPassword, setShowPassword] = React.useState<boolean>(false)
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState<boolean>(false)
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      password: "",
-      confirmPassword: "",
-    },
-  })
+  function validate() {
+    if (password.length < 8) return "Password must be at least 8 characters"
+    if (!/[A-Z]/.test(password)) return "Password must contain at least one uppercase letter"
+    if (!/[a-z]/.test(password)) return "Password must contain at least one lowercase letter"
+    if (!/[0-9]/.test(password)) return "Password must contain at least one number"
+    if (password !== confirmPassword) return "Passwords do not match"
+    return ""
+  }
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError("")
+    setSuccess("")
+    const validationError = validate()
+    if (validationError) {
+      setError(validationError)
+      return
+    }
     setIsLoading(true)
-
     try {
-      // In a real app, we would call an API endpoint
-      // For demo purposes, we'll simulate a successful password reset
-      console.log(values)
-      
       setTimeout(() => {
-        toast({
-          title: "Password reset successful",
-          description: "Your password has been reset. You can now log in with your new password.",
-        })
-        router.push("/login")
+        setIsLoading(false)
+        setSuccess("Your password has been reset. You can now log in with your new password.")
+        setPassword("")
+        setConfirmPassword("")
+        // window.location.href = "/login"
       }, 1000)
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Something went wrong",
-        description: "Please try again later.",
-      })
-    } finally {
+    } catch {
       setIsLoading(false)
+      setError("Something went wrong. Please try again later.")
     }
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>New Password</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <Input 
-                    type={showPassword ? "text" : "password"} 
-                    placeholder="Enter your new password" 
-                    {...field} 
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-1 text-muted-foreground"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="confirmPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <Input 
-                    type={showConfirmPassword ? "text" : "password"} 
-                    placeholder="Confirm your new password" 
-                    {...field} 
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-1 text-muted-foreground"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button className="w-full" type="submit" disabled={isLoading}>
-          {isLoading ? "Resetting password..." : "Reset password"}
-        </Button>
-      </form>
-    </Form>
+    <form onSubmit={handleSubmit} style={{ maxWidth: 400, margin: "0 auto" }}>
+      <h2>Reset Password</h2>
+      {error && <div style={{ color: "red", marginBottom: 8 }}>{error}</div>}
+      {success && <div style={{ color: "green", marginBottom: 8 }}>{success}</div>}
+      <div style={{ marginBottom: 16 }}>
+        <label>
+          New Password
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="Enter your new password"
+              style={{ width: "100%", paddingRight: 40 }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(v => !v)}
+              style={{
+                position: "absolute",
+                right: 0,
+                top: 0,
+                height: "100%",
+                width: 40,
+                background: "none",
+                border: "none",
+                cursor: "pointer"
+              }}
+              tabIndex={-1}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
+        </label>
+      </div>
+      <div style={{ marginBottom: 16 }}>
+        <label>
+          Confirm Password
+          <div style={{ position: "relative" }}>
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              value={confirmPassword}
+              onChange={e => setConfirmPassword(e.target.value)}
+              placeholder="Confirm your new password"
+              style={{ width: "100%", paddingRight: 40 }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(v => !v)}
+              style={{
+                position: "absolute",
+                right: 0,
+                top: 0,
+                height: "100%",
+                width: 40,
+                background: "none",
+                border: "none",
+                cursor: "pointer"
+              }}
+              tabIndex={-1}
+            >
+              {showConfirmPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
+        </label>
+      </div>
+      <button type="submit" disabled={isLoading} style={{ width: "100%", padding: 8 }}>
+        {isLoading ? "Resetting password..." : "Reset password"}
+      </button>
+    </form>
   )
 }

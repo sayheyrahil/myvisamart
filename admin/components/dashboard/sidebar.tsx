@@ -2,20 +2,17 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, FileText, Settings, BookOpen, PanelLeft } from "lucide-react"
-import { Fragment, useState } from "react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import React, { Fragment, useState } from "react"
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
     href: string
     title: string
-    icon: React.ReactNode
+    icon?: React.ReactNode
     submenu?: {
       href: string
       title: string
+      icon?: React.ReactNode
     }[]
   }[]
 }
@@ -25,40 +22,94 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
   const [hovered, setHovered] = useState<string | null>(null)
 
   return (
-    <nav className={cn("grid gap-1", className)} {...props}>
+    <nav
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+         minHeight: "100vh",
+        borderRight: "1px solid #e5e7eb",
+        boxShadow: "2px 0 8px rgba(0,0,0,0.03)",
+        padding: "8px 0",
+      }}
+      className={className }
+      {...props}
+    >
       {items.map((item) => (
         <div
           key={item.href}
           onMouseEnter={() => setHovered(item.href)}
           onMouseLeave={() => setHovered(null)}
         >
-          <Link href={item.href}>
-            <Button
-              variant={pathname === item.href ? "secondary" : "ghost"}
-              className={cn(
-                "w-full justify-start",
-                (pathname === item.href || pathname.startsWith(`${item.href}/`)) &&
-                "bg-muted font-medium"
-              )}
+          <Link href={item.href} style={{ textDecoration: "none" }}>
+            <button
+              type="button"
+              style={{
+                width: "100%",
+                textAlign: "left",
+                background: pathname === item.href ? "#0A509F" : "transparent",
+                fontWeight: pathname === item.href ? 600 : 400,
+                border: "none",
+                padding: "8px 16px",
+                borderRadius: 6,
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                transition: "background 0.15s",
+                 boxShadow: pathname === item.href ? "0 1px 4px rgba(0,0,0,0.04)" : undefined,
+                minHeight: 44,
+                gap: 10,
+              }}
+              onMouseOver={e => (e.currentTarget.style.background = "#0A509F")}
+              onMouseOut={e => (e.currentTarget.style.background = pathname === item.href ? "#0A509F" : "transparent")}
             >
-              {item.icon}
-              <span className="ml-2">{item.title}</span>
-            </Button>
+              {item.icon && <span style={{ marginRight: 10, fontSize: 20 }}>{item.icon}</span>}
+              <span style={{ flex: 1 }}>{item.title}</span>
+             
+            </button>
           </Link>
           {item.submenu && item.submenu.length > 0 && (hovered === item.href || pathname.startsWith(`${item.href}/`)) && (
-            <div className="ml-4 mt-1 grid gap-1">
-              {item.submenu.map((subitem: { href: string; title: string; icon?: React.ReactNode }) => (
-                <Link key={subitem.href} href={subitem.href}>
-                  <Button
-                    variant={pathname === subitem.href ? "secondary" : "ghost"}
-                    className={cn(
-                      "w-full justify-start text-sm",
-                      pathname === subitem.href && "bg-muted font-medium"
-                    )}
+            <div
+              style={{
+                marginLeft: 24,
+                marginTop: 2,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                background: "#f4f6fa",
+                border: "1px solid #e5e7eb",
+                borderRadius: 6,
+                boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+                padding: 4,
+                minWidth: 140,
+              }}
+            >
+              {item.submenu.map((subitem) => (
+                <Link key={subitem.href} href={subitem.href} style={{ textDecoration: "none" }}>
+                  <button
+                    type="button"
+                    style={{
+                      width: "100%",
+                      textAlign: "left",
+                      background: pathname === subitem.href ? "#e0e7ef" : "transparent",
+                      fontWeight: pathname === subitem.href ? 600 : 400,
+                      border: "none",
+                      padding: "7px 14px",
+                      borderRadius: 4,
+                      fontSize: 14,
+                      display: "flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+                      transition: "background 0.15s",
+                      color: "#222",
+                      gap: 8,
+                    }}
+                    onMouseOver={e => (e.currentTarget.style.background = "#0A509F")}
+                    onMouseOut={e => (e.currentTarget.style.background = pathname === subitem.href ? "#e0e7ef" : "transparent")}
                   >
-                    {subitem.icon && subitem.icon}
-                    <span className="ml-2">{subitem.title}</span>
-                  </Button>
+                    {subitem.icon && <span style={{ marginRight: 8 }}>{subitem.icon}</span>}
+                    <span>{subitem.title}</span>
+                  </button>
                 </Link>
               ))}
             </div>
@@ -74,67 +125,28 @@ export function DashboardSidebar({ passData }: { passData?: boolean }) {
     {
       title: "Overview",
       href: "/dashboard",
-      icon: <LayoutDashboard className="h-5 w-5" />,
+      icon: <span style={{ fontSize: 18 }}>🏠</span>,
     },
-    {
-      title: "Blog Posts",
-      href: "/blog",
-      icon: <BookOpen className="h-5 w-5" />,
-    },
-
+  
     {
       title: "category",
       href: "/category",
-      icon: <PanelLeft className="h-5 w-5" />,
+      icon: <span style={{ fontSize: 18 }}>📂</span>,
     },
-    // {
-    //   title: "Blog Posts",
-    //   href: "/blog",
-    //   icon: <BookOpen className="h-5 w-5" />,
-    // },
-
-    // {
-    //   title: "Happy Clients",
-    //   href: "/happy-client",
-    //   icon: <BookOpen className="h-5 w-5" />,
-    // },
-    // {
-    //   title: "Our Services",
-    //   href: "/our-service",
-    //   icon: <BookOpen className="h-5 w-5" />,
-    // },
-    // {
-    //   title: "portfolio",
-    //   href: "/portfolio",
-    //   icon: <BookOpen className="h-5 w-5" />,
-    // },
-    // {
-    //   title: "products",
-    //   href: "/product",
-    //   icon: <BookOpen className="h-5 w-5" />,
-    // },
-    // {
-    //   title: "Team",
-    //   href: "/team",
-    //   icon: <BookOpen className="h-5 w-5" />,
-    // },
-
     {
       title: "Settings",
       href: "/settings",
-      icon: <Settings className="h-5 w-5" />,
+      icon: <span style={{ fontSize: 18 }}>⚙️</span>,
       submenu: [
         {
           title: "Change Password",
           href: "/settings/password",
-          icon: <FileText className="h-5 w-5" />,
-
+          icon: <span style={{ fontSize: 16 }}>🔑</span>,
         },
-
         {
           title: "CMS Pages",
           href: "/cms",
-          icon: <FileText className="h-5 w-5" />,
+          icon: <span style={{ fontSize: 16 }}>📄</span>,
         },
       ],
     },
@@ -142,13 +154,38 @@ export function DashboardSidebar({ passData }: { passData?: boolean }) {
 
   return (
     <Fragment>
-      <div className="hidden w-64 flex-col md:flex bg-muted-100 min-h-screen border-r border-border">
-        <div className="flex flex-col gap-4 p-4">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: 256,
+          minHeight: "100vh",
+           borderRight: "1px solid #e5e7eb",
+          boxShadow: "2px 0 8px rgba(0,0,0,0.03)",
+        }}
+        className="md:flex bg-slate-900 rounded-xl text-white"
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: 0, padding: 0 }}>
           <SidebarNav items={sidebarNavItems} />
         </div>
       </div>
       {passData && (
-        <div className="md:hidden fixed  w-40 left-0 right-0 bg-muted-100 border-t border-border z-50">
+        <div
+          style={{
+            display: "block",
+            position: "fixed",
+            width: 200,
+            left: 0,
+            top: 0,
+            bottom: 0,
+            background: "#f8fafd",
+            borderRight: "1px solid #e5e7eb",
+            boxShadow: "2px 0 8px rgba(0,0,0,0.03)",
+            zIndex: 50,
+            paddingTop: 0,
+          }}
+          className="md:hidden"
+        >
           <SidebarNav items={sidebarNavItems} />
         </div>
       )}
