@@ -5,6 +5,7 @@ import http from "http";
 import log4js from "log4js";
 import cors from "cors";
 import indexRouter from "@routes/index-router";
+import fileRouter from "@routes/file-router";
 import baseRouter from "@routes/base-router";
 import adminRouter from "@routes/admin-router";
 import morgan from "morgan";
@@ -14,6 +15,7 @@ import '@models/associations';
 import "@models/async";
 import userRouter from "@routes/user-router";
 
+import { decryptBody, encryptJsonResponse } from "@middleware/crypto-middleware"; // <-- Add this
 
 morgan("tiny");
 morgan(":method :url :status :res[content-length] - :response-time ms");
@@ -55,11 +57,17 @@ app.get("/juhi", (req, res) => {
   res.send("Express + TypeScript Server");
 });
 
+app.use("/api", fileRouter); // File upload routes (should be before decryption/encryption middlewares)
 
 app.use("/api", indexRouter);
 //  app.use("/api/admin", baseRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
+
+// Apply decryption and encryption middleware only AFTER routers that need raw body (like fileRouter)
+app.use(decryptBody);
+app.use(encryptJsonResponse);
+
 const server = http.createServer(app);
 
 server.listen(port, () => {

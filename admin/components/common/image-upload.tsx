@@ -3,6 +3,7 @@ import { axiosInstance } from "@/lib/axios-instance"
 import { ENDPOINTS, WEB_URL } from "@/lib/constants"
 import { handleAxiosError } from "@/lib/common"
 import { useToast } from "@/components/ui/use-toast"
+import axios from "axios"
 
 interface ImageUploadProps {
   multiple?: boolean
@@ -36,7 +37,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         for (let i = 0; i < files.length; i++) {
           const formData = new FormData()
           formData.append("files", files[i])
-          const response = await axiosInstance.post(
+          const response = await axios.post(
             `${ENDPOINTS.image_upload}?type=profiles`,
             formData,
             { headers: { "Content-Type": "multipart/form-data" } }
@@ -49,11 +50,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         const file = files[0]
         const formData = new FormData()
         formData.append("files", file)
-        const response = await axiosInstance.post(
+        const response = await axios.post(
           `${ENDPOINTS.image_upload}?type=profiles`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         )
+
+
+        console.log("Upload response:", response.data)
         const store_url = response.data.data.store_url
         const image_url = response.data.data.image_url
         onChange(store_url, image_url)

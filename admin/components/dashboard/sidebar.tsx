@@ -83,8 +83,8 @@ export function DashboardSidebar({ passData }: { passData?: boolean }) {
     },
 
     {
-      title: "Gallery",
-      href: "/gallery",
+      title: "category",
+      href: "/category",
       icon: <PanelLeft className="h-5 w-5" />,
     },
     // {

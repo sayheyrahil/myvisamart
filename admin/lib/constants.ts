@@ -89,6 +89,13 @@ export const ENDPOINTS = {
   happy_client_store:  adminKey +  "happy_client/store",
   happy_client_edit:  adminKey +  "happy_client/edit_get",
   happy_client_change_status:  adminKey +  "happy_client/change_status",
+
+
+  category_get:  adminKey +  "category/get",
+  category_delete:  adminKey +  "category/delete",
+  category_store:  adminKey +  "category/store",
+  category_edit:  adminKey +  "category/edit_get",
+  category_change_status:  adminKey +  "category/change_status",
  
 
 

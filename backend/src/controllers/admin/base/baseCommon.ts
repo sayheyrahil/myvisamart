@@ -193,6 +193,7 @@ const uploadImage = async (req: any, res: any) => {
         };
         return response.sendSuccess(req, res, sendResponse);
     } catch (err: any) {
+        
         const sendResponse: any = {
             message: err.message,
         };

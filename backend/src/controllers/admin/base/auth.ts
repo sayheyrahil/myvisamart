@@ -316,9 +316,20 @@ const adminsDataGet = (async (id: any) => {
 })
 
 const login = async (req: Request, res: Response) => {
+
+    console.log("Admin Login Called");
+    console.log(req.body);
     try {
        
         const { email, password, firebase_token } = req.body;
+
+        // Validate email and password presence
+        if (!email || !password) {
+            const sendResponse: any = {
+                message: 'Email and password are required.',
+            };
+            return response.sendError(res, sendResponse);
+        }
 
         // Find an admin by email
         const adminData = await Admin.findOne({
