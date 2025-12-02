@@ -22,6 +22,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   setUploading,
   preview,
 }) => {
+  // Add runtime checks for required function props
+  React.useEffect(() => {
+    if (typeof onChange !== "function") {
+      throw new Error("ImageUpload: onChange prop must be a function")
+    }
+    if (typeof setUploading !== "function") {
+      throw new Error("ImageUpload: setUploading prop must be a function")
+    }
+  }, [onChange, setUploading])
+
   const { toast } = useToast()
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const [isDragActive, setIsDragActive] = React.useState(false)
@@ -38,7 +48,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           const formData = new FormData()
           formData.append("files", files[i])
           const response = await axios.post(
-            `${ENDPOINTS.image_upload}?type=profiles`,
+            `${ENDPOINTS.image_upload}?type=profiles11`,
             formData,
             { headers: { "Content-Type": "multipart/form-data" } }
           )

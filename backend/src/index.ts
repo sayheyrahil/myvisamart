@@ -47,9 +47,10 @@ const corsOptions = {
 };
 app.use(cors(corsOptions)); // Use this after the variable declaration
 
-// app.use(express.text({ type: "*/*" }));
-app.use(express.text({ type: "*/*" }));
+app.use("/api", fileRouter); // File upload routes (should be before text middleware)
 
+// Only apply express.text to routes after fileRouter
+app.use(express.text({ type: "*/*" }));
 app.use(bodyParser.json({ limit: '1000mb' }));
 app.use(bodyParser.urlencoded({ limit: '1000mb', extended: true }));
 
@@ -57,16 +58,12 @@ app.get("/juhi", (req, res) => {
   res.send("Express + TypeScript Server");
 });
 
-app.use("/api", fileRouter); // File upload routes (should be before decryption/encryption middlewares)
-
 app.use("/api", indexRouter);
 //  app.use("/api/admin", baseRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/user", userRouter);
 
 // Apply decryption and encryption middleware only AFTER routers that need raw body (like fileRouter)
-app.use(decryptBody);
-app.use(encryptJsonResponse);
 
 const server = http.createServer(app);
 

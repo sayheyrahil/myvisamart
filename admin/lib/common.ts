@@ -32,6 +32,8 @@ export function handleAxiosSuccess(
     title = "Success",
     description = "Operation completed successfully."
 ) {
+
+    console.log("Axios Success Response:", response);
     toast({
         title,
         description,
