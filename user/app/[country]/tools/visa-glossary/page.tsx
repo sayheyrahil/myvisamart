@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React,{useState ,useEffect } from "react";
 import MasterPage from "@/components/layouts/master";
 import HeroSection from "@/components/tools/HeroSection";
 import SectionIcon from "@/components/tools/SectionIcon";
@@ -96,7 +96,7 @@ export default function Page() {
 
   return (
     <MasterPage title="Visa Glossary">
-      <div className="w-full min-h-screen bg-white text-gray-900">
+      <div className="w-full min-h-screen  text-gray-900">
         {/* Hero Section */}
         <HeroSection
           title={<div>Visa Glossary</div>}

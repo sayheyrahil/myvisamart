@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React,{useState ,useEffect } from "react";
 import MasterPage from "@/components/layouts/master";
 import HeroSection from "@/components/tools/HeroSection";
 import HowItWorksSection from "@/components/tools/HowItWorksSection";
@@ -7,13 +7,38 @@ import { TbArrowBadgeRightFilled } from "react-icons/tb";
 import SectionHeading from "@/components/tools/SectionHeading";
 import SectionDescription from "@/components/tools/SectionDescription";
 import HistorySection from "@/components/tools/HistorySection";
-import FaqSection from "@/components/tools/FaqSection";
+ import { axiosInstance } from "@/utils/axios-instance";
+import { ENDPOINTS } from "@/utils/constants";
+
+import FAQ from "@/components/common/FAQ";
+
 import Image from "next/image";
 import WhyUseAtlysPhotoMaker from "@/components/tools/WhyUseAtlysPhotoMaker";
 export default function Page() {
+    const [faqs, setFaqs] = useState<any[]>([]);
+  const getFaqs = async () => {
+    await axiosInstance
+      .post(ENDPOINTS.faqActive, {
+        type: "vietnam_visa_status_checker",
+      })
+      .then((response: any) => {
+        if (response?.data?.data) {
+           setFaqs(response.data.data);
+        }
+      })
+      .catch((error: any) => {
+        handleAxiosError(error);
+      })
+      .finally(() => {
+       });
+  };
+
+  useEffect(() => {
+    getFaqs();
+  }, []);
   return (
     <MasterPage title="Vietnam Visa Status Checker - Track Your E-Visa Application Online">
-      <div className="w-full min-h-screen bg-white text-gray-900">
+      <div className="w-full min-h-screen   text-gray-900">
         <HeroSection
           title={
             <div>
@@ -264,15 +289,7 @@ export default function Page() {
           </div>
         </div>
 
-        <FaqSection
-          faqs={[
-            "Can I check the Vietnam visa status using my passport number?",
-            "What information do I need to track the Vietnam visa application?",
-            'My Vietnam e-visa status is still showing "in process." What can I do?',
-            "Can I check my Vietnam visa application status offline?",
-          ]}
-        />
-
+      <FAQ faqData={faqs} />
 
         <div className="my-8">
           <div className="bg-[#E6F4EA] border border-[#BBF7D0] rounded-xl p-4 flex items-start gap-2">

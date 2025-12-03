@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React,{useState ,useEffect } from "react";
 import MasterPage from "@/components/layouts/master";
 import HeroSection from "@/components/tools/HeroSection";
 import HowItWorksSection from "@/components/tools/HowItWorksSection";
@@ -7,14 +7,40 @@ import { TbArrowBadgeRightFilled } from "react-icons/tb";
 import SectionHeading from "@/components/tools/SectionHeading";
 import SectionDescription from "@/components/tools/SectionDescription";
 import HistorySection from "@/components/tools/HistorySection";
-import FaqSection from "@/components/tools/FaqSection";
+import FAQ from "@/components/common/FAQ";
+
 import Image from "next/image";
  
+ import { axiosInstance } from "@/utils/axios-instance";
+import { ENDPOINTS } from "@/utils/constants";
 
 export default function Page() {
+
+  const [faqs, setFaqs] = useState<any[]>([]);
+  const getFaqs = async () => {
+    await axiosInstance
+      .post(ENDPOINTS.faqActive, {
+        type: "schengen_cover_letter",
+      })
+      .then((response: any) => {
+        if (response?.data?.data) {
+           setFaqs(response.data.data);
+        }
+      })
+      .catch((error: any) => {
+        handleAxiosError(error);
+      })
+      .finally(() => {
+       });
+  };
+
+  useEffect(() => {
+    getFaqs();
+  }, []);
+
   return (
     <MasterPage title="Schengen Visa Cover Letter Generator - Atlys">
-      <div className="w-full min-h-screen bg-white text-gray-900">
+      <div className="w-full min-h-screen   text-gray-900">
         {/* Hero Section */}
         <HeroSection
           title={
@@ -435,23 +461,7 @@ export default function Page() {
           </div>
         </div>
 
-        {/* FAQ Section */}
-        <FaqSection
-          faqs={[
-            "Is the Atlys Schengen cover letter creator free?",
-            "Is it safe to use the Atlys Schengen cover letter creator?",
-            "Is a cover letter required for each Schengen visa application?",
-            "How long should my Schengen visa cover letter be?",
-            "Can I submit a handwritten cover letter?",
-            "I am planning to visit multiple Schengen countries. Do I need separate cover letters for each country?",
-            "How can I mention the travel itinerary in the cover letter?",
-            "What are the supporting documents that I need to submit with a cover letter for a Schengen visa?",
-            "How can I demonstrate proof of ties to my home country in the cover letter?",
-            "What sponsor information should I include in my cover letter if my trip to the Schengen Area is sponsored?",
-            "If my friend/partner and I are applying for a Schengen visa together, do we need to submit separate cover letters?",
-            "How long will the cover letter be valid?",
-          ]}
-        />
+    <FAQ faqData={faqs} />
 
         {/* History Section */}
         <HistorySection

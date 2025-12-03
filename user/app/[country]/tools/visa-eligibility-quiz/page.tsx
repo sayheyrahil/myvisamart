@@ -1,19 +1,45 @@
 "use client";
-import React from "react";
+import React,{useState ,useEffect } from "react";
 import MasterPage from "@/components/layouts/master";
 import HeroSection from "@/components/tools/HeroSection";
 import HowItWorksSection from "@/components/tools/HowItWorksSection";
 import SectionHeading from "@/components/tools/SectionHeading";
 import SectionDescription from "@/components/tools/SectionDescription";
 import HistorySection from "@/components/tools/HistorySection";
-import FaqSection from "@/components/tools/FaqSection";
+ import { axiosInstance } from "@/utils/axios-instance";
+import { ENDPOINTS } from "@/utils/constants";
+
+import FAQ from "@/components/common/FAQ";
+
 import SectionIcon from "@/components/tools/SectionIcon";
 import WhyUseAtlysPhotoMaker from "@/components/tools/WhyUseAtlysPhotoMaker";
 import Image from "next/image";
 export default function Page() {
+
+    const [faqs, setFaqs] = useState<any[]>([]);
+  const getFaqs = async () => {
+    await axiosInstance
+      .post(ENDPOINTS.faqActive, {
+        type: "visa_eligibility_quiz",
+      })
+      .then((response: any) => {
+        if (response?.data?.data) {
+           setFaqs(response.data.data);
+        }
+      })
+      .catch((error: any) => {
+        handleAxiosError(error);
+      })
+      .finally(() => {
+       });
+  };
+
+  useEffect(() => {
+    getFaqs();
+  }, []);
   return (
     <MasterPage title="Visa Eligibility Quiz - Atlys">
-      <div className="w-full min-h-screen bg-white text-gray-900">
+      <div className="w-full min-h-screen   text-gray-900">
         {/* Hero Section */}
         <HeroSection
           title={<div>Check Visa Eligibility In Minutes</div>}
@@ -205,15 +231,7 @@ export default function Page() {
         </div>
 
         {/* FAQ Section */}
-        <FaqSection
-          faqs={[
-            "Am I guaranteed to receive a visa when I am found eligible?",
-            "Is the visa eligibility quiz accurate?",
-            "What do I do when I am eligible to apply for a visa?",
-            "Can I retake the quiz if my circumstances change?",
-            "How do I find the type of visa I can apply for?",
-          ]}
-        />
+       <FAQ faqData={faqs} />
 
         {/* History Section */}
         <HistorySection

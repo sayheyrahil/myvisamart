@@ -1,20 +1,45 @@
 "use client";
-import React from "react";
+import React,{useState ,useEffect } from "react";
 import MasterPage from "@/components/layouts/master";
 import HeroSection from "@/components/tools/HeroSection";
 import HowItWorksSection from "@/components/tools/HowItWorksSection";
 import SectionHeading from "@/components/tools/SectionHeading";
 import SectionDescription from "@/components/tools/SectionDescription";
 import HistorySection from "@/components/tools/HistorySection";
-import FaqSection from "@/components/tools/FaqSection";
+ import { axiosInstance } from "@/utils/axios-instance";
+import { ENDPOINTS } from "@/utils/constants";
+
+import FAQ from "@/components/common/FAQ";
+
 import SectionIcon from "@/components/tools/SectionIcon";
 import { TbArrowBadgeRightFilled } from "react-icons/tb";
 import WhyUseAtlysPhotoMaker from "@/components/tools/WhyUseAtlysPhotoMaker";
 import Image from "next/image";
 export default function Page() {
+    const [faqs, setFaqs] = useState<any[]>([]);
+  const getFaqs = async () => {
+    await axiosInstance
+      .post(ENDPOINTS.faqActive, {
+        type: "uae_visa_status_online",
+      })
+      .then((response: any) => {
+        if (response?.data?.data) {
+           setFaqs(response.data.data);
+        }
+      })
+      .catch((error: any) => {
+        handleAxiosError(error);
+      })
+      .finally(() => {
+       });
+  };
+
+  useEffect(() => {
+    getFaqs();
+  }, []);
   return (
     <MasterPage title="UAE Visa Status Online - Atlys">
-      <div className="w-full min-h-screen bg-white text-gray-900">
+      <div className="w-full min-h-screen   text-gray-900">
         {/* Hero Section */}
         <HeroSection
           title={<div>UAE Visa Status Online</div>}
@@ -275,16 +300,7 @@ export default function Page() {
           />
         </div>
         {/* FAQ Section */}
-        <FaqSection
-          faqs={[
-            "Why is it important to check the status of a UAE visa?",
-            "Can I check the UAE Dubai visa status if I have applied from the government website?",
-            "What information do I need to check my Dubai visa status online?",
-            "Is there a fee for checking UAE visa status online?",
-            "How long does it take to process an online UAE visa status check?",
-          ]}
-        />
-
+       <FAQ faqData={faqs} />
         {/* History Section */}
         <HistorySection
           title="How we reviewed this tool:"

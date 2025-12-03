@@ -22,6 +22,8 @@ export const ENDPOINTS = {
   forget_password_otp_verify: 'forget-password-otp-verify',
   signup: "signup",
 
+  faqActive: "faq-active",
+
   verify: "verify",
   change_password: "/user/change-password",
 }

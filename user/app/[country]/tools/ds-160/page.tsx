@@ -41,7 +41,7 @@ export default function Page() {
 
   return (
     <MasterPage title="Vietnam Visa Status Checker - Track Your E-Visa Application Online">
-      <div className="w-full min-h-screen bg-white text-gray-900">
+      <div className="w-full min-h-screen   text-gray-900">
         <HeroSection
           title={
             <div>

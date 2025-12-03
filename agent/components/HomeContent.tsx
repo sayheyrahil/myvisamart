@@ -1,62 +1,90 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TrustedByAgents from "@/components/common/TrustedByAgents";
 import WhyVisamart from "@/components/common/WhyVisamart";
 
 import HeroSection from "@/components/common/HeroSection";
+import { axiosInstance } from "@/utils/axios-instance";
+import { ENDPOINTS } from "@/utils/constants";
+
+import FAQ from "@/components/common/FAQ";
 export default function HomeContent() {
   const [countryCode, setCountryCode] = useState("+880");
   const [flag, setFlag] = useState("🇧🇩");
 
+  const [faqs, setFaqs] = useState<any[]>([]);
+  const getFaqs = async () => {
+    await axiosInstance
+      .post(ENDPOINTS.faqActive, {
+        type: "agent_home",
+      })
+      .then((response: any) => {
+        if (response?.data?.data) {
+           setFaqs(response.data.data);
+        }
+      })
+      .catch((error: any) => {
+        handleAxiosError(error);
+      })
+      .finally(() => {
+       });
+  };
+
+  useEffect(() => {
+    getFaqs();
+  }, []);
+
   return (
     <>
       {/* Stats Section */}
-     <HeroSection
-          title={
-             <div className="max-w-2xl mx-auto flex flex-col items-start px-4">
-          {/* Pill */}
-          <div className="mb-6">
-            <span className="inline-flex items-center px-5 py-2 rounded-full bg-white shadow text-[#174ea6] font-medium text-sm">
-              <span className="w-3 h-3 rounded-full bg-[#174ea6] mr-2"></span>
-              Easy Application
-            </span>
-          </div>
-          {/* Heading */}
-          <h1 className="text-4xl md:text-5xl font-bold text-[#101828] text-start mb-4 leading-tight">
-            Great Value,<br />Simple Bookings
-          </h1>
-          {/* Subtitle */}
-          <p className="text-[#667085] text-lg text-center mb-8">
-            Velit aliquam imperdiet mollis nullam volutpat porttitor
-          </p>
-          {/* Phone Input */}
-          <div className="w-full mb-6 text-sm">
-            <div className="flex items-center bg-white border border-[#e3eaf3] rounded-xl px-5 py-3 shadow-sm">
-              <span className="mr-2 text-2xl">🇧🇩</span>
-              <span className="mr-2 text-[#101828] font-medium">+880</span>
-              <input
-                type="tel"
-                placeholder="Your mobile number"
-                className="flex-1 bg-transparent outline-none text-gray-600 text-base"
-              />
+      <HeroSection
+        title={
+          <div className="max-w-2xl mx-auto flex flex-col items-start px-4">
+            {/* Pill */}
+            <div className="mb-6">
+              <span className="inline-flex items-center px-5 py-2 rounded-full bg-white shadow text-[#174ea6] font-medium text-sm">
+                <span className="w-3 h-3 rounded-full bg-[#174ea6] mr-2"></span>
+                Easy Application
+              </span>
+            </div>
+            {/* Heading */}
+            <h1 className="text-4xl md:text-5xl font-bold text-[#101828] text-start mb-4 leading-tight">
+              Great Value,
+              <br />
+              Simple Bookings
+            </h1>
+            {/* Subtitle */}
+            <p className="text-[#667085] text-lg text-center mb-8">
+              Velit aliquam imperdiet mollis nullam volutpat porttitor
+            </p>
+            {/* Phone Input */}
+            <div className="w-full mb-6 text-sm">
+              <div className="flex items-center bg-white border border-[#e3eaf3] rounded-xl px-5 py-3 shadow-sm">
+                <span className="mr-2 text-2xl">🇧🇩</span>
+                <span className="mr-2 text-[#101828] font-medium">+880</span>
+                <input
+                  type="tel"
+                  placeholder="Your mobile number"
+                  className="flex-1 bg-transparent outline-none text-gray-600 text-base"
+                />
+              </div>
+            </div>
+            {/* Buttons */}
+            <div className="flex gap-4 w-full justify-center text-sm">
+              <button className="px-8 py-3 rounded-full bg-[#174ea6] text-white font-semibold text-sm shadow hover:bg-[#0a53b7] transition">
+                Sign Up for Free
+              </button>
+              <button className="px-8 py-3 rounded-full bg-white border border-[#e3eaf3] text-[#174ea6] font-semibold text-sm shadow hover:bg-blue-50 transition">
+                Attend a Demo
+              </button>
             </div>
           </div>
-          {/* Buttons */}
-          <div className="flex gap-4 w-full justify-center text-sm">
-            <button className="px-8 py-3 rounded-full bg-[#174ea6] text-white font-semibold text-sm shadow hover:bg-[#0a53b7] transition">
-              Sign Up for Free
-            </button>
-            <button className="px-8 py-3 rounded-full bg-white border border-[#e3eaf3] text-[#174ea6] font-semibold text-sm shadow hover:bg-blue-50 transition">
-              Attend a Demo
-            </button>
-          </div>
-        </div>
-          }
-          description=""
-          buttonText=""
-          imageSrc="/img/Rectangle14367.png"
-          imageAlt="Visa Preview"
-        />
+        }
+        description=""
+        buttonText=""
+        imageSrc="/img/Rectangle14367.png"
+        imageAlt="Visa Preview"
+      />
 
       <TrustedByAgents />
       <WhyVisamart />
@@ -75,24 +103,34 @@ export default function HomeContent() {
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full py-14 px-4">
           <div className="text-white text-3xl md:text-5xl font-semibold text-center mb-10 drop-shadow-lg">
-            99.2% Visas<br />Delivered On Time
+            99.2% Visas
+            <br />
+            Delivered On Time
           </div>
           <div className="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-24 w-full">
             {/* Stat 1 */}
             <div className="flex flex-col items-center">
-              <div className="text-blue-100 text-4xl md:text-5xl font-semibold mb-2">5,00,000+</div>
+              <div className="text-blue-100 text-4xl md:text-5xl font-semibold mb-2">
+                5,00,000+
+              </div>
               <div className="w-16 h-1 bg-white/40 mb-2" />
               <div className="text-white text-lg font-medium">Visas</div>
             </div>
             {/* Stat 2 */}
             <div className="flex flex-col items-center">
-              <div className="text-blue-100 text-4xl md:text-5xl font-semibold mb-2">65</div>
+              <div className="text-blue-100 text-4xl md:text-5xl font-semibold mb-2">
+                65
+              </div>
               <div className="w-16 h-1 bg-white/40 mb-2" />
-              <div className="text-white text-lg font-medium">Types of Visas</div>
+              <div className="text-white text-lg font-medium">
+                Types of Visas
+              </div>
             </div>
             {/* Stat 3 */}
             <div className="flex flex-col items-center">
-              <div className="text-blue-100 text-4xl md:text-5xl font-semibold mb-2">5,000+</div>
+              <div className="text-blue-100 text-4xl md:text-5xl font-semibold mb-2">
+                5,000+
+              </div>
               <div className="w-16 h-1 bg-white/40 mb-2" />
               <div className="text-white text-lg font-medium">Agents</div>
             </div>
@@ -103,14 +141,21 @@ export default function HomeContent() {
       <div className="w-full bg-[#f6fafd] py-16">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-semibold mb-12 text-[#101828]">
-            How to apply for a visa in<br className="hidden md:block" /> 30 seconds?
+            How to apply for a visa in
+            <br className="hidden md:block" /> 30 seconds?
           </h2>
           <div className="flex flex-col gap-10">
             {/* Step 1 */}
             <div className="flex flex-col md:flex-row items-center bg-white rounded-3xl shadow-md p-8 md:p-12 mb-2">
               <div className="flex-1 w-full md:w-auto mb-8 md:mb-0">
-                <div className="text-[56px] font-bold text-gray-200 leading-none mb-2">01</div>
-                <div className="text-xl font-medium text-[#101828] mb-2">Select your destination<br />and travel dates</div>
+                <div className="text-[56px] font-bold text-gray-200 leading-none mb-2">
+                  01
+                </div>
+                <div className="text-xl font-medium text-[#101828] mb-2">
+                  Select your destination
+                  <br />
+                  and travel dates
+                </div>
               </div>
               <div className="flex-1 flex justify-center w-full">
                 {/* Custom Form UI */}
@@ -119,7 +164,18 @@ export default function HomeContent() {
                   <div className="flex items-center bg-white rounded-xl px-5 py-4 shadow-sm mb-1">
                     <span className="mr-3 text-2xl">
                       {/* Home icon SVG */}
-                      <svg width="28" height="28" fill="none" stroke="#222" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 11.5L12 5l9 6.5" /><path d="M4 10v10h16V10" /><path d="M9 21V13h6v8" /></svg>
+                      <svg
+                        width="28"
+                        height="28"
+                        fill="none"
+                        stroke="#222"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M3 11.5L12 5l9 6.5" />
+                        <path d="M4 10v10h16V10" />
+                        <path d="M9 21V13h6v8" />
+                      </svg>
                     </span>
                     <span className="border-l border-gray-200 h-6 mx-3"></span>
                     <span className="text-gray-600 text-lg">India</span>
@@ -128,7 +184,16 @@ export default function HomeContent() {
                   <div className="flex items-center bg-white rounded-xl px-5 py-4 border-2 border-blue-300 shadow-sm mb-1">
                     <span className="mr-3 text-2xl">
                       {/* Plane icon SVG */}
-                      <svg width="28" height="28" fill="none" stroke="#222" strokeWidth="2" viewBox="0 0 24 24"><path d="M2.5 19.5L21.5 12 2.5 4.5 6 12l-3.5 7.5z" /></svg>
+                      <svg
+                        width="28"
+                        height="28"
+                        fill="none"
+                        stroke="#222"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M2.5 19.5L21.5 12 2.5 4.5 6 12l-3.5 7.5z" />
+                      </svg>
                     </span>
                     <span className="border-l border-gray-200 h-6 mx-3"></span>
                     <input
@@ -140,17 +205,41 @@ export default function HomeContent() {
                   {/* Dates */}
                   <div className="flex gap-4">
                     <div className="flex-1 flex items-center bg-white rounded-xl px-5 py-4 shadow-sm">
-                      <span className="text-gray-400 flex-1 text-lg">Depart Date</span>
+                      <span className="text-gray-400 flex-1 text-lg">
+                        Depart Date
+                      </span>
                       <span>
                         {/* Calendar icon SVG */}
-                        <svg width="22" height="22" fill="none" stroke="#222" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M16 3v4M8 3v4M3 9h18" /></svg>
+                        <svg
+                          width="22"
+                          height="22"
+                          fill="none"
+                          stroke="#222"
+                          strokeWidth="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <rect x="3" y="5" width="18" height="16" rx="2" />
+                          <path d="M16 3v4M8 3v4M3 9h18" />
+                        </svg>
                       </span>
                     </div>
                     <div className="flex-1 flex items-center bg-white rounded-xl px-5 py-4 shadow-sm">
-                      <span className="text-gray-400 flex-1 text-lg">Return Date</span>
+                      <span className="text-gray-400 flex-1 text-lg">
+                        Return Date
+                      </span>
                       <span>
                         {/* Calendar icon SVG */}
-                        <svg width="22" height="22" fill="none" stroke="#222" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2" /><path d="M16 3v4M8 3v4M3 9h18" /></svg>
+                        <svg
+                          width="22"
+                          height="22"
+                          fill="none"
+                          stroke="#222"
+                          strokeWidth="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <rect x="3" y="5" width="18" height="16" rx="2" />
+                          <path d="M16 3v4M8 3v4M3 9h18" />
+                        </svg>
                       </span>
                     </div>
                   </div>
@@ -164,8 +253,14 @@ export default function HomeContent() {
             {/* Step 2 */}
             <div className="flex flex-col md:flex-row items-center bg-white rounded-3xl shadow-md p-8 md:p-12 mb-2">
               <div className="flex-1 w-full md:w-auto mb-8 md:mb-0">
-                <div className="text-[56px] font-bold text-gray-200 leading-none mb-2">02</div>
-                <div className="text-xl font-medium text-[#101828] mb-2">Upload your passport<br />and photo</div>
+                <div className="text-[56px] font-bold text-gray-200 leading-none mb-2">
+                  02
+                </div>
+                <div className="text-xl font-medium text-[#101828] mb-2">
+                  Upload your passport
+                  <br />
+                  and photo
+                </div>
               </div>
               <div className="flex-1 flex justify-center w-full">
                 {/* Custom Form UI for Step 2 */}
@@ -207,7 +302,14 @@ export default function HomeContent() {
                   {/* File Upload */}
                   <label className="w-full bg-[#f6fafd] rounded-lg px-4 py-3 border border-gray-200 flex items-center cursor-pointer text-gray-400 text-base mb-2">
                     <span className="flex-1">Select File</span>
-                    <svg width="20" height="20" fill="none" stroke="#bdbdbd" strokeWidth="2" viewBox="0 0 24 24">
+                    <svg
+                      width="20"
+                      height="20"
+                      fill="none"
+                      stroke="#bdbdbd"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
                       <path d="M16 16v6H8v-6M12 12V2m0 10l-4-4m4 4l4-4" />
                     </svg>
                     <input type="file" className="hidden" />
@@ -222,24 +324,42 @@ export default function HomeContent() {
             {/* Step 3 */}
             <div className="flex flex-col md:flex-row items-center bg-white rounded-3xl shadow-md p-8 md:p-12 mb-2">
               <div className="flex-1 w-full md:w-auto mb-8 md:mb-0">
-                <div className="text-[56px] font-bold text-gray-200 leading-none mb-2">03</div>
-                <div className="text-xl font-medium text-[#101828] mb-2">Make a payment from<br />Visamart Wallet</div>
+                <div className="text-[56px] font-bold text-gray-200 leading-none mb-2">
+                  03
+                </div>
+                <div className="text-xl font-medium text-[#101828] mb-2">
+                  Make a payment from
+                  <br />
+                  Visamart Wallet
+                </div>
               </div>
               <div className="flex-1 flex justify-center w-full">
                 {/* Price Details Card */}
                 <div className="w-full max-w-md bg-[#f8fbfd] rounded-2xl shadow p-6">
-                  <div className="text-[#101828] text-lg font-semibold mb-4">Price Details</div>
+                  <div className="text-[#101828] text-lg font-semibold mb-4">
+                    Price Details
+                  </div>
                   <div className="bg-[#e9f0f7] rounded-xl mb-4">
                     <div className="flex justify-between items-center px-4 py-3 border-b border-[#dde6ef]">
-                      <span className="text-[#101828] text-base">Traveller 1</span>
-                      <span className="text-[#101828] text-base font-medium">₹2000</span>
+                      <span className="text-[#101828] text-base">
+                        Traveller 1
+                      </span>
+                      <span className="text-[#101828] text-base font-medium">
+                        ₹2000
+                      </span>
                     </div>
                     <div className="flex justify-between items-center px-4 py-3 border-b border-[#dde6ef]">
-                      <span className="text-[#101828] text-base">Total Amount</span>
-                      <span className="text-[#0a53b7] text-base font-bold">₹2000</span>
+                      <span className="text-[#101828] text-base">
+                        Total Amount
+                      </span>
+                      <span className="text-[#0a53b7] text-base font-bold">
+                        ₹2000
+                      </span>
                     </div>
                     <div className="flex justify-between items-center px-4 py-3">
-                      <span className="text-[#101828] text-base">Wallet Balance</span>
+                      <span className="text-[#101828] text-base">
+                        Wallet Balance
+                      </span>
                       <span className="text-[#101828] text-base">₹28,000</span>
                     </div>
                   </div>
@@ -257,26 +377,49 @@ export default function HomeContent() {
             {/* Step 4 */}
             <div className="flex flex-col md:flex-row items-center bg-white rounded-3xl shadow-md p-8 md:p-12">
               <div className="flex-1 w-full md:w-auto mb-8 md:mb-0">
-                <div className="text-[56px] font-bold text-gray-200 leading-none mb-2">04</div>
-                <div className="text-xl font-medium text-[#101828] mb-2">Get your visa within<br />the ETA!</div>
+                <div className="text-[56px] font-bold text-gray-200 leading-none mb-2">
+                  04
+                </div>
+                <div className="text-xl font-medium text-[#101828] mb-2">
+                  Get your visa within
+                  <br />
+                  the ETA!
+                </div>
               </div>
               <div className="flex-1 flex justify-center w-full">
                 {/* Visa Approved Card */}
                 <div className="w-full max-w-md bg-[#f6fafd] rounded-2xl shadow p-6">
                   <div className="bg-[#0a2940] rounded-lg px-4 py-2 flex items-center justify-center mb-4">
                     <span className="text-white text-base font-medium flex items-center gap-2">
-                      <svg width="16" height="16" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24" className="inline-block"><path d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9z" /><path d="M9.5 12.5l2 2 3-3" /></svg>
+                      <svg
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                        className="inline-block"
+                      >
+                        <path d="M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9z" />
+                        <path d="M9.5 12.5l2 2 3-3" />
+                      </svg>
                       Visa Approved
                     </span>
                   </div>
-                  <div className="text-[#101828] text-sm mb-2">Get your Visa Before Time</div>
+                  <div className="text-[#101828] text-sm mb-2">
+                    Get your Visa Before Time
+                  </div>
                   <div className="flex justify-between text-[#667085] text-xs mb-1">
                     <span>Guaranteed On</span>
-                    <span className="text-[#101828] font-medium">3 Aug 2023 at 8:10 PM</span>
+                    <span className="text-[#101828] font-medium">
+                      3 Aug 2023 at 8:10 PM
+                    </span>
                   </div>
                   <div className="flex justify-between text-[#667085] text-xs mb-4">
                     <span>Delivered On</span>
-                    <span className="text-[#101828] font-medium">2 Aug 2023 at 5:45 AM</span>
+                    <span className="text-[#101828] font-medium">
+                      2 Aug 2023 at 5:45 AM
+                    </span>
                   </div>
                   <div className="flex gap-2">
                     <button className="flex-1 py-2 rounded-full border border-[#0a53b7] text-[#0a53b7] font-medium bg-white hover:bg-[#e9f0f7] transition text-xs">
@@ -292,9 +435,6 @@ export default function HomeContent() {
           </div>
         </div>
       </div>
-
-
-
 
       {/* Travel Insurance Section */}
       <div
@@ -313,12 +453,24 @@ export default function HomeContent() {
           </div>
           <div className="flex flex-col md:flex-row items-center justify-center gap-12 mb-8">
             <div className="flex flex-col items-center">
-              <div className="text-white text-4xl md:text-5xl font-bold mb-1">98%</div>
-              <div className="text-white text-base opacity-80 text-center">settlement rate on your<br />insurance plans</div>
+              <div className="text-white text-4xl md:text-5xl font-bold mb-1">
+                98%
+              </div>
+              <div className="text-white text-base opacity-80 text-center">
+                settlement rate on your
+                <br />
+                insurance plans
+              </div>
             </div>
             <div className="flex flex-col items-center">
-              <div className="text-white text-4xl md:text-5xl font-bold mb-1">1 Day</div>
-              <div className="text-white text-base opacity-80 text-center">Completely digital<br />claims processing</div>
+              <div className="text-white text-4xl md:text-5xl font-bold mb-1">
+                1 Day
+              </div>
+              <div className="text-white text-base opacity-80 text-center">
+                Completely digital
+                <br />
+                claims processing
+              </div>
             </div>
           </div>
           <button className="px-8 py-3 rounded-full bg-white text-[#0a53b7] font-semibold text-lg shadow hover:bg-blue-50 transition">
@@ -416,48 +568,12 @@ export default function HomeContent() {
                 stars: 5,
               },
             ];
-            return (
-              <TestimonialSlider testimonials={testimonials} />
-            );
+            return <TestimonialSlider testimonials={testimonials} />;
           })()}
         </div>
       </div>
 
-      {/* FAQ Section */}
-      <div className="w-full bg-[#f6fafd] py-20">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 px-4">
-          {/* Left: Heading */}
-          <div className="flex-1 flex items-start justify-center">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-[#101828] mb-2">
-                Too good to be true?<br />Learn more here!
-              </h2>
-            </div>
-          </div>
-          {/* Right: FAQ List */}
-          <div className="flex-1 flex flex-col gap-4">
-            {[
-              "Lorem ipsum dolor sit amet consectetur",
-              "Blandit quis suspendisse aliquet nisi sodales",
-              "Cras eleifend turpis fames primis vulputate ornare sagittis.",
-              "Sem placerat in id cursus mi pretium",
-              "Orci varius natoque penatibus et magnis",
-              "Proin libero feugiat tristique accumsan maecenas",
-              "Sed diam urna tempor pulvinar vivamus fringilla lacus.",
-              "Eros lobortis nulla molestie mattis scelerisque"
-            ].map((q, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between bg-white border border-blue-200 rounded-xl px-6 py-4 text-[#101828] text-base font-normal cursor-pointer hover:bg-blue-50 transition"
-              >
-                <span>{q}</span>
-                <span className="text-blue-500 text-2xl font-light">+</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
+        <FAQ faqData={faqs} />
     </>
   );
 }
@@ -483,18 +599,24 @@ function TestimonialSlider({ testimonials }: { testimonials: any[] }) {
     <div className="w-full flex flex-col items-center">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 w-full">
         {pair.map((t, idx) => (
-          <div key={idx} className="bg-white rounded-2xl shadow p-8 flex flex-col justify-between h-full">
+          <div
+            key={idx}
+            className="bg-white rounded-2xl shadow p-8 flex flex-col justify-between h-full"
+          >
             <div>
               <div className="flex items-center mb-4">
                 {[...Array(t.stars)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg
+                    key={i}
+                    className="w-5 h-5 text-yellow-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
                     <polygon points="10,1 12.59,7.36 19.51,7.36 13.97,11.63 16.56,17.99 10,13.72 3.44,17.99 6.03,11.63 0.49,7.36 7.41,7.36" />
                   </svg>
                 ))}
               </div>
-              <div className="text-[#101828] text-base mb-6">
-                "{t.text}"
-              </div>
+              <div className="text-[#101828] text-base mb-6">"{t.text}"</div>
             </div>
             <div className="flex items-center gap-4 mt-6">
               <img
@@ -519,7 +641,14 @@ function TestimonialSlider({ testimonials }: { testimonials: any[] }) {
           onClick={prev}
           aria-label="Previous"
         >
-          <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <svg
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
             <path d="M15 19l-7-7 7-7" />
           </svg>
         </button>
@@ -528,7 +657,14 @@ function TestimonialSlider({ testimonials }: { testimonials: any[] }) {
           onClick={next}
           aria-label="Next"
         >
-          <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <svg
+            width="20"
+            height="20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
             <path d="M9 5l7 7-7 7" />
           </svg>
         </button>

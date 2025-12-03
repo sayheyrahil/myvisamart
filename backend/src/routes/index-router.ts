@@ -20,6 +20,7 @@ indexRouter.post(`/contact`, userCommonService.contactUsStore);
 
 // get here all router
 indexRouter.post(`/category-active`, commonService.getActiveCategory);
+indexRouter.post(`/faq-active`, commonService.getActiveFaq);
 
 
 

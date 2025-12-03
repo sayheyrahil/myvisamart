@@ -49,7 +49,7 @@ Faq.init(
       allowNull: false,
     },
     type: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     slug: {
