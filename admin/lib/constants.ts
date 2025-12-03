@@ -43,6 +43,11 @@ export const ENDPOINTS = {
   countries_change_status:  adminKey +  "countries/change_status",
   
   
+  faq_get:  adminKey +  "faq/get",
+  faq_delete:  adminKey +  "faq/delete",
+  faq_store:  adminKey +  "faq/store",
+  faq_edit:  adminKey +  "faq/edit_get",
+  faq_change_status:  adminKey +  "faq/change_status",
 }
 
 

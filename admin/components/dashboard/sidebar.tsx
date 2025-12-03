@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import React, { Fragment, useState } from "react"
+import { FaHome, FaFolder, FaGlobe, FaQuestionCircle, FaMapMarkedAlt, FaCog, FaKey, FaFileAlt } from "react-icons/fa";
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
@@ -125,38 +126,42 @@ export function DashboardSidebar({ passData }: { passData?: boolean }) {
     {
       title: "Overview",
       href: "/dashboard",
-      icon: <span style={{ fontSize: 18 }}>🏠</span>,
+      icon: <FaHome style={{ fontSize: 18 }} />,
     },
-  
     {
       title: "category",
       href: "/category",
-      icon: <span style={{ fontSize: 18 }}>📂</span>,
+      icon: <FaFolder style={{ fontSize: 18 }} />,
     },
     {
       title: "countries",
       href: "/countries",
-      icon: <span style={{ fontSize: 18 }}>📂</span>,
+      icon: <FaGlobe style={{ fontSize: 18 }} />,
+    },
+    {
+      title: "faq",
+      href: "/faq",
+      icon: <FaQuestionCircle style={{ fontSize: 18 }} />,
     },
     {
       title: "destinations",
       href: "/destination",
-      icon: <span style={{ fontSize: 18 }}>📂</span>,
+      icon: <FaMapMarkedAlt style={{ fontSize: 18 }} />,
     },
     {
       title: "Settings",
       href: "/settings",
-      icon: <span style={{ fontSize: 18 }}>⚙️</span>,
+      icon: <FaCog style={{ fontSize: 18 }} />,
       submenu: [
         {
           title: "Change Password",
           href: "/settings/password",
-          icon: <span style={{ fontSize: 16 }}>🔑</span>,
+          icon: <FaKey style={{ fontSize: 16 }} />,
         },
         {
           title: "CMS Pages",
           href: "/cms",
-          icon: <span style={{ fontSize: 16 }}>📄</span>,
+          icon: <FaFileAlt style={{ fontSize: 16 }} />,
         },
       ],
     },

@@ -8,6 +8,9 @@ import destinationValidation from "@validation/admin/destination-validation";
 import countriesController from "@controllers/admin/countries";
 import countriesValidation from "@validation/admin/countries-validation";
 
+import faqController from "@controllers/admin/faq";
+import faqValidation from "@validation/admin/faq-validation";
+
 import { decryptBody, encryptJsonResponse } from "@middleware/crypto-middleware"; // <-- Add this
 
 
@@ -41,6 +44,12 @@ adminRouter.post(`/countries/change_status`, commonValidation.idRequired, countr
 
  
 
+// FAQ routes
+adminRouter.post(`/faq/get`, faqController.get);
+adminRouter.post(`/faq/store`, faqValidation.store, faqValidation.nameUniquenessMiddleware, faqController.store);
+adminRouter.post(`/faq/edit_get`, commonValidation.idRequired, faqController.edit);
+adminRouter.post(`/faq/delete`, commonValidation.idRequired, faqController.destroy);
+adminRouter.post(`/faq/change_status`, commonValidation.idRequired, faqController.changeStatus);
 
 
 
