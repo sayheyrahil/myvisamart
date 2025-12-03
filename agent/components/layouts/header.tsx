@@ -1,37 +1,58 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { FaPhoneAlt,FaEnvelope } from "react-icons/fa";
 
 const Navbar = ({ title }: { title: string }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  return (
+   return (
     <header className="w-full shadow-sm">
       {/* Top Banner */}
       <title>{title}</title>
-      <div className="bg-[#0047AB] text-white flex items-center justify-center px-4 sm:px-6 py-0">
-        <div className="container flex items-center justify-between mx-auto">
-          {/* ...existing code... */}
-          <div className="flex items-center gap-3 justify-center">
-            {/* ...existing code... */}
-          </div>
-          <div className="flex items-center gap-3 justify-center">
-            <img
-              src="/img/banner.png"
-              alt="Traveler"
-              className="w-[48px] h-[42px] sm:w-[66px] sm:h-[58px]"
-            />
-            <p className="text-xs sm:text-sm font-medium">
-              Earn Points & Perks on your next Visa Application
-            </p>
-          </div>
-          <div className="flex items-center gap-2 sm:gap-4 justify-end">
-            <span className="text-xs opacity-80 cursor-pointer">T&C Apply</span>
-            <button className="bg-[#FFB800] text-xs sm:text-sm font-medium px-3 sm:px-4 py-1 rounded-full hover:bg-yellow-500 transition">
-              Join Free
-            </button>
-            {/* <button className="text-xl font-bold">✕</button> */}
-          </div>
+      <div className="bg-[#0047AB] text-white flex items-center justify-center px-4 sm:px-6 py-3">
+        <div className="container flex flex-col sm:flex-row items-center justify-center mx-auto gap-4 sm:gap-10">
+       
+       <div className="hidden sm:flex gap-6">
+          <Link href="/discover" className="flex items-center gap-3 justify-center">
+
+            <div className="text-xs sm:text-sm font-medium">
+              Discover
+            </div>
+          </Link>
+
+          <Link href="/specialdeals" className="flex items-center gap-3 justify-center">
+
+            <div className="text-xs sm:text-sm font-medium">
+              Special Deals
+            </div>
+          </Link>
+
+          <Link href="/support" className="flex items-center gap-3 justify-center">
+
+            <div className="text-xs sm:text-sm font-medium">
+              Support
+            </div>
+          </Link>
+       </div>
+       <div className="flex gap-6">
+        
+          <Link href="/support" className="flex items-center gap-3 justify-center">
+          
+            <div className="text-xs sm:text-sm font-medium flex items-center gap-2">
+              <FaPhoneAlt className="inline-block mr-1 text-white" />
+                +91 98765 43210
+            </div>
+          </Link>
+          <Link href="/support" className="flex items-center gap-3 justify-center">
+          
+            <div className="text-xs sm:text-sm font-medium flex items-center gap-2">
+              <FaEnvelope className="inline-block mr-1 text-white" />
+                    example@gmail.com
+            </div>
+          </Link>
+          
+        </div>
         </div>
       </div>
 
@@ -45,6 +66,25 @@ const Navbar = ({ title }: { title: string }) => {
               alt="Traveler"
               className="w-[48px] h-[48px] sm:w-[70px] sm:h-[70px]"
             />
+          </div>
+
+          {/* Search Bar */}
+          <div className="flex-1 flex justify-center px-4">
+            <div className="w-full max-w-md">
+              <div className="flex items-center bg-[#f6fafd] border border-[#e3eaf3] rounded-xl px-5 py-2">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="flex-1 bg-transparent outline-none text-gray-600 text-base"
+                />
+                <button className="ml-2 text-[#174ea6]">
+                  <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
 
           {/* Hamburger Icon */}
@@ -68,18 +108,7 @@ const Navbar = ({ title }: { title: string }) => {
               sm:translate-x-0
             `}
           >
-            <li className="font-medium text-[16px] leading-[24px] tracking-normal cursor-pointer text-brand">
-              <Link href="/" onClick={() => setMenuOpen(false)}>Home</Link>
-            </li>
-            <li className="font-medium text-[16px] leading-[24px] tracking-normal text-[#1C1C1C] cursor-pointer hover:text-brand">
-              <Link href="/discover" onClick={() => setMenuOpen(false)}>Discover</Link>
-            </li>
-            <li className="font-medium text-[16px] leading-[24px] tracking-normal text-[#1C1C1C] cursor-pointer hover:text-brand">
-              <Link href="/aboutus" onClick={() => setMenuOpen(false)}>About Us</Link>
-            </li>
-            <li className="font-medium text-[16px] leading-[24px] tracking-normal text-[#1C1C1C] cursor-pointer hover:text-brand">
-              <Link href="/contactus" onClick={() => setMenuOpen(false)}>Support</Link>
-            </li>
+               
             {/* Mobile only: Buttons */}
             <li className="flex flex-col gap-2 w-full mt-6 sm:hidden">
               <button className="border border-[#FFB800] text-[#FFB800] px-8 py-3 rounded-full text-sm font-medium hover:bg-[#FFF8E1] transition w-full">

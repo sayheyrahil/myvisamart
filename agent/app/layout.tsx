@@ -9,10 +9,10 @@ const faviconSvg = encodeURIComponent(
   `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='#0ea5e9'/><text x='50%' y='58%' text-anchor='middle' font-family='system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif' font-size='36' font-weight='700' fill='white'>V</text></svg>`
 );
 
-export const metadata: Metadata = {
-  title: 'Visamart — Coming Soon',
-  description: 'Be the first to know when we go live.',
-};
+// export const metadata: Metadata = {
+//   title: 'Visamart — Coming Soon',
+//   description: 'Be the first to know when we go live.',
+// };
 
 export const viewport = {
   width: "device-width",

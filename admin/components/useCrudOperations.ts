@@ -40,8 +40,6 @@ const useCrudOperations = (baseUrl: string, endpoints: { delete: string; changeS
                 is_active: is_active,
             };
             const response = await axiosInstance.post(`${endpoints.changeStatus}`, data);
-
-            console.log("Change status response:", response);
             handleAxiosSuccess(response);
             refreshCallback();
         } catch (error: any) {

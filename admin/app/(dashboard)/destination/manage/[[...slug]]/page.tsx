@@ -10,6 +10,12 @@ type DestinationForm = {
   name: string
   description: string
   image: string
+  area: string
+  is_top_destination: boolean
+  is_popular: boolean
+  amount: string
+  later_amount: string
+  countries: string[]
 }
 
 const pageTitleName = "destination";
@@ -23,6 +29,12 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     name: "",
     description: "",
     image: "",
+    area: "",
+    is_top_destination: false,
+    is_popular: false,
+    amount: "",
+    later_amount: "",
+    countries: [],
   })
   const [imagePreview, setImagePreview] = useState<string>("")
   const [uploading, setUploading] = useState<boolean>(false)
@@ -41,6 +53,12 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             name: data.name || "",
             description: data.description || "",
             image: data.image || "",
+            area: data.area || "",
+            is_top_destination: !!data.is_top_destination,
+            is_popular: !!data.is_popular,
+            amount: data.amount || "",
+            later_amount: data.later_amount || "",
+            countries: data.countries || [],
           });
           setImagePreview(data.image || "");
           setIsEdit(true);
@@ -89,17 +107,28 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) {
-    const { name, value } = e.target
-    setForm(prev => ({
-      ...prev,
-      [name]: value,
-    }))
+    const { name, value, type, checked, multiple, options } = e.target
+    if (name === "countries" && multiple) {
+      const selected: string[] = Array.from(options)
+        .filter(option => option.selected)
+        .map(option => option.value)
+      setForm(prev => ({
+        ...prev,
+        countries: selected,
+      }))
+    } else {
+      setForm(prev => ({
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      }))
+    }
   }
 
   function validate(): string {
     if (form.name.length < 2) return "Name must be at least 2 characters."
     if (form.name.length > 100) return "Name cannot exceed 100 characters."
     if (form.description.length < 10) return "Description must be at least 10 characters."
+    if (!form.area) return "Area is required."
     // if (!form.image) return "Image is required."
     return ""
   }
@@ -121,6 +150,12 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       name: "",
       description: "",
       image: "",
+      area: "",
+      is_top_destination: false,
+      is_popular: false,
+      amount: "",
+      later_amount: "",
+      countries: [],
     })
     setImagePreview("")
     setError("")
@@ -177,6 +212,100 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               rows={4}
               className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
             />
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block font-medium mb-1">
+            Area:
+            <select
+              name="area"
+              value={form.area}
+              onChange={handleChange}
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+            >
+              <option value="">Select Area</option>
+              <option value="Europe">Europe</option>
+              <option value="Asia">Asia</option>
+              <option value="America">America</option>
+              <option value="Africa">Africa</option>
+              <option value="Oceania">Oceania</option>
+            </select>
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="inline-flex items-center">
+            <input
+              type="checkbox"
+              name="is_top_destination"
+              checked={form.is_top_destination}
+              onChange={handleChange}
+              className="form-checkbox h-5 w-5 text-brand"
+            />
+            <span className="ml-2 font-medium">Is Top Destination</span>
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="inline-flex items-center">
+            <input
+              type="checkbox"
+              name="is_popular"
+              checked={form.is_popular}
+              onChange={handleChange}
+              className="form-checkbox h-5 w-5 text-brand"
+            />
+            <span className="ml-2 font-medium">Is Popular</span>
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block font-medium mb-1">
+            Amount:
+            <input
+              type="text"
+              name="amount"
+              value={form.amount}
+              onChange={handleChange}
+              placeholder="Enter amount"
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+            />
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block font-medium mb-1">
+            Later Amount:
+            <input
+              type="text"
+              name="later_amount"
+              value={form.later_amount}
+              onChange={handleChange}
+              placeholder="Enter later amount"
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+            />
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block font-medium mb-1">
+            Country Name:
+            <select
+              name="countries"
+              multiple
+              value={form.countries}
+              onChange={handleChange}
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+              size={5}
+            >
+              <option value="India">India</option>
+              <option value="USA">USA</option>
+              <option value="UK">UK</option>
+              <option value="Australia">Australia</option>
+              <option value="Canada">Canada</option>
+              <option value="Germany">Germany</option>
+              <option value="France">France</option>
+              <option value="Singapore">Singapore</option>
+              <option value="Japan">Japan</option>
+              <option value="South Africa">South Africa</option>
+              {/* Add more countries as needed */}
+            </select>
+            <span className="text-xs text-gray-500">Hold Ctrl (Windows) or Command (Mac) to select multiple.</span>
           </label>
         </div>
 

@@ -2,8 +2,8 @@ import Image from "next/image";
 import React from "react";
 
 const agentLogos = [
-    { src: "/image4560456748.png", alt: "Dial Travel" },
-    { src: "/Text.png", alt: "Traveldeal Online" },
+    { src: "/img/image4560456748.png", alt: "Dial Travel" },
+    { src: "/img/Text.png", alt: "Traveldeal Online" },
     // Add more logos as needed
 ];
 
@@ -22,13 +22,13 @@ export default function TrustedByAgents() {
                             <Image
                                 src={agentLogos[i % agentLogos.length].src}
                                 alt={agentLogos[i % agentLogos.length].alt}
-                                width={80}
+                                width={100}
                                 height={40}
                                 className="object-contain mb-2"
                             />
-                            <span className="font-medium text-base text-[#222]">
+                            {/* <span className="font-medium text-base text-[#222]">
                                 {agentLogos[i % agentLogos.length].alt}
-                            </span>
+                            </span> */}
                         </div>
                     ))}
                 </div>
