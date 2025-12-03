@@ -2,17 +2,17 @@ import * as React from "react"
 import { Editor } from "@tinymce/tinymce-react"
 import { TINY_MCE_API } from "@/lib/constants"
 
-interface RichTextEditorProps {
+interface PageProps {
   value: string
   onChange: (value: string) => void
 }
 
-const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange }) => {
+const Page: React.FC<PageProps> = ({ value, onChange }) => {
   // Helper to apply theme styles to the editor
  
 
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-md transition-colors">
+    <div className="bg-white my-2  rounded-md transition-colors">
       <Editor
         value={value}
         apiKey={TINY_MCE_API}
@@ -56,4 +56,4 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange }) => {
   )
 }
 
-export default RichTextEditor
+export default Page

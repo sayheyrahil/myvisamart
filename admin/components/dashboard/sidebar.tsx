@@ -134,6 +134,11 @@ export function DashboardSidebar({ passData }: { passData?: boolean }) {
       icon: <span style={{ fontSize: 18 }}>📂</span>,
     },
     {
+      title: "countries",
+      href: "/countries",
+      icon: <span style={{ fontSize: 18 }}>📂</span>,
+    },
+    {
       title: "destinations",
       href: "/destination",
       icon: <span style={{ fontSize: 18 }}>📂</span>,

@@ -36,6 +36,12 @@ export const ENDPOINTS = {
  
 
  
+  countries_get:  adminKey +  "countries/get",
+  countries_delete:  adminKey +  "countries/delete",
+  countries_store:  adminKey +  "countries/store",
+  countries_edit:  adminKey +  "countries/edit_get",
+  countries_change_status:  adminKey +  "countries/change_status",
+  
   
 }
 

@@ -11,6 +11,7 @@ interface ImageUploadProps {
   uploading: boolean
   setUploading: (val: boolean) => void
   preview: string | string[]
+  type?:string
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
@@ -20,9 +21,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   uploading,
   setUploading,
   preview,
+  type = "general",
 }) => {
  
-
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const [isDragActive, setIsDragActive] = React.useState(false)
 
@@ -38,7 +39,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           const formData = new FormData()
           formData.append("files", files[i])
           const response = await axios.post(
-            `${ENDPOINTS.image_upload}?type=profiles11`,
+            `${ENDPOINTS.image_upload}?type=${type}`,
             formData,
             { headers: { "Content-Type": "multipart/form-data" } }
           )
@@ -51,7 +52,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         const formData = new FormData()
         formData.append("files", file)
         const response = await axios.post(
-          `${ENDPOINTS.image_upload}?type=profiles`,
+          `${ENDPOINTS.image_upload}?type=${type}`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         )
@@ -114,9 +115,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     return `${WEB_URL}${url}`
   }
 
-  const hasImages = multiple
-    ? Array.isArray(value) && value.length > 0
-    : !!(preview || value)
+  const hasImages =
+    multiple
+      ? Array.isArray(preview) && preview.length > 0
+      : (typeof preview === "string" && preview) || (typeof value === "string" && value);
 
   return (
     <div className="flex flex-col gap-2">
@@ -141,10 +143,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         {hasImages ? (
           multiple && Array.isArray(value) && Array.isArray(preview) ? (
             <div className="flex flex-wrap gap-4 w-full justify-center">
-              {value.map((v, idx) => (
+              {preview.map((p, idx) => (
                 <div key={idx} className="relative flex flex-col items-center">
                   <img
-                    src={withBaseUrl(preview[idx] || v)}
+                    src={withBaseUrl(p || value[idx])}
                     alt={`Preview ${idx + 1}`}
                     className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain"
                   />
@@ -178,37 +180,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             </div>
           ) : (
             <div className="relative flex flex-col items-center">
-              {Array.isArray(preview) && preview.length > 0 ? (
-                preview.map((p, idx) => (
-                  <img
-                    key={idx}
-                    src={withBaseUrl(p)}
-                    alt={`Preview ${idx + 1}`}
-                    className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain"
-                  />
-                ))
-              ) : Array.isArray(value) && value.length > 0 ? (
-                value.map((v, idx) => (
-                  <img
-                    key={idx}
-                    src={withBaseUrl(v)}
-                    alt={`Preview ${idx + 1}`}
-                    className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain"
-                  />
-                ))
-              ) : (
-                <img
-                  src={
-                    typeof preview === "string" && preview
-                      ? withBaseUrl(preview)
-                      : typeof value === "string"
-                      ? withBaseUrl(value)
-                      : ""
-                  }
-                  alt="Preview"
-                  className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain"
-                />
-              )}
+              <img
+                src={
+                  typeof preview === "string" && preview
+                    ? withBaseUrl(preview)
+                    : typeof value === "string" && value
+                    ? withBaseUrl(value)
+                    : ""
+                }
+                alt="Preview"
+                className="max-h-40 rounded-lg border border-gray-300 shadow mb-2 object-contain"
+              />
               <button
                 type="button"
                 className="absolute top-2 right-2 bg-white border border-gray-300 rounded-full p-1 shadow hover:bg-red-500 hover:text-white transition-colors"

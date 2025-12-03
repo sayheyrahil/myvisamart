@@ -5,6 +5,9 @@ import categoryValidation from "@validation/admin/category-validation";
 import destinationController from "@controllers/admin/destination"
 import destinationValidation from "@validation/admin/destination-validation";
 
+import countriesController from "@controllers/admin/countries";
+import countriesValidation from "@validation/admin/countries-validation";
+
 import { decryptBody, encryptJsonResponse } from "@middleware/crypto-middleware"; // <-- Add this
 
 
@@ -29,6 +32,15 @@ adminRouter.post(`/destination/delete`, commonValidation.idRequired, destination
 adminRouter.post(`/destination/change_status`, commonValidation.idRequired, destinationController.changeStatus);
 
  
+// Destination routes
+adminRouter.post(`/countries/get`, countriesController.get);
+adminRouter.post(`/countries/store`, countriesValidation.store, countriesValidation.nameUniquenessMiddleware, countriesController.store);
+adminRouter.post(`/countries/edit_get`, commonValidation.idRequired, countriesController.edit);
+adminRouter.post(`/countries/delete`, commonValidation.idRequired, countriesController.destroy);
+adminRouter.post(`/countries/change_status`, commonValidation.idRequired, countriesController.changeStatus);
+
+ 
+
 
 
 

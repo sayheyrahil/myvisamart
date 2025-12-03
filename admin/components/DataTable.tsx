@@ -253,8 +253,8 @@ const CustomTable: React.FC<{
 
   return (
     <div className="overflow-x-auto rounded-lg border border-border">
-      {/* Table */}
-      <table className="w-full">
+      {/* Desktop Table */}
+      <table className="w-full hidden sm:table">
         <thead className="bg-muted/50">
           <tr>
             {columns.map((col, index) => (
@@ -299,7 +299,33 @@ const CustomTable: React.FC<{
           )}
         </tbody>
       </table>
-
+      {/* Mobile List View */}
+      <div className="sm:hidden">
+        {loading ? (
+          <div className="text-center py-6">Loading...</div>
+        ) : data.length > 0 ? (
+          <ul className="flex flex-col gap-4 py-2">
+            {data.map((row, rowIndex) => (
+              <li key={rowIndex} className="bg-white rounded-lg shadow p-4 border border-border">
+                <div className="grid grid-cols-2 gap-y-3 gap-x-2">
+                  {columns.map((col, colIndex) => (
+                    <React.Fragment key={colIndex}>
+                      <div className="text-xs font-semibold text-muted-foreground flex items-center">
+                        {col.title}
+                      </div>
+                      <div className="text-sm text-foreground flex items-center">
+                        {col.render ? col.render(row[col.dataIndex], row) : row[col.dataIndex]}
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="text-center py-10">No data available</div>
+        )}
+      </div>
       {/* Footer with pagination */}
       <div className="flex flex-col border-t-8 gap-4 mt-6 p-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">

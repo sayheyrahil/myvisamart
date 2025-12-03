@@ -113,7 +113,7 @@ const Page = () => {
       dataIndex: "is_active",
       align: "center",
       render: (text: any, row: any) => (
-        <div className="flex justify-center items-center w-10 m-auto bg-green-100 rounded-full p-2">
+        <div className="flex justify-center items-center w-10 m-auto bg-green-100 rounded-md p-2">
           {row.is_active ? (
             <FaEye className="text-green-600 text-lg" title="Active" />
           ) : (

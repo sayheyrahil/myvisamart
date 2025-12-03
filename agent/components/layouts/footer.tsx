@@ -17,64 +17,7 @@ const Footer = () => {
               className="w-28 h-28 mb-4"
             />
           </div>
-          <div className="flex flex-col items-center md:items-start justify-center">
-            <h3 className="text-[#0A509F] font-semibold text-sm mb-1 mt-4 uppercase tracking-wide">
-                Tools
-              </h3>
-              <ul className="flex flex-col gap-y-1 mb-8">
-                <li>
-                  <Link className={allSubTitle} href="/tools/ds-160" target="_blank" rel="noopener noreferrer">
-                    DS-160
-                  </Link>
-                </li>
-                <li>
-                  <Link className={allSubTitle} href="/tools/schengen-appointment-checker" target="_blank" rel="noopener noreferrer">
-                    Schengen Appointment Checker
-                  </Link>
-                </li>
-                <li>
-                  <Link className={allSubTitle} href="/tools/schengen-cover-letter" target="_blank" rel="noopener noreferrer">
-                    Schengen Cover Letter
-                  </Link>
-                </li>
-                <li>
-                  <Link className={allSubTitle} href="/tools/schengen-invitation-letter" target="_blank" rel="noopener noreferrer">
-                    Schengen Invitation Letter
-                  </Link>
-                </li>
-                <li>
-                  <Link className={allSubTitle} href="/tools/uae-visa-status-online" target="_blank" rel="noopener noreferrer">
-                    UAE Visa Status Online
-                  </Link>
-                </li>
-                <li>
-                  <Link className={allSubTitle} href="/tools/vietnam-visa-status-checker" target="_blank" rel="noopener noreferrer">
-                    Vietnam Visa Status Checker
-                  </Link>
-                </li>
-                <li>
-                  <Link className={allSubTitle} href="/tools/visa-eligibility-quiz" target="_blank" rel="noopener noreferrer">
-                    Visa Eligibility Quiz
-                  </Link>
-                </li>
-                <li>
-                  <Link className={allSubTitle} href="/tools/visa-glossary" target="_blank" rel="noopener noreferrer">
-                    Visa Glossary
-                  </Link>
-                </li>
-                <li>
-                  <Link className={allSubTitle} href="/tools/visa-glossary-adjustment-of-status" target="_blank" rel="noopener noreferrer">
-                    Visa Glossary Adjustment of Status
-                  </Link>
-                </li>
-                <li>
-                  <Link className={allSubTitle} href="/tools/visa-photo-maker" target="_blank" rel="noopener noreferrer">
-                    Visa Photo Maker
-                  </Link>
-                </li>
-              </ul>
-          </div>
-
+ 
           {/* About, Products, Other */}
           <div className="flex flex-col justify-center">
             <div>

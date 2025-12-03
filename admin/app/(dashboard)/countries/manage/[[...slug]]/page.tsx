@@ -6,35 +6,38 @@ import { handleAxiosError, handleAxiosSuccess } from "@/lib/common";
 import { ENDPOINTS } from "@/lib/constants";
 import ImageUpload from "@/components/common/image-upload";
 
-type DestinationForm = {
+import Editor from "@/components/common/Editor";
+type countriesForm = {
   name: string
   description: string
   image: string
-  area: string
-  is_top_destination: boolean
-  is_popular: boolean
+  country: string
+  icon: string
+  dail_code: string
+  detail: string
+  visa_process_time: string
   amount: string
-  later_amount: string
-  countries: string[]
+  pay_later_amount: string
 }
 
-const pageTitleName = "destination";
+const pageTitleName = "countries";
 export default function Page({ params: paramsPromise }: { params: any }) {
   const params = React.use(paramsPromise) as { slug?: string[] };
   
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean>(false)
-  const [form, setForm] = useState<DestinationForm>({
+  const [form, setForm] = useState<countriesForm>({
     name: "",
     description: "",
     image: "",
-    area: "",
-    is_top_destination: false,
-    is_popular: false,
+    country: "",
+    icon: "",
+    dail_code: "",
+    detail: "",
+    visa_process_time: "",
     amount: "",
-    later_amount: "",
-    countries: [],
+    pay_later_amount: "",
   })
   const [imagePreview, setImagePreview] = useState<string>("")
   const [uploading, setUploading] = useState<boolean>(false)
@@ -45,20 +48,21 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   // Fetch data for edit
   const fetchData = useCallback(
     (id: number) => {
-     const idpass = { id: id };
-      axiosInstance.post(ENDPOINTS.destination_edit , idpass)
+      const idpass = { id: id };
+      axiosInstance.post(ENDPOINTS.countries_edit , idpass)
         .then((response: any) => {
           let data = response.data.data;
           setForm({
             name: data.name || "",
             description: data.description || "",
             image: data.image || "",
-            area: data.area || "",
-            is_top_destination: !!data.is_top_destination,
-            is_popular: !!data.is_popular,
-            amount: data.amount || "",
-            later_amount: data.later_amount || "",
-            countries: data.countries || [],
+            country: data.country || "",
+            icon: data.icon || "",
+            dail_code: data.dail_code || "",
+            detail: data.detail || "",
+            visa_process_time: data.visa_process_time || "",
+            amount: data.amount ? String(data.amount) : "",
+            pay_later_amount: data.pay_later_amount ? String(data.pay_later_amount) : "",
           });
           setImagePreview(data.image || "");
           setIsEdit(true);
@@ -82,13 +86,16 @@ export default function Page({ params: paramsPromise }: { params: any }) {
 
   }, [fetchData]);
 
-  const onSubmit = async (data: DestinationForm) => {
+  const onSubmit = async (data: countriesForm) => {
     setIsLoading(true);
     const submitData: any = { ...data };
     if (id) {
       submitData["id"] = id;
     }
-    await axiosInstance.post(ENDPOINTS.destination_store, submitData)
+    // Convert amount fields to number
+    submitData.amount = Number(submitData.amount) || 0;
+    submitData.pay_later_amount = Number(submitData.pay_later_amount) || 0;
+    await axiosInstance.post(ENDPOINTS.countries_store, submitData)
       .then(async (response: any) => {
         setIsLoading(false);
         handleAxiosSuccess(response);
@@ -98,8 +105,8 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       })
       .catch((error: any) => {
         setIsLoading(false);
-        if (error.response) {
-          handleAxiosError(error);
+         if (error.response) {
+           handleAxiosError(error);
         }
       });
   };
@@ -107,28 +114,24 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) {
-    const { name, value, type, checked, multiple, options } = e.target
-    if (name === "countries" && multiple) {
-      const selected: string[] = Array.from(options)
-        .filter(option => option.selected)
-        .map(option => option.value)
-      setForm(prev => ({
-        ...prev,
-        countries: selected,
-      }))
-    } else {
-      setForm(prev => ({
-        ...prev,
-        [name]: type === "checkbox" ? checked : value,
-      }))
-    }
+    const { name, value, type, checked } = e.target
+    setForm(prev => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }))
   }
 
   function validate(): string {
     if (form.name.length < 2) return "Name must be at least 2 characters."
     if (form.name.length > 100) return "Name cannot exceed 100 characters."
     if (form.description.length < 10) return "Description must be at least 10 characters."
-    if (!form.area) return "Area is required."
+    if (!form.country) return "Country is required."
+    if (!form.icon) return "Icon is required."
+    if (!form.dail_code) return "Dail code is required."
+    if (!form.detail) return "Detail is required."
+    if (!form.visa_process_time) return "Visa process time is required."
+    if (!form.amount) return "Amount is required."
+    if (!form.pay_later_amount) return "Pay later amount is required."
     // if (!form.image) return "Image is required."
     return ""
   }
@@ -150,12 +153,13 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       name: "",
       description: "",
       image: "",
-      area: "",
-      is_top_destination: false,
-      is_popular: false,
+      country: "",
+      icon: "",
+      dail_code: "",
+      detail: "",
+      visa_process_time: "",
       amount: "",
-      later_amount: "",
-      countries: [],
+      pay_later_amount: "",
     })
     setImagePreview("")
     setError("")
@@ -165,9 +169,9 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   }
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white rounded-md shadow">
+    <div className=" p-6 bg-white rounded-md shadow">
       <h1 className="text-3xl font-bold mb-6">
-        {isEdit ? "Edit Destination" : "New Destination"}
+        {isEdit ? "Edit countries" : "New countries"}
       </h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -178,7 +182,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               name="name"
               value={form.name}
               onChange={handleChange}
-              placeholder="Enter Destination name"
+              placeholder="Enter countries name"
               className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
             />
           </label>
@@ -199,69 +203,93 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               }}
               uploading={uploading}
               setUploading={setUploading}
+              type="countries"
             />
           </label>
         </div>
         <div className="mb-4">
           <label className="block font-medium mb-1">
             Description:
-            <textarea
-              name="description"
+
+            <Editor 
               value={form.description}
+              onChange={(value: string) =>
+                setForm((prev) => ({ ...prev, description: value }))
+              }
+            />
+         
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block font-medium mb-1">
+            Country:
+            <input
+              type="text"
+              name="country"
+              value={form.country}
               onChange={handleChange}
-              placeholder="Enter description"
-              rows={4}
+              placeholder="Enter country name"
               className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
             />
           </label>
         </div>
         <div className="mb-4">
           <label className="block font-medium mb-1">
-            Area:
-            <select
-              name="area"
-              value={form.area}
+            Icon:
+            <input
+              type="text"
+              name="icon"
+              value={form.icon}
               onChange={handleChange}
+              placeholder="Enter icon url or name"
               className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            >
-              <option value="">Select Area</option>
-              <option value="Europe">Europe</option>
-              <option value="Asia">Asia</option>
-              <option value="America">America</option>
-              <option value="Africa">Africa</option>
-              <option value="Oceania">Oceania</option>
-            </select>
+            />
           </label>
         </div>
         <div className="mb-4">
-          <label className="inline-flex items-center">
+          <label className="block font-medium mb-1">
+            Dail Code:
             <input
-              type="checkbox"
-              name="is_top_destination"
-              checked={form.is_top_destination}
+              type="text"
+              name="dail_code"
+              value={form.dail_code}
               onChange={handleChange}
-              className="form-checkbox h-5 w-5 text-brand"
+              placeholder="Enter dail code"
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
             />
-            <span className="ml-2 font-medium">Is Top Destination</span>
           </label>
         </div>
         <div className="mb-4">
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              name="is_popular"
-              checked={form.is_popular}
+          <label className="block font-medium mb-1">
+            Detail:
+            <textarea
+              name="detail"
+              value={form.detail}
               onChange={handleChange}
-              className="form-checkbox h-5 w-5 text-brand"
+              placeholder="Enter detail"
+              rows={3}
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
             />
-            <span className="ml-2 font-medium">Is Popular</span>
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block font-medium mb-1">
+            Visa Process Time:
+            <input
+              type="text"
+              name="visa_process_time"
+              value={form.visa_process_time}
+              onChange={handleChange}
+              placeholder="Enter visa process time"
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+            />
           </label>
         </div>
         <div className="mb-4">
           <label className="block font-medium mb-1">
             Amount:
             <input
-              type="text"
+              type="number"
               name="amount"
               value={form.amount}
               onChange={handleChange}
@@ -272,44 +300,17 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         </div>
         <div className="mb-4">
           <label className="block font-medium mb-1">
-            Later Amount:
+            Pay Later Amount:
             <input
-              type="text"
-              name="later_amount"
-              value={form.later_amount}
+              type="number"
+              name="pay_later_amount"
+              value={form.pay_later_amount}
               onChange={handleChange}
-              placeholder="Enter later amount"
+              placeholder="Enter pay later amount"
               className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
             />
           </label>
         </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Country Name:
-            <select
-              name="countries"
-              multiple
-              value={form.countries}
-              onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-              size={5}
-            >
-              <option value="India">India</option>
-              <option value="USA">USA</option>
-              <option value="UK">UK</option>
-              <option value="Australia">Australia</option>
-              <option value="Canada">Canada</option>
-              <option value="Germany">Germany</option>
-              <option value="France">France</option>
-              <option value="Singapore">Singapore</option>
-              <option value="Japan">Japan</option>
-              <option value="South Africa">South Africa</option>
-              {/* Add more countries as needed */}
-            </select>
-            <span className="text-xs text-gray-500">Hold Ctrl (Windows) or Command (Mac) to select multiple.</span>
-          </label>
-        </div>
-
         {error && <div className="text-red-600 mb-4">{error}</div>}
         {success && <div className="text-green-600 mb-4">{success}</div>}
         <div className="flex justify-end gap-2">
@@ -323,7 +324,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           </button>
           <button
             type="button"
-            onClick={() => (window.location.href = "/Destination")}
+            onClick={() => (window.location.href = "/countries")}
             className="px-4 py-2 rounded border bg-gray-100 hover:bg-gray-200"
             disabled={isLoading}
           >

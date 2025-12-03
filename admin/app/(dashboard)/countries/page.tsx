@@ -7,7 +7,7 @@ import ActionButtons from "@/components/ActionButtons";
 import { FaEye } from "react-icons/fa";
 import { FaEarDeaf } from "react-icons/fa6";
 
-const pageTitleName = "category";
+const pageTitleName = "countries";
 
 // Main Page
 const Page = () => {
@@ -18,9 +18,9 @@ const Page = () => {
   const [modalImage, setModalImage] = useState<string | null>(null);
 
   const { deleteItem, changeStatus, editItem, fetchData, showRowDataModal } = useCrudOperations(API_URL, {
-    delete: ENDPOINTS.category_delete,
-    changeStatus: ENDPOINTS.category_change_status,
-    get: ENDPOINTS.category_get,
+    delete: ENDPOINTS.countries_delete,
+    changeStatus: ENDPOINTS.countries_change_status,
+    get: ENDPOINTS.countries_get,
   });
 
 
@@ -81,18 +81,18 @@ const Page = () => {
         >
           {typeof text === "string"
             ? text
-                .match(/.{1,150}/g)
-                ?.map((chunk, idx) => (
-                  <span key={idx}>
-                    {chunk}
-                    {idx !== Math.ceil(text.length / 150) - 1 && <br />}
-                  </span>
-                ))
+              .match(/.{1,150}/g)
+              ?.map((chunk, idx) => (
+                <span key={idx}>
+                  {chunk}
+                  {idx !== Math.ceil(text.length / 150) - 1 && <br />}
+                </span>
+              ))
             : ""}
         </div>
       ),
     },
-  
+
     {
       title: <div className="flex justify-center">Image</div>,
       dataIndex: "image",
@@ -152,7 +152,6 @@ const Page = () => {
 
   return (
     <div className="rounded-sm border shadow-default p-1 bg-white">
-      {/* Modal for large image */}
       {modalImage && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
