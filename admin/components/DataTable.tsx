@@ -17,6 +17,7 @@ interface DataTableProps {
   hideAddButton?: boolean;
   onAddClick?: () => void; // Add this prop
   extraHeaderButtons?: React.ReactNode; // <-- Add this line
+  customAddButtonLink?: string; // <-- Add this line
 
   // Add these for filter modal control
   filterModalOpen?: boolean;
@@ -47,6 +48,7 @@ const DataTable: React.FC<DataTableProps> = ({
   hideAddButton,
   onAddClick,
   extraHeaderButtons, // <-- Add this line
+  customAddButtonLink, // <-- Add this line
   filterModalOpen,
   setFilterModalOpen,
   pendingFilterText,
@@ -188,7 +190,7 @@ const DataTable: React.FC<DataTableProps> = ({
 
               {!onAddClick && (
                 <Link
-                  href={`/${pageTitleName}/manage/`}
+                  href={customAddButtonLink ? customAddButtonLink : `/${pageTitleName}/manage/`}
                   className="p-2  rounded-md  bg-brand  flex items-center justify-center !static"
                   aria-label="Add"
                 >

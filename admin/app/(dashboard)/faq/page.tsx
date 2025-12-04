@@ -6,6 +6,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import ActionButtons from "@/components/ActionButtons";
 import { FaEye } from "react-icons/fa";
 import { FaEarDeaf } from "react-icons/fa6";
+import { useSearchParams } from "next/navigation";
 
 const pageTitleName = "faq";
 
@@ -23,26 +24,33 @@ const Page = () => {
     get: ENDPOINTS.faq_get,
   });
 
+  const searchParams = useSearchParams();
+  const countryName = searchParams.get("country_name");
+
   useEffect(() => {
     getData(1, 10, "createdAt", "desc");
-  }, []);
+  }, [countryName]);
 
   const getData = useCallback(
     (page = 1, perPage = 10, sortField = "createdAt", sortDirection = "desc") => {
-      const queryParams = {
+      const queryParams: any = {
         page,
         per_page: perPage,
         sort_direction: sortDirection,
         sort_field: sortField,
         search: filterText,
+        country_name: countryName
       };
+      if (countryName) {
+        queryParams.country_name = countryName;
+      }
       setLoading(true);
       fetchData(queryParams, (data: any) => {
         setDataTableData(data);
         setLoading(false);
       }, setTotalRows);
     },
-    [filterText, fetchData]
+    [filterText, fetchData, countryName]
   );
 
   const filterComponentHandleChange = (event: any) => {
@@ -58,35 +66,12 @@ const Page = () => {
 
   const columnsAnt = [
     {
-      title: "Name",
-      dataIndex: "name",
-      sorter: true,
-    },
-    {
       title: "Question",
       dataIndex: "question",
       sorter: true,
       render: (text: string) => (
-        <div
-          style={{
-            maxHeight: "150px",
-            height: "50px",
-            overflowY: "auto",
-            whiteSpace: "pre-line",
-            wordBreak: "break-word",
-            width: "100%",
-          }}
-        >
-          {typeof text === "string"
-            ? text
-              .match(/.{1,150}/g)
-              ?.map((chunk, idx) => (
-                <span key={idx}>
-                  {chunk}
-                  {idx !== Math.ceil(text.length / 150) - 1 && <br />}
-                </span>
-              ))
-            : ""}
+        <div className="max-h-[150px] h-[50px] w-[400px] overflow-y-auto whitespace-pre-line break-words">
+          {text}
         </div>
       ),
     },
@@ -95,26 +80,8 @@ const Page = () => {
       dataIndex: "answer",
       sorter: true,
       render: (text: string) => (
-        <div
-          style={{
-            maxHeight: "150px",
-            height: "50px",
-            overflowY: "auto",
-            whiteSpace: "pre-line",
-            wordBreak: "break-word",
-            width: "100%",
-          }}
-        >
-          {typeof text === "string"
-            ? text
-              .match(/.{1,150}/g)
-              ?.map((chunk, idx) => (
-                <span key={idx}>
-                  {chunk}
-                  {idx !== Math.ceil(text.length / 150) - 1 && <br />}
-                </span>
-              ))
-            : ""}
+        <div className="max-h-[150px] h-[50px] w-[400px] overflow-y-auto whitespace-pre-line break-words">
+          {text}
         </div>
       ),
     },
@@ -122,12 +89,13 @@ const Page = () => {
       title: "Type",
       dataIndex: "type",
       sorter: true,
+      render: (text: string) => (
+        <div className="max-h-[150px] h-[50px] w-[400px] overflow-y-auto whitespace-pre-line break-words">
+          {text}
+        </div>
+      ),
     },
-    {
-      title: "Slug",
-      dataIndex: "slug",
-      sorter: true,
-    },
+  
     {
       title: <div className="flex justify-center">Is Active</div>,
       dataIndex: "is_active",
@@ -180,6 +148,8 @@ const Page = () => {
         setFilterText={setFilterText}
         filterText={filterText}
         filterComponentHandleChange={filterComponentHandleChange}
+        // hideAddButton={true}
+        customAddButtonLink={`/faq/manage?country_name=${countryName}`}
       />
     </div>
   );

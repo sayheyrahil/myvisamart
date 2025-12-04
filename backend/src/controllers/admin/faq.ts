@@ -9,11 +9,9 @@ import commonFunction from "@helpers/commonFunction";
 
 type FaqData = {
     id?: number;
-    name: string;
     question: string;
     answer: string;
     type: string;
-    slug: string;
     createdAt?: Date;
     updatedAt?: Date;
     is_active?: boolean;
@@ -23,11 +21,9 @@ type FaqData = {
 const titleName = "FAQ";
 const allFiled = [
     "id",
-    "name",
     "question",
     "answer",
     "type",
-    "slug",
     "createdAt",
     "updatedAt",
     "is_active",
@@ -35,18 +31,16 @@ const allFiled = [
 ];
 // Only these fields will be used for LIKE search
 const searchableFields = [
-    "name",
     "question",
     "answer",
     "type",
-    "slug"
 ];
 const project: any = {};
 
 
 const get = async (req: Request, res: Response) => {
     try {
-        const { search, per_page, page, sort_field, sort_direction, ...filters } = req.body;
+        const { search, per_page, page, sort_field, sort_direction, country_name, ...filters } = req.body;
         const pageFind = page ? Number(page) - 1 : 0;
         const perPage = per_page == undefined ? 10 : Number(per_page);
 
@@ -57,6 +51,11 @@ const get = async (req: Request, res: Response) => {
                 where[field] = filters[field];
             }
         });
+
+        // Filter by type if country_name is provided
+        if (country_name && typeof country_name === "string" && country_name.trim() !== "") {
+            where.type = country_name;
+        }
 
         // Only apply search filter if search is a non-empty string
         if (typeof search === "string" && search.trim() !== "") {
@@ -218,11 +217,9 @@ const store = async (req: Request, res: Response) => {
     const transaction = await sequelize.transaction();
     try {
         const bodyData: FaqData = {
-            name: req.body.name,
             question: req.body.question,
             answer: req.body.answer,
             type: req.body.type,
-            slug: req.body.slug,
             is_active: req.body.is_active,
             is_deleted: req.body.is_deleted,
             createdAt: req.body.createdAt ? new Date(req.body.createdAt) : undefined,

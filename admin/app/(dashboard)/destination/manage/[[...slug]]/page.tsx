@@ -5,6 +5,7 @@ import { axiosInstance } from "@/lib/axios-instance"
 import { handleAxiosError, handleAxiosSuccess } from "@/lib/common";
 import { ENDPOINTS } from "@/lib/constants";
 import ImageUpload from "@/components/common/image-upload";
+import { useRouter } from "next/navigation";
 
 type DestinationForm = {
   name: string
@@ -21,7 +22,7 @@ type DestinationForm = {
 const pageTitleName = "destination";
 export default function Page({ params: paramsPromise }: { params: any }) {
   const params = React.use(paramsPromise) as { slug?: string[] };
-  
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean>(false)
@@ -93,8 +94,8 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         setIsLoading(false);
         handleAxiosSuccess(response);
         setTimeout(() => {
-          window.location.href = `/${pageTitleName}`;
-        }, 1000);
+          router.push("/destination");
+        }, 100);
       })
       .catch((error: any) => {
         setIsLoading(false);
@@ -323,7 +324,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           </button>
           <button
             type="button"
-            onClick={() => (window.location.href = "/Destination")}
+            onClick={() => router.push("/destination")}
             className="px-4 py-2 rounded border bg-gray-100 hover:bg-gray-200"
             disabled={isLoading}
           >

@@ -3,26 +3,28 @@ import { sequelize } from "@models/init";
 
 interface FaqAttributes {
   id?: number;
-  name: string;
   question: string;
   answer: string;
   type: string;
-  slug: string;
   createdAt?: Date;
   updatedAt?: Date;
   is_active?: boolean;
   is_deleted?: boolean;
 }
 
-type FaqCreationAttributes = Optional<FaqAttributes, "id" | "createdAt" | "updatedAt" | "is_active" | "is_deleted">;
+type FaqCreationAttributes = Optional<
+  FaqAttributes,
+  "id" | "createdAt" | "updatedAt" | "is_active" | "is_deleted"
+>;
 
-class Faq extends Model<FaqAttributes, FaqCreationAttributes> implements FaqAttributes {
+class Faq
+  extends Model<FaqAttributes, FaqCreationAttributes>
+  implements FaqAttributes
+{
   public id!: number;
-  public name!: string;
   public question!: string;
   public answer!: string;
   public type!: string;
-  public slug!: string;
   public createdAt!: Date;
   public updatedAt!: Date;
   public is_active!: boolean;
@@ -36,10 +38,7 @@ Faq.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+
     question: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -52,11 +51,7 @@ Faq.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    slug: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
+
     is_active: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,

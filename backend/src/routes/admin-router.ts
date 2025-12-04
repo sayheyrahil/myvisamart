@@ -46,7 +46,7 @@ adminRouter.post(`/countries/change_status`, commonValidation.idRequired, countr
 
 // FAQ routes
 adminRouter.post(`/faq/get`, faqController.get);
-adminRouter.post(`/faq/store`, faqValidation.store, faqValidation.nameUniquenessMiddleware, faqController.store);
+adminRouter.post(`/faq/store`, faqValidation.store, faqController.store);
 adminRouter.post(`/faq/edit_get`, commonValidation.idRequired, faqController.edit);
 adminRouter.post(`/faq/delete`, commonValidation.idRequired, faqController.destroy);
 adminRouter.post(`/faq/change_status`, commonValidation.idRequired, faqController.changeStatus);

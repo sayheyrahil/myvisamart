@@ -5,6 +5,7 @@ import { axiosInstance } from "@/lib/axios-instance"
 import { handleAxiosError, handleAxiosSuccess } from "@/lib/common";
 import { ENDPOINTS } from "@/lib/constants";
 import ImageUpload from "@/components/common/image-upload";
+import { useRouter } from "next/navigation";
 
 import Editor from "@/components/common/Editor";
 type countriesForm = {
@@ -23,7 +24,7 @@ type countriesForm = {
 const pageTitleName = "countries";
 export default function Page({ params: paramsPromise }: { params: any }) {
   const params = React.use(paramsPromise) as { slug?: string[] };
-  
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean>(false)
@@ -31,8 +32,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     name: "",
     description: "",
     image: "",
-    country: "",
-    icon: "",
+     icon: "",
     dail_code: "",
     detail: "",
     visa_process_time: "",
@@ -40,6 +40,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     pay_later_amount: "",
   })
   const [imagePreview, setImagePreview] = useState<string>("")
+  const [imageIconPreview, setImageIconPreview] = useState<string>("")
   const [uploading, setUploading] = useState<boolean>(false)
   const [error, setError] = useState<string>("")
   const [success, setSuccess] = useState<string>("")
@@ -100,8 +101,8 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         setIsLoading(false);
         handleAxiosSuccess(response);
         setTimeout(() => {
-          window.location.href = `/${pageTitleName}`;
-        }, 1000);
+          router.push("/countries");
+        }, 100);
       })
       .catch((error: any) => {
         setIsLoading(false);
@@ -125,8 +126,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     if (form.name.length < 2) return "Name must be at least 2 characters."
     if (form.name.length > 100) return "Name cannot exceed 100 characters."
     if (form.description.length < 10) return "Description must be at least 10 characters."
-    if (!form.country) return "Country is required."
-    if (!form.icon) return "Icon is required."
+     if (!form.icon) return "Icon is required."
     if (!form.dail_code) return "Dail code is required."
     if (!form.detail) return "Detail is required."
     if (!form.visa_process_time) return "Visa process time is required."
@@ -153,8 +153,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       name: "",
       description: "",
       image: "",
-      country: "",
-      icon: "",
+       icon: "",
       dail_code: "",
       detail: "",
       visa_process_time: "",
@@ -220,29 +219,23 @@ export default function Page({ params: paramsPromise }: { params: any }) {
          
           </label>
         </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Country:
-            <input
-              type="text"
-              name="country"
-              value={form.country}
-              onChange={handleChange}
-              placeholder="Enter country name"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            />
-          </label>
-        </div>
+        
         <div className="mb-4">
           <label className="block font-medium mb-1">
             Icon:
-            <input
-              type="text"
-              name="icon"
+              <ImageUpload
               value={form.icon}
-              onChange={handleChange}
-              placeholder="Enter icon url or name"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+              preview={imageIconPreview}
+              onChange={(imgUrl, previewUrl) => {
+                // Always set both image and preview, even on first upload
+                const image = Array.isArray(imgUrl) ? imgUrl[0] : imgUrl;
+                const preview = Array.isArray(previewUrl) ? previewUrl[0] : previewUrl;
+                setForm((prev) => ({ ...prev, icon: image }));
+                setImageIconPreview(preview && preview.length > 0 ? preview : image); // fallback to image if preview is missing or empty
+              }}
+              uploading={uploading}
+              setUploading={setUploading}
+              type="countries_icon"
             />
           </label>
         </div>
@@ -324,7 +317,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           </button>
           <button
             type="button"
-            onClick={() => (window.location.href = "/countries")}
+            onClick={() => router.push("/countries")}
             className="px-4 py-2 rounded border bg-gray-100 hover:bg-gray-200"
             disabled={isLoading}
           >

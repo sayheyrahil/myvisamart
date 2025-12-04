@@ -206,8 +206,8 @@ module.exports = {
         const countriesData = list.map(country => ({
             name: country.name,
             description: `Country in ${country.name}`,
-            image: `/uploads/country/${country.name.toLowerCase().replace(/ /g, "_")}.png`,
-            icon: `/uploads/country/${country.name.toLowerCase().replace(/ /g, "_")}.png`,
+            image: `/uploads/country/${country.name.toLowerCase().replace(/ /g, "_")}.jpg`,
+            icon: `/uploads/country/${country.name.toLowerCase().replace(/ /g, "_")}.jpg`,
             dail_code: country.dial_code,
             detail: `Details about ${country.name}`,
             slug: country.name.toLowerCase().replace(/ /g, "-"),
