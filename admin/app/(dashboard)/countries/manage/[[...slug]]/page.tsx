@@ -22,7 +22,7 @@ type countriesForm = {
   is_top_destination: boolean
   is_popular: boolean
   countries: string[]
-  transit_timeline: string[]
+  transit_timeline: { icon: string; title: string; description: string }[]
   required_documents: { title: string; description: string; icon: string }[]
   visa_information: { key: string; value: string }[]
   continent: string
@@ -52,7 +52,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     is_top_destination: false,
     is_popular: false,
     countries: [],
-    transit_timeline: [""],
+    transit_timeline: [{ icon: "", title: "", description: "" }],
     required_documents: [{ title: "", description: "", icon: "" }],
     visa_information: [{ key: "", value: "" }],
     continent: "",
@@ -99,7 +99,13 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             is_top_destination: !!data.is_top_destination,
             is_popular: !!data.is_popular,
             countries: Array.isArray(data.countries) ? data.countries : [],
-            transit_timeline: Array.isArray(data.transit_timeline) ? data.transit_timeline : [""],
+            transit_timeline: Array.isArray(data.transit_timeline)
+              ? data.transit_timeline.map((item: any) => ({
+                  icon: item.icon || "",
+                  title: item.title || "",
+                  description: item.description || "",
+                }))
+              : [{ icon: "", title: "", description: "" }],
             required_documents: Array.isArray(data.required_documents)
               ? data.required_documents.map((item: any) => ({
                   title: item.title || "",
@@ -169,7 +175,11 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     submitData.is_top_destination = !!data.is_top_destination;
     submitData.is_popular = !!data.is_popular;
     submitData.countries = Array.isArray(data.countries) ? data.countries : [];
-    submitData.transit_timeline = data.transit_timeline;
+    submitData.transit_timeline = data.transit_timeline.map((item) => ({
+      icon: item.icon,
+      title: item.title,
+      description: item.description,
+    }));
     submitData.required_documents = data.required_documents.map((item) => ({
       title: item.title,
       description: item.description,
@@ -264,7 +274,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       is_top_destination: false,
       is_popular: false,
       countries: [],
-      transit_timeline: [""],
+      transit_timeline: [{ icon: "", title: "", description: "" }],
       required_documents: [{ title: "", description: "", icon: "" }],
       visa_information: [{ key: "", value: "" }],
       continent: "",
@@ -341,6 +351,28 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       required_documents: prev.required_documents.length === 1
         ? [{ title: "", description: "", icon: "" }]
         : prev.required_documents.filter((_, i) => i !== idx),
+    }));
+  }
+  function handleTransitTimelineChange(idx: number, field: "icon" | "title" | "description", value: string) {
+    setForm((prev) => ({
+      ...prev,
+      transit_timeline: prev.transit_timeline.map((item, i) =>
+        i === idx ? { ...item, [field]: value } : item
+      ),
+    }));
+  }
+  function handleTransitTimelineAdd() {
+    setForm((prev) => ({
+      ...prev,
+      transit_timeline: [...prev.transit_timeline, { icon: "", title: "", description: "" }],
+    }));
+  }
+  function handleTransitTimelineRemove(idx: number) {
+    setForm((prev) => ({
+      ...prev,
+      transit_timeline: prev.transit_timeline.length === 1
+        ? [{ icon: "", title: "", description: "" }]
+        : prev.transit_timeline.filter((_, i) => i !== idx),
     }));
   }
 
@@ -582,16 +614,39 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           <label className="block font-medium mb-1">Transit Timeline:</label>
           {form.transit_timeline.map((item, idx) => (
             <div key={idx} className="flex gap-2 mb-2 items-center">
-              <input
-                type="text"
-                value={item}
-                onChange={e => handleArrayChange("transit_timeline", idx, e.target.value)}
-                className="w-full px-3 py-2 border rounded"
-                placeholder={`Step ${idx + 1} Name`}
-              />
+              <div className="flex flex-col gap-2 w-full">
+                {/* Icon */}
+                <ImageUpload
+                  value={item.icon}
+                  preview={item.icon}
+                  onChange={(imgUrl, previewUrl) => {
+                    const image = Array.isArray(imgUrl) ? imgUrl[0] : imgUrl;
+                    handleTransitTimelineChange(idx, "icon", image);
+                  }}
+                  uploading={uploading}
+                  setUploading={setUploading}
+                  type="transit_timeline_icon"
+                />
+                {/* Title */}
+                <input
+                  type="text"
+                  value={item.title}
+                  onChange={e => handleTransitTimelineChange(idx, "title", e.target.value)}
+                  className="w-full px-3 py-2 border rounded"
+                  placeholder={`Step ${idx + 1} Title`}
+                />
+                {/* Description */}
+                <input
+                  type="text"
+                  value={item.description}
+                  onChange={e => handleTransitTimelineChange(idx, "description", e.target.value)}
+                  className="w-full px-3 py-2 border rounded"
+                  placeholder={`Step ${idx + 1} Description`}
+                />
+              </div>
               <button
                 type="button"
-                onClick={() => handleArrayRemove("transit_timeline", idx)}
+                onClick={() => handleTransitTimelineRemove(idx)}
                 disabled={form.transit_timeline.length === 1}
                 className="text-white px-3 py-2 rounded-xl bg-brand"
               >
@@ -601,7 +656,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           ))}
           <button
             type="button"
-            onClick={() => handleArrayAdd("transit_timeline")}
+            onClick={handleTransitTimelineAdd}
             className="text-white px-3 py-2 rounded-xl bg-brand"
           >
             Add Step

@@ -14,7 +14,11 @@ export default function InfoCard({ name, visa }) {
 
       <div className="grid grid-cols-2 gap-4 mt-5">
         {Array.isArray(visa) && visa.length > 0 ? (
-          visa.map((v, idx) => item(v.key || `Info ${idx + 1}`, v.value || ""))
+          visa.map((v, idx) =>
+            <React.Fragment key={v.key || idx}>
+              {item(v.key || `Info ${idx + 1}`, v.value || "")}
+            </React.Fragment>
+          )
         ) : (
           <div className="col-span-2 text-gray-400">
             No visa information available.

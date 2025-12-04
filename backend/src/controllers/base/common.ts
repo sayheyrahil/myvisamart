@@ -154,8 +154,37 @@ const getCountryDetail = async (req: Request, res: Response) => {
         "visa_fee_later",
         "service_fee_later",
       ],
+      raw: true, // ensure plain object
     });
-    const sendResponse: any = {
+
+    let relatedCountries: any[] = [];
+    if (countries && countries.countries) {
+      let ids: string[] = [];
+      if (Array.isArray(countries.countries)) {
+        ids = countries.countries.map((id: any) => String(id).trim()).filter((id: string) => id.length > 0);
+      } else {
+        ids = String(countries.countries)
+          .split(",")
+          .map((id: string) => id.trim())
+          .filter((id: string) => id.length > 0);
+      }
+
+      if (ids.length > 0) {
+        relatedCountries = await CountryModel.findAll({
+          where: {
+            id: ids,
+            is_active: true,
+          },
+          attributes: ["id", "name", "image", "slug"],
+          raw: true,
+        });
+      }
+    }
+
+    // Attach related_countries to the response object
+    countries.related_countries = relatedCountries;
+
+     const sendResponse: any = {
       data: countries,
       message: "get successfully",
     };
