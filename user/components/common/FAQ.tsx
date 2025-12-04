@@ -12,10 +12,10 @@ const FaqSection = ({ faqData }: { faqData?: string[] }) => {
   };
 
   return (
-    <div className="w-full flex justify-center items-start mt-0 min-h-screen px-2 md:px-6">
+    <div className="w-full flex justify-center items-start mt-0 min-h-screen1 px-2 md:px-1">
       <div className="flex flex-col md:flex-row w-full max-w-6xl">
         {/* Sidebar Title */}
-        <div className="flex flex-col justify-start items-start w-full md:w-1/2 pl-0 md:pl-12 pr-0 md:pr-8 mb-8 md:mb-0">
+        <div className="flex flex-col justify-start items-start w-full md:w-1/2 pl-0 md:pl-2 pr-0 md:pr-8 mb-8 md:mb-0">
           <h3
             className="font-[Wix_Madefor_Display] text-[32px] md:text-[48px] leading-[40px] md:leading-[60px] mb-2 text-black"
             style={{

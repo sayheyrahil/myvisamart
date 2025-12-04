@@ -5,7 +5,11 @@ npm install -g sequelize-cli
 Juhi@LAPTOP MINGW64 /e/dddd/backend/src
 $ npx sequelize-cli db:seed:all
 
+To run a specific seeder (e.g. 20231223080954-countries.js), use:
 
+npx sequelize-cli db:seed:undo --seed 20231223080954-countries.js   # Undo this seeder
+npx sequelize-cli db:seed:all                                      # Run all seeders
+npx sequelize-cli db:seed --seed 20231223080954-countries.js    # Run only this seeder
 
 go to seeder directory
 

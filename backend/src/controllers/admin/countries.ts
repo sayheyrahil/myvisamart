@@ -12,7 +12,7 @@ type countriesData = {
     name: string;
     description: string;
     image: string;
-     icon: string;
+    icon: string;
     dail_code: string;
     detail: string;
     visa_process_time: string;
@@ -22,6 +22,10 @@ type countriesData = {
     updatedAt?: Date;
     is_active?: boolean;
     is_deleted?: boolean;
+    visa_fee_now?: number;
+    service_fee_now?: number;
+    visa_fee_later?: number;
+    service_fee_later?: number;
 };
 
 const titleName = "countries";
@@ -39,7 +43,11 @@ const allFiled = [
     "createdAt",
     "updatedAt",
     "is_active",
-    "is_deleted"
+    "is_deleted",
+    "visa_fee_now",
+    "service_fee_now",
+    "visa_fee_later",
+    "service_fee_later"
 ];
 // Only these fields will be used for LIKE search
 const searchableFields = [
@@ -232,7 +240,31 @@ const changeStatus = async (req: Request, res: Response) => {
 const store = async (req: Request, res: Response) => {
     const transaction = await sequelize.transaction();
     try {
-        const bodyData: countriesData = {
+        // Generate slug from name
+        const slug = req.body.name
+            ? req.body.name.trim().toLowerCase().replace(/\s+/g, "-")
+            : "";
+
+        // Ensure countries is a string
+        let countriesValue = req.body.countries ?? "";
+        if (Array.isArray(countriesValue)) {
+            countriesValue = countriesValue.join(",");
+        } else if (typeof countriesValue === "object" && countriesValue !== null) {
+            countriesValue = JSON.stringify(countriesValue);
+        }
+
+        const bodyData: countriesData & {
+            slug?: string;
+            is_top_destination?: boolean;
+            is_popular?: boolean;
+            countries?: string;
+            subtitle?: string;
+            rating?: number;
+            continent?: string;
+            required_documents?: any;
+            visa_information?: any;
+            transit_timeline?: any;
+        } = {
             name: req.body.name,
             description: req.body.description,
             image: req.body.image,
@@ -246,6 +278,20 @@ const store = async (req: Request, res: Response) => {
             is_deleted: req.body.is_deleted,
             createdAt: req.body.createdAt ? new Date(req.body.createdAt) : undefined,
             updatedAt: req.body.updatedAt ? new Date(req.body.updatedAt) : undefined,
+            slug: slug,
+            is_top_destination: req.body.is_top_destination ?? false,
+            is_popular: req.body.is_popular ?? false,
+            countries: countriesValue,
+            subtitle: req.body.subtitle ?? "",
+            rating: req.body.rating ?? 0,
+            continent: req.body.continent ?? "",
+            required_documents: req.body.required_documents ?? [],
+            visa_information: req.body.visa_information ?? [],
+            transit_timeline: req.body.transit_timeline ?? [],
+            visa_fee_now: req.body.visa_fee_now ?? 0,
+            service_fee_now: req.body.service_fee_now ?? 0,
+            visa_fee_later: req.body.visa_fee_later ?? 0,
+            service_fee_later: req.body.service_fee_later ?? 0,
         };
         if (req.body.id && !isNaN(Number(req.body.id))) {
             bodyData.id = Number(req.body.id);

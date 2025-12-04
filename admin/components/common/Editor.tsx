@@ -1,6 +1,12 @@
 import * as React from "react"
-import { Editor } from "@tinymce/tinymce-react"
+import dynamic from "next/dynamic"
 import { TINY_MCE_API } from "@/lib/constants"
+
+// Dynamically import TinyMCE Editor for client-side only
+const TinyEditor = dynamic(
+  () => import("@tinymce/tinymce-react").then(mod => mod.Editor),
+  { ssr: false }
+);
 
 interface PageProps {
   value: string
@@ -13,7 +19,7 @@ const Page: React.FC<PageProps> = ({ value, onChange }) => {
 
   return (
     <div className="bg-white my-2  rounded-md transition-colors">
-      <Editor
+      <TinyEditor
         value={value}
         apiKey={TINY_MCE_API}
         onEditorChange={onChange}

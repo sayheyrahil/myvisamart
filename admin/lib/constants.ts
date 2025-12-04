@@ -48,6 +48,9 @@ export const ENDPOINTS = {
   faq_store:  adminKey +  "faq/store",
   faq_edit:  adminKey +  "faq/edit_get",
   faq_change_status:  adminKey +  "faq/change_status",
+
+
+  country_names_active: "country-names-active",
 }
 
 

@@ -4,6 +4,7 @@ import log4js from "log4js";
 const logger = log4js.getLogger();
 import CategoryModel from "@models/category-model";
 import FaqModel from "@models/faq-model";
+import CountryModel from "@models/countries-model";
 
 const getActiveCategory = async (req: Request, res: Response) => {
   try {
@@ -63,7 +64,116 @@ const getActiveFaq = async (req: Request, res: Response) => {
   }
 };
 
+// Get all active countries with full details
+const getActiveCountries = async (req: Request, res: Response) => {
+  try {
+    const { is_popular, is_top_destination, continent } = req.body;
+    const where: any = { is_active: true };
+
+    if (is_popular !== undefined) where.is_popular = is_popular;
+    if (is_top_destination !== undefined)
+      where.is_top_destination = is_top_destination;
+    if (continent) where.continent = continent;
+
+    const countries: any = await CountryModel.findAll({
+      where,
+      attributes: ["name", "id", "image", "rating", "subtitle", "slug"], // Only fetch the name field
+    });
+    const sendResponse: any = {
+      data: countries,
+      message: "get successfully",
+    };
+    return response.sendSuccess(req, res, sendResponse);
+  } catch (err: any) {
+    const sendResponse: any = {
+      message: err.message,
+    };
+    logger.info("get countries error:", err);
+    logger.info(err);
+    return response.sendError(res, sendResponse);
+  }
+};
+
+// Get only names of active countries
+const getActiveCountryNames = async (req: Request, res: Response) => {
+  try {
+    const countries: any = await CountryModel.findAll({
+      where: {
+        is_active: true,
+      },
+      attributes: ["name", "id"], // Only fetch the name field
+    });
+    const sendResponse: any = {
+      data: countries,
+      message: "get successfully",
+    };
+    return response.sendSuccess(req, res, sendResponse);
+  } catch (err: any) {
+    const sendResponse: any = {
+      message: err.message,
+    };
+    logger.info("get country names error:", err);
+    logger.info(err);
+    return response.sendError(res, sendResponse);
+  }
+};
+const getCountryDetail = async (req: Request, res: Response) => {
+  try {
+    const { slug } = req.body;
+    const where: any = {
+      is_active: true,
+    };
+    if (slug !== undefined) {
+      where.slug = slug;
+    }
+    const countries: any = await CountryModel.findOne({
+      where,
+      attributes: [
+        "id",
+        "name",
+        "image",
+        "icon",
+        "description",
+        "dail_code",
+        "detail",
+        "visa_process_time",
+        "amount",
+        "pay_later_amount",
+        "is_top_destination",
+        "is_popular",
+        "countries",
+        "subtitle",
+        "rating",
+        "continent",
+        "slug",
+        "visa_information",
+        "transit_timeline",
+        "required_documents",
+        "visa_fee_now",
+        "service_fee_now",
+        "visa_fee_later",
+        "service_fee_later",
+      ],
+    });
+    const sendResponse: any = {
+      data: countries,
+      message: "get successfully",
+    };
+    return response.sendSuccess(req, res, sendResponse);
+  } catch (err: any) {
+    const sendResponse: any = {
+      message: err.message,
+    };
+    logger.info("get country names error:", err);
+    logger.info(err);
+    return response.sendError(res, sendResponse);
+  }
+};
+
 export default {
   getActiveCategory,
   getActiveFaq,
+  getActiveCountries,
+  getActiveCountryNames,
+  getCountryDetail,
 };

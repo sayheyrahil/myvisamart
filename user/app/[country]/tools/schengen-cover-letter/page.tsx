@@ -98,7 +98,7 @@ export default function Page() {
               {/* Tabs */}
               <div className="flex items-center border-b mb-8">
                 <button
-                  className="flex items-center gap-2 px-4 py-2 border-b-2 border-blue-600 text-blue-600 font-medium focus:outline-none"
+                  className="flex items-center gap-2 px-4 py-2 border-b-2 border-brand text-brand font-medium focus:outline-none"
                   disabled
                 >
                   <svg width="20" height="20" fill="none"><path d="M4 4.75A2.75 2.75 0 0 1 6.75 2h6.5A2.75 2.75 0 0 1 16 4.75v10.5A2.75 2.75 0 0 1 13.25 18h-6.5A2.75 2.75 0 0 1 4 15.25V4.75Z" stroke="#0A509F" strokeWidth="1.5" /><path d="M7 6h6M7 10h6M7 14h3" stroke="#0A509F" strokeWidth="1.5" strokeLinecap="round" /></svg>
@@ -216,7 +216,7 @@ export default function Page() {
                 <div className="flex justify-center pt-4">
                   <button
                     type="submit"
-                    className="px-8 py-3 bg-blue-600 text-white rounded-full text-lg font-medium shadow hover:bg-blue-700 transition"
+                    className="px-8 py-3 bg-brand text-white rounded-full text-lg font-medium shadow hover:bg-blue-700 transition"
                   >
                     Generate Cover Letter
                   </button>

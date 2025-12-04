@@ -10,7 +10,7 @@ const faviconSvg = encodeURIComponent(
 );
 
 export const metadata: Metadata = {
-  title: 'Visamart — Coming Soon',
+  // title: 'Visamart — Coming Soon',
   description: 'Be the first to know when we go live.',
 };
 

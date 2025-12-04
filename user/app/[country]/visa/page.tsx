@@ -97,7 +97,7 @@ export default function DubaiVisaPage() {
                   </div>
                 </div>
 
-                <button className="w-full mt-5 bg-blue-600 text-white rounded-lg py-3 font-medium hover:bg-blue-700 transition">
+                <button className="w-full mt-5 bg-brand text-white rounded-lg py-3 font-medium hover:bg-blue-700 transition">
                   Start Application
                 </button>
               </div>

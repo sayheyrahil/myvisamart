@@ -211,7 +211,7 @@ export default function Page() {
               <div className="flex justify-center pt-4">
                 <button
                   type="submit"
-                  className="px-8 py-3 bg-blue-600 text-white rounded-full text-lg font-medium shadow hover:bg-blue-700 transition"
+                  className="px-8 py-3 bg-brand text-white rounded-full text-lg font-medium shadow hover:bg-blue-700 transition"
                 >
                   Generate Invitation Letter
                 </button>

@@ -198,27 +198,89 @@ const list = [
   { "name": "Zimbabwe", "dial_code": "+263" }
 ]
 
+const continentMap = {
+  "Africa": [
+    "Algeria","Angola","Benin","Botswana","Burkina Faso","Burundi","Cabo Verde","Cameroon","Central African Republic","Chad","Comoros","Congo","Democratic Republic of the Congo","Djibouti","Egypt","Equatorial Guinea","Eritrea","Eswatini","Ethiopia","Gabon","Gambia","Ghana","Guinea","Guinea-Bissau","Ivory Coast","Kenya","Lesotho","Liberia","Libya","Madagascar","Malawi","Mali","Mauritania","Mauritius","Morocco","Mozambique","Namibia","Niger","Nigeria","Rwanda","Sao Tome and Principe","Senegal","Seychelles","Sierra Leone","Somalia","South Africa","South Sudan","Sudan","Tanzania","Togo","Tunisia","Uganda","Zambia","Zimbabwe"
+  ],
+  "Asia": [
+    "Afghanistan","Armenia","Azerbaijan","Bahrain","Bangladesh","Bhutan","Brunei","Cambodia","China","Cyprus","Georgia","India","Indonesia","Iran","Iraq","Israel","Japan","Jordan","Kazakhstan","Kuwait","Kyrgyzstan","Laos","Lebanon","Malaysia","Maldives","Mongolia","Myanmar","Nepal","North Korea","Oman","Pakistan","Palau","Philippines","Qatar","Saudi Arabia","Singapore","South Korea","Sri Lanka","Syria","Taiwan","Tajikistan","Thailand","Timor-Leste","Turkmenistan","United Arab Emirates","Uzbekistan","Vietnam","Yemen"
+  ],
+  "Europe": [
+    "Albania","Andorra","Austria","Belarus","Belgium","Bosnia and Herzegovina","Bulgaria","Croatia","Czech Republic","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Iceland","Ireland","Italy","Latvia","Liechtenstein","Lithuania","Luxembourg","Malta","Moldova","Monaco","Montenegro","Netherlands","North Macedonia","Norway","Poland","Portugal","Romania","Russia","San Marino","Serbia","Slovakia","Slovenia","Spain","Sweden","Switzerland","Ukraine","United Kingdom","Vatican City"
+  ],
+  "North America": [
+    "Antigua and Barbuda","Bahamas","Barbados","Belize","Canada","Costa Rica","Cuba","Dominica","Dominican Republic","El Salvador","Grenada","Guatemala","Haiti","Honduras","Jamaica","Mexico","Nicaragua","Panama","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Trinidad and Tobago","United States"
+  ],
+  "South America": [
+    "Argentina","Bolivia","Brazil","Chile","Colombia","Ecuador","Guyana","Paraguay","Peru","Suriname","Uruguay","Venezuela"
+  ],
+  "Oceania": [
+    "Australia","Fiji","Kiribati","Marshall Islands","Micronesia","Nauru","New Zealand","Palau","Papua New Guinea","Samoa","Solomon Islands","Tonga","Tuvalu","Vanuatu"
+  ]
+};
+
+function getContinent(countryName) {
+  for (const [continent, countries] of Object.entries(continentMap)) {
+    if (countries.includes(countryName)) return continent;
+  }
+  return "";
+}
+
+function getRandomSubtitle(name) {
+  return `Explore the beauty of ${name}`;
+}
+
+function getRandomRating() {
+  return +(Math.random() * 4 + 1).toFixed(1); // 1.0 to 5.0
+}
+
+function getRandomBool() {
+  return Math.random() < 0.5;
+}
+
+function getRandomVisaProcessTime() {
+  const times = ["15 days", "30 days", "45 days", "60 days", "90 days"];
+  return times[Math.floor(Math.random() * times.length)];
+}
+
+function getRandomAmount(min = 50, max = 500) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandomPayLaterAmount(min = 20, max = 250) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const countriesData = list.map(country => {
+  const continent = getContinent(country.name);
+  return {
+    name: country.name,
+    description: `Country in ${country.name}`,
+    image: `/uploads/country/${country.name.toLowerCase().replace(/ /g, "_")}.jpg`,
+    icon: `/uploads/country/${country.name.toLowerCase().replace(/ /g, "_")}.jpg`,
+    dail_code: country.dial_code,
+    detail: `Details about ${country.name}`,
+    slug: country.name.toLowerCase().replace(/ /g, "-"),
+    visa_process_time: getRandomVisaProcessTime(),
+    amount: getRandomAmount(),
+    pay_later_amount: getRandomPayLaterAmount(),
+    is_top_destination: getRandomBool(),
+    is_popular: getRandomBool(),
+    countries: "",
+    subtitle: getRandomSubtitle(country.name),
+    rating: getRandomRating(),
+    continent,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+});
+
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         // Prepare countriesData array from list
 
         // /uploads/profiles/2025-12-02T16-18-55.647Z-mountains.jpg
-        const countriesData = list.map(country => ({
-            name: country.name,
-            description: `Country in ${country.name}`,
-            image: `/uploads/country/${country.name.toLowerCase().replace(/ /g, "_")}.jpg`,
-            icon: `/uploads/country/${country.name.toLowerCase().replace(/ /g, "_")}.jpg`,
-            dail_code: country.dial_code,
-            detail: `Details about ${country.name}`,
-            slug: country.name.toLowerCase().replace(/ /g, "-"),
-            visa_process_time: "30 days",
-            amount: 100,
-            pay_later_amount: 50,
-            is_active: true,
-            is_deleted: false,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        }));
+        
 
         await queryInterface.bulkDelete("countries", null, {});
         await queryInterface.bulkInsert("countries", countriesData, {});

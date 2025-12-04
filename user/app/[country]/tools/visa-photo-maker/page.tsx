@@ -98,7 +98,7 @@ export default function Page() {
           <section className="max-w-screen-xl mx-auto px-6 py-8">
             <div className="border rounded-3xl p-8 shadow-sm bg-white">
               <div className="flex gap-8 border-b pb-4 mb-6">
-                <button className="text-blue-600 font-semibold">Select Country</button>
+                <button className="text-brand font-semibold">Select Country</button>
                 <button className="text-gray-500">Upload Photo</button>
                 <button className="text-gray-500">Download Result</button>
               </div>
@@ -106,7 +106,7 @@ export default function Page() {
               <select className="w-full border p-3 rounded-xl mb-6">
                 <option>Select an option...</option>
               </select>
-              <button className="px-6 py-3 bg-blue-600 text-white rounded-xl text-lg shadow hover:bg-blue-700 transition">
+              <button className="px-6 py-3 bg-brand text-white rounded-xl text-lg shadow hover:bg-blue-700 transition">
                 Create my photo
               </button>
             </div>
