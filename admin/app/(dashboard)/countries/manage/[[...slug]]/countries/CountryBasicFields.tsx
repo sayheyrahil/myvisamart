@@ -3,8 +3,7 @@ import React from "react";
 type Props = {
   dailCode: string;
   visaProcessTime: string;
-  amount: string;
-  payLaterAmount: string;
+ 
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 

@@ -6,6 +6,10 @@ import { handleAxiosError, handleAxiosSuccess } from "@/lib/common";
 import { ENDPOINTS } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import Editor from "@/components/common/Editor";
+
+import ImageUpload from "@/components/common/image-upload";
+import VideoUpload from "@/components/common/video-upload"; // <-- Add this import
+
 import ContinentSelect from "./countries/ContinentSelect";
 import DocumentsRequiredProcess from "./countries/DocumentsRequiredProcess";
 import VisaInformation from "./countries/VisaInformation";
@@ -15,6 +19,10 @@ import VisaFeeFields from "./countries/VisaFeeFields";
 import CountryImages from "./countries/CountryImages";
 import CountryDetailDescription from "./countries/CountryDetailDescription";
 import CountryBasicFields from "./countries/CountryBasicFields";
+
+import AmountsAndFeesFields from "./countries/AmountsAndFeesFields";
+import RejectionReasons from "./countries/RejectionReasons";
+import WhyReasons from "./countries/WhyReasons";
 
 type countriesForm = {
   name: string
@@ -65,6 +73,7 @@ type countriesForm = {
 const steps = [
   { label: "Basic Info" },
   { label: "Images" },
+  { label: "Video" }, // <-- Add this step
   { label: "Details & Description" },
   { label: "Amounts & Fees" },
   { label: "Country Selection" },
@@ -73,13 +82,42 @@ const steps = [
   { label: "Visa Information" },
   { label: "Continent" },
   { label: "Documents Required & Process" },
+  { label: "What You Get Images" },
+  { label: "Partners We Work With Images" }, // <-- Add this step
+  { label: "Rejection Reasons" }, // <-- Add this step
+  { label: "Why Reasons" }, // <-- Add this step
 ];
 
 const pageTitleName = "countries";
 export default function Page({ params: paramsPromise }: { params: any }) {
   const params = React.use(paramsPromise) as { slug?: string[] };
   const router = useRouter();
+  const [imagePreview, setImagePreview] = useState<string>("")
+  const [imageIconPreview, setImageIconPreview] = useState<string>("")
+  const [uploading, setUploading] = useState<boolean>(false)
+  const [error, setError] = useState<string>("")
+  const [success, setSuccess] = useState<string>("")
+  const [id, setId] = useState<number | null>(null)
+  const [countryOptions, setCountryOptions] = useState<string[]>([]);
+  const [step, setStep] = useState<number>(0);
+  const [whatYouGetPreviews, setWhatYouGetPreviews] = useState<string[]>([]); // For image previews
+  const [videoPreview, setVideoPreview] = useState<string>("");
+  const [partnersWeWorkWithPreviews, setPartnersWeWorkWithPreviews] = useState<string[]>([]); // For partners images
+  const [rejectionReasons, setRejectionReasons] = useState(
+    [{ icon: "", title: "", description: "" }]
+  );
+  const [whyReasons, setWhyReasons] = useState([{ icon: "", title: "", description: "" }]);
 
+  const filters = [
+    "Asia",
+    "Africa",
+    "North America",
+    "South America",
+    "Antarctica",
+    "Europe",
+    "Australia",
+  ];
+ 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean>(false)
   const [form, setForm] = useState<countriesForm>({
@@ -127,24 +165,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     },
     what_you_get: [],
   })
-  const [imagePreview, setImagePreview] = useState<string>("")
-  const [imageIconPreview, setImageIconPreview] = useState<string>("")
-  const [uploading, setUploading] = useState<boolean>(false)
-  const [error, setError] = useState<string>("")
-  const [success, setSuccess] = useState<string>("")
-  const [id, setId] = useState<number | null>(null)
-  const [countryOptions, setCountryOptions] = useState<string[]>([]);
-  const [step, setStep] = useState<number>(0);
-  const filters = [
-    "Asia",
-    "Africa",
-    "North America",
-    "South America",
-    "Antarctica",
-    "Europe",
-    "Australia",
-  ];
- 
+
   // Fetch data for edit
   const fetchData = useCallback(
     (id: number) => {
@@ -252,6 +273,28 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       });
   }, []);
 
+  // Handler for uploading multiple images for what_you_get
+  function handleWhatYouGetImagesChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    // For preview
+    const previews = files.map(file => URL.createObjectURL(file));
+    setWhatYouGetPreviews(previews);
+
+    // For form data (store as array of File or base64, depending on backend)
+    setForm(prev => ({
+      ...prev,
+      what_you_get: files,
+    }));
+  }
+
+  // Clean up previews on unmount
+  useEffect(() => {
+    return () => {
+      whatYouGetPreviews.forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [whatYouGetPreviews]);
+
   const onSubmit = async (data: countriesForm) => {
     setIsLoading(true);
     const submitData: any = { ...data }
@@ -293,7 +336,28 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       title: item.title,
       description: item.description,
     }));
-    await axiosInstance.post(ENDPOINTS.countries_store, submitData)
+    // Handle what_you_get images (convert to FormData if needed)
+    let formDataToSend: any = submitData;
+    if (submitData.what_you_get && Array.isArray(submitData.what_you_get) && submitData.what_you_get[0] instanceof File) {
+      // Use FormData for file upload
+      const fd = new FormData();
+      Object.entries(submitData).forEach(([key, value]) => {
+        if (key === "what_you_get") {
+          (value as File[]).forEach((file, idx) => {
+            fd.append(`what_you_get[]`, file);
+          });
+        } else if (typeof value === "object" && value !== null) {
+          fd.append(key, JSON.stringify(value));
+        } else {
+          fd.append(key, value as any);
+        }
+      });
+      formDataToSend = fd;
+    }
+
+    await axiosInstance.post(ENDPOINTS.countries_store, formDataToSend, {
+      headers: formDataToSend instanceof FormData ? { "Content-Type": "multipart/form-data" } : undefined,
+    })
       .then(async (response: any) => {
         setIsLoading(false);
         handleAxiosSuccess(response);
@@ -452,6 +516,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     setIsEdit(false)
     setId(null)
     setStep(0);
+    setWhatYouGetPreviews([]);
   }
 
   // Helper to handle array textbox changes
@@ -564,6 +629,78 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     }));
   }
 
+  // Sync form.rejection_reasons <-> local rejectionReasons state
+  useEffect(() => {
+    if (Array.isArray(form.rejection_reasons) && form.rejection_reasons.length > 0) {
+      setRejectionReasons(form.rejection_reasons);
+    }
+  }, [form.rejection_reasons]);
+
+  function handleRejectionReasonsChange(idx: number, field: "icon" | "title" | "description", value: string) {
+    setRejectionReasons(prev =>
+      prev.map((item, i) => (i === idx ? { ...item, [field]: value } : item))
+    );
+    setForm(prev => ({
+      ...prev,
+      rejection_reasons: rejectionReasons.map((item, i) =>
+        i === idx ? { ...item, [field]: value } : item
+      ),
+    }));
+  }
+  function handleRejectionReasonsAdd() {
+    setRejectionReasons(prev => [...prev, { icon: "", title: "", description: "" }]);
+    setForm(prev => ({
+      ...prev,
+      rejection_reasons: [...rejectionReasons, { icon: "", title: "", description: "" }],
+    }));
+  }
+  function handleRejectionReasonsRemove(idx: number) {
+    const updated = rejectionReasons.length === 1
+      ? [{ icon: "", title: "", description: "" }]
+      : rejectionReasons.filter((_, i) => i !== idx);
+    setRejectionReasons(updated);
+    setForm(prev => ({
+      ...prev,
+      rejection_reasons: updated,
+    }));
+  }
+
+  // Sync form.why <-> local whyReasons state
+  useEffect(() => {
+    if (Array.isArray(form.why) && form.why.length > 0) {
+      setWhyReasons(form.why);
+    }
+  }, [form.why]);
+
+  function handleWhyReasonsChange(idx: number, field: "icon" | "title" | "description", value: string) {
+    setWhyReasons(prev =>
+      prev.map((item, i) => (i === idx ? { ...item, [field]: value } : item))
+    );
+    setForm(prev => ({
+      ...prev,
+      why: whyReasons.map((item, i) =>
+        i === idx ? { ...item, [field]: value } : item
+      ),
+    }));
+  }
+  function handleWhyReasonsAdd() {
+    setWhyReasons(prev => [...prev, { icon: "", title: "", description: "" }]);
+    setForm(prev => ({
+      ...prev,
+      why: [...whyReasons, { icon: "", title: "", description: "" }],
+    }));
+  }
+  function handleWhyReasonsRemove(idx: number) {
+    const updated = whyReasons.length === 1
+      ? [{ icon: "", title: "", description: "" }]
+      : whyReasons.filter((_, i) => i !== idx);
+    setWhyReasons(updated);
+    setForm(prev => ({
+      ...prev,
+      why: updated,
+    }));
+  }
+
    return (
     <div className=" p-6 bg-white rounded-md shadow">
       <h1 className="text-3xl font-bold mb-6">
@@ -617,8 +754,28 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             />
           </div>
         )}
-        {/* Step 2: Details & Description */}
+        {/* Step 2: Video */}
         {step === 2 && (
+          <div className="mb-4">
+            <label className="block font-medium mb-1">
+              Upload Video:
+              <VideoUpload
+                value={form.video}
+                preview={videoPreview}
+                onChange={(videoUrl, previewUrl) => {
+                  setForm(prev => ({ ...prev, video: videoUrl }));
+                  setVideoPreview(previewUrl || videoUrl);
+                }}
+                uploading={uploading}
+                setUploading={setUploading}
+                type="countries"
+              />
+            </label>
+            <span className="text-xs text-gray-500">Upload a video file (mp4, webm, etc).</span>
+          </div>
+        )}
+        {/* Step 3: Details & Description */}
+        {step === 3 && (
           <CountryDetailDescription
             detail={form.detail}
             description={form.description}
@@ -626,48 +783,44 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             onDescriptionChange={value => setForm(prev => ({ ...prev, description: value }))}
           />
         )}
-        {/* Step 3: Amounts & Fees */}
-        {step === 3 && (
-          <>
-            <CountryBasicFields
-              dailCode={form.dail_code}
-              visaProcessTime={form.visa_process_time}
-              amount={form.amount}
-              payLaterAmount={form.pay_later_amount}
-              onChange={handleChange}
-            />
-            <VisaFeeFields
-              form={form}
-              onChange={handleChange}
-            />
-            <div className="mb-4">
-              <label className="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  name="is_top_destination"
-                  checked={form.is_top_destination}
-                  onChange={handleChange}
-                  className="form-checkbox h-5 w-5 text-brand"
-                />
-                <span className="ml-2 font-medium">Is Top Destination</span>
-              </label>
-            </div>
-            <div className="mb-4">
-              <label className="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  name="is_popular"
-                  checked={form.is_popular}
-                  onChange={handleChange}
-                  className="form-checkbox h-5 w-5 text-brand"
-                />
-                <span className="ml-2 font-medium">Is Popular</span>
-              </label>
-            </div>
-          </>
-        )}
-        {/* Step 4: Country Selection */}
+        {/* Step 4: Amounts & Fees */}
         {step === 4 && (
+          <AmountsAndFeesFields
+            form={form}
+            onChange={handleChange}
+            uploading={uploading}
+            setUploading={setUploading}
+          />
+          {/* Chances of Approval Fields */}
+          <div className="mb-4">
+            <label className="block font-medium mb-1">
+              Chances of Approval For This:
+              <input
+                type="text"
+                name="chances_of_approval_for_this"
+                value={form.chances_of_approval_for_this}
+                onChange={handleChange}
+                placeholder="Enter chances of approval for this"
+                className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+              />
+            </label>
+          </div>
+          <div className="mb-4">
+            <label className="block font-medium mb-1">
+              Chances of Approval For Other:
+              <input
+                type="text"
+                name="chances_of_approval_for_other"
+                value={form.chances_of_approval_for_other}
+                onChange={handleChange}
+                placeholder="Enter chances of approval for other"
+                className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+              />
+            </label>
+          </div>
+        )}
+        {/* Step 5: Country Selection */}
+        {step === 5 && (
           <div className="mb-4">
             <label className="block font-medium mb-1">
               Country Name:
@@ -687,8 +840,8 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             </label>
           </div>
         )}
-        {/* Step 5: Transit Timeline */}
-        {step === 5 && (
+        {/* Step 6: Transit Timeline */}
+        {step === 6 && (
           <div className="mb-4">
              <TransitTimeline
               transitTimeline={form.transit_timeline}
@@ -700,8 +853,8 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             />
           </div>
         )}
-        {/* Step 6: Required Documents */}
-        {step === 6 && (
+        {/* Step 7: Required Documents */}
+        {step === 7 && (
           <div className="mb-4">
              <RequiredDocuments
               requiredDocuments={form.required_documents}
@@ -713,8 +866,8 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             />
           </div>
         )}
-        {/* Step 7: Visa Information */}
-        {step === 7 && (
+        {/* Step 8: Visa Information */}
+        {step === 8 && (
           <div className="mb-4">
              <VisaInformation
               visaInformation={form.visa_information}
@@ -724,8 +877,8 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             />
           </div>
         )}
-        {/* Step 8: Continent */}
-        {step === 8 && (
+        {/* Step 9: Continent */}
+        {step === 9 && (
           <div className="mb-4">
             <label className="block font-medium mb-1">
                <ContinentSelect
@@ -736,14 +889,88 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             </label>
           </div>
         )}
-        {/* Step 9: Documents Required & Process */}
-        {step === 9 && (
+        {/* Step 10: Documents Required & Process */}
+        {step === 10 && (
           <div className="mb-4">
              <DocumentsRequiredProcess
               documentsRequiredProcess={form.documents_required_process}
               onChange={handleDocumentsRequiredProcessChange}
               onAdd={handleDocumentsRequiredProcessAdd}
               onRemove={handleDocumentsRequiredProcessRemove}
+            />
+          </div>
+        )}
+        {/* Step 11: What You Get Images */}
+        {step === 11 && (
+          <div className="mb-4">
+            <label className="block font-medium mb-1">
+              Upload What You Get Images:
+              <ImageUpload
+                value={form.what_you_get}
+                preview={whatYouGetPreviews}
+                multiple
+                onChange={(imgUrls, previewUrls) => {
+                  setForm(prev => ({
+                    ...prev,
+                    what_you_get: Array.isArray(imgUrls) ? imgUrls : [imgUrls],
+                  }));
+                  setWhatYouGetPreviews(Array.isArray(previewUrls) ? previewUrls : [previewUrls]);
+                }}
+                uploading={uploading}
+                setUploading={setUploading}
+                type="countries"
+              />
+            </label>
+            <span className="text-xs text-gray-500">You can upload multiple images.</span>
+          </div>
+        )}
+        {/* Step 12: Partners We Work With Images */}
+        {step === 12 && (
+          <div className="mb-4">
+            <label className="block font-medium mb-1">
+              Upload Partners We Work With Images:
+              <ImageUpload
+                value={form.partners_we_work_with}
+                preview={partnersWeWorkWithPreviews}
+                multiple
+                onChange={(imgUrls, previewUrls) => {
+                  setForm(prev => ({
+                    ...prev,
+                    partners_we_work_with: Array.isArray(imgUrls) ? imgUrls : [imgUrls],
+                  }));
+                  setPartnersWeWorkWithPreviews(Array.isArray(previewUrls) ? previewUrls : [previewUrls]);
+                }}
+                uploading={uploading}
+                setUploading={setUploading}
+                type="partners_we_work_with"
+              />
+            </label>
+            <span className="text-xs text-gray-500">You can upload multiple images.</span>
+          </div>
+        )}
+        {/* Step 13: Rejection Reasons */}
+        {step === 13 && (
+          <div className="mb-4">
+            <RejectionReasons
+              rejectionReasons={rejectionReasons}
+              onChange={handleRejectionReasonsChange}
+              onAdd={handleRejectionReasonsAdd}
+              onRemove={handleRejectionReasonsRemove}
+              uploading={uploading}
+              setUploading={setUploading}
+            />
+          </div>
+        )}
+        {/* Step 14: Why Reasons */}
+        {step === 14 && (
+          <div className="mb-4">
+            <WhyReasons
+              whyReasons={whyReasons}
+              onChange={handleWhyReasonsChange}
+              onAdd={handleWhyReasonsAdd}
+              onRemove={handleWhyReasonsRemove}
+              uploading={uploading}
+              setUploading={setUploading}
             />
           </div>
         )}

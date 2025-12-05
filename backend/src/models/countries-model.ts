@@ -46,6 +46,7 @@ interface CountriesAttributes {
     rows: object[];
   }; // <-- add this line
   what_you_get?: object[]; // <-- add this line
+  why?: object[]; // <-- add this line to CountriesAttributes
 }
 
 type CountriesCreationAttributes = Optional<
@@ -79,6 +80,7 @@ type CountriesCreationAttributes = Optional<
   | "statistics_on_visa_approval_rating" // <-- add this line
   | "visa_approval_comparison" // <-- add this line
   | "what_you_get" // <-- add this line
+  | "why" // <-- add this line to CountriesCreationAttributes
 >;
 
 class Countries
@@ -127,6 +129,7 @@ class Countries
     rows: object[];
   }; // <-- add this line
   public what_you_get!: object[]; // <-- add this line
+  public why!: object[]; // <-- add this line to Countries class
 }
 
 Countries.init(
@@ -320,6 +323,11 @@ Countries.init(
       },
     },
     what_you_get: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: [],
+    },
+    why: {
       type: DataTypes.JSON,
       allowNull: true,
       defaultValue: [],

@@ -2,9 +2,7 @@ import React from "react";
 
 type Props = {
   form: {
-    visa_process_time: string;
-    amount: string;
-    pay_later_amount: string;
+ 
     visa_fee_now?: string;
     service_fee_now?: string;
     visa_fee_later?: string;
