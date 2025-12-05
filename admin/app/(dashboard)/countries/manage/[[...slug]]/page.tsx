@@ -9,6 +9,7 @@ import Editor from "@/components/common/Editor";
 
 import ImageUpload from "@/components/common/image-upload";
 import VideoUpload from "@/components/common/video-upload"; // <-- Add this import
+import VisaApprovalComparisonForm from "./countries/VisaApprovalComparisonForm";
 
 import ContinentSelect from "./countries/ContinentSelect";
 import DocumentsRequiredProcess from "./countries/DocumentsRequiredProcess";
@@ -785,39 +786,53 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         )}
         {/* Step 4: Amounts & Fees */}
         {step === 4 && (
-          <AmountsAndFeesFields
-            form={form}
-            onChange={handleChange}
-            uploading={uploading}
-            setUploading={setUploading}
-          />
-          {/* Chances of Approval Fields */}
-          <div className="mb-4">
-            <label className="block font-medium mb-1">
-              Chances of Approval For This:
-              <input
-                type="text"
-                name="chances_of_approval_for_this"
-                value={form.chances_of_approval_for_this}
-                onChange={handleChange}
-                placeholder="Enter chances of approval for this"
-                className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+          <>
+            <AmountsAndFeesFields
+              form={form}
+              onChange={handleChange}
+              uploading={uploading}
+              setUploading={setUploading}
+            />
+            {/* Chances of Approval Fields */}
+            <div className="mb-4">
+              <label className="block font-medium mb-1">
+                Chances of Approval For This:
+                <input
+                  type="text"
+                  name="chances_of_approval_for_this"
+                  value={form.chances_of_approval_for_this}
+                  onChange={handleChange}
+                  placeholder="Enter chances of approval for this"
+                  className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+                />
+              </label>
+            </div>
+            <div className="mb-4">
+              <label className="block font-medium mb-1">
+                Chances of Approval For Other:
+                <input
+                  type="text"
+                  name="chances_of_approval_for_other"
+                  value={form.chances_of_approval_for_other}
+                  onChange={handleChange}
+                  placeholder="Enter chances of approval for other"
+                  className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+                />
+              </label>
+            </div>
+            {/* Visa Approval Comparison Form */}
+            <div className="mb-4">
+              <VisaApprovalComparisonForm
+                value={form.visa_approval_comparison}
+                onChange={val =>
+                  setForm(prev => ({
+                    ...prev,
+                    visa_approval_comparison: val,
+                  }))
+                }
               />
-            </label>
-          </div>
-          <div className="mb-4">
-            <label className="block font-medium mb-1">
-              Chances of Approval For Other:
-              <input
-                type="text"
-                name="chances_of_approval_for_other"
-                value={form.chances_of_approval_for_other}
-                onChange={handleChange}
-                placeholder="Enter chances of approval for other"
-                className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-              />
-            </label>
-          </div>
+            </div>
+          </>
         )}
         {/* Step 5: Country Selection */}
         {step === 5 && (
