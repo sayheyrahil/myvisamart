@@ -30,6 +30,7 @@ type countriesForm = {
   service_fee_now?: string;
   visa_fee_later?: string;
   service_fee_later?: string;
+  documents_required_process: { title: string; description: string }[]
 }
 
 const pageTitleName = "countries";
@@ -60,6 +61,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     service_fee_now: "",
     visa_fee_later: "",
     service_fee_later: "",
+    documents_required_process: [{ title: "", description: "" }],
   })
   const [imagePreview, setImagePreview] = useState<string>("")
   const [imageIconPreview, setImageIconPreview] = useState<string>("")
@@ -125,6 +127,12 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             service_fee_now: data.service_fee_now ? String(data.service_fee_now) : "",
             visa_fee_later: data.visa_fee_later ? String(data.visa_fee_later) : "",
             service_fee_later: data.service_fee_later ? String(data.service_fee_later) : "",
+            documents_required_process: Array.isArray(data.documents_required_process)
+              ? data.documents_required_process.map((item: any) => ({
+                  title: item.title || "",
+                  description: item.description || "",
+                }))
+              : [{ title: "", description: "" }],
           });
           setImagePreview(data.image || "");
           setIsEdit(true);
@@ -188,6 +196,10 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     submitData.visa_information = data.visa_information.map((item) => ({
       key: item.key,
       value: item.value,
+    }));
+    submitData.documents_required_process = data.documents_required_process.map((item) => ({
+      title: item.title,
+      description: item.description,
     }));
     await axiosInstance.post(ENDPOINTS.countries_store, submitData)
       .then(async (response: any) => {
@@ -282,6 +294,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       service_fee_now: "",
       visa_fee_later: "",
       service_fee_later: "",
+      documents_required_process: [{ title: "", description: "" }],
     })
     setImagePreview("")
     setError("")
@@ -373,6 +386,30 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       transit_timeline: prev.transit_timeline.length === 1
         ? [{ icon: "", title: "", description: "" }]
         : prev.transit_timeline.filter((_, i) => i !== idx),
+    }));
+  }
+
+  // Handler for Documents Required & Process
+  function handleDocumentsRequiredProcessChange(idx: number, field: "title" | "description", value: string) {
+    setForm((prev) => ({
+      ...prev,
+      documents_required_process: prev.documents_required_process.map((item, i) =>
+        i === idx ? { ...item, [field]: value } : item
+      ),
+    }));
+  }
+  function handleDocumentsRequiredProcessAdd() {
+    setForm((prev) => ({
+      ...prev,
+      documents_required_process: [...prev.documents_required_process, { title: "", description: "" }],
+    }));
+  }
+  function handleDocumentsRequiredProcessRemove(idx: number) {
+    setForm((prev) => ({
+      ...prev,
+      documents_required_process: prev.documents_required_process.length === 1
+        ? [{ title: "", description: "" }]
+        : prev.documents_required_process.filter((_, i) => i !== idx),
     }));
   }
 
@@ -768,6 +805,45 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               ))}
             </select>
           </label>
+        </div>
+
+        {/* Documents Required & Process */}
+        <div className="mb-4">
+          <label className="block font-medium mb-1">Documents Required &amp; Process:</label>
+          {form.documents_required_process.map((item, idx) => (
+            <div key={idx} className="flex gap-2 mb-2 items-center">
+              <div className="flex flex-col gap-2 w-full">
+                {/* Title */}
+                <input
+                  type="text"
+                  value={item.title}
+                  onChange={e => handleDocumentsRequiredProcessChange(idx, "title", e.target.value)}
+                  className="w-full px-3 py-2 border rounded"
+                  placeholder={`Document ${idx + 1} Title`}
+                />
+                {/* Description (Editor) */}
+                <Editor
+                  value={item.description}
+                  onChange={value => handleDocumentsRequiredProcessChange(idx, "description", value)}
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => handleDocumentsRequiredProcessRemove(idx)}
+                disabled={form.documents_required_process.length === 1}
+                className="text-white px-3 py-2 rounded-xl bg-brand"
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={handleDocumentsRequiredProcessAdd}
+            className="text-white px-3 py-2 rounded-xl bg-brand"
+          >
+            Add Document
+          </button>
         </div>
 
         {error && <div className="text-red-600 mb-4">{error}</div>}

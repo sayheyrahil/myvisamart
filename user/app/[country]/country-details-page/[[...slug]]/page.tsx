@@ -11,12 +11,14 @@ import { axiosInstance } from "@/utils/axios-instance";
 import { ENDPOINTS } from "@/utils/constants";
 import FAQ from "@/components/common/FAQ";
 import VisaStatisticsCard from "./VisaStatisticsCard";
-
+import CalendarCard from "./CalendarCard";
 // Import new components
 import RequiredDocumentsSection from "./RequiredDocumentsSection";
 import RelatedCountriesSection from "./RelatedCountriesSection";
 import PaymentSection from "./PaymentSection";
 import TransitTimelineSection from "./TransitTimelineSection";
+import NearbyCountriesMap from "./NearbyCountriesMap";
+import DocumentsRequiredProcessSection from "./DocumentsRequiredProcessSection";
 
 export default function Page() {
   // Get slug from URL params
@@ -55,6 +57,7 @@ export default function Page() {
               <InfoCard name={countryDetail?.name} visa={countryDetail?.visa_information} />
               <div className="space-y-4 mt-5">
                 <SectionHeading>Get a Guaranteed Visa on</SectionHeading>
+                <CalendarCard />
                 {/* ...existing code for CalendarCard... */}
               </div>
               <RequiredDocumentsSection countryDetail={countryDetail} />
@@ -63,8 +66,10 @@ export default function Page() {
               <div className="mt-10">
                 <FAQ faqData={faqs} />
               </div>
+              <DocumentsRequiredProcessSection documents_required_process={countryDetail?.documents_required_process} />
               <TransitTimelineSection countryDetail={countryDetail} />
               <VisaStatisticsCard stats={countryDetail?.statistics} name={countryDetail?.name} />
+              <NearbyCountriesMap countries={countryDetail?.related_countries || []}  name={countryDetail?.name} />
             </div>
             <div className="md:col-span-2">
               <PriceCard detail={countryDetail} />

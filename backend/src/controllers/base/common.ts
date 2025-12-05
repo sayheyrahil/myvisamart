@@ -153,6 +153,7 @@ const getCountryDetail = async (req: Request, res: Response) => {
         "service_fee_now",
         "visa_fee_later",
         "service_fee_later",
+        'documents_required_process',
       ],
       raw: true, // ensure plain object
     });

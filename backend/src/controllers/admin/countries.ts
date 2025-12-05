@@ -264,6 +264,11 @@ const store = async (req: Request, res: Response) => {
             required_documents?: any;
             visa_information?: any;
             transit_timeline?: any;
+            documents_required_process?: any;
+            visa_fee_now?: number;
+            service_fee_now?: number;
+            visa_fee_later?: number;
+            service_fee_later?: number;
         } = {
             name: req.body.name,
             description: req.body.description,
@@ -288,6 +293,7 @@ const store = async (req: Request, res: Response) => {
             required_documents: req.body.required_documents ?? [],
             visa_information: req.body.visa_information ?? [],
             transit_timeline: req.body.transit_timeline ?? [],
+            documents_required_process: req.body.documents_required_process ?? [],
             visa_fee_now: req.body.visa_fee_now ?? 0,
             service_fee_now: req.body.service_fee_now ?? 0,
             visa_fee_later: req.body.visa_fee_later ?? 0,

@@ -30,6 +30,7 @@ interface CountriesAttributes {
   service_fee_now?: number;
   visa_fee_later?: number;
   service_fee_later?: number;
+  documents_required_process?: object[]; // <-- add this line
 }
 
 type CountriesCreationAttributes = Optional<
@@ -49,6 +50,7 @@ type CountriesCreationAttributes = Optional<
   | "service_fee_now"
   | "visa_fee_later"
   | "service_fee_later"
+  | "documents_required_process" // <-- add this line
 >;
 
 class Countries
@@ -81,6 +83,7 @@ class Countries
   public service_fee_now!: number;
   public visa_fee_later!: number;
   public service_fee_later!: number;
+  public documents_required_process!: object[]; // <-- add this line
 }
 
 Countries.init(
@@ -213,6 +216,11 @@ Countries.init(
       type: DataTypes.FLOAT,
       allowNull: true,
       defaultValue: 0,
+    },
+    documents_required_process: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: [],
     },
   },
   {
