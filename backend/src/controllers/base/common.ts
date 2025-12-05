@@ -77,7 +77,7 @@ const getActiveCountries = async (req: Request, res: Response) => {
 
     const countries: any = await CountryModel.findAll({
       where,
-      attributes: ["name", "id", "image", "rating", "subtitle", "slug"], // Only fetch the name field
+      attributes: ["name", "id", "image", "rating", "subtitle", "slug",'amount','pay_later_amount','visa_process_time'], // Only fetch the name field
     });
     const sendResponse: any = {
       data: countries,

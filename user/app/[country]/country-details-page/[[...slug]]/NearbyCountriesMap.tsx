@@ -25,6 +25,7 @@ export default function NearbyCountriesMap({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "", // Set your API key in .env
   });
 
+  
   return (
     <div className="my-10">
       <div className="mb-4">

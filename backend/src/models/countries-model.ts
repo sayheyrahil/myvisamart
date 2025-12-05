@@ -7,6 +7,7 @@ interface CountriesAttributes {
   description: string;
   image: string;
   icon: string;
+  video?: string; // <-- add this line
   dail_code: string;
   detail: string;
   visa_process_time: string;
@@ -31,6 +32,22 @@ interface CountriesAttributes {
   visa_fee_later?: number;
   service_fee_later?: number;
   documents_required_process?: object[]; // <-- add this line
+  partners_we_work_with?: object[]; // <-- add this line
+  rejection_reasons?: object[]; // <-- add this line
+  chances_of_approval_for_this?: number; // <-- add this line
+  chances_of_approval_for_other?: number; // <-- add this line
+  how_we_reviewed_this_page_sources?: string; // <-- add this line
+  how_we_reviewed_this_page_history?: string; // <-- add this line
+  get_a_guaranteed_visa_on?: string; // <-- add this line
+  check_appointment_availability?: string; // <-- add this line
+  statistics_on_visa_processing_time?: string; // <-- add this line
+  statistics_on_visa_approval_rating?: string; // <-- add this line
+  visa_approval_comparison?: {
+    atlys_percentage: number;
+    overall_percentage: number;
+    rows: object[];
+  }; // <-- add this line
+  what_you_get?: object[]; // <-- add this line
 }
 
 type CountriesCreationAttributes = Optional<
@@ -51,6 +68,19 @@ type CountriesCreationAttributes = Optional<
   | "visa_fee_later"
   | "service_fee_later"
   | "documents_required_process" // <-- add this line
+  | "video" // <-- add this line
+  | "partners_we_work_with" // <-- add this line
+  | "rejection_reasons" // <-- add this line
+  | "chances_of_approval_for_this" // <-- add this line
+  | "chances_of_approval_for_other" // <-- add this line
+  | "how_we_reviewed_this_page_sources" // <-- add this line
+  | "how_we_reviewed_this_page_history" // <-- add this line
+  | "get_a_guaranteed_visa_on" // <-- add this line
+  | "check_appointment_availability" // <-- add this line
+  | "statistics_on_visa_processing_time" // <-- add this line
+  | "statistics_on_visa_approval_rating" // <-- add this line
+  | "visa_approval_comparison" // <-- add this line
+  | "what_you_get" // <-- add this line
 >;
 
 class Countries
@@ -62,6 +92,7 @@ class Countries
   public description!: string;
   public image!: string;
   public icon!: string;
+  public video!: string; // <-- add this line
   public dail_code!: string;
   public detail!: string;
   public visa_process_time!: string;
@@ -84,6 +115,22 @@ class Countries
   public visa_fee_later!: number;
   public service_fee_later!: number;
   public documents_required_process!: object[]; // <-- add this line
+  public partners_we_work_with!: object[]; // <-- add this line
+  public rejection_reasons!: object[]; // <-- add this line
+  public chances_of_approval_for_this!: number; // <-- add this line
+  public chances_of_approval_for_other!: number; // <-- add this line
+  public how_we_reviewed_this_page_sources!: string; // <-- add this line
+  public how_we_reviewed_this_page_history!: string; // <-- add this line
+  public get_a_guaranteed_visa_on!: string; // <-- add this line
+  public check_appointment_availability!: string; // <-- add this line
+  public statistics_on_visa_processing_time!: string; // <-- add this line
+  public statistics_on_visa_approval_rating!: string; // <-- add this line
+  public visa_approval_comparison!: {
+    atlys_percentage: number;
+    overall_percentage: number;
+    rows: object[];
+  }; // <-- add this line
+  public what_you_get!: object[]; // <-- add this line
 }
 
 Countries.init(
@@ -108,6 +155,11 @@ Countries.init(
     icon: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    video: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: "",
     },
     dail_code: {
       type: DataTypes.STRING,
@@ -218,6 +270,70 @@ Countries.init(
       defaultValue: 0,
     },
     documents_required_process: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: [],
+    },
+    partners_we_work_with: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: [],
+    },
+    rejection_reasons: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: [],
+    },
+    chances_of_approval_for_this: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+      defaultValue: 0,
+    },
+    chances_of_approval_for_other: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+      defaultValue: 0,
+    },
+    how_we_reviewed_this_page_sources: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: "",
+    },
+    how_we_reviewed_this_page_history: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: "",
+    },
+    get_a_guaranteed_visa_on: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: "",
+    },
+    check_appointment_availability: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: "",
+    },
+    statistics_on_visa_processing_time: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: "",
+    },
+    statistics_on_visa_approval_rating: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: "",
+    },
+    visa_approval_comparison: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: {
+        atlys_percentage: 0,
+        overall_percentage: 0,
+        rows: []
+      },
+    },
+    what_you_get: {
       type: DataTypes.JSON,
       allowNull: true,
       defaultValue: [],
