@@ -9,7 +9,11 @@ type RejectionReason = {
 
 type Props = {
   rejectionReasons: RejectionReason[];
-  onChange: (idx: number, field: "icon" | "title" | "description", value: string) => void;
+  onChange: (
+    idx: number,
+    field: "icon" | "title" | "description",
+    value: string
+  ) => void;
   onAdd: () => void;
   onRemove: (idx: number) => void;
   uploading: boolean;
@@ -47,7 +51,7 @@ const RejectionReasons: React.FC<Props> = ({
           <input
             type="text"
             value={item.title}
-            onChange={e => onChange(idx, "title", e.target.value)}
+            onChange={(e) => onChange(idx, "title", e.target.value)}
             className="w-full px-3 py-2 border rounded"
             placeholder="Enter title"
           />
@@ -56,7 +60,7 @@ const RejectionReasons: React.FC<Props> = ({
           <label className="block text-sm font-medium mb-1">Description:</label>
           <textarea
             value={item.description}
-            onChange={e => onChange(idx, "description", e.target.value)}
+            onChange={(e) => onChange(idx, "description", e.target.value)}
             className="w-full px-3 py-2 border rounded"
             placeholder="Enter description"
           />
@@ -65,7 +69,7 @@ const RejectionReasons: React.FC<Props> = ({
           <button
             type="button"
             onClick={() => onRemove(idx)}
-            className="px-2 py-1 rounded bg-red-100 text-red-700 hover:bg-red-200"
+            className="text-white px-3 py-2 rounded-xl bg-brand"
             disabled={rejectionReasons.length === 1}
           >
             Remove
@@ -74,7 +78,7 @@ const RejectionReasons: React.FC<Props> = ({
             <button
               type="button"
               onClick={onAdd}
-              className="px-2 py-1 rounded bg-green-100 text-green-700 hover:bg-green-200"
+              className="text-white px-3 py-2 rounded-xl bg-brand"
             >
               Add
             </button>

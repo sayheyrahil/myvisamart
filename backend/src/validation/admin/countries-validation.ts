@@ -8,10 +8,7 @@ const store = async (req: Request, res: Response, next: NextFunction) => {
   let id: any = 0;
   if (req.body.id) id = req.body.id;
   const validationRule = {
-    "name": "required|string",
-    "description": "required|string",
-    "image": "required|string",
-    "is_active": "optional|boolean",
+    "name": "required|string", 
   };
   validator.validatorUtilWithCallback(validationRule, {}, req, res, next);
 };

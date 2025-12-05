@@ -65,7 +65,7 @@ const WhyReasons: React.FC<Props> = ({
           <button
             type="button"
             onClick={() => onRemove(idx)}
-            className="px-2 py-1 rounded bg-red-100 text-red-700 hover:bg-red-200"
+      className="text-white px-3 py-2 rounded-xl bg-brand"
             disabled={whyReasons.length === 1}
           >
             Remove
@@ -74,7 +74,7 @@ const WhyReasons: React.FC<Props> = ({
             <button
               type="button"
               onClick={onAdd}
-              className="px-2 py-1 rounded bg-green-100 text-green-700 hover:bg-green-200"
+      className="text-white px-3 py-2 rounded-xl bg-brand"
             >
               Add
             </button>

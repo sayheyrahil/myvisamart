@@ -406,28 +406,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       case 0:
         if (form.name.length < 2) return "Name must be at least 2 characters.";
         if (form.name.length > 100) return "Name cannot exceed 100 characters.";
-        break;
-      case 1:
-        if (form.icon.length < 10) return "Icon is required.";
-        // if (!form.image) return "Image is required."
-        break;
-      case 2:
-        if (form.description.length < 10) return "Description must be at least 10 characters.";
-        if (!form.detail) return "Detail is required.";
-        break;
-      case 3:
-        if (!form.dail_code) return "Dail code is required.";
-        if (!form.visa_process_time) return "Visa process time is required.";
-        if (!form.amount) return "Amount is required.";
-        if (!form.pay_later_amount) return "Pay later amount is required.";
-        break;
-      case 4:
-        // Optionally validate countries selection
-        // if (!form.countries || form.countries.length === 0) return "At least one country must be selected."
-        break;
-      case 8:
-        if (!form.continent) return "Continent is required.";
-        break;
+        break; 
       default:
         break;
     }
