@@ -4,34 +4,76 @@ import { useCallback, useEffect, useState } from "react"
 import { axiosInstance } from "@/lib/axios-instance"
 import { handleAxiosError, handleAxiosSuccess } from "@/lib/common";
 import { ENDPOINTS } from "@/lib/constants";
-import ImageUpload from "@/components/common/image-upload";
 import { useRouter } from "next/navigation";
-
 import Editor from "@/components/common/Editor";
+import ContinentSelect from "./countries/ContinentSelect";
+import DocumentsRequiredProcess from "./countries/DocumentsRequiredProcess";
+import VisaInformation from "./countries/VisaInformation";
+import RequiredDocuments from "./countries/RequiredDocuments";
+import TransitTimeline from "./countries/TransitTimeline";
+import VisaFeeFields from "./countries/VisaFeeFields";
+import CountryImages from "./countries/CountryImages";
+import CountryDetailDescription from "./countries/CountryDetailDescription";
+import CountryBasicFields from "./countries/CountryBasicFields";
+
 type countriesForm = {
   name: string
   description: string
   image: string
-  country: string
   icon: string
+  video: string
   dail_code: string
   detail: string
   visa_process_time: string
-  amount: string
-  pay_later_amount: string
+  is_active: boolean
+  is_deleted: boolean
+  createdAt?: string
+  updatedAt?: string
+  slug: string
   is_top_destination: boolean
   is_popular: boolean
   countries: string[]
-  transit_timeline: { icon: string; title: string; description: string }[]
+  subtitle: string
+  rating: number
+  continent: string
   required_documents: { title: string; description: string; icon: string }[]
   visa_information: { key: string; value: string }[]
-  continent: string
-  visa_fee_now?: string;
-  service_fee_now?: string;
-  visa_fee_later?: string;
-  service_fee_later?: string;
+  transit_timeline: { icon: string; title: string; description: string }[]
+  visa_fee_now?: string
+  service_fee_now?: string
+  visa_fee_later?: string
+  service_fee_later?: string
   documents_required_process: { title: string; description: string }[]
+  partners_we_work_with: any[]
+  rejection_reasons: any[]
+  chances_of_approval_for_this: string
+  chances_of_approval_for_other: string
+  how_we_reviewed_this_page_sources: string
+  how_we_reviewed_this_page_history: string
+  get_a_guaranteed_visa_on: string
+  check_appointment_availability: string
+  statistics_on_visa_processing_time: string
+  statistics_on_visa_approval_rating: string
+  visa_approval_comparison: {
+    atlys_percentage: string
+    overall_percentage: string
+    rows: any[]
+  }
+  what_you_get: any[]
 }
+
+const steps = [
+  { label: "Basic Info" },
+  { label: "Images" },
+  { label: "Details & Description" },
+  { label: "Amounts & Fees" },
+  { label: "Country Selection" },
+  { label: "Transit Timeline" },
+  { label: "Required Documents" },
+  { label: "Visa Information" },
+  { label: "Continent" },
+  { label: "Documents Required & Process" },
+];
 
 const pageTitleName = "countries";
 export default function Page({ params: paramsPromise }: { params: any }) {
@@ -45,23 +87,45 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     description: "",
     image: "",
     icon: "",
+    video: "",
     dail_code: "",
     detail: "",
     visa_process_time: "",
-    amount: "",
-    pay_later_amount: "",
+    is_active: true,
+    is_deleted: false,
+    createdAt: "",
+    updatedAt: "",
+    slug: "",
     is_top_destination: false,
     is_popular: false,
     countries: [],
-    transit_timeline: [{ icon: "", title: "", description: "" }],
+    subtitle: "",
+    rating: 0,
+    continent: "",
     required_documents: [{ title: "", description: "", icon: "" }],
     visa_information: [{ key: "", value: "" }],
-    continent: "",
+    transit_timeline: [{ icon: "", title: "", description: "" }],
     visa_fee_now: "",
     service_fee_now: "",
     visa_fee_later: "",
     service_fee_later: "",
     documents_required_process: [{ title: "", description: "" }],
+    partners_we_work_with: [],
+    rejection_reasons: [],
+    chances_of_approval_for_this: "",
+    chances_of_approval_for_other: "",
+    how_we_reviewed_this_page_sources: "",
+    how_we_reviewed_this_page_history: "",
+    get_a_guaranteed_visa_on: "",
+    check_appointment_availability: "",
+    statistics_on_visa_processing_time: "",
+    statistics_on_visa_approval_rating: "",
+    visa_approval_comparison: {
+      atlys_percentage: "",
+      overall_percentage: "",
+      rows: [],
+    },
+    what_you_get: [],
   })
   const [imagePreview, setImagePreview] = useState<string>("")
   const [imageIconPreview, setImageIconPreview] = useState<string>("")
@@ -70,6 +134,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   const [success, setSuccess] = useState<string>("")
   const [id, setId] = useState<number | null>(null)
   const [countryOptions, setCountryOptions] = useState<string[]>([]);
+  const [step, setStep] = useState<number>(0);
   const filters = [
     "Asia",
     "Africa",
@@ -93,6 +158,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             image: data.image || "",
             country: data.country || "",
             icon: data.icon || "",
+            video: data.video || "",
             dail_code: data.dail_code || "",
             detail: data.detail || "",
             visa_process_time: data.visa_process_time || "",
@@ -133,6 +199,25 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                   description: item.description || "",
                 }))
               : [{ title: "", description: "" }],
+            is_active: !!data.is_active,
+            is_deleted: !!data.is_deleted,
+            createdAt: data.createdAt || "",
+            updatedAt: data.updatedAt || "",
+            slug: data.slug || "",
+            subtitle: data.subtitle || "",
+            rating: data.rating ? Number(data.rating) : 0,
+            partners_we_work_with: Array.isArray(data.partners_we_work_with) ? data.partners_we_work_with : [],
+            rejection_reasons: Array.isArray(data.rejection_reasons) ? data.rejection_reasons : [],
+            chances_of_approval_for_this: data.chances_of_approval_for_this ? String(data.chances_of_approval_for_this) : "",
+            chances_of_approval_for_other: data.chances_of_approval_for_other ? String(data.chances_of_approval_for_other) : "",
+            how_we_reviewed_this_page_sources: data.how_we_reviewed_this_page_sources || "",
+            how_we_reviewed_this_page_history: data.how_we_reviewed_this_page_history || "",
+            get_a_guaranteed_visa_on: data.get_a_guaranteed_visa_on || "",
+            check_appointment_availability: data.check_appointment_availability || "",
+            statistics_on_visa_processing_time: data.statistics_on_visa_processing_time || "",
+            statistics_on_visa_approval_rating: data.statistics_on_visa_approval_rating || "",
+            visa_approval_comparison: data.visa_approval_comparison || { atlys_percentage: "", overall_percentage: "", rows: [] },
+            what_you_get: Array.isArray(data.what_you_get) ? data.what_you_get : [],
           });
           setImagePreview(data.image || "");
           setIsEdit(true);
@@ -169,7 +254,14 @@ export default function Page({ params: paramsPromise }: { params: any }) {
 
   const onSubmit = async (data: countriesForm) => {
     setIsLoading(true);
-    const submitData: any = { ...data };
+    const submitData: any = { ...data }
+    submitData.rating = Number(data.rating) || 0
+    submitData.visa_fee_now = Number(data.visa_fee_now) || 0
+    submitData.service_fee_now = Number(data.service_fee_now) || 0
+    submitData.visa_fee_later = Number(data.visa_fee_later) || 0
+    submitData.service_fee_later = Number(data.service_fee_later) || 0
+    submitData.chances_of_approval_for_this = Number(data.chances_of_approval_for_this) || 0
+    submitData.chances_of_approval_for_other = Number(data.chances_of_approval_for_other) || 0
     if (id) {
       submitData["id"] = id;
     }
@@ -243,33 +335,69 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     }
   }
 
-  function validate(): string {
-    if (form.name.length < 2) return "Name must be at least 2 characters."
-    if (form.name.length > 100) return "Name cannot exceed 100 characters."
-    if (form.description.length < 10) return "Description must be at least 10 characters."
-    if (!form.icon) return "Icon is required."
-    if (!form.dail_code) return "Dail code is required."
-    if (!form.detail) return "Detail is required."
-    if (!form.visa_process_time) return "Visa process time is required."
-    if (!form.amount) return "Amount is required."
-    if (!form.pay_later_amount) return "Pay later amount is required."
-    if (!form.continent) return "Continent is required."
-    // if (!form.image) return "Image is required."
-    // Optionally validate countries selection
-    // if (!form.countries || form.countries.length === 0) return "At least one country must be selected."
-    return ""
+  // Step validation
+  function validateStep(currentStep: number): string {
+    switch (currentStep) {
+      case 0:
+        if (form.name.length < 2) return "Name must be at least 2 characters.";
+        if (form.name.length > 100) return "Name cannot exceed 100 characters.";
+        break;
+      case 1:
+        if (form.icon.length < 10) return "Icon is required.";
+        // if (!form.image) return "Image is required."
+        break;
+      case 2:
+        if (form.description.length < 10) return "Description must be at least 10 characters.";
+        if (!form.detail) return "Detail is required.";
+        break;
+      case 3:
+        if (!form.dail_code) return "Dail code is required.";
+        if (!form.visa_process_time) return "Visa process time is required.";
+        if (!form.amount) return "Amount is required.";
+        if (!form.pay_later_amount) return "Pay later amount is required.";
+        break;
+      case 4:
+        // Optionally validate countries selection
+        // if (!form.countries || form.countries.length === 0) return "At least one country must be selected."
+        break;
+      case 8:
+        if (!form.continent) return "Continent is required.";
+        break;
+      default:
+        break;
+    }
+    return "";
+  }
+
+  const handleNext = () => {
+    setError("");
+    const err = validateStep(step);
+    if (err) {
+      setError(err);
+      return;
+    }
+    setStep(prev => Math.min(prev + 1, steps.length - 1));
+  }
+
+  const handlePrev = () => {
+    setError("");
+    setStep(prev => Math.max(prev - 1, 0));
   }
 
   function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setError("")
-    setSuccess("")
-    const err = validate()
-    if (err) {
-      setError(err)
-      return
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    // Validate all steps before submit
+    for (let i = 0; i < steps.length; i++) {
+      const err = validateStep(i);
+      if (err) {
+        setError(`Step ${i + 1}: ${err}`);
+        setStep(i);
+        return;
+      }
     }
-    onSubmit(form)
+    onSubmit(form);
   }
 
   function onReset() {
@@ -278,29 +406,52 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       description: "",
       image: "",
       icon: "",
+      video: "",
       dail_code: "",
       detail: "",
       visa_process_time: "",
-      amount: "",
-      pay_later_amount: "",
+      is_active: true,
+      is_deleted: false,
+      createdAt: "",
+      updatedAt: "",
+      slug: "",
       is_top_destination: false,
       is_popular: false,
       countries: [],
-      transit_timeline: [{ icon: "", title: "", description: "" }],
+      subtitle: "",
+      rating: 0,
+      continent: "",
       required_documents: [{ title: "", description: "", icon: "" }],
       visa_information: [{ key: "", value: "" }],
-      continent: "",
+      transit_timeline: [{ icon: "", title: "", description: "" }],
       visa_fee_now: "",
       service_fee_now: "",
       visa_fee_later: "",
       service_fee_later: "",
       documents_required_process: [{ title: "", description: "" }],
+      partners_we_work_with: [],
+      rejection_reasons: [],
+      chances_of_approval_for_this: "",
+      chances_of_approval_for_other: "",
+      how_we_reviewed_this_page_sources: "",
+      how_we_reviewed_this_page_history: "",
+      get_a_guaranteed_visa_on: "",
+      check_appointment_availability: "",
+      statistics_on_visa_processing_time: "",
+      statistics_on_visa_approval_rating: "",
+      visa_approval_comparison: {
+        atlys_percentage: "",
+        overall_percentage: "",
+        rows: [],
+      },
+      what_you_get: [],
     })
     setImagePreview("")
     setError("")
     setSuccess("")
     setIsEdit(false)
     setId(null)
+    setStep(0);
   }
 
   // Helper to handle array textbox changes
@@ -418,433 +569,184 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       <h1 className="text-3xl font-bold mb-6">
         {isEdit ? "Edit countries" : "New countries"}
       </h1>
+      {/* Stepper UI */}
+      <div className="flex mb-6 gap-2">
+        {steps.map((s, idx) => (
+          <div
+            key={s.label}
+            className={`p-2 rounded-lg text-sm font-medium cursor-pointer flex items-center justify-center
+              ${step === idx ? "bg-brand text-white" : "bg-gray-200 text-brand"}
+            `}
+            onClick={() => setStep(idx)}
+          >
+            {idx + 1}. {s.label}
+          </div>
+        ))}
+      </div>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="Enter countries name"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            />
-          </label>
-        </div>
-
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Image:
-            <ImageUpload
-              value={form.image}
-              preview={imagePreview}
-              onChange={(imgUrl, previewUrl) => {
-                // Always set both image and preview, even on first upload
-                const image = Array.isArray(imgUrl) ? imgUrl[0] : imgUrl;
-                const preview = Array.isArray(previewUrl) ? previewUrl[0] : previewUrl;
-                setForm((prev) => ({ ...prev, image }));
-                setImagePreview(preview && preview.length > 0 ? preview : image); // fallback to image if preview is missing or empty
-              }}
-              uploading={uploading}
-              setUploading={setUploading}
-              type="countries"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Description:
-
-            <Editor 
-              value={form.description}
-              onChange={(value: string) =>
-                setForm((prev) => ({ ...prev, description: value }))
-              }
-            />
-         
-          </label>
-        </div>
-        
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Icon:
-              <ImageUpload
-              value={form.icon}
-              preview={imageIconPreview}
-              onChange={(imgUrl, previewUrl) => {
-                // Always set both image and preview, even on first upload
-                const image = Array.isArray(imgUrl) ? imgUrl[0] : imgUrl;
-                const preview = Array.isArray(previewUrl) ? previewUrl[0] : previewUrl;
-                setForm((prev) => ({ ...prev, icon: image }));
-                setImageIconPreview(preview && preview.length > 0 ? preview : image); // fallback to image if preview is missing or empty
-              }}
-              uploading={uploading}
-              setUploading={setUploading}
-              type="countries_icon"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Dail Code:
-            <input
-              type="text"
-              name="dail_code"
-              value={form.dail_code}
-              onChange={handleChange}
-              placeholder="Enter dail code"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Detail:
-            <textarea
-              name="detail"
-              value={form.detail}
-              onChange={handleChange}
-              placeholder="Enter detail"
-              rows={3}
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Visa Process Time:
-            <input
-              type="text"
-              name="visa_process_time"
-              value={form.visa_process_time}
-              onChange={handleChange}
-              placeholder="Enter visa process time"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Amount:
-            <input
-              type="number"
-              name="amount"
-              value={form.amount}
-              onChange={handleChange}
-              placeholder="Enter amount"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Pay Later Amount:
-            <input
-              type="number"
-              name="pay_later_amount"
-              value={form.pay_later_amount}
-              onChange={handleChange}
-              placeholder="Enter pay later amount"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            />
-          </label>
-        </div>
-        {/* Visa Fee & Service Fee Fields */}
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Visa Fee (Pay Now):
-            <input
-              type="number"
-              name="visa_fee_now"
-              value={form.visa_fee_now}
-              onChange={handleChange}
-              placeholder="Enter visa fee for pay now"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Service Fee (Pay Now):
-            <input
-              type="number"
-              name="service_fee_now"
-              value={form.service_fee_now}
-              onChange={handleChange}
-              placeholder="Enter service fee for pay now"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Visa Fee (Pay Later):
-            <input
-              type="number"
-              name="visa_fee_later"
-              value={form.visa_fee_later}
-              onChange={handleChange}
-              placeholder="Enter visa fee for pay later"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Service Fee (Pay Later):
-            <input
-              type="number"
-              name="service_fee_later"
-              value={form.service_fee_later}
-              onChange={handleChange}
-              placeholder="Enter service fee for pay later"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              name="is_top_destination"
-              checked={form.is_top_destination}
-              onChange={handleChange}
-              className="form-checkbox h-5 w-5 text-brand"
-            />
-            <span className="ml-2 font-medium">Is Top Destination</span>
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              name="is_popular"
-              checked={form.is_popular}
-              onChange={handleChange}
-              className="form-checkbox h-5 w-5 text-brand"
-            />
-            <span className="ml-2 font-medium">Is Popular</span>
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Country Name:
-            <select
-              name="countries"
-              multiple
-              value={form.countries}
-              onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-              size={5}
-            >
-              {countryOptions.map((country) => (
-                <option key={country.id} value={country.id}>{country.name}</option>
-              ))}
-            </select>
-            <span className="text-xs text-gray-500">Hold Ctrl (Windows) or Command (Mac) to select multiple.</span>
-          </label>
-        </div>
-
-        {/* Transit Timeline */}
-        <div className="mb-4">
-          <label className="block font-medium mb-1">Transit Timeline:</label>
-          {form.transit_timeline.map((item, idx) => (
-            <div key={idx} className="flex gap-2 mb-2 items-center">
-              <div className="flex flex-col gap-2 w-full">
-                {/* Icon */}
-                <ImageUpload
-                  value={item.icon}
-                  preview={item.icon}
-                  onChange={(imgUrl, previewUrl) => {
-                    const image = Array.isArray(imgUrl) ? imgUrl[0] : imgUrl;
-                    handleTransitTimelineChange(idx, "icon", image);
-                  }}
-                  uploading={uploading}
-                  setUploading={setUploading}
-                  type="transit_timeline_icon"
-                />
-                {/* Title */}
-                <input
-                  type="text"
-                  value={item.title}
-                  onChange={e => handleTransitTimelineChange(idx, "title", e.target.value)}
-                  className="w-full px-3 py-2 border rounded"
-                  placeholder={`Step ${idx + 1} Title`}
-                />
-                {/* Description */}
-                <input
-                  type="text"
-                  value={item.description}
-                  onChange={e => handleTransitTimelineChange(idx, "description", e.target.value)}
-                  className="w-full px-3 py-2 border rounded"
-                  placeholder={`Step ${idx + 1} Description`}
-                />
-              </div>
-              <button
-                type="button"
-                onClick={() => handleTransitTimelineRemove(idx)}
-                disabled={form.transit_timeline.length === 1}
-                className="text-white px-3 py-2 rounded-xl bg-brand"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={handleTransitTimelineAdd}
-            className="text-white px-3 py-2 rounded-xl bg-brand"
-          >
-            Add Step
-          </button>
-        </div>
-        {/* Required Documents */}
-        <div className="mb-4">
-          <label className="block font-medium mb-1">Required Documents:</label>
-          {form.required_documents.map((item, idx) => (
-            <div key={idx} className="flex gap-2 mb-2 items-center">
-              <div className="flex flex-col gap-2 w-full">
-                {/* Title */}
-                <input
-                  type="text"
-                  value={item.title}
-                  onChange={e => handleRequiredDocChange(idx, "title", e.target.value)}
-                  className="w-full px-3 py-2 border rounded"
-                  placeholder={`Document ${idx + 1} Title`}
-                />
-                {/* Description */}
-                <input
-                  type="text"
-                  value={item.description}
-                  onChange={e => handleRequiredDocChange(idx, "description", e.target.value)}
-                  className="w-full px-3 py-2 border rounded"
-                  placeholder={`Document ${idx + 1} Description`}
-                />
-                {/* Icon */}
-                <ImageUpload
-                  value={item.icon}
-                  preview={item.icon}
-                  onChange={(imgUrl, previewUrl) => {
-                    const image = Array.isArray(imgUrl) ? imgUrl[0] : imgUrl;
-                    handleRequiredDocChange(idx, "icon", image);
-                  }}
-                  uploading={uploading}
-                  setUploading={setUploading}
-                  type="required_document_icon"
-                />
-              </div>
-              <button
-                type="button"
-                onClick={() => handleRequiredDocRemove(idx)}
-                disabled={form.required_documents.length === 1}
-                className="text-white px-3 py-2 rounded-xl bg-brand"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={handleRequiredDocAdd}
-            className="text-white px-3 py-2 rounded-xl bg-brand"
-          >
-            Add Document
-          </button>
-        </div>
-        {/* Visa Information */}
-        <div className="mb-4">
-          <label className="block font-medium mb-1">Visa Information:</label>
-          {form.visa_information.map((item, idx) => (
-            <div key={idx} className="flex gap-2 mb-2 items-center">
+        {/* Step 0: Basic Info */}
+        {step === 0 && (
+          <div className="mb-4">
+            <label className="block font-medium mb-1">
+              Name:
               <input
                 type="text"
-                value={item.key}
-                onChange={e => handleVisaInfoChange(idx, "key", e.target.value)}
-                className="w-1/3 px-3 py-2 border rounded"
-                placeholder={`Key ${idx + 1}`}
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Enter countries name"
+                className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
               />
-              <input
-                type="text"
-                value={item.value}
-                onChange={e => handleVisaInfoChange(idx, "value", e.target.value)}
-                className="w-2/3 px-3 py-2 border rounded"
-                placeholder={`Value ${idx + 1}`}
-              />
-              <button
-                type="button"
-                onClick={() => handleVisaInfoRemove(idx)}
-                disabled={form.visa_information.length === 1}
-                className="text-white px-3 py-2 rounded-xl bg-brand"
-              >
-                Remove
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={handleVisaInfoAdd}
-            className="text-white px-3 py-2 rounded-xl bg-brand"
-          >
-            Add Info
-          </button>
-        </div>
-
-        <div className="mb-4">
-          <label className="block font-medium mb-1">
-            Continent:
-            <select
-              name="continent"
-              value={form.continent}
+            </label>
+          </div>
+        )}
+        {/* Step 1: Images */}
+        {step === 1 && (
+          <div className="mb-4">
+            <CountryImages
+              icon={form.icon}
+              image={form.image}
+              imageIconPreview={imageIconPreview}
+              imagePreview={imagePreview}
+              setIcon={icon => setForm(prev => ({ ...prev, icon }))}
+              setImage={image => setForm(prev => ({ ...prev, image }))}
+              setImageIconPreview={setImageIconPreview}
+              setImagePreview={setImagePreview}
+              uploading={uploading}
+              setUploading={setUploading}
+            />
+          </div>
+        )}
+        {/* Step 2: Details & Description */}
+        {step === 2 && (
+          <CountryDetailDescription
+            detail={form.detail}
+            description={form.description}
+            onDetailChange={handleChange}
+            onDescriptionChange={value => setForm(prev => ({ ...prev, description: value }))}
+          />
+        )}
+        {/* Step 3: Amounts & Fees */}
+        {step === 3 && (
+          <>
+            <CountryBasicFields
+              dailCode={form.dail_code}
+              visaProcessTime={form.visa_process_time}
+              amount={form.amount}
+              payLaterAmount={form.pay_later_amount}
               onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-            >
-              <option value="">Select continent</option>
-              {filters.map((continent) => (
-                <option key={continent} value={continent}>{continent}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-
-        {/* Documents Required & Process */}
-        <div className="mb-4">
-          <label className="block font-medium mb-1">Documents Required &amp; Process:</label>
-          {form.documents_required_process.map((item, idx) => (
-            <div key={idx} className="flex gap-2 mb-2 items-center">
-              <div className="flex flex-col gap-2 w-full">
-                {/* Title */}
+            />
+            <VisaFeeFields
+              form={form}
+              onChange={handleChange}
+            />
+            <div className="mb-4">
+              <label className="inline-flex items-center">
                 <input
-                  type="text"
-                  value={item.title}
-                  onChange={e => handleDocumentsRequiredProcessChange(idx, "title", e.target.value)}
-                  className="w-full px-3 py-2 border rounded"
-                  placeholder={`Document ${idx + 1} Title`}
+                  type="checkbox"
+                  name="is_top_destination"
+                  checked={form.is_top_destination}
+                  onChange={handleChange}
+                  className="form-checkbox h-5 w-5 text-brand"
                 />
-                {/* Description (Editor) */}
-                <Editor
-                  value={item.description}
-                  onChange={value => handleDocumentsRequiredProcessChange(idx, "description", value)}
-                />
-              </div>
-              <button
-                type="button"
-                onClick={() => handleDocumentsRequiredProcessRemove(idx)}
-                disabled={form.documents_required_process.length === 1}
-                className="text-white px-3 py-2 rounded-xl bg-brand"
-              >
-                Remove
-              </button>
+                <span className="ml-2 font-medium">Is Top Destination</span>
+              </label>
             </div>
-          ))}
-          <button
-            type="button"
-            onClick={handleDocumentsRequiredProcessAdd}
-            className="text-white px-3 py-2 rounded-xl bg-brand"
-          >
-            Add Document
-          </button>
-        </div>
+            <div className="mb-4">
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  name="is_popular"
+                  checked={form.is_popular}
+                  onChange={handleChange}
+                  className="form-checkbox h-5 w-5 text-brand"
+                />
+                <span className="ml-2 font-medium">Is Popular</span>
+              </label>
+            </div>
+          </>
+        )}
+        {/* Step 4: Country Selection */}
+        {step === 4 && (
+          <div className="mb-4">
+            <label className="block font-medium mb-1">
+              Country Name:
+              <select
+                name="countries"
+                multiple
+                value={form.countries}
+                onChange={handleChange}
+                className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+                size={5}
+              >
+                {countryOptions.map((country) => (
+                  <option key={country.id} value={country.id}>{country.name}</option>
+                ))}
+              </select>
+              <span className="text-xs text-gray-500">Hold Ctrl (Windows) or Command (Mac) to select multiple.</span>
+            </label>
+          </div>
+        )}
+        {/* Step 5: Transit Timeline */}
+        {step === 5 && (
+          <div className="mb-4">
+             <TransitTimeline
+              transitTimeline={form.transit_timeline}
+              onChange={handleTransitTimelineChange}
+              onAdd={handleTransitTimelineAdd}
+              onRemove={handleTransitTimelineRemove}
+              uploading={uploading}
+              setUploading={setUploading}
+            />
+          </div>
+        )}
+        {/* Step 6: Required Documents */}
+        {step === 6 && (
+          <div className="mb-4">
+             <RequiredDocuments
+              requiredDocuments={form.required_documents}
+              onChange={handleRequiredDocChange}
+              onAdd={handleRequiredDocAdd}
+              onRemove={handleRequiredDocRemove}
+              uploading={uploading}
+              setUploading={setUploading}
+            />
+          </div>
+        )}
+        {/* Step 7: Visa Information */}
+        {step === 7 && (
+          <div className="mb-4">
+             <VisaInformation
+              visaInformation={form.visa_information}
+              onChange={handleVisaInfoChange}
+              onAdd={handleVisaInfoAdd}
+              onRemove={handleVisaInfoRemove}
+            />
+          </div>
+        )}
+        {/* Step 8: Continent */}
+        {step === 8 && (
+          <div className="mb-4">
+            <label className="block font-medium mb-1">
+               <ContinentSelect
+                value={form.continent}
+                onChange={handleChange}
+                filters={filters}
+              />
+            </label>
+          </div>
+        )}
+        {/* Step 9: Documents Required & Process */}
+        {step === 9 && (
+          <div className="mb-4">
+             <DocumentsRequiredProcess
+              documentsRequiredProcess={form.documents_required_process}
+              onChange={handleDocumentsRequiredProcessChange}
+              onAdd={handleDocumentsRequiredProcessAdd}
+              onRemove={handleDocumentsRequiredProcessRemove}
+            />
+          </div>
+        )}
 
         {error && <div className="text-red-600 mb-4">{error}</div>}
         {success && <div className="text-green-600 mb-4">{success}</div>}
@@ -865,13 +767,35 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           >
             Cancel
           </button>
-          <button
-            type="submit"
-            className="px-4 py-2 rounded bg-brand text-white hover:bg-brand-dark"
-            disabled={isLoading}
-          >
-            {isLoading ? (isEdit ? "Updating..." : "Creating...") : (isEdit ? "Update" : "Create")}
-          </button>
+          {step > 0 && (
+            <button
+              type="button"
+              onClick={handlePrev}
+              className="px-4 py-2 rounded border bg-gray-100 hover:bg-gray-200"
+              disabled={isLoading}
+            >
+              Previous
+            </button>
+          )}
+          {step < steps.length - 1 && (
+            <button
+              type="button"
+              onClick={handleNext}
+              className="px-4 py-2 rounded bg-brand text-white hover:bg-brand-dark"
+              disabled={isLoading}
+            >
+              Next
+            </button>
+          )}
+          {step === steps.length - 1 && (
+            <button
+              type="submit"
+              className="px-4 py-2 rounded bg-brand text-white hover:bg-brand-dark"
+              disabled={isLoading}
+            >
+              {isLoading ? (isEdit ? "Updating..." : "Creating...") : (isEdit ? "Update" : "Create")}
+            </button>
+          )}
         </div>
       </form>
     </div>

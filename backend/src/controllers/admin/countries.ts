@@ -16,8 +16,7 @@ type countriesData = {
   dail_code: string;
   detail: string;
   visa_process_time: string;
-  amount: number;
-  pay_later_amount: number;
+ 
   createdAt?: Date;
   updatedAt?: Date;
   is_active?: boolean;
@@ -64,9 +63,7 @@ const allFiled = [
   "description",
   "image",
   "icon",
- 
- 
-];
+ ];
 // Only these fields will be used for LIKE search
 const searchableFields = [
   "name",
@@ -280,8 +277,7 @@ const store = async (req: Request, res: Response) => {
       dail_code: req.body.dail_code,
       detail: req.body.detail,
       visa_process_time: req.body.visa_process_time,
-      amount: req.body.amount,
-      pay_later_amount: req.body.pay_later_amount,
+    
       is_active: req.body.is_active,
       is_deleted: req.body.is_deleted,
       createdAt: req.body.createdAt ? new Date(req.body.createdAt) : undefined,

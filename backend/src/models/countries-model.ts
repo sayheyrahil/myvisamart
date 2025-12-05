@@ -11,8 +11,6 @@ interface CountriesAttributes {
   dail_code: string;
   detail: string;
   visa_process_time: string;
-  amount: number;
-  pay_later_amount: number;
   createdAt?: Date;
   updatedAt?: Date;
   is_active?: boolean;
@@ -96,8 +94,6 @@ class Countries
   public dail_code!: string;
   public detail!: string;
   public visa_process_time!: string;
-  public amount!: number;
-  public pay_later_amount!: number;
   public createdAt!: Date;
   public updatedAt!: Date;
   public is_active!: boolean;
@@ -172,16 +168,6 @@ Countries.init(
     visa_process_time: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    amount: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-      defaultValue: 0,
-    },
-    pay_later_amount: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-      defaultValue: 0,
     },
     is_active: {
       type: DataTypes.BOOLEAN,
