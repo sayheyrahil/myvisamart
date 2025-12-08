@@ -3,7 +3,7 @@ import { WEB_URL } from "@/utils/constants";
 
 export default function RelatedCountriesSection({ countryDetail }: { countryDetail: any }) {
   return (
-    <div className="max-w-6xl mx-auto mt-10 rounded-2xl p-6">
+    <div className="  mt-10 rounded-2xl  ">
       <SectionHeading>All {countryDetail.related_countries?.length || 0} Emirates with 1 Visa</SectionHeading>
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6 mt-5">
         {Array.isArray(countryDetail?.related_countries) && countryDetail.related_countries.length > 0 ? (

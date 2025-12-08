@@ -356,22 +356,70 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       title: item.title,
       description: item.description,
     }));
+    if (
+      Array.isArray(submitData.transit_timeline) &&
+      submitData.transit_timeline.length === 1 &&
+      Object.values(submitData.transit_timeline[0]).every(v => v === "")
+    ) {
+      delete submitData.transit_timeline;
+    }
+
     submitData.required_documents = data.required_documents.map((item) => ({
       title: item.title,
       description: item.description,
       icon: item.icon,
     }));
+    if (
+      Array.isArray(submitData.required_documents) &&
+      submitData.required_documents.length === 1 &&
+      Object.values(submitData.required_documents[0]).every(v => v === "")
+    ) {
+      delete submitData.required_documents;
+    }
+
     submitData.visa_information = data.visa_information.map((item) => ({
       key: item.key,
       value: item.value,
     }));
+    if (
+      Array.isArray(submitData.visa_information) &&
+      submitData.visa_information.length === 1 &&
+      Object.values(submitData.visa_information[0]).every(v => v === "")
+    ) {
+      delete submitData.visa_information;
+    }
+
     submitData.documents_required_process = data.documents_required_process.map(
       (item) => ({
         title: item.title,
         description: item.description,
       })
     );
+    if (
+      Array.isArray(submitData.documents_required_process) &&
+      submitData.documents_required_process.length === 1 &&
+      Object.values(submitData.documents_required_process[0]).every(v => v === "")
+    ) {
+      delete submitData.documents_required_process;
+    }
     // Handle what_you_get images (convert to FormData if needed)
+    // Remove rejection_reasons if only one empty object
+    if (
+      Array.isArray(submitData.rejection_reasons) &&
+      submitData.rejection_reasons.length === 1 &&
+      Object.values(submitData.rejection_reasons[0]).every(v => v === "")
+    ) {
+      delete submitData.rejection_reasons;
+    }
+    // Remove why if only one empty object
+    if (
+      Array.isArray(submitData.why) &&
+      submitData.why.length === 1 &&
+      Object.values(submitData.why[0]).every(v => v === "")
+    ) {
+      delete submitData.why;
+    }
+
     let formDataToSend: any = submitData;
     if (
       submitData.what_you_get &&
@@ -381,6 +429,15 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       // Use FormData for file upload
       const fd = new FormData();
       Object.entries(submitData).forEach(([key, value]) => {
+        // Remove empty rejection_reasons/why from FormData as well
+        if (
+          (key === "rejection_reasons" || key === "why") &&
+          Array.isArray(value) &&
+          value.length === 1 &&
+          Object.values(value[0]).every(v => v === "")
+        ) {
+          return; // skip
+        }
         if (key === "what_you_get") {
           (value as File[]).forEach((file, idx) => {
             fd.append(`what_you_get[]`, file);
@@ -488,7 +545,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     const errs = validateStep(step);
     if (errs.length > 0) {
       setErrors(errs);
-      return;
+      // return; // <-- prevents going to next step if errors exist
     }
     setStep(prev => Math.min(prev + 1, steps.length - 1));
   };
@@ -901,7 +958,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             <FieldInput
               label="Chances of Approval For This"
               name="chances_of_approval_for_this"
-              placeholder="Enter country name"
+              placeholder="Enter chances of approval for this"
               value={form.chances_of_approval_for_this}
               onChange={handleChange}
               errors={errors.filter(e => e.key === "chances_of_approval_for_this").map(e => e.message)}
@@ -909,7 +966,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             <FieldInput
               label="Chances of Approval For Other"
               name="chances_of_approval_for_other"
-              placeholder="Enter country name"
+              placeholder="Enter chances of approval for other"
               value={form.chances_of_approval_for_other}
               onChange={handleChange}
               errors={errors.filter(e => e.key === "chances_of_approval_for_other").map(e => e.message)}

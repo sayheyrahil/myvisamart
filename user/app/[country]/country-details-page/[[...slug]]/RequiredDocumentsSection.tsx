@@ -3,7 +3,7 @@ import { WEB_URL } from "@/utils/constants";
 
 export default function RequiredDocumentsSection({ countryDetail }: { countryDetail: any }) {
   return (
-    <div className="max-w-6xl mx-auto mt-10 rounded-2xl p-6">
+    <div className="  mt-10 rounded-2xl  ">
       <SectionHeading>Required Documents</SectionHeading>
       <div className="flex flex-col sm:flex-row gap-6 mb-6">
         {Array.isArray(countryDetail?.required_documents) && countryDetail.required_documents.length > 0 ? (

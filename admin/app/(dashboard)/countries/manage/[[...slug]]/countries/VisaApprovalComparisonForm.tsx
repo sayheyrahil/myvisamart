@@ -114,7 +114,7 @@ const VisaApprovalComparisonForm: React.FC<Props> = ({ value, onChange }) => {
                     handleRowChange(idx, "atlys_text", e.target.value)
                   }
                   className="flex-1 px-2 py-1 border rounded"
-                  placeholder="Atlys Text"
+                  placeholder=" Text"
                 />
                 <select
                   value={row.atlys_status === "true" ? "true" : "false"}

@@ -47,6 +47,8 @@ export default function Page() {
     getFaqs();
   }, []);
 
+  console.log("countryDetail", countryDetail);
+
   return (
     <MasterPage title={`Country Details Page | Visamart - ${countryDetail?.name || ""}`}>
       <div className="min-h-screen bg-bg py-10 px-5">
@@ -55,8 +57,8 @@ export default function Page() {
             <Hero time={countryDetail?.visa_process_time || "N/A"} src={WEB_URL + countryDetail?.image} />
           )}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            <div className="md:col-span-3">
-              {countryDetail?.name && countryDetail?.visa_information && (
+            <div className="md:col-span-3 bg-red-900">
+              {countryDetail?.visa_information && countryDetail?.visa_information && (
                 <InfoCard name={countryDetail?.name} visa={countryDetail?.visa_information} />
               )}
               <div className="space-y-4 mt-5">
