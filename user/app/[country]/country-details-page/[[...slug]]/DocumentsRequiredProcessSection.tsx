@@ -21,10 +21,10 @@ export default function DocumentsRequiredProcessSection({
         {documents_required_process.map((data, idx) => (
           <div key={idx} className="relative pl-8 pb-6">
             {/* Timeline dot */}
-            <span className="absolute left-0 top-2 w-4 h-4   border-2 border-blue-400 rounded-full"></span>
+            <span className="absolute left-0 top-2 w-4 h-4   border-2 border-brand rounded-full"></span>
             {/* Timeline line */}
             {idx < documents_required_process.length - 1 && (
-              <span className="absolute left-2 top-6 w-0.5 h-full bg-blue-200"></span>
+              <span className="absolute left-2 top-6 w-0.5 h-full bg-brand"></span>
             )}
             <div className="bg-white p-5 rounded-lg shadow">
               <div className="font-semibold text-lg mb-1">{data.title}</div>

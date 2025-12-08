@@ -180,7 +180,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               value={form.name}
               onChange={handleChange}
               placeholder="Enter Destination name"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
             />
           </label>
         </div>
@@ -212,7 +212,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               onChange={handleChange}
               placeholder="Enter description"
               rows={4}
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
             />
           </label>
         </div>
@@ -223,7 +223,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               name="area"
               value={form.area}
               onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
             >
               <option value="">Select Area</option>
               <option value="Europe">Europe</option>
@@ -267,7 +267,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               value={form.amount}
               onChange={handleChange}
               placeholder="Enter amount"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
             />
           </label>
         </div>
@@ -280,7 +280,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               value={form.later_amount}
               onChange={handleChange}
               placeholder="Enter later amount"
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
             />
           </label>
         </div>
@@ -292,7 +292,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               multiple
               value={form.countries}
               onChange={handleChange}
-              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+              className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
               size={5}
             >
               <option value="India">India</option>

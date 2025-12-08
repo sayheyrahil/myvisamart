@@ -74,7 +74,7 @@ const Categories = () => {
 						</button>
 						<button
 							onClick={() => scroll("right")}
-							className="p-2 rounded-full bg-blue-600 text-white hover:bg-blue-700"
+							className="p-2 rounded-full bg-blue-600 text-white hover:bg-brand"
 						>
 							<ChevronRight size={20} />
 						</button>

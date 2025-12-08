@@ -36,7 +36,7 @@ const NewsletterSection = () => {
             />
             <button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full m-1 transition"
+              className="bg-blue-600 hover:bg-brand text-white p-3 rounded-full m-1 transition"
             >
               <Send size={18} />
             </button>

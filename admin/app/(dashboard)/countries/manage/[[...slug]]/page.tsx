@@ -25,7 +25,7 @@ import AmountsAndFeesFields from "./countries/AmountsAndFeesFields";
 import RejectionReasons from "./countries/RejectionReasons";
 import WhyReasons from "./countries/WhyReasons";
 import FieldInput from "@/components/common/FieldInput";
-
+import Why from "./countries/Why";
 type countriesForm = {
   name: string;
   description: string;
@@ -88,6 +88,7 @@ const steps = [
   { label: "Partners We Work With Images" }, // <-- Add this step
   { label: "Rejection Reasons" }, // <-- Add this step
   { label: "Why Reasons" }, // <-- Add this step
+  { label: "Why This" },
 ];
 
 const pageTitleName = "countries";
@@ -111,6 +112,9 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     { icon: "", title: "", description: "" },
   ]);
   const [whyReasons, setWhyReasons] = useState([
+    { icon: "", title: "", description: "" },
+  ]);
+  const [why, setWhy] = useState([
     { icon: "", title: "", description: "" },
   ]);
 
@@ -170,6 +174,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       rows: [],
     },
     what_you_get: [],
+    why: [],
   });
 
   // Fetch data for edit
@@ -271,6 +276,15 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           what_you_get: Array.isArray(data.what_you_get)
             ? data.what_you_get
             : [],
+
+          why: Array.isArray(data.why)
+            ? data.why.map((item: any) => ({
+                icon: item.icon || "",
+                title: item.title || "",
+                description: item.description || "",
+              }))
+            : [{ icon: "", title: "", description: "" }],
+
         });
         setImagePreview(data.image || "");
         setIsEdit(true);
@@ -359,7 +373,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     if (
       Array.isArray(submitData.transit_timeline) &&
       submitData.transit_timeline.length === 1 &&
-      Object.values(submitData.transit_timeline[0]).every(v => v === "")
+      Object.values(submitData.transit_timeline[0]).every((v) => v === "")
     ) {
       delete submitData.transit_timeline;
     }
@@ -372,7 +386,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     if (
       Array.isArray(submitData.required_documents) &&
       submitData.required_documents.length === 1 &&
-      Object.values(submitData.required_documents[0]).every(v => v === "")
+      Object.values(submitData.required_documents[0]).every((v) => v === "")
     ) {
       delete submitData.required_documents;
     }
@@ -384,7 +398,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     if (
       Array.isArray(submitData.visa_information) &&
       submitData.visa_information.length === 1 &&
-      Object.values(submitData.visa_information[0]).every(v => v === "")
+      Object.values(submitData.visa_information[0]).every((v) => v === "")
     ) {
       delete submitData.visa_information;
     }
@@ -398,7 +412,9 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     if (
       Array.isArray(submitData.documents_required_process) &&
       submitData.documents_required_process.length === 1 &&
-      Object.values(submitData.documents_required_process[0]).every(v => v === "")
+      Object.values(submitData.documents_required_process[0]).every(
+        (v) => v === ""
+      )
     ) {
       delete submitData.documents_required_process;
     }
@@ -407,18 +423,29 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     if (
       Array.isArray(submitData.rejection_reasons) &&
       submitData.rejection_reasons.length === 1 &&
-      Object.values(submitData.rejection_reasons[0]).every(v => v === "")
+      Object.values(submitData.rejection_reasons[0]).every((v) => v === "")
     ) {
       delete submitData.rejection_reasons;
     }
-    // Remove why if only one empty object
     if (
       Array.isArray(submitData.why) &&
       submitData.why.length === 1 &&
-      Object.values(submitData.why[0]).every(v => v === "")
+      Object.values(submitData.why[0]).every((v) => v === "")
     ) {
       delete submitData.why;
     }
+
+     // Remove why if only one empty object
+    if (
+      Array.isArray(submitData.why) &&
+      submitData.why.length === 1 &&
+      Object.values(submitData.why[0]).every((v) => v === "")
+    ) {
+      delete submitData.why;
+    }
+
+
+
 
     let formDataToSend: any = submitData;
     if (
@@ -434,7 +461,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           (key === "rejection_reasons" || key === "why") &&
           Array.isArray(value) &&
           value.length === 1 &&
-          Object.values(value[0]).every(v => v === "")
+          Object.values(value[0]).every((v) => v === "")
         ) {
           return; // skip
         }
@@ -511,29 +538,51 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     switch (currentStep) {
       case 0:
         if (form.name.length < 2)
-          errs.push({ key: "name", message: "Name must be at least 2 characters." });
+          errs.push({
+            key: "name",
+            message: "Name must be at least 2 characters.",
+          });
         if (form.name.length > 100)
-          errs.push({ key: "name", message: "Name cannot exceed 100 characters." });
-        
+          errs.push({
+            key: "name",
+            message: "Name cannot exceed 100 characters.",
+          });
+
       case 1:
-        if (!form.image) errs.push({ key: "image", message: "Image is required." });
-        
+        if (!form.image)
+          errs.push({ key: "image", message: "Image is required." });
+
       case 4:
         if (!form.get_a_guaranteed_visa_on)
-          errs.push({ key: "get_a_guaranteed_visa_on", message: "Get a Guaranteed Visa On is required." });
+          errs.push({
+            key: "get_a_guaranteed_visa_on",
+            message: "Get a Guaranteed Visa On is required.",
+          });
         if (!form.visa_fee_now || isNaN(Number(form.visa_fee_now))) {
-          errs.push({ key: "visa_fee_now", message: "Visa Fee Now is required and must be a number." });
+          errs.push({
+            key: "visa_fee_now",
+            message: "Visa Fee Now is required and must be a number.",
+          });
         }
         if (!form.service_fee_now || isNaN(Number(form.service_fee_now))) {
-          errs.push({ key: "service_fee_now", message: "Service Fee Now is required and must be a number." });
+          errs.push({
+            key: "service_fee_now",
+            message: "Service Fee Now is required and must be a number.",
+          });
         }
         if (!form.visa_fee_later || isNaN(Number(form.visa_fee_later))) {
-          errs.push({ key: "visa_fee_later", message: "Visa Fee Later is required and must be a number." });
+          errs.push({
+            key: "visa_fee_later",
+            message: "Visa Fee Later is required and must be a number.",
+          });
         }
         if (!form.service_fee_later || isNaN(Number(form.service_fee_later))) {
-          errs.push({ key: "service_fee_later", message: "Service Fee Later is required and must be a number." });
+          errs.push({
+            key: "service_fee_later",
+            message: "Service Fee Later is required and must be a number.",
+          });
         }
-        
+
       default:
         break;
     }
@@ -547,7 +596,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       setErrors(errs);
       // return; // <-- prevents going to next step if errors exist
     }
-    setStep(prev => Math.min(prev + 1, steps.length - 1));
+    setStep((prev) => Math.min(prev + 1, steps.length - 1));
   };
 
   const handlePrev = () => {
@@ -863,6 +912,43 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     }));
   }
 
+  function handleWhyChange(
+    idx: number,
+    field: "icon" | "title" | "description",
+    value: string
+  ) {
+    setWhy((prev) =>
+      prev.map((item, i) => (i === idx ? { ...item, [field]: value } : item))
+    );
+    setForm((prev) => ({
+      ...prev,
+      why: why.map((item, i) =>
+        i === idx ? { ...item, [field]: value } : item
+      ),
+    }));
+  }
+  function handleWhyAdd() {
+    setWhy((prev) => [
+      ...prev,
+      { icon: "", title: "", description: "" },
+    ]);
+    setForm((prev) => ({
+      ...prev,
+      why: [...why, { icon: "", title: "", description: "" }],
+    }));
+  }
+  function handleWhyRemove(idx: number) {
+    const updated =
+      why.length === 1
+        ? [{ icon: "", title: "", description: "" }]
+        : why.filter((_, i) => i !== idx);
+    setWhy(updated);
+    setForm((prev) => ({
+      ...prev,
+      why: updated,
+    }));
+  }
+
   return (
     <div className=" p-6 bg-white rounded-md shadow">
       <h1 className="text-3xl font-bold mb-6">
@@ -891,7 +977,9 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             placeholder="Enter country name"
             value={form.name}
             onChange={handleChange}
-            errors={errors.filter(e => e.key === "name").map(e => e.message)}
+            errors={errors
+              .filter((e) => e.key === "name")
+              .map((e) => e.message)}
           />
         )}
         {/* Step 1: Images */}
@@ -902,13 +990,15 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               image={form.image}
               imageIconPreview={imageIconPreview}
               imagePreview={imagePreview}
-              setIcon={icon => setForm(prev => ({ ...prev, icon }))}
-              setImage={image => setForm(prev => ({ ...prev, image }))}
+              setIcon={(icon) => setForm((prev) => ({ ...prev, icon }))}
+              setImage={(image) => setForm((prev) => ({ ...prev, image }))}
               setImageIconPreview={setImageIconPreview}
               setImagePreview={setImagePreview}
               uploading={uploading}
               setUploading={setUploading}
-              errors={errors.filter(e => e.key === "image").map(e => e.message)}
+              errors={errors
+                .filter((e) => e.key === "image")
+                .map((e) => e.message)}
             />
           </div>
         )}
@@ -961,7 +1051,9 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               placeholder="Enter chances of approval for this"
               value={form.chances_of_approval_for_this}
               onChange={handleChange}
-              errors={errors.filter(e => e.key === "chances_of_approval_for_this").map(e => e.message)}
+              errors={errors
+                .filter((e) => e.key === "chances_of_approval_for_this")
+                .map((e) => e.message)}
             />
             <FieldInput
               label="Chances of Approval For Other"
@@ -969,14 +1061,16 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               placeholder="Enter chances of approval for other"
               value={form.chances_of_approval_for_other}
               onChange={handleChange}
-              errors={errors.filter(e => e.key === "chances_of_approval_for_other").map(e => e.message)}
+              errors={errors
+                .filter((e) => e.key === "chances_of_approval_for_other")
+                .map((e) => e.message)}
             />
             {/* Visa Approval Comparison Form */}
             <div className="mb-4">
               <VisaApprovalComparisonForm
                 value={form.visa_approval_comparison}
-                onChange={val =>
-                  setForm(prev => ({
+                onChange={(val) =>
+                  setForm((prev) => ({
                     ...prev,
                     visa_approval_comparison: val,
                   }))
@@ -988,6 +1082,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         {/* Step 5: Country Selection */}
         {step === 5 && (
           <div className="mb-4">
+            {/* ...existing Country Selection code... */}
             <label className="block font-medium mb-1">
               Country Name:
               <select
@@ -995,7 +1090,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 multiple
                 value={form.countries}
                 onChange={handleChange}
-                className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+                className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
                 size={5}
               >
                 {countryOptions.map((country) => (
@@ -1008,6 +1103,37 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 Hold Ctrl (Windows) or Command (Mac) to select multiple.
               </span>
             </label>
+            {/* Add editors for how_we_reviewed_this_page_sources/history */}
+            <div className="mt-4">
+              <label className="block font-medium mb-1">
+                How we reviewed this page (Sources):
+              </label>
+              <Editor
+                value={form.how_we_reviewed_this_page_sources}
+                onChange={value =>
+                  setForm(prev => ({
+                    ...prev,
+                    how_we_reviewed_this_page_sources: value,
+                  }))
+                }
+                placeholder="Enter sources for how this page was reviewed"
+              />
+            </div>
+            <div className="mt-4">
+              <label className="block font-medium mb-1">
+                How we reviewed this page (History):
+              </label>
+              <Editor
+                value={form.how_we_reviewed_this_page_history}
+                onChange={value =>
+                  setForm(prev => ({
+                    ...prev,
+                    how_we_reviewed_this_page_history: value,
+                  }))
+                }
+                placeholder="Enter history for how this page was reviewed"
+              />
+            </div>
           </div>
         )}
         {/* Step 6: Transit Timeline */}
@@ -1154,16 +1280,37 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             />
           </div>
         )}
+        {step === 15 && (
+          <div className="mb-4">
+            <Why
+              why={why}
+                onChange={handleWhyChange}
+                onAdd={handleWhyAdd}
+              onRemove={handleWhyRemove}
+              uploading={uploading}
+              setUploading={setUploading}
+            />
+          </div>
+        )}
 
         {errors.length > 0 &&
-          !["name", "image", "get_a_guaranteed_visa_on", "visa_fee_now", "service_fee_now", "visa_fee_later", "service_fee_later", "chances_of_approval_for_this", "chances_of_approval_for_other"]
-            .some(key => errors.some(e => e.key === key)) && (
+          ![
+            "name",
+            "image",
+            "get_a_guaranteed_visa_on",
+            "visa_fee_now",
+            "service_fee_now",
+            "visa_fee_later",
+            "service_fee_later",
+            "chances_of_approval_for_this",
+            "chances_of_approval_for_othr",
+          ].some((key) => errors.some((e) => e.key === key)) && (
             <div className="text-red-600 mb-4">
               {errors.map((e, i) => (
                 <div key={i}>{e.message}</div>
               ))}
             </div>
-        )}
+          )}
         {success && <div className="text-green-600 mb-4">{success}</div>}
         <div className="flex justify-end gap-2">
           <button

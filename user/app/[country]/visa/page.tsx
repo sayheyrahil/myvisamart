@@ -76,7 +76,7 @@ export default function DubaiVisaPage() {
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </p>
 
-                <div className="mt-4 bg-blue-50 px-4 py-2 text-center rounded-lg text-blue-700 font-semibold">
+                <div className="mt-4 bg-brand px-4 py-2 text-center rounded-lg text-brand font-semibold">
                   Visa guaranteed in 1 day
                 </div>
 
@@ -97,7 +97,7 @@ export default function DubaiVisaPage() {
                   </div>
                 </div>
 
-                <button className="w-full mt-5 bg-brand text-white rounded-lg py-3 font-medium hover:bg-blue-700 transition">
+                <button className="w-full mt-5 bg-brand text-white rounded-lg py-3 font-medium hover:bg-brand transition">
                   Start Application
                 </button>
               </div>
@@ -114,7 +114,7 @@ export default function DubaiVisaPage() {
 
 function InfoCard({ title, value }: { title: any; value: any }) {
   return (
-    <div className="bg-blue-50 p-4 rounded-lg">
+    <div className="bg-brand p-4 rounded-lg">
       <p className="text-xs text-gray-600">{title}</p>
       <p className="text-base font-semibold">{value}</p>
     </div>

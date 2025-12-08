@@ -55,7 +55,7 @@ export default function Page() {
                 <SectionHeading>Required Documents</SectionHeading>
                 <div className="flex flex-col sm:flex-row gap-6 mb-6">
                   <div className="flex-1 bg-[#F4F8FB] rounded-xl p-6 flex flex-col items-center shadow">
-                    <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mb-3">
+                    <div className="w-16 h-16 rounded-full bg-brand flex items-center justify-center mb-3">
                       {/* Example icon, replace with your own if needed */}
                       <svg
                         width="32"
@@ -77,7 +77,7 @@ export default function Page() {
                     </div>
                   </div>
                   <div className="flex-1 bg-[#F4F8FB] rounded-xl p-6 flex flex-col items-center shadow">
-                    <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mb-3">
+                    <div className="w-16 h-16 rounded-full bg-brand flex items-center justify-center mb-3">
                       {/* Example icon, replace with your own if needed */}
                       <svg
                         width="32"
@@ -120,7 +120,7 @@ export default function Page() {
                     <div>
                       <div className="text-[#1A355A] font-semibold text-lg mb-1">
                         Visa Appointment as Early as{" "}
-                        <span className="text-blue-700">6th Oct 2025</span>
+                        <span className="text-brand">6th Oct 2025</span>
                       </div>
                       <div className="text-sm text-gray-500 mb-2">
                         Appointment Location
@@ -130,7 +130,7 @@ export default function Page() {
                         <option>Delhi</option>
                         <option>Bangalore</option>
                       </select>
-                      <button className="block w-full md:w-auto bg-brand text-white px-6 py-2 rounded-full font-semibold mt-2 hover:bg-blue-700 transition">
+                      <button className="block w-full md:w-auto bg-brand text-white px-6 py-2 rounded-full font-semibold mt-2 hover:bg-brand transition">
                         Reserve Appointment Now
                       </button>
                     </div>
@@ -216,7 +216,7 @@ export default function Page() {
                     <span className="font-semibold text-[#1A355A]">
                       Total Amount for one Traveller
                     </span>
-                    <span className="font-bold text-blue-700 text-lg">
+                    <span className="font-bold text-brand text-lg">
                       ₹14,680
                     </span>
                   </div>
@@ -248,7 +248,7 @@ export default function Page() {
                   <SectionHeading>Statistics</SectionHeading>
 
                   <div className="flex items-center gap-3 mb-2 text-sm text-gray-500">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#F4F8FB] text-blue-700 font-semibold">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#F4F8FB] text-brand font-semibold">
                       <svg width="18" height="18" fill="none" className="mr-1">
                         <rect width="18" height="18" rx="4" fill="#0A509F" />
                       </svg>
@@ -270,7 +270,7 @@ export default function Page() {
                     Apply now, save later!
                   </h3>
                   <div className="flex items-center gap-3 mb-2 text-sm text-gray-500">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#F4F8FB] text-blue-700 font-semibold">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#F4F8FB] text-brand font-semibold">
                       <svg width="18" height="18" fill="none" className="mr-1">
                         <rect width="18" height="18" rx="4" fill="#0A509F" />
                       </svg>
@@ -431,7 +431,7 @@ export default function Page() {
                     <div className="flex flex-col md:flex-row gap-8">
                       {/* Timeline */}
                       <div className="relative flex flex-col items-center md:w-1/4">
-                        <div className="absolute left-1/2 -translate-x-1/2 top-6 bottom-6 w-1 bg-blue-100 z-0" />
+                        <div className="absolute left-1/2 -translate-x-1/2 top-6 bottom-6 w-1 bg-brand z-0" />
                         {[
                           {
                             icon: (
@@ -563,11 +563,11 @@ export default function Page() {
                             key={idx}
                             className="relative z-10 flex flex-col items-center mb-8 last:mb-0"
                           >
-                            <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white border-2 border-blue-100 z-10">
+                            <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white border-2 border-brand z-10">
                               {step.icon}
                             </div>
                             {idx < arr.length - 1 && (
-                              <div className="w-1 h-8 bg-blue-100"></div>
+                              <div className="w-1 h-8 bg-brand"></div>
                             )}
                           </div>
                         ))}
@@ -653,7 +653,7 @@ export default function Page() {
                         href="https://www.trustpilot.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-700 text-xs font-semibold underline"
+                        className="text-brand text-xs font-semibold underline"
                       >
                         Read more on Trustpilot
                       </a>
@@ -681,7 +681,7 @@ export default function Page() {
                         href="https://www.trustpilot.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-700 text-xs font-semibold underline"
+                        className="text-brand text-xs font-semibold underline"
                       >
                         Read more on Trustpilot
                       </a>
@@ -690,10 +690,10 @@ export default function Page() {
                   </div>
                   {/* Carousel Controls */}
                   <div className="flex gap-3 mt-4">
-                    <button className="w-10 h-10 rounded-full border border-blue-200 flex items-center justify-center text-blue-700 hover:bg-blue-50 transition">
+                    <button className="w-10 h-10 rounded-full border border-brand flex items-center justify-center text-brand hover:bg-brand transition">
                       <span className="text-lg">&lt;</span>
                     </button>
-                    <button className="w-10 h-10 rounded-full border border-blue-200 flex items-center justify-center text-blue-700 hover:bg-blue-50 transition">
+                    <button className="w-10 h-10 rounded-full border border-brand flex items-center justify-center text-brand hover:bg-brand transition">
                       <span className="text-lg">&gt;</span>
                     </button>
                   </div>

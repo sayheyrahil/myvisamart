@@ -9,7 +9,7 @@ export default function RequiredDocumentsSection({ countryDetail }: { countryDet
         {Array.isArray(countryDetail?.required_documents) && countryDetail.required_documents.length > 0 ? (
           countryDetail.required_documents.map((doc: any, idx: number) => (
             <div key={idx + Math.random()} className="flex-1 bg-white mt-5 rounded-xl p-6 flex flex-col items-center shadow">
-              <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mb-3">
+              <div className="w-16 h-16 rounded-full bg-brand flex items-center justify-center mb-3">
                 {doc.icon ? (
                   <img src={WEB_URL + doc.icon} alt={doc.title || "Document Icon"} className="w-16 h-16 object-contain rounded-full" />
                 ) : (

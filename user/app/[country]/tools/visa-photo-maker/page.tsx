@@ -106,7 +106,7 @@ export default function Page() {
               <select className="w-full border p-3 rounded-xl mb-6">
                 <option>Select an option...</option>
               </select>
-              <button className="px-6 py-3 bg-brand text-white rounded-xl text-lg shadow hover:bg-blue-700 transition">
+              <button className="px-6 py-3 bg-brand text-white rounded-xl text-lg shadow hover:bg-brand transition">
                 Create my photo
               </button>
             </div>

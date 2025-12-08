@@ -300,6 +300,7 @@ const store = async (req: Request, res: Response) => {
       service_fee_later: req.body.service_fee_later ?? 0,
       partners_we_work_with: req.body.partners_we_work_with ?? [],
       rejection_reasons: req.body.rejection_reasons ?? [],
+      why: req.body.why ?? [],
       chances_of_approval_for_this: req.body.chances_of_approval_for_this ?? 0,
       chances_of_approval_for_other:
         req.body.chances_of_approval_for_other ?? 0,

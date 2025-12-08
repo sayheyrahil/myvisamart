@@ -15,19 +15,19 @@ export default function DashboardPage() {
       <div>
         <div className="flex gap-2 mb-4">
           <button
-            className={`px-4 py-2 rounded-t ${tab === "overview" ? "bg-white border-b-2 border-blue-600 font-semibold" : "bg-gray-100"}`}
+            className={`px-4 py-2 rounded-t ${tab === "overview" ? "bg-white border-b-2 border-brand0 font-semibold" : "bg-gray-100"}`}
             onClick={() => setTab("overview")}
           >
             Overview
           </button>
           <button
-            className={`px-4 py-2 rounded-t ${tab === "analytics" ? "bg-white border-b-2 border-blue-600 font-semibold" : "bg-gray-100"}`}
+            className={`px-4 py-2 rounded-t ${tab === "analytics" ? "bg-white border-b-2 border-brand0 font-semibold" : "bg-gray-100"}`}
             onClick={() => setTab("analytics")}
           >
             Analytics
           </button>
           <button
-            className={`px-4 py-2 rounded-t ${tab === "reports" ? "bg-white border-b-2 border-blue-600 font-semibold" : "bg-gray-100"}`}
+            className={`px-4 py-2 rounded-t ${tab === "reports" ? "bg-white border-b-2 border-brand0 font-semibold" : "bg-gray-100"}`}
             onClick={() => setTab("reports")}
           >
             Reports

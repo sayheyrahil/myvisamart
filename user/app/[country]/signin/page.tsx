@@ -24,7 +24,7 @@ export default function Page() {
     const [mobileOtp, setMobileOtp] = useState(["", "", "", "", "", ""]);
     const [mobileOtpVerified, setMobileOtpVerified] = useState(false);
 
-    const classAdd = "w-full border border-blue-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-200 outline-none text-base";
+    const classAdd = "w-full border border-brand rounded-lg px-4 py-3 focus:ring-2 focus:ring-brand outline-none text-base";
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
@@ -112,7 +112,7 @@ export default function Page() {
                             <div className="flex flex-col  "> 
 
                                 <div className="flex items-center gap-2">
-                                    <div className="flex items-center border border-blue-200 rounded-lg px-2 py-2 bg-gray-50">
+                                    <div className="flex items-center border border-brand rounded-lg px-2 py-2 bg-gray-50">
                                         <img src="https://flagcdn.com/16x12/bd.png" alt="BD" className="w-5 h-4 mr-1" />
                                         <span className="text-gray-700 text-sm">+880</span>
                                     </div>
@@ -146,7 +146,7 @@ export default function Page() {
                                             id={`mobile-otp-${i}`}
                                             type="text"
                                             maxLength={1}
-                                            className="w-14 h-12 border border-blue-200 rounded-lg text-center text-lg"
+                                            className="w-14 h-12 border border-brand rounded-lg text-center text-lg"
                                             value={mobileOtp[i]}
                                             onChange={e => handleMobileOtpChange(e.target.value, i)}
                                             disabled={mobileOtpVerified}
@@ -185,7 +185,7 @@ export default function Page() {
                                                     key={i}
                                                     type="text"
                                                     maxLength={1}
-                                                    className="w-14 h-12 border border-blue-200 rounded-lg text-center text-lg"
+                                                    className="w-14 h-12 border border-brand rounded-lg text-center text-lg"
                                                 // ...handle OTP input logic as needed...
                                                 />
                                             ))}

@@ -124,7 +124,7 @@ export default function Page() {
                 <input
                   type="text"
                   placeholder="Search countries, visas, placeholder"
-                  className="w-full border border-[#E5E7EB] rounded-lg px-5 py-3 text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                  className="w-full border border-[#E5E7EB] rounded-lg px-5 py-3 text-base bg-white focus:outline-none focus:ring-2 focus:ring-brand"
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
                   <svg width="20" height="20" fill="none"><path d="M19 19l-4-4M9 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="#94A3B8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>

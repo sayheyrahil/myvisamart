@@ -24,7 +24,7 @@ const CountryDetailDescription: React.FC<Props> = ({
           onChange={onDetailChange}
           placeholder="Enter detail"
           rows={3}
-          className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
+          className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
         />
       </label>
     </div>

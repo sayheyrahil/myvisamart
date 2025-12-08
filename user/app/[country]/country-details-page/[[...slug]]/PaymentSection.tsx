@@ -66,9 +66,9 @@ export default function PaymentSection({ countryDetail }: { countryDetail: any }
             </div>
           </div>
         </div>
-        <div className="bg-[#F4F8FB] rounded-2xl shadow p-4 flex justify-between items-center mt-2 border border-blue-200">
+        <div className="bg-[#F4F8FB] rounded-2xl shadow p-4 flex justify-between items-center mt-2 border border-brand">
           <span className="font-semibold text-[#1A355A]">Total Amount for one Traveller</span>
-          <span className="font-bold text-blue-700 text-lg">
+          <span className="font-bold text-brand text-lg">
             ₹{((countryDetail?.visa_fee_now || 0) + (countryDetail?.service_fee_now || 0)).toLocaleString()}
           </span>
         </div>

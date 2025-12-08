@@ -124,7 +124,7 @@ export default function Page() {
                         <input
                           type="text"
                           placeholder="dd-mm-YYYY"
-                          className="w-full border border-[#dbeafe] rounded-lg p-3 pr-10 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                          className="w-full border border-[#dbeafe] rounded-lg p-3 pr-10 bg-white focus:outline-none focus:ring-2 focus:ring-brand"
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
                           <svg width="20" height="20" fill="none"><path d="M6.667 2.5v2.5m6.666-2.5v2.5M3.333 7.5h13.334M4.167 4.167h11.666A1.667 1.667 0 0 1 17.5 5.833v8.334a1.667 1.667 0 0 1-1.667 1.666H4.167A1.667 1.667 0 0 1 2.5 14.167V5.833a1.667 1.667 0 0 1 1.667-1.666Z" stroke="#9ca3af" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -142,7 +142,7 @@ export default function Page() {
                       <label className="block mb-2 font-medium">Full Name*</label>
                       <input
                         type="text"
-                        className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-brand"
                       />
                     </div>
                     <div>
@@ -150,7 +150,7 @@ export default function Page() {
                       <div className="relative">
                         <input
                           type="text"
-                          className="w-full border border-[#dbeafe] rounded-lg p-3 pr-10 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                          className="w-full border border-[#dbeafe] rounded-lg p-3 pr-10 bg-white focus:outline-none focus:ring-2 focus:ring-brand"
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
                           <svg width="20" height="20" fill="none"><rect x="3.5" y="3.5" width="13" height="13" rx="2.5" stroke="#9ca3af" strokeWidth="1.5" /><path d="M7 7h6v6H7V7Z" stroke="#9ca3af" strokeWidth="1.5" /></svg>
@@ -161,7 +161,7 @@ export default function Page() {
                       <label className="block mb-2 font-medium">Occupation*</label>
                       <input
                         type="text"
-                        className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-brand"
                       />
                     </div>
                   </div>
@@ -173,7 +173,7 @@ export default function Page() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block mb-2 font-medium">Destination Country*</label>
-                      <select className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100">
+                      <select className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-brand">
                         <option value="">Select country</option>
                       </select>
                     </div>
@@ -183,7 +183,7 @@ export default function Page() {
                         <input
                           type="text"
                           placeholder="dd-mm-YYYY"
-                          className="w-full border border-[#dbeafe] rounded-lg p-3 pr-10 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                          className="w-full border border-[#dbeafe] rounded-lg p-3 pr-10 bg-white focus:outline-none focus:ring-2 focus:ring-brand"
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
                           <svg width="20" height="20" fill="none"><path d="M6.667 2.5v2.5m6.666-2.5v2.5M3.333 7.5h13.334M4.167 4.167h11.666A1.667 1.667 0 0 1 17.5 5.833v8.334a1.667 1.667 0 0 1-1.667 1.666H4.167A1.667 1.667 0 0 1 2.5 14.167V5.833a1.667 1.667 0 0 1 1.667-1.666Z" stroke="#9ca3af" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -196,7 +196,7 @@ export default function Page() {
                         <input
                           type="text"
                           placeholder="dd-mm-YYYY"
-                          className="w-full border border-[#dbeafe] rounded-lg p-3 pr-10 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100"
+                          className="w-full border border-[#dbeafe] rounded-lg p-3 pr-10 bg-white focus:outline-none focus:ring-2 focus:ring-brand"
                         />
                         <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
                           <svg width="20" height="20" fill="none"><path d="M6.667 2.5v2.5m6.666-2.5v2.5M3.333 7.5h13.334M4.167 4.167h11.666A1.667 1.667 0 0 1 17.5 5.833v8.334a1.667 1.667 0 0 1-1.667 1.666H4.167A1.667 1.667 0 0 1 2.5 14.167V5.833a1.667 1.667 0 0 1 1.667-1.666Z" stroke="#9ca3af" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -205,7 +205,7 @@ export default function Page() {
                     </div>
                     <div>
                       <label className="block mb-2 font-medium">Purpose*</label>
-                      <select className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100">
+                      <select className="w-full border border-[#dbeafe] rounded-lg p-3 bg-white focus:outline-none focus:ring-2 focus:ring-brand">
                         <option value="">Select purpose</option>
                       </select>
                     </div>
@@ -216,7 +216,7 @@ export default function Page() {
                 <div className="flex justify-center pt-4">
                   <button
                     type="submit"
-                    className="px-8 py-3 bg-brand text-white rounded-full text-lg font-medium shadow hover:bg-blue-700 transition"
+                    className="px-8 py-3 bg-brand text-white rounded-full text-lg font-medium shadow hover:bg-brand transition"
                   >
                     Generate Cover Letter
                   </button>
