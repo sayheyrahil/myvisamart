@@ -253,7 +253,8 @@ const changeStatus = async (req: Request, res: Response) => {
 };
 
 const store = async (req: Request, res: Response) => {
-  const transaction = await sequelize.transaction();
+
+   const transaction = await sequelize.transaction();
   try {
     // Generate slug from name
     const slug = req.body.name

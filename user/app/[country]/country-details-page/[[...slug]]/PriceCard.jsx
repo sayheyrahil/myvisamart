@@ -19,18 +19,18 @@ export default function PriceCard(deta) {
       <div className="mt-6 space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Pay Now</span>
-          <span className="font-semibold"> ${deta.detail?.amount}</span>
+          <span className="font-semibold"> ${deta.detail?.visa_fee_now}</span>
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Pay Later</span>
           <span className="font-semibold">
             {" "}
-            ${deta.detail?.pay_later_amount}
+            ${deta.detail?.visa_fee_later}
           </span>
         </div>
         <div className="flex justify-between border-t pt-2 font-semibold text-[#1A355A]">
           <span>Total Amount</span>
-          <span>${deta.detail?.amount + deta.detail?.pay_later_amount}</span>
+          <span>${deta.detail?.visa_fee_now + deta.detail?.service_fee_now}</span>
         </div>
       </div>
 

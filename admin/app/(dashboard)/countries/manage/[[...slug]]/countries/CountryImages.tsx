@@ -12,6 +12,7 @@ type Props = {
   setImagePreview: (preview: string) => void;
   uploading: boolean;
   setUploading: (val: boolean) => void;
+  errors?: string[]; // <-- add errors prop
 };
 
 const CountryImages: React.FC<Props> = ({
@@ -25,6 +26,7 @@ const CountryImages: React.FC<Props> = ({
   setImagePreview,
   uploading,
   setUploading,
+  errors = [],
 }) => (
   <>
     <div className="mb-4">
@@ -44,6 +46,9 @@ const CountryImages: React.FC<Props> = ({
           type="countries_icon"
         />
       </label>
+      {errors.filter(e => e.toLowerCase().includes("icon")).map((e, i) => (
+        <div key={i} className="text-red-600 text-sm mt-1">{e}</div>
+      ))}
     </div>
     <div className="mb-4">
       <label className="block font-medium mb-1">
@@ -62,6 +67,9 @@ const CountryImages: React.FC<Props> = ({
           type="countries"
         />
       </label>
+      {errors.filter(e => e.toLowerCase().includes("image")).map((e, i) => (
+        <div key={i} className="text-red-600 text-sm mt-1">{e}</div>
+      ))}
     </div>
   </>
 );

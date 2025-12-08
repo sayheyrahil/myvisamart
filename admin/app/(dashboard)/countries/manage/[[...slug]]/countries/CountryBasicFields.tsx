@@ -1,10 +1,14 @@
 import React from "react";
+import FieldInput from "@/components/common/FieldInput";
 
+type FieldError = { key: string; message: string };
 type Props = {
   dailCode: string;
   visaProcessTime: string;
- 
+  amount?: string;
+  payLaterAmount?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  errors?: FieldError[];
 };
 
 const CountryBasicFields: React.FC<Props> = ({
@@ -13,35 +17,26 @@ const CountryBasicFields: React.FC<Props> = ({
   amount,
   payLaterAmount,
   onChange,
+  errors = [],
 }) => (
   <>
-    <div className="mb-4">
-      <label className="block font-medium mb-1">
-        Dail Code:
-        <input
-          type="text"
-          name="dail_code"
-          value={dailCode}
-          onChange={onChange}
-          placeholder="Enter dail code"
-          className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-        />
-      </label>
-    </div>
-    <div className="mb-4">
-      <label className="block font-medium mb-1">
-        Visa Process Time:
-        <input
-          type="text"
-          name="visa_process_time"
-          value={visaProcessTime}
-          onChange={onChange}
-          placeholder="Enter visa process time"
-          className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-        />
-      </label>
-    </div>
-   
+    <FieldInput
+      label="dail code"
+      name="dail_code"
+      placeholder="Enter dail code"
+      value={dailCode}
+      onChange={onChange}
+      errors={errors.filter((e) => e.key === "dail_code").map(e => e.message)}
+    />
+
+    <FieldInput
+      label="visa process time"
+      name="visa_process_time"
+      placeholder="Enter visa process time"
+      value={visaProcessTime}
+      onChange={onChange}
+      errors={errors.filter((e) => e.key === "visa_process_time").map(e => e.message)}
+    />
   </>
 );
 

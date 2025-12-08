@@ -1,7 +1,7 @@
-"use client"
-import * as React from "react"
-import { useCallback, useEffect, useState } from "react"
-import { axiosInstance } from "@/lib/axios-instance"
+"use client";
+import * as React from "react";
+import { useCallback, useEffect, useState } from "react";
+import { axiosInstance } from "@/lib/axios-instance";
 import { handleAxiosError, handleAxiosSuccess } from "@/lib/common";
 import { ENDPOINTS } from "@/lib/constants";
 import { useRouter } from "next/navigation";
@@ -24,52 +24,53 @@ import CountryBasicFields from "./countries/CountryBasicFields";
 import AmountsAndFeesFields from "./countries/AmountsAndFeesFields";
 import RejectionReasons from "./countries/RejectionReasons";
 import WhyReasons from "./countries/WhyReasons";
+import FieldInput from "@/components/common/FieldInput";
 
 type countriesForm = {
-  name: string
-  description: string
-  image: string
-  icon: string
-  video: string
-  dail_code: string
-  detail: string
-  visa_process_time: string
-  is_active: boolean
-  is_deleted: boolean
-  createdAt?: string
-  updatedAt?: string
-  slug: string
-  is_top_destination: boolean
-  is_popular: boolean
-  countries: string[]
-  subtitle: string
-  rating: number
-  continent: string
-  required_documents: { title: string; description: string; icon: string }[]
-  visa_information: { key: string; value: string }[]
-  transit_timeline: { icon: string; title: string; description: string }[]
-  visa_fee_now?: string
-  service_fee_now?: string
-  visa_fee_later?: string
-  service_fee_later?: string
-  documents_required_process: { title: string; description: string }[]
-  partners_we_work_with: any[]
-  rejection_reasons: any[]
-  chances_of_approval_for_this: string
-  chances_of_approval_for_other: string
-  how_we_reviewed_this_page_sources: string
-  how_we_reviewed_this_page_history: string
-  get_a_guaranteed_visa_on: string
-  check_appointment_availability: string
-  statistics_on_visa_processing_time: string
-  statistics_on_visa_approval_rating: string
+  name: string;
+  description: string;
+  image: string;
+  icon: string;
+  video: string;
+  dail_code: string;
+  detail: string;
+  visa_process_time: string;
+  is_active: boolean;
+  is_deleted: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  slug: string;
+  is_top_destination: boolean;
+  is_popular: boolean;
+  countries: string[];
+  subtitle: string;
+  rating: number;
+  continent: string;
+  required_documents: { title: string; description: string; icon: string }[];
+  visa_information: { key: string; value: string }[];
+  transit_timeline: { icon: string; title: string; description: string }[];
+  visa_fee_now?: string;
+  service_fee_now?: string;
+  visa_fee_later?: string;
+  service_fee_later?: string;
+  documents_required_process: { title: string; description: string }[];
+  partners_we_work_with: any[];
+  rejection_reasons: any[];
+  chances_of_approval_for_this: string;
+  chances_of_approval_for_other: string;
+  how_we_reviewed_this_page_sources: string;
+  how_we_reviewed_this_page_history: string;
+  get_a_guaranteed_visa_on: string;
+  check_appointment_availability: string;
+  statistics_on_visa_processing_time: string;
+  statistics_on_visa_approval_rating: string;
   visa_approval_comparison: {
-    atlys_percentage: string
-    overall_percentage: string
-    rows: any[]
-  }
-  what_you_get: any[]
-}
+    atlys_percentage: string;
+    overall_percentage: string;
+    rows: any[];
+  };
+  what_you_get: any[];
+};
 
 const steps = [
   { label: "Basic Info" },
@@ -93,21 +94,25 @@ const pageTitleName = "countries";
 export default function Page({ params: paramsPromise }: { params: any }) {
   const params = React.use(paramsPromise) as { slug?: string[] };
   const router = useRouter();
-  const [imagePreview, setImagePreview] = useState<string>("")
-  const [imageIconPreview, setImageIconPreview] = useState<string>("")
-  const [uploading, setUploading] = useState<boolean>(false)
-  const [error, setError] = useState<string>("")
-  const [success, setSuccess] = useState<string>("")
-  const [id, setId] = useState<number | null>(null)
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const [imageIconPreview, setImageIconPreview] = useState<string>("");
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
+  const [id, setId] = useState<number | null>(null);
   const [countryOptions, setCountryOptions] = useState<string[]>([]);
   const [step, setStep] = useState<number>(0);
   const [whatYouGetPreviews, setWhatYouGetPreviews] = useState<string[]>([]); // For image previews
   const [videoPreview, setVideoPreview] = useState<string>("");
-  const [partnersWeWorkWithPreviews, setPartnersWeWorkWithPreviews] = useState<string[]>([]); // For partners images
-  const [rejectionReasons, setRejectionReasons] = useState(
-    [{ icon: "", title: "", description: "" }]
-  );
-  const [whyReasons, setWhyReasons] = useState([{ icon: "", title: "", description: "" }]);
+  const [partnersWeWorkWithPreviews, setPartnersWeWorkWithPreviews] = useState<
+    string[]
+  >([]); // For partners images
+  const [rejectionReasons, setRejectionReasons] = useState([
+    { icon: "", title: "", description: "" },
+  ]);
+  const [whyReasons, setWhyReasons] = useState([
+    { icon: "", title: "", description: "" },
+  ]);
 
   const filters = [
     "Asia",
@@ -118,9 +123,9 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     "Europe",
     "Australia",
   ];
- 
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [isEdit, setIsEdit] = useState<boolean>(false)
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
   const [form, setForm] = useState<countriesForm>({
     name: "",
     description: "",
@@ -165,107 +170,131 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       rows: [],
     },
     what_you_get: [],
-  })
+  });
 
   // Fetch data for edit
-  const fetchData = useCallback(
-    (id: number) => {
-      const idpass = { id: id };
-      axiosInstance.post(ENDPOINTS.countries_edit , idpass)
-        .then((response: any) => {
-          let data = response.data.data;
-          setForm({
-            name: data.name || "",
-            description: data.description || "",
-            image: data.image || "",
-            country: data.country || "",
-            icon: data.icon || "",
-            video: data.video || "",
-            dail_code: data.dail_code || "",
-            detail: data.detail || "",
-            visa_process_time: data.visa_process_time || "",
-            amount: data.amount ? String(data.amount) : "",
-            pay_later_amount: data.pay_later_amount ? String(data.pay_later_amount) : "",
-            is_top_destination: !!data.is_top_destination,
-            is_popular: !!data.is_popular,
-            countries: Array.isArray(data.countries) ? data.countries : [],
-            transit_timeline: Array.isArray(data.transit_timeline)
-              ? data.transit_timeline.map((item: any) => ({
-                  icon: item.icon || "",
-                  title: item.title || "",
-                  description: item.description || "",
-                }))
-              : [{ icon: "", title: "", description: "" }],
-            required_documents: Array.isArray(data.required_documents)
-              ? data.required_documents.map((item: any) => ({
-                  title: item.title || "",
-                  description: item.description || "",
-                  icon: item.icon || "",
-                }))
-              : [{ title: "", description: "", icon: "" }],
-            visa_information: Array.isArray(data.visa_information)
-              ? data.visa_information.map((item: any) =>
-                  typeof item === "object" && item !== null
-                    ? { key: item.key || "", value: item.value || "" }
-                    : { key: "", value: String(item) }
-                )
-              : [{ key: "", value: "" }],
-            continent: data.continent || "",
-            visa_fee_now: data.visa_fee_now ? String(data.visa_fee_now) : "",
-            service_fee_now: data.service_fee_now ? String(data.service_fee_now) : "",
-            visa_fee_later: data.visa_fee_later ? String(data.visa_fee_later) : "",
-            service_fee_later: data.service_fee_later ? String(data.service_fee_later) : "",
-            documents_required_process: Array.isArray(data.documents_required_process)
-              ? data.documents_required_process.map((item: any) => ({
-                  title: item.title || "",
-                  description: item.description || "",
-                }))
-              : [{ title: "", description: "" }],
-            is_active: !!data.is_active,
-            is_deleted: !!data.is_deleted,
-            createdAt: data.createdAt || "",
-            updatedAt: data.updatedAt || "",
-            slug: data.slug || "",
-            subtitle: data.subtitle || "",
-            rating: data.rating ? Number(data.rating) : 0,
-            partners_we_work_with: Array.isArray(data.partners_we_work_with) ? data.partners_we_work_with : [],
-            rejection_reasons: Array.isArray(data.rejection_reasons) ? data.rejection_reasons : [],
-            chances_of_approval_for_this: data.chances_of_approval_for_this ? String(data.chances_of_approval_for_this) : "",
-            chances_of_approval_for_other: data.chances_of_approval_for_other ? String(data.chances_of_approval_for_other) : "",
-            how_we_reviewed_this_page_sources: data.how_we_reviewed_this_page_sources || "",
-            how_we_reviewed_this_page_history: data.how_we_reviewed_this_page_history || "",
-            get_a_guaranteed_visa_on: data.get_a_guaranteed_visa_on || "",
-            check_appointment_availability: data.check_appointment_availability || "",
-            statistics_on_visa_processing_time: data.statistics_on_visa_processing_time || "",
-            statistics_on_visa_approval_rating: data.statistics_on_visa_approval_rating || "",
-            visa_approval_comparison: data.visa_approval_comparison || { atlys_percentage: "", overall_percentage: "", rows: [] },
-            what_you_get: Array.isArray(data.what_you_get) ? data.what_you_get : [],
-          });
-          setImagePreview(data.image || "");
-          setIsEdit(true);
-        })
-        .catch((error: any) => {
-          if (error.response) {
-            handleAxiosError(error);
-          }
+  const fetchData = useCallback((id: number) => {
+    const idpass = { id: id };
+    axiosInstance
+      .post(ENDPOINTS.countries_edit, idpass)
+      .then((response: any) => {
+        let data = response.data.data;
+        setForm({
+          name: data.name || "",
+          description: data.description || "",
+          image: data.image || "",
+          country: data.country || "",
+          icon: data.icon || "",
+          video: data.video || "",
+          dail_code: data.dail_code || "",
+          detail: data.detail || "",
+          visa_process_time: data.visa_process_time || "",
+
+          is_top_destination: !!data.is_top_destination,
+          is_popular: !!data.is_popular,
+          countries: Array.isArray(data.countries) ? data.countries : [],
+          transit_timeline: Array.isArray(data.transit_timeline)
+            ? data.transit_timeline.map((item: any) => ({
+                icon: item.icon || "",
+                title: item.title || "",
+                description: item.description || "",
+              }))
+            : [{ icon: "", title: "", description: "" }],
+          required_documents: Array.isArray(data.required_documents)
+            ? data.required_documents.map((item: any) => ({
+                title: item.title || "",
+                description: item.description || "",
+                icon: item.icon || "",
+              }))
+            : [{ title: "", description: "", icon: "" }],
+          visa_information: Array.isArray(data.visa_information)
+            ? data.visa_information.map((item: any) =>
+                typeof item === "object" && item !== null
+                  ? { key: item.key || "", value: item.value || "" }
+                  : { key: "", value: String(item) }
+              )
+            : [{ key: "", value: "" }],
+          continent: data.continent || "",
+          visa_fee_now: data.visa_fee_now ? String(data.visa_fee_now) : "",
+          service_fee_now: data.service_fee_now
+            ? String(data.service_fee_now)
+            : "",
+          visa_fee_later: data.visa_fee_later
+            ? String(data.visa_fee_later)
+            : "",
+          service_fee_later: data.service_fee_later
+            ? String(data.service_fee_later)
+            : "",
+          documents_required_process: Array.isArray(
+            data.documents_required_process
+          )
+            ? data.documents_required_process.map((item: any) => ({
+                title: item.title || "",
+                description: item.description || "",
+              }))
+            : [{ title: "", description: "" }],
+          is_active: !!data.is_active,
+          is_deleted: !!data.is_deleted,
+          createdAt: data.createdAt || "",
+          updatedAt: data.updatedAt || "",
+          slug: data.slug || "",
+          subtitle: data.subtitle || "",
+          rating: data.rating ? Number(data.rating) : 0,
+          partners_we_work_with: Array.isArray(data.partners_we_work_with)
+            ? data.partners_we_work_with
+            : [],
+          rejection_reasons: Array.isArray(data.rejection_reasons)
+            ? data.rejection_reasons
+            : [],
+          chances_of_approval_for_this: data.chances_of_approval_for_this
+            ? String(data.chances_of_approval_for_this)
+            : "",
+          chances_of_approval_for_other: data.chances_of_approval_for_other
+            ? String(data.chances_of_approval_for_other)
+            : "",
+          how_we_reviewed_this_page_sources:
+            data.how_we_reviewed_this_page_sources || "",
+          how_we_reviewed_this_page_history:
+            data.how_we_reviewed_this_page_history || "",
+          get_a_guaranteed_visa_on: data.get_a_guaranteed_visa_on || "",
+          check_appointment_availability:
+            data.check_appointment_availability || "",
+          statistics_on_visa_processing_time:
+            data.statistics_on_visa_processing_time || "",
+          statistics_on_visa_approval_rating:
+            data.statistics_on_visa_approval_rating || "",
+          visa_approval_comparison: data.visa_approval_comparison || {
+            atlys_percentage: "",
+            overall_percentage: "",
+            rows: [],
+          },
+          what_you_get: Array.isArray(data.what_you_get)
+            ? data.what_you_get
+            : [],
         });
-    },
-    []
-  );
+        setImagePreview(data.image || "");
+        setIsEdit(true);
+      })
+      .catch((error: any) => {
+        if (error.response) {
+          handleAxiosError(error);
+        }
+      });
+  }, []);
 
   useEffect(() => {
     const dynamicId = params.slug?.[0] || null;
 
-     if (dynamicId) {
+    if (dynamicId) {
       setId(dynamicId as unknown as number);
       fetchData(dynamicId as unknown as number);
     }
-
   }, [fetchData]);
 
   // Fetch country names for select options
   useEffect(() => {
-     axiosInstance.post(ENDPOINTS.country_names_active)
+    axiosInstance
+      .post(ENDPOINTS.country_names_active)
       .then((response: any) => {
         setCountryOptions(response.data.data || []);
       })
@@ -275,15 +304,17 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   }, []);
 
   // Handler for uploading multiple images for what_you_get
-  function handleWhatYouGetImagesChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleWhatYouGetImagesChange(
+    e: React.ChangeEvent<HTMLInputElement>
+  ) {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
     // For preview
-    const previews = files.map(file => URL.createObjectURL(file));
+    const previews = files.map((file) => URL.createObjectURL(file));
     setWhatYouGetPreviews(previews);
 
     // For form data (store as array of File or base64, depending on backend)
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
       what_you_get: files,
     }));
@@ -292,26 +323,27 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   // Clean up previews on unmount
   useEffect(() => {
     return () => {
-      whatYouGetPreviews.forEach(url => URL.revokeObjectURL(url));
+      whatYouGetPreviews.forEach((url) => URL.revokeObjectURL(url));
     };
   }, [whatYouGetPreviews]);
 
   const onSubmit = async (data: countriesForm) => {
     setIsLoading(true);
-    const submitData: any = { ...data }
-    submitData.rating = Number(data.rating) || 0
-    submitData.visa_fee_now = Number(data.visa_fee_now) || 0
-    submitData.service_fee_now = Number(data.service_fee_now) || 0
-    submitData.visa_fee_later = Number(data.visa_fee_later) || 0
-    submitData.service_fee_later = Number(data.service_fee_later) || 0
-    submitData.chances_of_approval_for_this = Number(data.chances_of_approval_for_this) || 0
-    submitData.chances_of_approval_for_other = Number(data.chances_of_approval_for_other) || 0
+    const submitData: any = { ...data };
+    submitData.rating = Number(data.rating) || 0;
+    submitData.visa_fee_now = Number(data.visa_fee_now) || 0;
+    submitData.service_fee_now = Number(data.service_fee_now) || 0;
+    submitData.visa_fee_later = Number(data.visa_fee_later) || 0;
+    submitData.service_fee_later = Number(data.service_fee_later) || 0;
+    submitData.chances_of_approval_for_this =
+      Number(data.chances_of_approval_for_this) || 0;
+    submitData.chances_of_approval_for_other =
+      Number(data.chances_of_approval_for_other) || 0;
     if (id) {
       submitData["id"] = id;
     }
     // Convert amount fields to number
-    submitData.amount = Number(submitData.amount) || 0;
-    submitData.pay_later_amount = Number(submitData.pay_later_amount) || 0;
+
     submitData.visa_fee_now = Number(data.visa_fee_now) || 0;
     submitData.service_fee_now = Number(data.service_fee_now) || 0;
     submitData.visa_fee_later = Number(data.visa_fee_later) || 0;
@@ -333,13 +365,19 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       key: item.key,
       value: item.value,
     }));
-    submitData.documents_required_process = data.documents_required_process.map((item) => ({
-      title: item.title,
-      description: item.description,
-    }));
+    submitData.documents_required_process = data.documents_required_process.map(
+      (item) => ({
+        title: item.title,
+        description: item.description,
+      })
+    );
     // Handle what_you_get images (convert to FormData if needed)
     let formDataToSend: any = submitData;
-    if (submitData.what_you_get && Array.isArray(submitData.what_you_get) && submitData.what_you_get[0] instanceof File) {
+    if (
+      submitData.what_you_get &&
+      Array.isArray(submitData.what_you_get) &&
+      submitData.what_you_get[0] instanceof File
+    ) {
       // Use FormData for file upload
       const fd = new FormData();
       Object.entries(submitData).forEach(([key, value]) => {
@@ -356,9 +394,13 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       formDataToSend = fd;
     }
 
-    await axiosInstance.post(ENDPOINTS.countries_store, formDataToSend, {
-      headers: formDataToSend instanceof FormData ? { "Content-Type": "multipart/form-data" } : undefined,
-    })
+    await axiosInstance
+      .post(ENDPOINTS.countries_store, formDataToSend, {
+        headers:
+          formDataToSend instanceof FormData
+            ? { "Content-Type": "multipart/form-data" }
+            : undefined,
+      })
       .then(async (response: any) => {
         setIsLoading(false);
         handleAxiosSuccess(response);
@@ -368,75 +410,103 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       })
       .catch((error: any) => {
         setIsLoading(false);
-         if (error.response) {
-           handleAxiosError(error);
+        if (error.response) {
+          handleAxiosError(error);
         }
       });
   };
 
   function handleChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) {
-    const { name, value, type, checked, multiple, options } = e.target
+    const { name, value, type, checked, multiple, options } = e.target;
     if (type === "checkbox") {
-      setForm(prev => ({
+      setForm((prev) => ({
         ...prev,
         [name]: checked,
-      }))
+      }));
     } else if (multiple) {
-      const selected: string[] = []
+      const selected: string[] = [];
       for (let i = 0; i < options.length; i++) {
-        if (options[i].selected) selected.push(options[i].value)
+        if (options[i].selected) selected.push(options[i].value);
       }
-      setForm(prev => ({
+      setForm((prev) => ({
         ...prev,
         [name]: selected,
-      }))
+      }));
     } else {
-      setForm(prev => ({
+      setForm((prev) => ({
         ...prev,
         [name]: value,
-      }))
+      }));
     }
   }
 
+  // Replace errors state with array of objects: { key: string, message: string }
+  type FieldError = { key: string; message: string };
+  const [errors, setErrors] = useState<FieldError[]>([]);
+
   // Step validation
-  function validateStep(currentStep: number): string {
+  function validateStep(currentStep: number): FieldError[] {
+    const errs: FieldError[] = [];
     switch (currentStep) {
       case 0:
-        if (form.name.length < 2) return "Name must be at least 2 characters.";
-        if (form.name.length > 100) return "Name cannot exceed 100 characters.";
-        break; 
+        if (form.name.length < 2)
+          errs.push({ key: "name", message: "Name must be at least 2 characters." });
+        if (form.name.length > 100)
+          errs.push({ key: "name", message: "Name cannot exceed 100 characters." });
+        
+      case 1:
+        if (!form.image) errs.push({ key: "image", message: "Image is required." });
+        
+      case 4:
+        if (!form.get_a_guaranteed_visa_on)
+          errs.push({ key: "get_a_guaranteed_visa_on", message: "Get a Guaranteed Visa On is required." });
+        if (!form.visa_fee_now || isNaN(Number(form.visa_fee_now))) {
+          errs.push({ key: "visa_fee_now", message: "Visa Fee Now is required and must be a number." });
+        }
+        if (!form.service_fee_now || isNaN(Number(form.service_fee_now))) {
+          errs.push({ key: "service_fee_now", message: "Service Fee Now is required and must be a number." });
+        }
+        if (!form.visa_fee_later || isNaN(Number(form.visa_fee_later))) {
+          errs.push({ key: "visa_fee_later", message: "Visa Fee Later is required and must be a number." });
+        }
+        if (!form.service_fee_later || isNaN(Number(form.service_fee_later))) {
+          errs.push({ key: "service_fee_later", message: "Service Fee Later is required and must be a number." });
+        }
+        
       default:
         break;
     }
-    return "";
+    return errs;
   }
 
   const handleNext = () => {
-    setError("");
-    const err = validateStep(step);
-    if (err) {
-      setError(err);
+    setErrors([]);
+    const errs = validateStep(step);
+    if (errs.length > 0) {
+      setErrors(errs);
       return;
     }
     setStep(prev => Math.min(prev + 1, steps.length - 1));
-  }
+  };
 
   const handlePrev = () => {
-    setError("");
-    setStep(prev => Math.max(prev - 1, 0));
-  }
+    setErrors([]);
+    setStep((prev) => Math.max(prev - 1, 0));
+  };
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
+    setErrors([]);
     setSuccess("");
     // Validate all steps before submit
     for (let i = 0; i < steps.length; i++) {
-      const err = validateStep(i);
-      if (err) {
-        setError(`Step ${i + 1}: ${err}`);
+      const errs = validateStep(i);
+      if (errs.length > 0) {
+        setErrors(errs);
         setStep(i);
         return;
       }
@@ -489,36 +559,44 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         rows: [],
       },
       what_you_get: [],
-    })
-    setImagePreview("")
-    setError("")
-    setSuccess("")
-    setIsEdit(false)
-    setId(null)
+    });
+    setImagePreview("");
+    setError("");
+    setSuccess("");
+    setIsEdit(false);
+    setId(null);
     setStep(0);
     setWhatYouGetPreviews([]);
   }
 
   // Helper to handle array textbox changes
-  function handleArrayChange(field: keyof countriesForm, idx: number, value: string) {
-    setForm(prev => ({
+  function handleArrayChange(
+    field: keyof countriesForm,
+    idx: number,
+    value: string
+  ) {
+    setForm((prev) => ({
       ...prev,
       [field]: prev[field].map((item, i) => (i === idx ? value : item)),
     }));
   }
   function handleArrayAdd(field: keyof countriesForm) {
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
       [field]: [...prev[field], ""],
     }));
   }
   function handleArrayRemove(field: keyof countriesForm, idx: number) {
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
       [field]: prev[field].filter((_, i) => i !== idx),
     }));
   }
-  function handleVisaInfoChange(idx: number, field: "key" | "value", value: string) {
+  function handleVisaInfoChange(
+    idx: number,
+    field: "key" | "value",
+    value: string
+  ) {
     setForm((prev) => ({
       ...prev,
       visa_information: prev.visa_information.map((item, i) =>
@@ -535,12 +613,17 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   function handleVisaInfoRemove(idx: number) {
     setForm((prev) => ({
       ...prev,
-      visa_information: prev.visa_information.length === 1
-        ? [{ key: "", value: "" }]
-        : prev.visa_information.filter((_, i) => i !== idx),
+      visa_information:
+        prev.visa_information.length === 1
+          ? [{ key: "", value: "" }]
+          : prev.visa_information.filter((_, i) => i !== idx),
     }));
   }
-  function handleRequiredDocChange(idx: number, field: "title" | "description" | "icon", value: string) {
+  function handleRequiredDocChange(
+    idx: number,
+    field: "title" | "description" | "icon",
+    value: string
+  ) {
     setForm((prev) => ({
       ...prev,
       required_documents: prev.required_documents.map((item, i) =>
@@ -551,18 +634,26 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   function handleRequiredDocAdd() {
     setForm((prev) => ({
       ...prev,
-      required_documents: [...prev.required_documents, { title: "", description: "", icon: "" }],
+      required_documents: [
+        ...prev.required_documents,
+        { title: "", description: "", icon: "" },
+      ],
     }));
   }
   function handleRequiredDocRemove(idx: number) {
     setForm((prev) => ({
       ...prev,
-      required_documents: prev.required_documents.length === 1
-        ? [{ title: "", description: "", icon: "" }]
-        : prev.required_documents.filter((_, i) => i !== idx),
+      required_documents:
+        prev.required_documents.length === 1
+          ? [{ title: "", description: "", icon: "" }]
+          : prev.required_documents.filter((_, i) => i !== idx),
     }));
   }
-  function handleTransitTimelineChange(idx: number, field: "icon" | "title" | "description", value: string) {
+  function handleTransitTimelineChange(
+    idx: number,
+    field: "icon" | "title" | "description",
+    value: string
+  ) {
     setForm((prev) => ({
       ...prev,
       transit_timeline: prev.transit_timeline.map((item, i) =>
@@ -573,54 +664,73 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   function handleTransitTimelineAdd() {
     setForm((prev) => ({
       ...prev,
-      transit_timeline: [...prev.transit_timeline, { icon: "", title: "", description: "" }],
+      transit_timeline: [
+        ...prev.transit_timeline,
+        { icon: "", title: "", description: "" },
+      ],
     }));
   }
   function handleTransitTimelineRemove(idx: number) {
     setForm((prev) => ({
       ...prev,
-      transit_timeline: prev.transit_timeline.length === 1
-        ? [{ icon: "", title: "", description: "" }]
-        : prev.transit_timeline.filter((_, i) => i !== idx),
+      transit_timeline:
+        prev.transit_timeline.length === 1
+          ? [{ icon: "", title: "", description: "" }]
+          : prev.transit_timeline.filter((_, i) => i !== idx),
     }));
   }
 
   // Handler for Documents Required & Process
-  function handleDocumentsRequiredProcessChange(idx: number, field: "title" | "description", value: string) {
+  function handleDocumentsRequiredProcessChange(
+    idx: number,
+    field: "title" | "description",
+    value: string
+  ) {
     setForm((prev) => ({
       ...prev,
-      documents_required_process: prev.documents_required_process.map((item, i) =>
-        i === idx ? { ...item, [field]: value } : item
+      documents_required_process: prev.documents_required_process.map(
+        (item, i) => (i === idx ? { ...item, [field]: value } : item)
       ),
     }));
   }
   function handleDocumentsRequiredProcessAdd() {
     setForm((prev) => ({
       ...prev,
-      documents_required_process: [...prev.documents_required_process, { title: "", description: "" }],
+      documents_required_process: [
+        ...prev.documents_required_process,
+        { title: "", description: "" },
+      ],
     }));
   }
   function handleDocumentsRequiredProcessRemove(idx: number) {
     setForm((prev) => ({
       ...prev,
-      documents_required_process: prev.documents_required_process.length === 1
-        ? [{ title: "", description: "" }]
-        : prev.documents_required_process.filter((_, i) => i !== idx),
+      documents_required_process:
+        prev.documents_required_process.length === 1
+          ? [{ title: "", description: "" }]
+          : prev.documents_required_process.filter((_, i) => i !== idx),
     }));
   }
 
   // Sync form.rejection_reasons <-> local rejectionReasons state
   useEffect(() => {
-    if (Array.isArray(form.rejection_reasons) && form.rejection_reasons.length > 0) {
+    if (
+      Array.isArray(form.rejection_reasons) &&
+      form.rejection_reasons.length > 0
+    ) {
       setRejectionReasons(form.rejection_reasons);
     }
   }, [form.rejection_reasons]);
 
-  function handleRejectionReasonsChange(idx: number, field: "icon" | "title" | "description", value: string) {
-    setRejectionReasons(prev =>
+  function handleRejectionReasonsChange(
+    idx: number,
+    field: "icon" | "title" | "description",
+    value: string
+  ) {
+    setRejectionReasons((prev) =>
       prev.map((item, i) => (i === idx ? { ...item, [field]: value } : item))
     );
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
       rejection_reasons: rejectionReasons.map((item, i) =>
         i === idx ? { ...item, [field]: value } : item
@@ -628,18 +738,25 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     }));
   }
   function handleRejectionReasonsAdd() {
-    setRejectionReasons(prev => [...prev, { icon: "", title: "", description: "" }]);
-    setForm(prev => ({
+    setRejectionReasons((prev) => [
       ...prev,
-      rejection_reasons: [...rejectionReasons, { icon: "", title: "", description: "" }],
+      { icon: "", title: "", description: "" },
+    ]);
+    setForm((prev) => ({
+      ...prev,
+      rejection_reasons: [
+        ...rejectionReasons,
+        { icon: "", title: "", description: "" },
+      ],
     }));
   }
   function handleRejectionReasonsRemove(idx: number) {
-    const updated = rejectionReasons.length === 1
-      ? [{ icon: "", title: "", description: "" }]
-      : rejectionReasons.filter((_, i) => i !== idx);
+    const updated =
+      rejectionReasons.length === 1
+        ? [{ icon: "", title: "", description: "" }]
+        : rejectionReasons.filter((_, i) => i !== idx);
     setRejectionReasons(updated);
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
       rejection_reasons: updated,
     }));
@@ -652,11 +769,15 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     }
   }, [form.why]);
 
-  function handleWhyReasonsChange(idx: number, field: "icon" | "title" | "description", value: string) {
-    setWhyReasons(prev =>
+  function handleWhyReasonsChange(
+    idx: number,
+    field: "icon" | "title" | "description",
+    value: string
+  ) {
+    setWhyReasons((prev) =>
       prev.map((item, i) => (i === idx ? { ...item, [field]: value } : item))
     );
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
       why: whyReasons.map((item, i) =>
         i === idx ? { ...item, [field]: value } : item
@@ -664,24 +785,28 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     }));
   }
   function handleWhyReasonsAdd() {
-    setWhyReasons(prev => [...prev, { icon: "", title: "", description: "" }]);
-    setForm(prev => ({
+    setWhyReasons((prev) => [
+      ...prev,
+      { icon: "", title: "", description: "" },
+    ]);
+    setForm((prev) => ({
       ...prev,
       why: [...whyReasons, { icon: "", title: "", description: "" }],
     }));
   }
   function handleWhyReasonsRemove(idx: number) {
-    const updated = whyReasons.length === 1
-      ? [{ icon: "", title: "", description: "" }]
-      : whyReasons.filter((_, i) => i !== idx);
+    const updated =
+      whyReasons.length === 1
+        ? [{ icon: "", title: "", description: "" }]
+        : whyReasons.filter((_, i) => i !== idx);
     setWhyReasons(updated);
-    setForm(prev => ({
+    setForm((prev) => ({
       ...prev,
       why: updated,
     }));
   }
 
-   return (
+  return (
     <div className=" p-6 bg-white rounded-md shadow">
       <h1 className="text-3xl font-bold mb-6">
         {isEdit ? "Edit countries" : "New countries"}
@@ -703,19 +828,14 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       <form onSubmit={handleSubmit}>
         {/* Step 0: Basic Info */}
         {step === 0 && (
-          <div className="mb-4">
-            <label className="block font-medium mb-1">
-              Name:
-              <input
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                placeholder="Enter countries name"
-                className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-              />
-            </label>
-          </div>
+          <FieldInput
+            label="Name"
+            name="name"
+            placeholder="Enter country name"
+            value={form.name}
+            onChange={handleChange}
+            errors={errors.filter(e => e.key === "name").map(e => e.message)}
+          />
         )}
         {/* Step 1: Images */}
         {step === 1 && (
@@ -731,6 +851,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               setImagePreview={setImagePreview}
               uploading={uploading}
               setUploading={setUploading}
+              errors={errors.filter(e => e.key === "image").map(e => e.message)}
             />
           </div>
         )}
@@ -743,7 +864,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 value={form.video}
                 preview={videoPreview}
                 onChange={(videoUrl, previewUrl) => {
-                  setForm(prev => ({ ...prev, video: videoUrl }));
+                  setForm((prev) => ({ ...prev, video: videoUrl }));
                   setVideoPreview(previewUrl || videoUrl);
                 }}
                 uploading={uploading}
@@ -751,7 +872,9 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 type="countries"
               />
             </label>
-            <span className="text-xs text-gray-500">Upload a video file (mp4, webm, etc).</span>
+            <span className="text-xs text-gray-500">
+              Upload a video file (mp4, webm, etc).
+            </span>
           </div>
         )}
         {/* Step 3: Details & Description */}
@@ -760,7 +883,9 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             detail={form.detail}
             description={form.description}
             onDetailChange={handleChange}
-            onDescriptionChange={value => setForm(prev => ({ ...prev, description: value }))}
+            onDescriptionChange={(value) =>
+              setForm((prev) => ({ ...prev, description: value }))
+            }
           />
         )}
         {/* Step 4: Amounts & Fees */}
@@ -771,34 +896,24 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               onChange={handleChange}
               uploading={uploading}
               setUploading={setUploading}
+              errors={errors}
             />
-            {/* Chances of Approval Fields */}
-            <div className="mb-4">
-              <label className="block font-medium mb-1">
-                Chances of Approval For This:
-                <input
-                  type="text"
-                  name="chances_of_approval_for_this"
-                  value={form.chances_of_approval_for_this}
-                  onChange={handleChange}
-                  placeholder="Enter chances of approval for this"
-                  className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-                />
-              </label>
-            </div>
-            <div className="mb-4">
-              <label className="block font-medium mb-1">
-                Chances of Approval For Other:
-                <input
-                  type="text"
-                  name="chances_of_approval_for_other"
-                  value={form.chances_of_approval_for_other}
-                  onChange={handleChange}
-                  placeholder="Enter chances of approval for other"
-                  className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-400"
-                />
-              </label>
-            </div>
+            <FieldInput
+              label="Chances of Approval For This"
+              name="chances_of_approval_for_this"
+              placeholder="Enter country name"
+              value={form.chances_of_approval_for_this}
+              onChange={handleChange}
+              errors={errors.filter(e => e.key === "chances_of_approval_for_this").map(e => e.message)}
+            />
+            <FieldInput
+              label="Chances of Approval For Other"
+              name="chances_of_approval_for_other"
+              placeholder="Enter country name"
+              value={form.chances_of_approval_for_other}
+              onChange={handleChange}
+              errors={errors.filter(e => e.key === "chances_of_approval_for_other").map(e => e.message)}
+            />
             {/* Visa Approval Comparison Form */}
             <div className="mb-4">
               <VisaApprovalComparisonForm
@@ -827,17 +942,21 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 size={5}
               >
                 {countryOptions.map((country) => (
-                  <option key={country.id} value={country.id}>{country.name}</option>
+                  <option key={country.id} value={country.id}>
+                    {country.name}
+                  </option>
                 ))}
               </select>
-              <span className="text-xs text-gray-500">Hold Ctrl (Windows) or Command (Mac) to select multiple.</span>
+              <span className="text-xs text-gray-500">
+                Hold Ctrl (Windows) or Command (Mac) to select multiple.
+              </span>
             </label>
           </div>
         )}
         {/* Step 6: Transit Timeline */}
         {step === 6 && (
           <div className="mb-4">
-             <TransitTimeline
+            <TransitTimeline
               transitTimeline={form.transit_timeline}
               onChange={handleTransitTimelineChange}
               onAdd={handleTransitTimelineAdd}
@@ -850,7 +969,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         {/* Step 7: Required Documents */}
         {step === 7 && (
           <div className="mb-4">
-             <RequiredDocuments
+            <RequiredDocuments
               requiredDocuments={form.required_documents}
               onChange={handleRequiredDocChange}
               onAdd={handleRequiredDocAdd}
@@ -863,7 +982,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         {/* Step 8: Visa Information */}
         {step === 8 && (
           <div className="mb-4">
-             <VisaInformation
+            <VisaInformation
               visaInformation={form.visa_information}
               onChange={handleVisaInfoChange}
               onAdd={handleVisaInfoAdd}
@@ -875,7 +994,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         {step === 9 && (
           <div className="mb-4">
             <label className="block font-medium mb-1">
-               <ContinentSelect
+              <ContinentSelect
                 value={form.continent}
                 onChange={handleChange}
                 filters={filters}
@@ -886,7 +1005,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         {/* Step 10: Documents Required & Process */}
         {step === 10 && (
           <div className="mb-4">
-             <DocumentsRequiredProcess
+            <DocumentsRequiredProcess
               documentsRequiredProcess={form.documents_required_process}
               onChange={handleDocumentsRequiredProcessChange}
               onAdd={handleDocumentsRequiredProcessAdd}
@@ -904,18 +1023,22 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 preview={whatYouGetPreviews}
                 multiple
                 onChange={(imgUrls, previewUrls) => {
-                  setForm(prev => ({
+                  setForm((prev) => ({
                     ...prev,
                     what_you_get: Array.isArray(imgUrls) ? imgUrls : [imgUrls],
                   }));
-                  setWhatYouGetPreviews(Array.isArray(previewUrls) ? previewUrls : [previewUrls]);
+                  setWhatYouGetPreviews(
+                    Array.isArray(previewUrls) ? previewUrls : [previewUrls]
+                  );
                 }}
                 uploading={uploading}
                 setUploading={setUploading}
                 type="countries"
               />
             </label>
-            <span className="text-xs text-gray-500">You can upload multiple images.</span>
+            <span className="text-xs text-gray-500">
+              You can upload multiple images.
+            </span>
           </div>
         )}
         {/* Step 12: Partners We Work With Images */}
@@ -928,18 +1051,24 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 preview={partnersWeWorkWithPreviews}
                 multiple
                 onChange={(imgUrls, previewUrls) => {
-                  setForm(prev => ({
+                  setForm((prev) => ({
                     ...prev,
-                    partners_we_work_with: Array.isArray(imgUrls) ? imgUrls : [imgUrls],
+                    partners_we_work_with: Array.isArray(imgUrls)
+                      ? imgUrls
+                      : [imgUrls],
                   }));
-                  setPartnersWeWorkWithPreviews(Array.isArray(previewUrls) ? previewUrls : [previewUrls]);
+                  setPartnersWeWorkWithPreviews(
+                    Array.isArray(previewUrls) ? previewUrls : [previewUrls]
+                  );
                 }}
                 uploading={uploading}
                 setUploading={setUploading}
                 type="partners_we_work_with"
               />
             </label>
-            <span className="text-xs text-gray-500">You can upload multiple images.</span>
+            <span className="text-xs text-gray-500">
+              You can upload multiple images.
+            </span>
           </div>
         )}
         {/* Step 13: Rejection Reasons */}
@@ -969,7 +1098,15 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           </div>
         )}
 
-        {error && <div className="text-red-600 mb-4">{error}</div>}
+        {errors.length > 0 &&
+          !["name", "image", "get_a_guaranteed_visa_on", "visa_fee_now", "service_fee_now", "visa_fee_later", "service_fee_later", "chances_of_approval_for_this", "chances_of_approval_for_other"]
+            .some(key => errors.some(e => e.key === key)) && (
+            <div className="text-red-600 mb-4">
+              {errors.map((e, i) => (
+                <div key={i}>{e.message}</div>
+              ))}
+            </div>
+        )}
         {success && <div className="text-green-600 mb-4">{success}</div>}
         <div className="flex justify-end gap-2">
           <button
@@ -1014,11 +1151,17 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               className="px-4 py-2 rounded bg-brand text-white hover:bg-brand-dark"
               disabled={isLoading}
             >
-              {isLoading ? (isEdit ? "Updating..." : "Creating...") : (isEdit ? "Update" : "Create")}
+              {isLoading
+                ? isEdit
+                  ? "Updating..."
+                  : "Creating..."
+                : isEdit
+                ? "Update"
+                : "Create"}
             </button>
           )}
         </div>
       </form>
     </div>
-  )
+  );
 }

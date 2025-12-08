@@ -51,28 +51,67 @@ export default function Page() {
     <MasterPage title={`Country Details Page | Visamart - ${countryDetail?.name || ""}`}>
       <div className="min-h-screen bg-bg py-10 px-5">
         <div className="max-w-6xl mx-auto space-y-10">
-          <Hero time={countryDetail?.visa_process_time || "N/A"} src={WEB_URL + countryDetail?.image} />
+          {countryDetail?.image && (
+            <Hero time={countryDetail?.visa_process_time || "N/A"} src={WEB_URL + countryDetail?.image} />
+          )}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
             <div className="md:col-span-3">
-              <InfoCard name={countryDetail?.name} visa={countryDetail?.visa_information} />
+              {countryDetail?.name && countryDetail?.visa_information && (
+                <InfoCard name={countryDetail?.name} visa={countryDetail?.visa_information} />
+              )}
               <div className="space-y-4 mt-5">
-                <SectionHeading>Get a Guaranteed Visa on</SectionHeading>
-                <CalendarCard />
+                {countryDetail?.get_a_guaranteed_visa_on && (
+                  <>
+                    <SectionHeading>Get a Guaranteed Visa on</SectionHeading>
+                    <CalendarCard />
+                  </>
+                )}
                 {/* ...existing code for CalendarCard... */}
               </div>
-              <RequiredDocumentsSection countryDetail={countryDetail} />
-              <RelatedCountriesSection countryDetail={countryDetail} />
-              <PaymentSection countryDetail={countryDetail} />
-              <div className="mt-10">
-                <FAQ faqData={faqs} />
-              </div>
-              <DocumentsRequiredProcessSection documents_required_process={countryDetail?.documents_required_process} />
-              <TransitTimelineSection countryDetail={countryDetail} />
-              <VisaStatisticsCard stats={countryDetail?.statistics} name={countryDetail?.name} />
-              <NearbyCountriesMap countries={countryDetail?.related_countries || []}  name={countryDetail?.name} />
+              {countryDetail?.required_documents && countryDetail?.required_documents.length > 0 && (
+                <RequiredDocumentsSection countryDetail={countryDetail} />
+              )}
+              {countryDetail?.related_countries && countryDetail?.related_countries.length > 0 && (
+                <RelatedCountriesSection countryDetail={countryDetail} />
+              )}
+              {(countryDetail?.visa_fee_now || countryDetail?.service_fee_now || countryDetail?.visa_fee_later || countryDetail?.service_fee_later) && (
+                <PaymentSection countryDetail={countryDetail} />
+              )}
+              {faqs && faqs.length > 0 && (
+                <div className="mt-10">
+                  <FAQ faqData={faqs} />
+                </div>
+              )}
+              {countryDetail?.documents_required_process && countryDetail?.documents_required_process.length > 0 && (
+                <DocumentsRequiredProcessSection documents_required_process={countryDetail?.documents_required_process} />
+              )}
+              {countryDetail?.transit_timeline && countryDetail?.transit_timeline.length > 0 && (
+                <TransitTimelineSection countryDetail={countryDetail} />
+              )}
+              {countryDetail?.statistics && (
+                <VisaStatisticsCard stats={countryDetail?.statistics} name={countryDetail?.name} />
+              )}
+              {countryDetail?.related_countries && countryDetail?.related_countries.length > 0 && (
+                <NearbyCountriesMap countries={countryDetail?.related_countries || []} name={countryDetail?.name} />
+              )}
             </div>
             <div className="md:col-span-2">
-              <PriceCard detail={countryDetail} />
+              {(countryDetail?.visa_fee_now ||
+                countryDetail?.service_fee_now ||
+                countryDetail?.visa_fee_later ||
+                countryDetail?.service_fee_later) && (
+                <PriceCard
+                  detail={{
+                    name: countryDetail?.name,
+                    detail: countryDetail,
+                    visa_fee_now: countryDetail?.visa_fee_now,
+                    service_fee_now: countryDetail?.service_fee_now,
+                    visa_fee_later: countryDetail?.visa_fee_later,
+                    service_fee_later: countryDetail?.service_fee_later,
+                    visa_process_time: countryDetail?.visa_process_time,
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>

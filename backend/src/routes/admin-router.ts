@@ -37,7 +37,7 @@ adminRouter.post(`/destination/change_status`, commonValidation.idRequired, dest
  
 // Destination routes
 adminRouter.post(`/countries/get`, countriesController.get);
-adminRouter.post(`/countries/store`, countriesValidation.store, countriesValidation.nameUniquenessMiddleware, countriesController.store);
+adminRouter.post(`/countries/store`, countriesValidation.store,   countriesController.store);
 adminRouter.post(`/countries/edit_get`, commonValidation.idRequired, countriesController.edit);
 adminRouter.post(`/countries/delete`, commonValidation.idRequired, countriesController.destroy);
 adminRouter.post(`/countries/change_status`, commonValidation.idRequired, countriesController.changeStatus);
