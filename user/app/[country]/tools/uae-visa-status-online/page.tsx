@@ -15,6 +15,7 @@ import SectionIcon from "@/components/tools/SectionIcon";
 import { TbArrowBadgeRightFilled } from "react-icons/tb";
 import WhyUseAtlysPhotoMaker from "@/components/tools/WhyUseAtlysPhotoMaker";
 import Image from "next/image";
+import { handleAxiosError } from "@/utils/common";
 export default function Page() {
     const [faqs, setFaqs] = useState<any[]>([]);
   const getFaqs = async () => {

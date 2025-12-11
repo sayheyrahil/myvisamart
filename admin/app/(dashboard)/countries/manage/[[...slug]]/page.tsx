@@ -70,6 +70,7 @@ type countriesForm = {
     rows: any[];
   };
   what_you_get: any[];
+  why: { icon: string; title: string; description: string }[];
 };
 
 const steps = [
@@ -188,7 +189,6 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           name: data.name || "",
           description: data.description || "",
           image: data.image || "",
-          country: data.country || "",
           icon: data.icon || "",
           video: data.video || "",
           dail_code: data.dail_code || "",
@@ -505,13 +505,15 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) {
-    const { name, value, type, checked, multiple, options } = e.target;
+    const { name, value, type } = e.target;
     if (type === "checkbox") {
+      const checked = (e.target as HTMLInputElement).checked;
       setForm((prev) => ({
         ...prev,
         [name]: checked,
       }));
-    } else if (multiple) {
+    } else if ((e.target as HTMLSelectElement).multiple) {
+      const options = (e.target as HTMLSelectElement).options;
       const selected: string[] = [];
       for (let i = 0; i < options.length; i++) {
         if (options[i].selected) selected.push(options[i].value);
@@ -665,6 +667,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         rows: [],
       },
       what_you_get: [],
+      why: [{ icon: "", title: "", description: "" }], // <-- Add this line
     });
     setImagePreview("");
     setError("");
@@ -675,29 +678,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     setWhatYouGetPreviews([]);
   }
 
-  // Helper to handle array textbox changes
-  function handleArrayChange(
-    field: keyof countriesForm,
-    idx: number,
-    value: string
-  ) {
-    setForm((prev) => ({
-      ...prev,
-      [field]: prev[field].map((item, i) => (i === idx ? value : item)),
-    }));
-  }
-  function handleArrayAdd(field: keyof countriesForm) {
-    setForm((prev) => ({
-      ...prev,
-      [field]: [...prev[field], ""],
-    }));
-  }
-  function handleArrayRemove(field: keyof countriesForm, idx: number) {
-    setForm((prev) => ({
-      ...prev,
-      [field]: prev[field].filter((_, i) => i !== idx),
-    }));
-  }
+  
   function handleVisaInfoChange(
     idx: number,
     field: "key" | "value",
@@ -1070,7 +1051,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
               <VisaApprovalComparisonForm
                 value={form.visa_approval_comparison}
                 onChange={(val) =>
-                  setForm((prev) => ({
+                  setForm((prev:any) => ({
                     ...prev,
                     visa_approval_comparison: val,
                   }))
@@ -1093,7 +1074,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
                 size={5}
               >
-                {countryOptions.map((country) => (
+                {countryOptions.map((country:any) => (
                   <option key={country.id} value={country.id}>
                     {country.name}
                   </option>
@@ -1116,8 +1097,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                     how_we_reviewed_this_page_sources: value,
                   }))
                 }
-                placeholder="Enter sources for how this page was reviewed"
-              />
+               />
             </div>
             <div className="mt-4">
               <label className="block font-medium mb-1">
@@ -1131,8 +1111,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                     how_we_reviewed_this_page_history: value,
                   }))
                 }
-                placeholder="Enter history for how this page was reviewed"
-              />
+               />
             </div>
           </div>
         )}

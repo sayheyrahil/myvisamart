@@ -13,6 +13,7 @@ import Image from "next/image";
  
  import { axiosInstance } from "@/utils/axios-instance";
 import { ENDPOINTS } from "@/utils/constants";
+import { handleAxiosError } from "@/utils/common";
 
 export default function Page() {
 

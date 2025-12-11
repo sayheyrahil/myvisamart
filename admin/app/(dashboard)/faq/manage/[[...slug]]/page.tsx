@@ -86,7 +86,11 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           name: data.name || "",
           question: data.question || "",
           answer: data.answer || "",
-          type: data.type || "",
+          type: Array.isArray(data.type)
+            ? data.type
+            : typeof data.type === "string" && data.type.length > 0
+              ? data.type.split(",")
+              : [],
           slug: data.slug || "",
           is_active: data.is_active,
           is_deleted: data.is_deleted,
@@ -144,8 +148,9 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) {
-    const { name, value, type, checked, multiple, options } = e.target;
-    if (name === "type" && multiple) {
+    const { name, value, type } = e.target;
+    if (name === "type" && (e.target as HTMLSelectElement).multiple) {
+      const options = (e.target as HTMLSelectElement).options;
       const selected: string[] = [];
       for (let i = 0; i < options.length; i++) {
         if (options[i].selected) selected.push(options[i].value);
@@ -154,10 +159,16 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         ...prev,
         type: selected,
       }));
+    } else if (type === "checkbox") {
+      const checked = (e.target as HTMLInputElement).checked;
+      setForm((prev) => ({
+        ...prev,
+        [name]: checked,
+      }));
     } else {
       setForm((prev) => ({
         ...prev,
-        [name]: type === "checkbox" ? checked : value,
+        [name]: value,
       }));
     }
   }

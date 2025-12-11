@@ -14,6 +14,7 @@ import FAQ from "@/components/common/FAQ";
 
 import Image from "next/image";
 import WhyUseAtlysPhotoMaker from "@/components/tools/WhyUseAtlysPhotoMaker";
+import { handleAxiosError } from "@/utils/common";
 export default function Page() {
     const [faqs, setFaqs] = useState<any[]>([]);
   const getFaqs = async () => {
