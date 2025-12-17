@@ -1,8 +1,8 @@
 // local
-export const WEB_URL = "https://www.admin.myvisamart.com/applicationinterface/";
-// export const WEB_URL = "http://localhost:2003";
-export const BASE_API_URL = `${WEB_URL}api/`;
-export const API_URL = `${BASE_API_URL}admin/`;
+// export const WEB_URL = "https://www.admin.myvisamart.com/applicationinterface";
+export const WEB_URL = "http://localhost:2003";
+export const BASE_API_URL = `${WEB_URL}/api/`;
+export const API_URL = `${BASE_API_URL}/admin/`;
 
 // TinyMCE API key
 export const TINY_MCE_API = 'm3pcelodpggvb0k2egnaqw2cc4j5zgt0dgwyb53jp70m7y6f'

@@ -3,6 +3,9 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/lib/axios-instance"
 import { handleAxiosError, handleAxiosSuccess } from "@/lib/common";
+import { WEB_URL } from "@/lib/constants";
+
+
 const useCrudOperations = (baseUrl: string, endpoints: { delete: string; changeStatus: string; get: string }) => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -88,13 +91,64 @@ const useCrudOperations = (baseUrl: string, endpoints: { delete: string; changeS
         [baseUrl, endpoints.get]
     );
 
-    const showRowDataModal = (tableRows: { label: string; value: any; isImage?: boolean }[]) => {
+    const showRowDataModal = (tableRows: { label: string; value: any; isImage?: boolean; isTable?: boolean }[]) => {
         const modalContent = `
             <div class="overflow-x-auto">
                 <table class="w-full border-collapse border text-sm text-left"
                     style="background-color: var(--background, #fff); color: var(--foreground, #222);">
                     <tbody>
                         ${tableRows.map((row, index) => {
+            // Table rendering for arrays/objects
+            if (row.isTable && (Array.isArray(row.value) || typeof row.value === "object")) {
+                let arr = Array.isArray(row.value) ? row.value : [row.value];
+                if (arr.length === 0 || (arr.length === 1 && Object.keys(arr[0] || {}).length === 0)) {
+                    return `
+                        <tr key=${index}>
+                            <td class="border px-4 py-2 font-bold" style="width:30%; background-color: var(--background, #f3f4f6);">${row.label}</td>
+                            <td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);">No Data</td>
+                        </tr>
+                    `;
+                }
+                // Get all unique keys for table headers
+                const allKeys = Array.from(
+                    arr.reduce((set, obj) => {
+                        if (obj && typeof obj === "object") {
+                            Object.keys(obj).forEach(k => set.add(k));
+                        }
+                        return set;
+                    }, new Set<string>())
+                );
+                return `
+                    <tr key=${index}>
+                        <td class="border px-4 py-2 font-bold align-top" style="width:30%; background-color: var(--background, #f3f4f6);">${row.label}</td>
+                        <td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full border text-xs">
+                                    <thead>
+                                        <tr>
+                                            ${allKeys.map(k => `<th class="border px-2 py-1 bg-gray-100">${k}</th>`).join("")}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${arr.map((obj, i) => `
+                                            <tr key=${i}>
+                                                ${allKeys.map((k:any) => {
+                                                    // If the key is 'icon', prepend WEB_URL if not already present
+                                                    if (k === "icon" && obj[k]) {
+                                                        const iconUrl = obj[k].startsWith("http") ? obj[k] : (typeof window !== "undefined" && WEB_URL ? WEB_URL : "/") + obj[k];
+                                                        return `<td class="border px-2 py-1"><img src="${iconUrl}" alt="icon" style="max-width:40px;max-height:40px;border-radius:6px;" /></td>`;
+                                                    }
+                                                    return `<td class="border px-2 py-1">${obj && obj[k] !== undefined ? (typeof obj[k] === "object" ? JSON.stringify(obj[k]) : obj[k]) : ""}</td>`;
+                                                }).join("")}
+                                            </tr>
+                                        `).join("")}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
             let displayValue = row.value;
             if (Array.isArray(row.value)) {
                 // If array of objects, try to stringify nicely
@@ -114,7 +168,7 @@ const useCrudOperations = (baseUrl: string, endpoints: { delete: string; changeS
                                 <tr key=${index} style="background-color: var(--background, transparent);">
                                     <td class="border px-4 py-2 font-bold" style="width:30%; background-color: var(--background, #f3f4f6);">${row.label}</td>
                                     ${row.isImage
-                    ? `<td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);"><Image style=" border-radius: 8px;" src="${displayValue}" alt="${row.label}" /></td>`
+                    ? `<td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);"><img style="border-radius: 8px; max-width: 120px; max-height: 120px;" src="${displayValue}" alt="${row.label}" /></td>`
                     : `<td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);">${displayValue}</td>`
                 }
                                 </tr>

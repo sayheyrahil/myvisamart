@@ -12,11 +12,7 @@ interface ActionButtonsProps {
   editButtonClick?: (id: string) => void;
   requestManagerChangeStatus?: (id: string, status: string) => void;
   deleteButtonClick?: (id: string) => void;
-  MenuButtonOnClick?: () => void;
-  ViewMenuButtonOnClick?: () => void; // Add this prop
-  ManageTimingButtonOnClick?: () => void; // Add this prop
-  ViewChangePlanButtonOnClick?: () => void; // Add this prop
-  ManageButtonOnClick?: () => void; // <-- Added prop
+ 
 }
 
 const ActionButtons: React.FC<ActionButtonsProps> = ({
@@ -25,11 +21,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   editButtonClick,
   requestManagerChangeStatus,
   deleteButtonClick,
-  MenuButtonOnClick,
-  ViewMenuButtonOnClick,
-  ManageTimingButtonOnClick,
-  ViewChangePlanButtonOnClick,
-  ManageButtonOnClick,
+ 
 }) => {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -97,61 +89,6 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
           onClick={() => { deleteButtonClick(row.id); setOpen(false); }}
         >
           <FaTrashAlt className="mr-2" /> <span>Delete</span>
-        </button>
-      ),
-    },
-    MenuButtonOnClick && {
-      key: "addmenu",
-      label: (
-        <button
-          className="flex items-center w-full px-3 py-2 hover:bg-gray-100"
-          onClick={() => { MenuButtonOnClick(); setOpen(false); }}
-        >
-          <FaUtensils className="mr-2" /> <span>Add Menu</span>
-        </button>
-      ),
-    },
-    ViewMenuButtonOnClick && {
-      key: "viewmenu",
-      label: (
-        <button
-          className="flex items-center w-full px-3 py-2 hover:bg-gray-100"
-          onClick={() => { ViewMenuButtonOnClick(); setOpen(false); }}
-        >
-          <FaEye className="mr-2" /> <span>View Menu</span>
-        </button>
-      ),
-    },
-    ManageTimingButtonOnClick && {
-      key: "managetiming",
-      label: (
-        <button
-          className="flex items-center w-full px-3 py-2 hover:bg-gray-100"
-          onClick={() => { ManageTimingButtonOnClick(); setOpen(false); }}
-        >
-          <FaClock className="mr-2" /> <span>Manage Timing</span>
-        </button>
-      ),
-    },
-    ViewChangePlanButtonOnClick && {
-      key: "viewchangeplan",
-      label: (
-        <button
-          className="flex items-center w-full px-3 py-2 hover:bg-gray-100"
-          onClick={() => { ViewChangePlanButtonOnClick(); setOpen(false); }}
-        >
-          <FaClock className="mr-2" /> <span>View plan</span>
-        </button>
-      ),
-    },
-    ManageButtonOnClick && {
-      key: "manage",
-      label: (
-        <button
-          className="flex items-center w-full px-3 py-2 hover:bg-gray-100"
-          onClick={() => { ManageButtonOnClick(); setOpen(false); }}
-        >
-          <FaPencilAlt className="mr-2" /> <span>Detail</span>
         </button>
       ),
     },

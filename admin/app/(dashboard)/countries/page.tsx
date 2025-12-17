@@ -73,6 +73,22 @@ const Page = () => {
       sorter: true,
     },
     {
+      title: "Visa Process Time",
+      dataIndex: "visa_process_time",
+      sorter: true,
+    },
+    {
+      title: "Service Fee Now",
+      dataIndex: "service_fee_now",
+      sorter: true,
+    },
+    {
+      title: "slug",
+      dataIndex: "slug",
+      sorter: true,
+    },
+
+    {
       title: <div className="flex justify-center">Description</div>,
       dataIndex: "description",
       sorter: true,
@@ -85,7 +101,8 @@ const Page = () => {
             overflowY: "auto",
             whiteSpace: "pre-line",
             wordBreak: "break-word",
-            width: "100%",
+            width: "250px",
+
           }}
         >
           {typeof text === "string"
@@ -111,6 +128,21 @@ const Page = () => {
             alt={row.name}
             className="w-12 h-12 object-cover rounded-md m-auto   cursor-pointer"
             onClick={() => setModalImage(WEB_URL + row.image)}
+          />
+        </>
+      ),
+    },
+    {
+      title: <div className="flex justify-center">Video</div>,
+      dataIndex: "video",
+      align: "center",
+      render: (text: any, row: any) => (
+        <>
+          <img
+            src={WEB_URL + row.video}
+            alt={row.name}
+            className="w-12 h-12 object-cover rounded-md m-auto   cursor-pointer"
+            onClick={() => setModalImage(WEB_URL + row.video)}
           />
         </>
       ),
@@ -166,15 +198,44 @@ const Page = () => {
               { label: "Id", value: row.id },
               { label: "Name", value: row.name },
               { label: "Description", value: row.description },
-              {
-                label: "Image",
-                value: WEB_URL + row.image,
-                isImage: true,
-              },
-              {
-                label: "Is Active",
-                value: row.is_active ? "Yes" : "No",
-              },
+              { label: "Image", value: WEB_URL + row.image, isImage: true },
+              { label: "Icon", value: row.icon },
+              { label: "Video", value: WEB_URL + row.video, isImage: true },
+              { label: "Dail Code", value: row.dail_code },
+              { label: "Detail", value: row.detail },
+              { label: "Visa Process Time", value: row.visa_process_time },
+              { label: "Created At", value: row.createdAt },
+              { label: "Updated At", value: row.updatedAt },
+              { label: "Is Active", value: row.is_active ? "Yes" : "No" },
+              { label: "Is Deleted", value: row.is_deleted ? "Yes" : "No" },
+              { label: "Slug", value: row.slug },
+              { label: "Is Top Destination", value: row.is_top_destination ? "Yes" : "No" },
+              { label: "Is Popular", value: row.is_popular ? "Yes" : "No" },
+              { label: "Countries", value: row.countries },
+              { label: "Subtitle", value: row.subtitle },
+              { label: "Rating", value: row.rating },
+              { label: "Continent", value: row.continent },
+              { label: "Required Documents", value: row.required_documents, isTable: true },
+              { label: "Visa Information", value: row.visa_information, isTable: true },
+              { label: "Transit Timeline", value: row.transit_timeline, isTable: true },
+              { label: "Visa Fee Now", value: row.visa_fee_now },
+              { label: "Service Fee Now", value: row.service_fee_now },
+              { label: "Visa Fee Later", value: row.visa_fee_later },
+              { label: "Service Fee Later", value: row.service_fee_later },
+              { label: "Documents Required Process", value: row.documents_required_process, isTable: true },
+              { label: "Partners We Work With", value: row.partners_we_work_with, isTable: true },
+              { label: "Rejection Reasons", value: row.rejection_reasons, isTable: true },
+              { label: "Chances of Approval For This", value: row.chances_of_approval_for_this },
+              { label: "Chances of Approval For Other", value: row.chances_of_approval_for_other },
+              { label: "How We Reviewed This Page Sources", value: row.how_we_reviewed_this_page_sources },
+              { label: "How We Reviewed This Page History", value: row.how_we_reviewed_this_page_history },
+              { label: "Get a Guaranteed Visa On", value: row.get_a_guaranteed_visa_on },
+              { label: "Check Appointment Availability", value: row.check_appointment_availability },
+              { label: "Statistics on Visa Processing Time", value: row.statistics_on_visa_processing_time },
+              { label: "Statistics on Visa Approval Rating", value: row.statistics_on_visa_approval_rating },
+              { label: "Visa Approval Comparison", value: row.visa_approval_comparison, isTable: true },
+              { label: "What You Get", value: row.what_you_get, isTable: true },
+              { label: "Why", value: row.why, isTable: true },
             ])
           }
           editButtonClick={() => editItem(row.id, pageTitleName)}

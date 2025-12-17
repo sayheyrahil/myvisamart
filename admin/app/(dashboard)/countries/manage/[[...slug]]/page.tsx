@@ -930,421 +930,470 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     }));
   }
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <div className=" p-6 bg-white rounded-md shadow">
+    <div className="p-6 bg-white rounded-md shadow">
       <h1 className="text-3xl font-bold mb-6">
         {isEdit ? "Edit countries" : "New countries"}
       </h1>
-      {/* Stepper UI */}
-      <div className="flex mb-6 gap-2">
-        {steps.map((s, idx) => (
-          <div
-            key={s.label}
-            className={`p-2 rounded-lg text-sm font-medium cursor-pointer flex items-center justify-center
-              ${step === idx ? "bg-brand text-white" : "bg-gray-200 text-brand"}
-            `}
-            onClick={() => setStep(idx)}
-          >
-            {idx + 1}. {s.label}
-          </div>
-        ))}
+      {/* Hamburger for mobile and mid screens */}
+      <div className="  mb-2">
+        <button
+          type="button"
+          className="flex items-center px-3 py-2 border rounded text-brand border-brand focus:outline-none"
+          onClick={() => setSidebarOpen(true)}
+        >
+          <svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          Steps
+        </button>
       </div>
-      <form onSubmit={handleSubmit}>
-        {/* Step 0: Basic Info */}
-        {step === 0 && (
-          <FieldInput
-            label="Name"
-            name="name"
-            placeholder="Enter country name"
-            value={form.name}
-            onChange={handleChange}
-            errors={errors
-              .filter((e) => e.key === "name")
-              .map((e) => e.message)}
-          />
-        )}
-        {/* Step 1: Images */}
-        {step === 1 && (
-          <div className="mb-4">
-            <CountryImages
-              icon={form.icon}
-              image={form.image}
-              imageIconPreview={imageIconPreview}
-              imagePreview={imagePreview}
-              setIcon={(icon) => setForm((prev) => ({ ...prev, icon }))}
-              setImage={(image) => setForm((prev) => ({ ...prev, image }))}
-              setImageIconPreview={setImageIconPreview}
-              setImagePreview={setImagePreview}
-              uploading={uploading}
-              setUploading={setUploading}
-              errors={errors
-                .filter((e) => e.key === "image")
-                .map((e) => e.message)}
-            />
-          </div>
-        )}
-        {/* Step 2: Video */}
-        {step === 2 && (
-          <div className="mb-4">
-            <label className="block font-medium mb-1">
-              Upload Video:
-              <VideoUpload
-                value={form.video}
-                preview={videoPreview}
-                onChange={(videoUrl, previewUrl) => {
-                  setForm((prev) => ({ ...prev, video: videoUrl }));
-                  setVideoPreview(previewUrl || videoUrl);
-                }}
-                uploading={uploading}
-                setUploading={setUploading}
-                type="countries"
-              />
-            </label>
-            <span className="text-xs text-gray-500">
-              Upload a video file (mp4, webm, etc).
-            </span>
-          </div>
-        )}
-        {/* Step 3: Details & Description */}
-        {step === 3 && (
-          <CountryDetailDescription
-            detail={form.detail}
-            description={form.description}
-            onDetailChange={handleChange}
-            onDescriptionChange={(value) =>
-              setForm((prev) => ({ ...prev, description: value }))
-            }
-          />
-        )}
-        {/* Step 4: Amounts & Fees */}
-        {step === 4 && (
+      <div className="flex flex-col lg:flex-row gap-6 relative">
+        {/* Sidebar Drawer for mobile and mid screens */}
+        {sidebarOpen && (
           <>
-            <AmountsAndFeesFields
-              form={form}
-              onChange={handleChange}
-              uploading={uploading}
-              setUploading={setUploading}
-              errors={errors}
+            <div
+              className="fixed inset-0 bg-black bg-opacity-30 z-30"
+              onClick={() => setSidebarOpen(false)}
             />
-            <FieldInput
-              label="Chances of Approval For This"
-              name="chances_of_approval_for_this"
-              placeholder="Enter chances of approval for this"
-              value={form.chances_of_approval_for_this}
-              onChange={handleChange}
-              errors={errors
-                .filter((e) => e.key === "chances_of_approval_for_this")
-                .map((e) => e.message)}
-            />
-            <FieldInput
-              label="Chances of Approval For Other"
-              name="chances_of_approval_for_other"
-              placeholder="Enter chances of approval for other"
-              value={form.chances_of_approval_for_other}
-              onChange={handleChange}
-              errors={errors
-                .filter((e) => e.key === "chances_of_approval_for_other")
-                .map((e) => e.message)}
-            />
-            {/* Visa Approval Comparison Form */}
-            <div className="mb-4">
-              <VisaApprovalComparisonForm
-                value={form.visa_approval_comparison}
-                onChange={(val) =>
-                  setForm((prev:any) => ({
-                    ...prev,
-                    visa_approval_comparison: val,
-                  }))
-                }
-              />
+            <div className="fixed top-0 left-0 bottom-0 w-64 bg-white shadow-lg z-40 flex flex-col p-4">
+              <div className="flex justify-between items-center mb-4">
+                <span className="font-bold text-lg">Steps</span>
+                <button
+                  type="button"
+                  className="text-gray-600 hover:text-black"
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="flex flex-col gap-2 overflow-y-auto">
+                {steps.map((s, idx) => (
+                  <div
+                    key={s.label}
+                    className={`p-2 rounded-lg text-sm font-medium cursor-pointer flex items-center
+                      ${step === idx ? "bg-brand text-white" : "bg-gray-200 text-brand"}
+                      transition-colors duration-150
+                      ${step === idx ? "shadow-md" : ""}
+                    `}
+                    onClick={() => {
+                      setStep(idx);
+                      setSidebarOpen(false);
+                    }}
+                  >
+                    <span className="font-bold mr-2">{idx + 1}.</span> {s.label}
+                  </div>
+                ))}
+              </div>
             </div>
           </>
         )}
-        {/* Step 5: Country Selection */}
-        {step === 5 && (
-          <div className="mb-4">
-            {/* ...existing Country Selection code... */}
-            <label className="block font-medium mb-1">
-              Country Name:
-              <select
-                name="countries"
-                multiple
-                value={form.countries}
+   
+        {/* Main Form Content */}
+        <div className="flex-1">
+          <form onSubmit={handleSubmit}>
+            {/* Step 0: Basic Info */}
+            {step === 0 && (
+              <FieldInput
+                label="Name"
+                name="name"
+                placeholder="Enter country name"
+                value={form.name}
                 onChange={handleChange}
-                className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
-                size={5}
-              >
-                {countryOptions.map((country:any) => (
-                  <option key={country.id} value={country.id}>
-                    {country.name}
-                  </option>
-                ))}
-              </select>
-              <span className="text-xs text-gray-500">
-                Hold Ctrl (Windows) or Command (Mac) to select multiple.
-              </span>
-            </label>
-            {/* Add editors for how_we_reviewed_this_page_sources/history */}
-            <div className="mt-4">
-              <label className="block font-medium mb-1">
-                How we reviewed this page (Sources):
-              </label>
-              <Editor
-                value={form.how_we_reviewed_this_page_sources}
-                onChange={value =>
-                  setForm(prev => ({
-                    ...prev,
-                    how_we_reviewed_this_page_sources: value,
-                  }))
+                errors={errors
+                  .filter((e) => e.key === "name")
+                  .map((e) => e.message)}
+              />
+            )}
+            {/* Step 1: Images */}
+            {step === 1 && (
+              <div className="mb-4">
+                <CountryImages
+                  icon={form.icon}
+                  image={form.image}
+                  imageIconPreview={imageIconPreview}
+                  imagePreview={imagePreview}
+                  setIcon={(icon) => setForm((prev) => ({ ...prev, icon }))}
+                  setImage={(image) => setForm((prev) => ({ ...prev, image }))}
+                  setImageIconPreview={setImageIconPreview}
+                  setImagePreview={setImagePreview}
+                  uploading={uploading}
+                  setUploading={setUploading}
+                  errors={errors
+                    .filter((e) => e.key === "image")
+                    .map((e) => e.message)}
+                />
+              </div>
+            )}
+            {/* Step 2: Video */}
+            {step === 2 && (
+              <div className="mb-4">
+                <label className="block font-medium mb-1">
+                  Upload Video:
+                  <VideoUpload
+                    value={form.video}
+                    preview={videoPreview}
+                    onChange={(videoUrl, previewUrl) => {
+                      setForm((prev) => ({ ...prev, video: videoUrl }));
+                      setVideoPreview(previewUrl || videoUrl);
+                    }}
+                    uploading={uploading}
+                    setUploading={setUploading}
+                    type="countries"
+                  />
+                </label>
+                <span className="text-xs text-gray-500">
+                  Upload a video file (mp4, webm, etc).
+                </span>
+              </div>
+            )}
+            {/* Step 3: Details & Description */}
+            {step === 3 && (
+              <CountryDetailDescription
+                detail={form.detail}
+                description={form.description}
+                onDetailChange={handleChange}
+                onDescriptionChange={(value) =>
+                  setForm((prev) => ({ ...prev, description: value }))
                 }
-               />
-            </div>
-            <div className="mt-4">
-              <label className="block font-medium mb-1">
-                How we reviewed this page (History):
-              </label>
-              <Editor
-                value={form.how_we_reviewed_this_page_history}
-                onChange={value =>
-                  setForm(prev => ({
-                    ...prev,
-                    how_we_reviewed_this_page_history: value,
-                  }))
-                }
-               />
-            </div>
-          </div>
-        )}
-        {/* Step 6: Transit Timeline */}
-        {step === 6 && (
-          <div className="mb-4">
-            <TransitTimeline
-              transitTimeline={form.transit_timeline}
-              onChange={handleTransitTimelineChange}
-              onAdd={handleTransitTimelineAdd}
-              onRemove={handleTransitTimelineRemove}
-              uploading={uploading}
-              setUploading={setUploading}
-            />
-          </div>
-        )}
-        {/* Step 7: Required Documents */}
-        {step === 7 && (
-          <div className="mb-4">
-            <RequiredDocuments
-              requiredDocuments={form.required_documents}
-              onChange={handleRequiredDocChange}
-              onAdd={handleRequiredDocAdd}
-              onRemove={handleRequiredDocRemove}
-              uploading={uploading}
-              setUploading={setUploading}
-            />
-          </div>
-        )}
-        {/* Step 8: Visa Information */}
-        {step === 8 && (
-          <div className="mb-4">
-            <VisaInformation
-              visaInformation={form.visa_information}
-              onChange={handleVisaInfoChange}
-              onAdd={handleVisaInfoAdd}
-              onRemove={handleVisaInfoRemove}
-            />
-          </div>
-        )}
-        {/* Step 9: Continent */}
-        {step === 9 && (
-          <div className="mb-4">
-            <label className="block font-medium mb-1">
-              <ContinentSelect
-                value={form.continent}
-                onChange={handleChange}
-                filters={filters}
               />
-            </label>
-          </div>
-        )}
-        {/* Step 10: Documents Required & Process */}
-        {step === 10 && (
-          <div className="mb-4">
-            <DocumentsRequiredProcess
-              documentsRequiredProcess={form.documents_required_process}
-              onChange={handleDocumentsRequiredProcessChange}
-              onAdd={handleDocumentsRequiredProcessAdd}
-              onRemove={handleDocumentsRequiredProcessRemove}
-            />
-          </div>
-        )}
-        {/* Step 11: What You Get Images */}
-        {step === 11 && (
-          <div className="mb-4">
-            <label className="block font-medium mb-1">
-              Upload What You Get Images:
-              <ImageUpload
-                value={form.what_you_get}
-                preview={whatYouGetPreviews}
-                multiple
-                onChange={(imgUrls, previewUrls) => {
-                  setForm((prev) => ({
-                    ...prev,
-                    what_you_get: Array.isArray(imgUrls) ? imgUrls : [imgUrls],
-                  }));
-                  setWhatYouGetPreviews(
-                    Array.isArray(previewUrls) ? previewUrls : [previewUrls]
-                  );
-                }}
-                uploading={uploading}
-                setUploading={setUploading}
-                type="countries"
-              />
-            </label>
-            <span className="text-xs text-gray-500">
-              You can upload multiple images.
-            </span>
-          </div>
-        )}
-        {/* Step 12: Partners We Work With Images */}
-        {step === 12 && (
-          <div className="mb-4">
-            <label className="block font-medium mb-1">
-              Upload Partners We Work With Images:
-              <ImageUpload
-                value={form.partners_we_work_with}
-                preview={partnersWeWorkWithPreviews}
-                multiple
-                onChange={(imgUrls, previewUrls) => {
-                  setForm((prev) => ({
-                    ...prev,
-                    partners_we_work_with: Array.isArray(imgUrls)
-                      ? imgUrls
-                      : [imgUrls],
-                  }));
-                  setPartnersWeWorkWithPreviews(
-                    Array.isArray(previewUrls) ? previewUrls : [previewUrls]
-                  );
-                }}
-                uploading={uploading}
-                setUploading={setUploading}
-                type="partners_we_work_with"
-              />
-            </label>
-            <span className="text-xs text-gray-500">
-              You can upload multiple images.
-            </span>
-          </div>
-        )}
-        {/* Step 13: Rejection Reasons */}
-        {step === 13 && (
-          <div className="mb-4">
-            <RejectionReasons
-              rejectionReasons={rejectionReasons}
-              onChange={handleRejectionReasonsChange}
-              onAdd={handleRejectionReasonsAdd}
-              onRemove={handleRejectionReasonsRemove}
-              uploading={uploading}
-              setUploading={setUploading}
-            />
-          </div>
-        )}
-        {/* Step 14: Why Reasons */}
-        {step === 14 && (
-          <div className="mb-4">
-            <WhyReasons
-              whyReasons={whyReasons}
-              onChange={handleWhyReasonsChange}
-              onAdd={handleWhyReasonsAdd}
-              onRemove={handleWhyReasonsRemove}
-              uploading={uploading}
-              setUploading={setUploading}
-            />
-          </div>
-        )}
-        {step === 15 && (
-          <div className="mb-4">
-            <Why
-              why={why}
-                onChange={handleWhyChange}
-                onAdd={handleWhyAdd}
-              onRemove={handleWhyRemove}
-              uploading={uploading}
-              setUploading={setUploading}
-            />
-          </div>
-        )}
+            )}
+            {/* Step 4: Amounts & Fees */}
+            {step === 4 && (
+              <>
+                <AmountsAndFeesFields
+                  form={form}
+                  onChange={handleChange}
+                  uploading={uploading}
+                  setUploading={setUploading}
+                  errors={errors}
+                />
+                <FieldInput
+                  label="Chances of Approval For This"
+                  name="chances_of_approval_for_this"
+                  placeholder="Enter chances of approval for this"
+                  value={form.chances_of_approval_for_this}
+                  onChange={handleChange}
+                  errors={errors
+                    .filter((e) => e.key === "chances_of_approval_for_this")
+                    .map((e) => e.message)}
+                />
+                <FieldInput
+                  label="Chances of Approval For Other"
+                  name="chances_of_approval_for_other"
+                  placeholder="Enter chances of approval for other"
+                  value={form.chances_of_approval_for_other}
+                  onChange={handleChange}
+                  errors={errors
+                    .filter((e) => e.key === "chances_of_approval_for_other")
+                    .map((e) => e.message)}
+                />
+                {/* Visa Approval Comparison Form */}
+                <div className="mb-4">
+                  <VisaApprovalComparisonForm
+                    value={form.visa_approval_comparison}
+                    onChange={(val) =>
+                      setForm((prev:any) => ({
+                        ...prev,
+                        visa_approval_comparison: val,
+                      }))
+                    }
+                  />
+                </div>
+              </>
+            )}
+            {/* Step 5: Country Selection */}
+            {step === 5 && (
+              <div className="mb-4">
+                {/* ...existing Country Selection code... */}
+                <label className="block font-medium mb-1">
+                  Country Name:
+                  <select
+                    name="countries"
+                    multiple
+                    value={form.countries}
+                    onChange={handleChange}
+                    className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
+                    size={5}
+                  >
+                    {countryOptions.map((country:any) => (
+                      <option key={country.id} value={country.id}>
+                        {country.name}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="text-xs text-gray-500">
+                    Hold Ctrl (Windows) or Command (Mac) to select multiple.
+                  </span>
+                </label>
+                {/* Add editors for how_we_reviewed_this_page_sources/history */}
+                <div className="mt-4">
+                  <label className="block font-medium mb-1">
+                    How we reviewed this page (Sources):
+                  </label>
+                  <Editor
+                    value={form.how_we_reviewed_this_page_sources}
+                    onChange={value =>
+                      setForm(prev => ({
+                        ...prev,
+                        how_we_reviewed_this_page_sources: value,
+                      }))
+                    }
+                   />
+                </div>
+                <div className="mt-4">
+                  <label className="block font-medium mb-1">
+                    How we reviewed this page (History):
+                  </label>
+                  <Editor
+                    value={form.how_we_reviewed_this_page_history}
+                    onChange={value =>
+                      setForm(prev => ({
+                        ...prev,
+                        how_we_reviewed_this_page_history: value,
+                      }))
+                    }
+                   />
+                </div>
+              </div>
+            )}
+            {/* Step 6: Transit Timeline */}
+            {step === 6 && (
+              <div className="mb-4">
+                <TransitTimeline
+                  transitTimeline={form.transit_timeline}
+                  onChange={handleTransitTimelineChange}
+                  onAdd={handleTransitTimelineAdd}
+                  onRemove={handleTransitTimelineRemove}
+                  uploading={uploading}
+                  setUploading={setUploading}
+                />
+              </div>
+            )}
+            {/* Step 7: Required Documents */}
+            {step === 7 && (
+              <div className="mb-4">
+                <RequiredDocuments
+                  requiredDocuments={form.required_documents}
+                  onChange={handleRequiredDocChange}
+                  onAdd={handleRequiredDocAdd}
+                  onRemove={handleRequiredDocRemove}
+                  uploading={uploading}
+                  setUploading={setUploading}
+                />
+              </div>
+            )}
+            {/* Step 8: Visa Information */}
+            {step === 8 && (
+              <div className="mb-4">
+                <VisaInformation
+                  visaInformation={form.visa_information}
+                  onChange={handleVisaInfoChange}
+                  onAdd={handleVisaInfoAdd}
+                  onRemove={handleVisaInfoRemove}
+                />
+              </div>
+            )}
+            {/* Step 9: Continent */}
+            {step === 9 && (
+              <div className="mb-4">
+                <label className="block font-medium mb-1">
+                  <ContinentSelect
+                    value={form.continent}
+                    onChange={handleChange}
+                    filters={filters}
+                  />
+                </label>
+              </div>
+            )}
+            {/* Step 10: Documents Required & Process */}
+            {step === 10 && (
+              <div className="mb-4">
+                <DocumentsRequiredProcess
+                  documentsRequiredProcess={form.documents_required_process}
+                  onChange={handleDocumentsRequiredProcessChange}
+                  onAdd={handleDocumentsRequiredProcessAdd}
+                  onRemove={handleDocumentsRequiredProcessRemove}
+                />
+              </div>
+            )}
+            {/* Step 11: What You Get Images */}
+            {step === 11 && (
+              <div className="mb-4">
+                <label className="block font-medium mb-1">
+                  Upload What You Get Images:
+                  <ImageUpload
+                    value={form.what_you_get}
+                    preview={whatYouGetPreviews}
+                    multiple
+                    onChange={(imgUrls, previewUrls) => {
+                      setForm((prev) => ({
+                        ...prev,
+                        what_you_get: Array.isArray(imgUrls) ? imgUrls : [imgUrls],
+                      }));
+                      setWhatYouGetPreviews(
+                        Array.isArray(previewUrls) ? previewUrls : [previewUrls]
+                      );
+                    }}
+                    uploading={uploading}
+                    setUploading={setUploading}
+                    type="countries"
+                  />
+                </label>
+                <span className="text-xs text-gray-500">
+                  You can upload multiple images.
+                </span>
+              </div>
+            )}
+            {/* Step 12: Partners We Work With Images */}
+            {step === 12 && (
+              <div className="mb-4">
+                <label className="block font-medium mb-1">
+                  Upload Partners We Work With Images:
+                  <ImageUpload
+                    value={form.partners_we_work_with}
+                    preview={partnersWeWorkWithPreviews}
+                    multiple
+                    onChange={(imgUrls, previewUrls) => {
+                      setForm((prev) => ({
+                        ...prev,
+                        partners_we_work_with: Array.isArray(imgUrls)
+                          ? imgUrls
+                          : [imgUrls],
+                      }));
+                      setPartnersWeWorkWithPreviews(
+                        Array.isArray(previewUrls) ? previewUrls : [previewUrls]
+                      );
+                    }}
+                    uploading={uploading}
+                    setUploading={setUploading}
+                    type="partners_we_work_with"
+                  />
+                </label>
+                <span className="text-xs text-gray-500">
+                  You can upload multiple images.
+                </span>
+              </div>
+            )}
+            {/* Step 13: Rejection Reasons */}
+            {step === 13 && (
+              <div className="mb-4">
+                <RejectionReasons
+                  rejectionReasons={rejectionReasons}
+                  onChange={handleRejectionReasonsChange}
+                  onAdd={handleRejectionReasonsAdd}
+                  onRemove={handleRejectionReasonsRemove}
+                  uploading={uploading}
+                  setUploading={setUploading}
+                />
+              </div>
+            )}
+            {/* Step 14: Why Reasons */}
+            {step === 14 && (
+              <div className="mb-4">
+                <WhyReasons
+                  whyReasons={whyReasons}
+                  onChange={handleWhyReasonsChange}
+                  onAdd={handleWhyReasonsAdd}
+                  onRemove={handleWhyReasonsRemove}
+                  uploading={uploading}
+                  setUploading={setUploading}
+                />
+              </div>
+            )}
+            {/* Step 15: Why This */}
+            {step === 15 && (
+              <div className="mb-4">
+                <Why
+                  why={why}
+                  onChange={handleWhyChange}
+                  onAdd={handleWhyAdd}
+                  onRemove={handleWhyRemove}
+                  uploading={uploading}
+                  setUploading={setUploading}
+                />
+              </div>
+            )}
 
-        {errors.length > 0 &&
-          ![
-            "name",
-            "image",
-            "get_a_guaranteed_visa_on",
-            "visa_fee_now",
-            "service_fee_now",
-            "visa_fee_later",
-            "service_fee_later",
-            "chances_of_approval_for_this",
-            "chances_of_approval_for_othr",
-          ].some((key) => errors.some((e) => e.key === key)) && (
-            <div className="text-red-600 mb-4">
-              {errors.map((e, i) => (
-                <div key={i}>{e.message}</div>
-              ))}
+            {errors.length > 0 &&
+              ![
+                "name",
+                "image",
+                "get_a_guaranteed_visa_on",
+                "visa_fee_now",
+                "service_fee_now",
+                "visa_fee_later",
+                "service_fee_later",
+                "chances_of_approval_for_this",
+                "chances_of_approval_for_othr",
+              ].some((key) => errors.some((e) => e.key === key)) && (
+                <div className="text-red-600 mb-4">
+                  {errors.map((e, i) => (
+                    <div key={i}>{e.message}</div>
+                  ))}
+                </div>
+              )}
+            {success && <div className="text-green-600 mb-4">{success}</div>}
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={onReset}
+                className="px-4 py-2 rounded border bg-gray-100 hover:bg-gray-200"
+                disabled={isLoading}
+              >
+                Reset
+              </button>
+              <button
+                type="button"
+                onClick={() => router.push("/countries")}
+                className="px-4 py-2 rounded border bg-gray-100 hover:bg-gray-200"
+                disabled={isLoading}
+              >
+                Cancel
+              </button>
+              {step > 0 && (
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  className="px-4 py-2 rounded border bg-gray-100 hover:bg-gray-200"
+                  disabled={isLoading}
+                >
+                  Previous
+                </button>
+              )}
+              {step < steps.length - 1 && (
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="px-4 py-2 rounded bg-brand text-white hover:bg-brand-dark"
+                  disabled={isLoading}
+                >
+                  Next
+                </button>
+              )}
+              {step === steps.length - 1 && (
+                <button
+                  type="submit"
+                  className="px-4 py-2 rounded bg-brand text-white hover:bg-brand-dark"
+                  disabled={isLoading}
+                >
+                  {isLoading
+                    ? isEdit
+                      ? "Updating..."
+                      : "Creating..."
+                    : isEdit
+                    ? "Update"
+                    : "Create"}
+                </button>
+              )}
             </div>
-          )}
-        {success && <div className="text-green-600 mb-4">{success}</div>}
-        <div className="flex justify-end gap-2">
-          <button
-            type="button"
-            onClick={onReset}
-            className="px-4 py-2 rounded border bg-gray-100 hover:bg-gray-200"
-            disabled={isLoading}
-          >
-            Reset
-          </button>
-          <button
-            type="button"
-            onClick={() => router.push("/countries")}
-            className="px-4 py-2 rounded border bg-gray-100 hover:bg-gray-200"
-            disabled={isLoading}
-          >
-            Cancel
-          </button>
-          {step > 0 && (
-            <button
-              type="button"
-              onClick={handlePrev}
-              className="px-4 py-2 rounded border bg-gray-100 hover:bg-gray-200"
-              disabled={isLoading}
-            >
-              Previous
-            </button>
-          )}
-          {step < steps.length - 1 && (
-            <button
-              type="button"
-              onClick={handleNext}
-              className="px-4 py-2 rounded bg-brand text-white hover:bg-brand-dark"
-              disabled={isLoading}
-            >
-              Next
-            </button>
-          )}
-          {step === steps.length - 1 && (
-            <button
-              type="submit"
-              className="px-4 py-2 rounded bg-brand text-white hover:bg-brand-dark"
-              disabled={isLoading}
-            >
-              {isLoading
-                ? isEdit
-                  ? "Updating..."
-                  : "Creating..."
-                : isEdit
-                ? "Update"
-                : "Create"}
-            </button>
-          )}
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
