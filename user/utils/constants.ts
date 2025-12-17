@@ -1,8 +1,10 @@
 import { profile } from "console";
 
 // local
-export const WEB_URL = "http://localhost:2003";
-export const BASE_API_URL = `${WEB_URL}/api/`;
+// export const WEB_URL = "http://localhost:2003";
+export const WEB_URL = "https://www.admin.myvisamart.com/applicationinterface/";
+
+export const BASE_API_URL = `${WEB_URL}api/`;
 export const API_URL = `${BASE_API_URL}admin/`;
 
 // TinyMCE API key
