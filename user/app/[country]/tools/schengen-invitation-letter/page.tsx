@@ -14,6 +14,7 @@ import SectionIcon from "@/components/tools/SectionIcon";
 import FAQ from "@/components/common/FAQ";
 
 import Image from "next/image";
+import { handleAxiosError } from "@/utils/common";
 export default function Page() {
 
     const [faqs, setFaqs] = useState<any[]>([]);

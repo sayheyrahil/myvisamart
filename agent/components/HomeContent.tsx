@@ -8,6 +8,7 @@ import { axiosInstance } from "@/utils/axios-instance";
 import { ENDPOINTS } from "@/utils/constants";
 
 import FAQ from "@/components/common/FAQ";
+import { handleAxiosError } from "@/utils/common";
 export default function HomeContent() {
   const [countryCode, setCountryCode] = useState("+880");
   const [flag, setFlag] = useState("🇧🇩");

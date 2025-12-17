@@ -108,20 +108,27 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) {
-    const { name, value, type, checked, multiple, options } = e.target
-    if (name === "countries" && multiple) {
+    const { name, value, type } = e.target;
+    if (name === "countries" && (e.target as HTMLSelectElement).multiple) {
+      const options = (e.target as HTMLSelectElement).options;
       const selected: string[] = Array.from(options)
         .filter(option => option.selected)
-        .map(option => option.value)
+        .map(option => option.value);
       setForm(prev => ({
         ...prev,
         countries: selected,
-      }))
+      }));
+    } else if (type === "checkbox") {
+      const checked = (e.target as HTMLInputElement).checked;
+      setForm(prev => ({
+        ...prev,
+        [name]: checked,
+      }));
     } else {
       setForm(prev => ({
         ...prev,
-        [name]: type === "checkbox" ? checked : value,
-      }))
+        [name]: value,
+      }));
     }
   }
 

@@ -37,17 +37,18 @@ const VideoUpload: React.FC<VideoUploadProps> = ({
   };
 
   return (
-   <ImageUpload
-            value={value}
-            preview={value}
-            onChange={(imgUrl, previewUrl) => {
-              const image = Array.isArray(imgUrl) ? imgUrl[0] : imgUrl;
-              onChange(idx, "video", image);
-            }}
-            uploading={uploading}
-            setUploading={setUploading}
-            type="transit_timeline_video"
-          />
+    <ImageUpload
+      value={value}
+      preview={preview ?? ""}
+      onChange={(imgUrl, previewUrl) => {
+        const videoUrl = Array.isArray(imgUrl) ? imgUrl[0] : imgUrl;
+        const previewUrlFinal = Array.isArray(previewUrl) ? previewUrl[0] : previewUrl;
+        onChange(videoUrl, previewUrlFinal);
+      }}
+      uploading={uploading}
+      setUploading={setUploading}
+      type="transit_timeline_video"
+    />
   );
 };
 

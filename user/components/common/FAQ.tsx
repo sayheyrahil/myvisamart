@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 
- 
+type FaqItem = {
+  question: string;
+  answer: string;
+};
 
 // Accept faqData as a prop and default to the above array
-const FaqSection = ({ faqData }: { faqData?: string[] }) => {
+const FaqSection = ({ faqData = [] }: { faqData?: FaqItem[] }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
- 
-   const toggleFAQ = (index: number) => {
+
+  const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
@@ -56,7 +59,7 @@ const FaqSection = ({ faqData }: { faqData?: string[] }) => {
                 </button>
                 {openIndex === index && (
                   <div className="px-4 md:px-6 pb-4 text-gray-500 text-sm border-t border-[#f0f4fa]">
-                  <div className="whitespace-pre-line my-3">{item.answer}</div>
+                    <div className="whitespace-pre-line my-3">{item.answer}</div>
                   </div>
                 )}
               </div>

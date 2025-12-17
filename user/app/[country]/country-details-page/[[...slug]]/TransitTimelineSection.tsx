@@ -9,7 +9,7 @@ export default function TransitTimelineSection({ countryDetail }: { countryDetai
         <div className="relative flex flex-col items-center min-w-[40px] pt-2">
           <div className="absolute left-1/2 -translate-x-1/2 top-6 bottom-6 w-1 bg-brand z-0" />
           {Array.isArray(countryDetail?.transit_timeline) && countryDetail.transit_timeline.length > 0
-            ? countryDetail.transit_timeline.map((_, idx: number) => (
+            ? countryDetail.transit_timeline.map((_:any, idx: number) => (
                 <div key={idx} className="relative z-10 flex flex-col items-center mb-8 last:mb-0">
                   <div className="w-3 h-3 rounded-full bg-white border-2 border-brand z-10" />
                   {idx <= countryDetail.transit_timeline.length - 1 && (

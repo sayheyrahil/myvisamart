@@ -2,13 +2,20 @@
 import DataTable from "@/components/DataTable";
 import useCrudOperations from "@/components/useCrudOperations";
 import { API_URL, ENDPOINTS, WEB_URL } from "@/lib/constants";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
 import ActionButtons from "@/components/ActionButtons";
 import { FaEye } from "react-icons/fa";
 import { FaEarDeaf } from "react-icons/fa6";
 import { useSearchParams } from "next/navigation";
 
 const pageTitleName = "faq";
+
+// Helper to use search params inside Suspense
+function CountryNameSearchParams({ children }: { children: (countryName: string | null) => React.ReactElement }) {
+  const searchParams = useSearchParams();
+  const countryName = searchParams.get("country_name");
+  return children(countryName);
+}
 
 // Main Page
 const Page = () => {
@@ -24,15 +31,12 @@ const Page = () => {
     get: ENDPOINTS.faq_get,
   });
 
-  const searchParams = useSearchParams();
-  const countryName = searchParams.get("country_name");
-
   useEffect(() => {
-    getData(1, 10, "createdAt", "desc");
-  }, [countryName]);
+    getData(1, 10, "createdAt", "desc", null);
+  }, []);
 
   const getData = useCallback(
-    (page = 1, perPage = 10, sortField = "createdAt", sortDirection = "desc") => {
+    (page = 1, perPage = 10, sortField = "createdAt", sortDirection = "desc", countryName: string | null) => {
       const queryParams: any = {
         page,
         per_page: perPage,
@@ -50,17 +54,18 @@ const Page = () => {
         setLoading(false);
       }, setTotalRows);
     },
-    [filterText, fetchData, countryName]
+    [filterText, fetchData]
   );
 
   const filterComponentHandleChange = (event: any) => {
     const currentFilterText = event.target.value;
     setFilterText(currentFilterText);
-    getData();
+    // Call getData with required arguments
+    getData(1, 10, "createdAt", "desc", null);
   };
 
   useEffect(() => {
-    getData(1, 10, "createdAt", "desc");
+    getData(1, 10, "createdAt", "desc", null);
     // eslint-disable-next-line
   }, [filterText, getData]);
 
@@ -129,29 +134,41 @@ const Page = () => {
             },
           ])}
           editButtonClick={() => editItem(row.id, pageTitleName)}
-          requestManagerChangeStatus={() => changeStatus(row.id, row.is_active ? 0 : 1, getData)}
-          deleteButtonClick={() => deleteItem(row.id, getData)}
+          requestManagerChangeStatus={() =>
+            changeStatus(row.id, row.is_active ? 0 : 1, () => getData(1, 10, "createdAt", "desc", null))
+          }
+          deleteButtonClick={() =>
+            deleteItem(row.id, () => getData(1, 10, "createdAt", "desc", null))
+          }
         />
       ),
     },
   ];
 
   return (
-    <div className="rounded-sm border shadow-default p-1 bg-white">
-      <DataTable
-        columnsAnt={columnsAnt}
-        dataTableData={dataTableData}
-        loading={loading}
-        totalRows={totalRows}
-        getData={getData}
-        pageTitleName={pageTitleName}
-        setFilterText={setFilterText}
-        filterText={filterText}
-        filterComponentHandleChange={filterComponentHandleChange}
-        // hideAddButton={true}
-        customAddButtonLink={`/faq/manage?country_name=${countryName}`}
-      />
-    </div>
+    <Suspense fallback={null}>
+      <CountryNameSearchParams>
+        {(countryName) => (
+          <div className="rounded-sm border shadow-default p-1 bg-white">
+            <DataTable
+              columnsAnt={columnsAnt}
+              dataTableData={dataTableData}
+              loading={loading}
+              totalRows={totalRows}
+              getData={(page, perPage, sortField, sortDirection) =>
+                getData(page, perPage, sortField, sortDirection, null)
+              }
+              pageTitleName={pageTitleName}
+              setFilterText={setFilterText}
+              filterText={filterText}
+              filterComponentHandleChange={filterComponentHandleChange}
+              // hideAddButton={true}
+              customAddButtonLink={`/faq/manage?country_name=${countryName}`}
+            />
+          </div>
+        )}
+      </CountryNameSearchParams>
+    </Suspense>
   );
 };
 

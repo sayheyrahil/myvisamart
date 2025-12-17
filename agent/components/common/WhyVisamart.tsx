@@ -4,6 +4,7 @@ import { Plus, Minus } from "lucide-react";
 import { ENDPOINTS } from "@/utils/constants";
 
 import FAQ from "@/components/common/FAQ";
+import { handleAxiosError } from "@/utils/common";
 const WhyVisamart = () => {
 
     const [flag, setFlag] = useState("🇧🇩");

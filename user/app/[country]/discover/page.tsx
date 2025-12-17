@@ -22,7 +22,8 @@ const center = {
 
 export default function Page() {
   const [countryOptions, setCountryOptions] = useState<any[]>([]);
- 
+  const [modalOpen, setModalOpen] = useState(false); // <-- Add this line
+
   // Fetch country names for select options
   useEffect(() => {
     axiosInstance
@@ -41,7 +42,7 @@ export default function Page() {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
   });
- 
+
   return (
     <div className="min-h-screen bg-[#F6FBFF]">
       <MasterPage title="MyVisaMart - Your Gateway to Hassle-Free Visa Applications">
@@ -91,7 +92,6 @@ export default function Page() {
           </div>
         </div>
 
- 
         {/* Main content: country cards + map */}
         <div className="flex flex-col md:flex-row gap-8 my-10">
           {/* Left: Country cards */}
