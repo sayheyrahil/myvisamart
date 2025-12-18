@@ -5,7 +5,6 @@ import { axiosInstance } from "@/lib/axios-instance";
 import { handleAxiosError, handleAxiosSuccess } from "@/lib/common";
 import { ENDPOINTS } from "@/lib/constants";
 import { useRouter } from "next/navigation";
-import Editor from "@/components/common/Editor";
 
 import ImageUpload from "@/components/common/image-upload";
 import VideoUpload from "@/components/common/video-upload"; // <-- Add this import
@@ -16,16 +15,16 @@ import DocumentsRequiredProcess from "./countries/DocumentsRequiredProcess";
 import VisaInformation from "./countries/VisaInformation";
 import RequiredDocuments from "./countries/RequiredDocuments";
 import TransitTimeline from "./countries/TransitTimeline";
-import VisaFeeFields from "./countries/VisaFeeFields";
 import CountryImages from "./countries/CountryImages";
 import CountryDetailDescription from "./countries/CountryDetailDescription";
-import CountryBasicFields from "./countries/CountryBasicFields";
 
 import AmountsAndFeesFields from "./countries/AmountsAndFeesFields";
 import RejectionReasons from "./countries/RejectionReasons";
 import WhyReasons from "./countries/WhyReasons";
 import FieldInput from "@/components/common/FieldInput";
 import Why from "./countries/Why";
+import CountrySelectionSection from "./countries/CountrySelectionSection";
+
 type countriesForm = {
   name: string;
   description: string;
@@ -115,9 +114,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   const [whyReasons, setWhyReasons] = useState([
     { icon: "", title: "", description: "" },
   ]);
-  const [why, setWhy] = useState([
-    { icon: "", title: "", description: "" },
-  ]);
+  const [why, setWhy] = useState([{ icon: "", title: "", description: "" }]);
 
   const filters = [
     "Asia",
@@ -197,7 +194,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
 
           is_top_destination: !!data.is_top_destination,
           is_popular: !!data.is_popular,
-          countries: Array.isArray(data.countries) ? data.countries : [],
+          countries: data.countries || [],
           transit_timeline: Array.isArray(data.transit_timeline)
             ? data.transit_timeline.map((item: any) => ({
                 icon: item.icon || "",
@@ -284,10 +281,21 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 description: item.description || "",
               }))
             : [{ icon: "", title: "", description: "" }],
-
         });
         setImagePreview(data.image || "");
         setIsEdit(true);
+        setPartnersWeWorkWithPreviews(
+          Array.isArray(data.partners_we_work_with)
+            ? data.partners_we_work_with
+            : [data.partners_we_work_with]
+        );
+        setWhatYouGetPreviews(
+          Array.isArray(data.what_you_get)
+            ? data.what_you_get
+            : [data.what_you_get]
+        );
+
+        setWhy(Array.isArray(data.why) ? data.why : [{ icon: "", title: "", description: "" }]);
       })
       .catch((error: any) => {
         if (error.response) {
@@ -316,23 +324,6 @@ export default function Page({ params: paramsPromise }: { params: any }) {
         setCountryOptions([]);
       });
   }, []);
-
-  // Handler for uploading multiple images for what_you_get
-  function handleWhatYouGetImagesChange(
-    e: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
-    // For preview
-    const previews = files.map((file) => URL.createObjectURL(file));
-    setWhatYouGetPreviews(previews);
-
-    // For form data (store as array of File or base64, depending on backend)
-    setForm((prev) => ({
-      ...prev,
-      what_you_get: files,
-    }));
-  }
 
   // Clean up previews on unmount
   useEffect(() => {
@@ -364,7 +355,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     submitData.service_fee_later = Number(data.service_fee_later) || 0;
     submitData.is_top_destination = !!data.is_top_destination;
     submitData.is_popular = !!data.is_popular;
-    submitData.countries = Array.isArray(data.countries) ? data.countries : [];
+    submitData.countries = JSON.stringify(data.countries || []);
     submitData.transit_timeline = data.transit_timeline.map((item) => ({
       icon: item.icon,
       title: item.title,
@@ -435,7 +426,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       delete submitData.why;
     }
 
-     // Remove why if only one empty object
+    // Remove why if only one empty object
     if (
       Array.isArray(submitData.why) &&
       submitData.why.length === 1 &&
@@ -443,9 +434,6 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     ) {
       delete submitData.why;
     }
-
-
-
 
     let formDataToSend: any = submitData;
     if (
@@ -678,7 +666,6 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     setWhatYouGetPreviews([]);
   }
 
-  
   function handleVisaInfoChange(
     idx: number,
     field: "key" | "value",
@@ -909,10 +896,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     }));
   }
   function handleWhyAdd() {
-    setWhy((prev) => [
-      ...prev,
-      { icon: "", title: "", description: "" },
-    ]);
+    setWhy((prev) => [...prev, { icon: "", title: "", description: "" }]);
     setForm((prev) => ({
       ...prev,
       why: [...why, { icon: "", title: "", description: "" }],
@@ -944,8 +928,18 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           className="flex items-center px-3 py-2 border rounded text-brand border-brand focus:outline-none"
           onClick={() => setSidebarOpen(true)}
         >
-          <svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          <svg
+            className="h-5 w-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
           </svg>
           Steps
         </button>
@@ -966,8 +960,18 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                   className="text-gray-600 hover:text-black"
                   onClick={() => setSidebarOpen(false)}
                 >
-                  <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    className="h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 </button>
               </div>
@@ -976,7 +980,11 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                   <div
                     key={s.label}
                     className={`p-2 rounded-lg text-sm font-medium cursor-pointer flex items-center
-                      ${step === idx ? "bg-brand text-white" : "bg-gray-200 text-brand"}
+                      ${
+                        step === idx
+                          ? "bg-brand text-white"
+                          : "bg-gray-200 text-brand"
+                      }
                       transition-colors duration-150
                       ${step === idx ? "shadow-md" : ""}
                     `}
@@ -992,7 +1000,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             </div>
           </>
         )}
-   
+
         {/* Main Form Content */}
         <div className="flex-1">
           <form onSubmit={handleSubmit}>
@@ -1029,7 +1037,6 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 />
               </div>
             )}
-            {/* Step 2: Video */}
             {step === 2 && (
               <div className="mb-4">
                 <label className="block font-medium mb-1">
@@ -1043,7 +1050,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                     }}
                     uploading={uploading}
                     setUploading={setUploading}
-                    type="countries"
+                    type="countries_video"
                   />
                 </label>
                 <span className="text-xs text-gray-500">
@@ -1051,7 +1058,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 </span>
               </div>
             )}
-            {/* Step 3: Details & Description */}
+
             {step === 3 && (
               <CountryDetailDescription
                 detail={form.detail}
@@ -1062,7 +1069,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 }
               />
             )}
-            {/* Step 4: Amounts & Fees */}
+
             {step === 4 && (
               <>
                 <AmountsAndFeesFields
@@ -1097,7 +1104,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                   <VisaApprovalComparisonForm
                     value={form.visa_approval_comparison}
                     onChange={(val) =>
-                      setForm((prev:any) => ({
+                      setForm((prev: any) => ({
                         ...prev,
                         visa_approval_comparison: val,
                       }))
@@ -1108,58 +1115,27 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             )}
             {/* Step 5: Country Selection */}
             {step === 5 && (
-              <div className="mb-4">
-                {/* ...existing Country Selection code... */}
-                <label className="block font-medium mb-1">
-                  Country Name:
-                  <select
-                    name="countries"
-                    multiple
-                    value={form.countries}
-                    onChange={handleChange}
-                    className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
-                    size={5}
-                  >
-                    {countryOptions.map((country:any) => (
-                      <option key={country.id} value={country.id}>
-                        {country.name}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="text-xs text-gray-500">
-                    Hold Ctrl (Windows) or Command (Mac) to select multiple.
-                  </span>
-                </label>
-                {/* Add editors for how_we_reviewed_this_page_sources/history */}
-                <div className="mt-4">
-                  <label className="block font-medium mb-1">
-                    How we reviewed this page (Sources):
-                  </label>
-                  <Editor
-                    value={form.how_we_reviewed_this_page_sources}
-                    onChange={value =>
-                      setForm(prev => ({
-                        ...prev,
-                        how_we_reviewed_this_page_sources: value,
-                      }))
-                    }
-                   />
-                </div>
-                <div className="mt-4">
-                  <label className="block font-medium mb-1">
-                    How we reviewed this page (History):
-                  </label>
-                  <Editor
-                    value={form.how_we_reviewed_this_page_history}
-                    onChange={value =>
-                      setForm(prev => ({
-                        ...prev,
-                        how_we_reviewed_this_page_history: value,
-                      }))
-                    }
-                   />
-                </div>
-              </div>
+              <CountrySelectionSection
+                countryOptions={countryOptions}
+                countries={form.countries}
+                onCountriesChange={(selected: string[]) =>
+                  setForm((prev) => ({ ...prev, countries: selected }))
+                }
+                howWeReviewedSources={form.how_we_reviewed_this_page_sources}
+                onHowWeReviewedSourcesChange={(value: string) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    how_we_reviewed_this_page_sources: value,
+                  }))
+                }
+                howWeReviewedHistory={form.how_we_reviewed_this_page_history}
+                onHowWeReviewedHistoryChange={(value: string) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    how_we_reviewed_this_page_history: value,
+                  }))
+                }
+              />
             )}
             {/* Step 6: Transit Timeline */}
             {step === 6 && (
@@ -1221,6 +1197,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 />
               </div>
             )}
+
             {/* Step 11: What You Get Images */}
             {step === 11 && (
               <div className="mb-4">
@@ -1233,7 +1210,9 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                     onChange={(imgUrls, previewUrls) => {
                       setForm((prev) => ({
                         ...prev,
-                        what_you_get: Array.isArray(imgUrls) ? imgUrls : [imgUrls],
+                        what_you_get: Array.isArray(imgUrls)
+                          ? imgUrls
+                          : [imgUrls],
                       }));
                       setWhatYouGetPreviews(
                         Array.isArray(previewUrls) ? previewUrls : [previewUrls]
@@ -1305,6 +1284,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 />
               </div>
             )}
+          
             {/* Step 15: Why This */}
             {step === 15 && (
               <div className="mb-4">

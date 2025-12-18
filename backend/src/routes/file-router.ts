@@ -40,6 +40,14 @@ fileRouter.post(
     uploadFilesMiddleware,
     commonService.uploadImage
 );
+
+fileRouter.post(
+    "/uploadVideo",
+    uploadFilesMiddleware,
+    commonService.uploadVideo
+);
+
+
 // fileRouter.post(
 //     "/upload-media",
 //     uploadFilesMiddleware,

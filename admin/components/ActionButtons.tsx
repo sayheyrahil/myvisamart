@@ -47,7 +47,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
           className="flex items-center w-full px-3 py-2 hover:bg-gray-100"
           onClick={() => { showRowDataModal(row); setOpen(false); }}
         >
-          <FaEye className="mr-2" /> <span>View</span>
+          <FaEye className="mr-2"  /> <span>View</span>
         </button>
       ),
     },
@@ -103,12 +103,12 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
         aria-haspopup="menu"
         aria-expanded={open}
       >
-        <FaEllipsisV className="text-[#A4A7AE]" />
+        <FaEllipsisV className="text-brand" />
       </button>
       {open && (
         <div className="absolute right-0 z-20 mt-2 w-40 bg-white border rounded shadow-lg py-1">
           {items.map((item: any) => (
-            <div key={item.key}>{item.label}</div>
+            <div className="hover:text-brand" key={item.key}>{item.label} </div>
           ))}
         </div>
       )}

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { FaArrowLeft, FaChevronLeft, FaChevronRight, FaPaperPlane, FaPlusCircle, FaSearch } from 'react-icons/fa';
+import {  FaChevronLeft, FaChevronRight,  FaPlusCircle, FaSearch } from 'react-icons/fa';
 import Link from 'next/link';
-import { FaFilter } from "react-icons/fa";
-
+ 
 interface DataTableProps {
   columnsAnt: any[];
   dataTableData: any[];
@@ -16,23 +15,9 @@ interface DataTableProps {
   filterComponentHandleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // made optional
   hideAddButton?: boolean;
   onAddClick?: () => void; // Add this prop
-  extraHeaderButtons?: React.ReactNode; // <-- Add this line
-  customAddButtonLink?: string; // <-- Add this line
+   customAddButtonLink?: string; // <-- Add this line
 
-  // Add these for filter modal control
-  filterModalOpen?: boolean;
-  setFilterModalOpen?: (open: boolean) => void;
-  pendingFilterText?: string;
-  setPendingFilterText?: (text: string) => void;
-  filterLocation?: string;
-  setFilterLocation?: (location: string) => void;
-  filterOnboardDate?: string;
-  setFilterOnboardDate?: (date: string) => void;
-  filterSubscriptionExpiry?: string;
-  setFilterSubscriptionExpiry?: (date: string) => void;
-  filterFranchiseStatus?: string;
-  setFilterFranchiseStatus?: (status: string) => void;
-  handleFilter?: () => void;
+ 
 }
 
 const DataTable: React.FC<DataTableProps> = ({
@@ -47,21 +32,8 @@ const DataTable: React.FC<DataTableProps> = ({
   filterComponentHandleChange,
   hideAddButton,
   onAddClick,
-  extraHeaderButtons, // <-- Add this line
-  customAddButtonLink, // <-- Add this line
-  filterModalOpen,
-  setFilterModalOpen,
-  pendingFilterText,
-  setPendingFilterText,
-  filterLocation,
-  setFilterLocation,
-  filterOnboardDate,
-  setFilterOnboardDate,
-  filterSubscriptionExpiry,
-  setFilterSubscriptionExpiry,
-  filterFranchiseStatus,
-  setFilterFranchiseStatus,
-  handleFilter,
+   customAddButtonLink, // <-- Add this line
+ 
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -101,88 +73,7 @@ const DataTable: React.FC<DataTableProps> = ({
             </button>
           )}
 
-          <div>
-            <button
-              className="flex items-center text-sm gap-2 px-8 h-[36px] rounded-lg  transition  border border-gray-300"
-              onClick={() => setFilterModalOpen && setFilterModalOpen(true)}
-              type="button"
-              // style={{ minWidth: "140px", minHeight: "36px" }}
-            >
-             <FaFilter />
-
-             Advanced Filters 
-            </button>
-            {/* Custom Modal instead of AntdModal */}
-            {setFilterModalOpen && filterModalOpen && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-                <div className="bg-white rounded-lg shadow-lg w-full max-w-sm p-6 relative">
-                  <button
-                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-                    onClick={() => setFilterModalOpen(false)}
-                    aria-label="Close"
-                    type="button"
-                  >
-                    &times;
-                  </button>
-                  <h2 className="text-lg font-semibold mb-4">Filter Restaurants</h2>
-                  <div className="flex flex-col gap-4">
-                    <input
-                      type="text"
-                      placeholder="Search by name"
-                      value={pendingFilterText}
-                      onChange={e => setPendingFilterText && setPendingFilterText(e.target.value)}
-                      className="w-full h-[42px] border border-blue-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition placeholder-gray-400 text-gray-700"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Location"
-                      value={filterLocation}
-                      onChange={e => setFilterLocation && setFilterLocation(e.target.value)}
-                      className="w-full h-[42px] border border-blue-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition placeholder-gray-400 text-gray-700"
-                    />
-                    <input
-                      type="date"
-                      placeholder="Onboard Date"
-                      value={filterOnboardDate}
-                      onChange={e => setFilterOnboardDate && setFilterOnboardDate(e.target.value)}
-                      className="w-full h-[42px] border border-blue-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-gray-700"
-                    />
-                    <input
-                      type="date"
-                      placeholder="Subscription Expiry"
-                      value={filterSubscriptionExpiry}
-                      onChange={e => setFilterSubscriptionExpiry && setFilterSubscriptionExpiry(e.target.value)}
-                      className="w-full h-[42px] border border-blue-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-gray-700"
-                    />
-                    <select
-                      value={filterFranchiseStatus}
-                      onChange={e => setFilterFranchiseStatus && setFilterFranchiseStatus(e.target.value)}
-                      className="w-full h-[42px] border border-blue-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition text-gray-700"
-                      style={{ minHeight: "42px" }}
-                    >
-                      <option value="">Franchise Status</option>
-                      <option value="1">Franchise</option>
-                      <option value="0">Non-Franchise</option>
-                    </select>
-                    <button
-                      className="flex items-center justify-center gap-2 px-6 h-[42px] bg-neutral-600 hover:bg-neutral-700 text-white rounded-lg shadow transition font-semibold mt-2 w-full"
-                      onClick={() => {
-                        handleFilter && handleFilter();
-                        setFilterModalOpen(false);
-                      }}
-                      type="button"
-                      style={{ minHeight: "42px" }}
-                    >
-                      <svg className="w-5 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
-                      </svg>
-                      Apply Filter
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+       
           {/* Add Button for mobile */}
           {!hideAddButton && (
             <>

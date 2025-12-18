@@ -8,6 +8,8 @@ import { FaEye } from "react-icons/fa";
 import { FaEarDeaf } from "react-icons/fa6";
 import Link from "next/link";
 const pageTitleName = "countries";
+import Swal from "sweetalert2";
+import parse from "html-react-parser";
 
 // Main Page
 const Page = () => {
@@ -27,6 +29,31 @@ const Page = () => {
   useEffect(() => {
     getData(1, 10, "createdAt", "desc");
   }, []);
+  const openVideoSwal = (videoUrl: string) => {
+    Swal.fire({
+      title: "Video Preview",
+      html: `
+      <video 
+        src="${videoUrl}" 
+        controls 
+        autoplay 
+        style="width:100%; border-radius:8px;"
+      ></video>
+    `,
+      width: "800px",
+      showCloseButton: true,
+      showConfirmButton: false,
+      focusConfirm: false,
+      didOpen: () => {
+        const video = Swal.getPopup()?.querySelector("video");
+        video?.play();
+      },
+      willClose: () => {
+        const video = Swal.getPopup()?.querySelector("video");
+        video?.pause();
+      },
+    });
+  };
 
   const getData = useCallback(
     (
@@ -89,30 +116,30 @@ const Page = () => {
     },
 
     {
+      title: <div className="flex justify-center">Media</div>,
+      dataIndex: "video",
+      align: "center",
+      render: (_: any, row: any) => {
+        const mediaUrl = WEB_URL + row.video;
+
+        return (
+          <video
+            src={mediaUrl}
+            className="w-full h-28 object-cover rounded-md cursor-pointer"
+            muted
+            playsInline
+            onClick={() => openVideoSwal(mediaUrl)}
+          />
+        );
+      },
+    },
+    {
       title: <div className="flex justify-center">Description</div>,
       dataIndex: "description",
       sorter: true,
       render: (text: string) => (
-        <div
-          className="flex justify-center"
-          style={{
-            maxHeight: "150px",
-            height: "50px",
-            overflowY: "auto",
-            whiteSpace: "pre-line",
-            wordBreak: "break-word",
-            width: "250px",
-
-          }}
-        >
-          {typeof text === "string"
-            ? text.match(/.{1,150}/g)?.map((chunk, idx) => (
-                <span key={idx}>
-                  {chunk}
-                  {idx !== Math.ceil(text.length / 150) - 1 && <br />}
-                </span>
-              ))
-            : ""}
+        <div className="flex justify-center max-h-28 h-28 overflow-y-auto whitespace-pre-line break-words w-80">
+          {parse(text)}
         </div>
       ),
     },
@@ -126,27 +153,13 @@ const Page = () => {
           <img
             src={WEB_URL + row.image}
             alt={row.name}
-            className="w-12 h-12 object-cover rounded-md m-auto   cursor-pointer"
+            className="w-28 h-28 object-cover rounded-md m-auto   cursor-pointer"
             onClick={() => setModalImage(WEB_URL + row.image)}
           />
         </>
       ),
     },
-    {
-      title: <div className="flex justify-center">Video</div>,
-      dataIndex: "video",
-      align: "center",
-      render: (text: any, row: any) => (
-        <>
-          <img
-            src={WEB_URL + row.video}
-            alt={row.name}
-            className="w-12 h-12 object-cover rounded-md m-auto   cursor-pointer"
-            onClick={() => setModalImage(WEB_URL + row.video)}
-          />
-        </>
-      ),
-    },
+
     {
       title: <div className="flex justify-center">Review</div>,
       dataIndex: "id",
@@ -200,7 +213,7 @@ const Page = () => {
               { label: "Description", value: row.description },
               { label: "Image", value: WEB_URL + row.image, isImage: true },
               { label: "Icon", value: row.icon },
-              { label: "Video", value: WEB_URL + row.video, isImage: true },
+              { label: "Video", value: WEB_URL + row.video, isVideo: true },
               { label: "Dail Code", value: row.dail_code },
               { label: "Detail", value: row.detail },
               { label: "Visa Process Time", value: row.visa_process_time },
@@ -209,32 +222,87 @@ const Page = () => {
               { label: "Is Active", value: row.is_active ? "Yes" : "No" },
               { label: "Is Deleted", value: row.is_deleted ? "Yes" : "No" },
               { label: "Slug", value: row.slug },
-              { label: "Is Top Destination", value: row.is_top_destination ? "Yes" : "No" },
+              {
+                label: "Is Top Destination",
+                value: row.is_top_destination ? "Yes" : "No",
+              },
               { label: "Is Popular", value: row.is_popular ? "Yes" : "No" },
               { label: "Countries", value: row.countries },
               { label: "Subtitle", value: row.subtitle },
               { label: "Rating", value: row.rating },
               { label: "Continent", value: row.continent },
-              { label: "Required Documents", value: row.required_documents, isTable: true },
-              { label: "Visa Information", value: row.visa_information, isTable: true },
-              { label: "Transit Timeline", value: row.transit_timeline, isTable: true },
+              {
+                label: "Required Documents",
+                value: row.required_documents,
+                isTable: true,
+              },
+              {
+                label: "Visa Information",
+                value: row.visa_information,
+                isTable: true,
+              },
+              {
+                label: "Transit Timeline",
+                value: row.transit_timeline,
+                isTable: true,
+              },
               { label: "Visa Fee Now", value: row.visa_fee_now },
               { label: "Service Fee Now", value: row.service_fee_now },
               { label: "Visa Fee Later", value: row.visa_fee_later },
               { label: "Service Fee Later", value: row.service_fee_later },
-              { label: "Documents Required Process", value: row.documents_required_process, isTable: true },
-              { label: "Partners We Work With", value: row.partners_we_work_with, isTable: true },
-              { label: "Rejection Reasons", value: row.rejection_reasons, isTable: true },
-              { label: "Chances of Approval For This", value: row.chances_of_approval_for_this },
-              { label: "Chances of Approval For Other", value: row.chances_of_approval_for_other },
-              { label: "How We Reviewed This Page Sources", value: row.how_we_reviewed_this_page_sources },
-              { label: "How We Reviewed This Page History", value: row.how_we_reviewed_this_page_history },
-              { label: "Get a Guaranteed Visa On", value: row.get_a_guaranteed_visa_on },
-              { label: "Check Appointment Availability", value: row.check_appointment_availability },
-              { label: "Statistics on Visa Processing Time", value: row.statistics_on_visa_processing_time },
-              { label: "Statistics on Visa Approval Rating", value: row.statistics_on_visa_approval_rating },
-              { label: "Visa Approval Comparison", value: row.visa_approval_comparison, isTable: true },
-              { label: "What You Get", value: row.what_you_get, isTable: true },
+              {
+                label: "Documents Required Process",
+                value: row.documents_required_process,
+                isTable: true,
+              },
+              {
+                label: "Partners We Work With",
+                value: row.partners_we_work_with,
+                isImage: true,
+              },
+              {
+                label: "Rejection Reasons",
+                value: row.rejection_reasons,
+                isTable: true,
+              },
+              {
+                label: "Chances of Approval For This",
+                value: row.chances_of_approval_for_this,
+              },
+              {
+                label: "Chances of Approval For Other",
+                value: row.chances_of_approval_for_other,
+              },
+              {
+                label: "How We Reviewed This Page Sources",
+                value: row.how_we_reviewed_this_page_sources,
+              },
+              {
+                label: "How We Reviewed This Page History",
+                value: row.how_we_reviewed_this_page_history,
+              },
+              {
+                label: "Get a Guaranteed Visa On",
+                value: row.get_a_guaranteed_visa_on,
+              },
+              {
+                label: "Check Appointment Availability",
+                value: row.check_appointment_availability,
+              },
+              {
+                label: "Statistics on Visa Processing Time",
+                value: row.statistics_on_visa_processing_time,
+              },
+              {
+                label: "Statistics on Visa Approval Rating",
+                value: row.statistics_on_visa_approval_rating,
+              },
+              {
+                label: "Visa Approval Comparison",
+                value: row.visa_approval_comparison,
+                isTable: true,
+              },
+              { label: "What You Get", value: row.what_you_get, isImage: true },
               { label: "Why", value: row.why, isTable: true },
             ])
           }
@@ -247,6 +315,7 @@ const Page = () => {
       ),
     },
   ];
+  const [filterModalOpen, setFilterModalOpen] = useState(false);
 
   return (
     <div className="rounded-sm border shadow-default p-1 bg-white">
@@ -284,6 +353,7 @@ const Page = () => {
         setFilterText={setFilterText}
         filterText={filterText}
         filterComponentHandleChange={filterComponentHandleChange}
+      
       />
     </div>
   );

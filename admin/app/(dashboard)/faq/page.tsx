@@ -162,8 +162,7 @@ const Page = () => {
               setFilterText={setFilterText}
               filterText={filterText}
               filterComponentHandleChange={filterComponentHandleChange}
-              // hideAddButton={true}
-              customAddButtonLink={`/faq/manage?country_name=${countryName}`}
+               customAddButtonLink={`/faq/manage?country_name=${countryName}`}
             />
           </div>
         )}

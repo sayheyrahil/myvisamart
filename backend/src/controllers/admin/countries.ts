@@ -21,10 +21,7 @@ type countriesData = {
   updatedAt?: Date;
   is_active?: boolean;
   is_deleted?: boolean;
-  visa_fee_now?: number;
-  service_fee_now?: number;
-  visa_fee_later?: number;
-  service_fee_later?: number;
+  why?: any;
 
   slug?: string;
   is_top_destination?: boolean;
@@ -83,7 +80,9 @@ const get = async (req: Request, res: Response) => {
     const pageFind = page ? Number(page) - 1 : 0;
     const perPage = per_page == undefined ? 10 : Number(per_page);
 
-    let where: any = {};
+    let where: any = {
+      id : 204
+    };
 
     allFiled.forEach((field) => {
       if (filters[field] !== undefined && filters[field] !== "") {
@@ -260,35 +259,28 @@ const store = async (req: Request, res: Response) => {
     const slug = req.body.name
       ? req.body.name.trim().toLowerCase().replace(/\s+/g, "-")
       : "";
-
-    // Ensure countries is a string
-    let countriesValue = req.body.countries ?? "";
-    if (Array.isArray(countriesValue)) {
-      countriesValue = countriesValue.join(",");
-    } else if (typeof countriesValue === "object" && countriesValue !== null) {
-      countriesValue = JSON.stringify(countriesValue);
-    }
+ 
 
     const bodyData: countriesData = {
-      name: req.body.name,
-      description: req.body.description,
-      image: req.body.image,
-      icon: req.body.icon,
+      name: req.body.name ?? "",
+      description: req.body.description ?? "",
+      image: req.body.image ?? "",
+      icon: req.body.icon ?? "",
       video: req.body.video ?? "",
-      dail_code: req.body.dail_code,
-      detail: req.body.detail,
-      visa_process_time: req.body.visa_process_time,
-    
+      dail_code: req.body.dail_code ?? "",
+      detail: req.body.detail ?? "",
+      visa_process_time: req.body.visa_process_time ?? "",
       is_active: req.body.is_active,
       is_deleted: req.body.is_deleted,
       createdAt: req.body.createdAt ? new Date(req.body.createdAt) : undefined,
       updatedAt: req.body.updatedAt ? new Date(req.body.updatedAt) : undefined,
-      slug: slug,
+      slug: slug, // always a string
       is_top_destination: req.body.is_top_destination ?? false,
       is_popular: req.body.is_popular ?? false,
-      countries: countriesValue,
+      countries: req.body.countries ?? "",
       subtitle: req.body.subtitle ?? "",
       rating: req.body.rating ?? 0,
+
       continent: req.body.continent ?? "",
       required_documents: req.body.required_documents ?? [],
       visa_information: req.body.visa_information ?? [],

@@ -14,6 +14,7 @@ export const ENDPOINTS = {
   logout: "logout",
   forget_password: "admin_forget_password",
   image_upload: BASE_API_URL + "image_upload",
+  file_upload: BASE_API_URL + "uploadVideo",
   get_profile: "profile",
   update_profile: "profile_update",
   change_password: adminKey + "change_password",

@@ -14,7 +14,7 @@ const CountryDetailDescription: React.FC<Props> = ({
   onDetailChange,
   onDescriptionChange,
 }) => (
-  <>
+  <div>
     <div className="mb-4">
       <label className="block font-medium mb-1">
         Detail:
@@ -37,7 +37,7 @@ const CountryDetailDescription: React.FC<Props> = ({
         />
       </label>
     </div>
-  </>
+  </div>
 );
 
 export default CountryDetailDescription;

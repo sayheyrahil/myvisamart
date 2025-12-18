@@ -122,7 +122,7 @@ export function DashboardSidebar({ passData }: { passData?: boolean }) {
   return (
     <Fragment>
       <div
-        className="flex flex-col w-64 min-h-screen border-r border-gray-200 shadow-[2px_0_8px_rgba(0,0,0,0.03)] md:flex bg-slate-900 rounded-xl text-white"
+        className="flex flex-col   min-h-screen   shadow-[2px_0_8px_rgba(0,0,0,0.03)] md:flex bg-slate-900 rounded-xl text-white"
       >
         <div className="flex flex-col gap-0 p-0">
           <SidebarNav items={sidebarNavItems} />

@@ -5,7 +5,7 @@ import { axiosInstance } from "@/lib/axios-instance"
 import { handleAxiosError, handleAxiosSuccess } from "@/lib/common";
 import { WEB_URL } from "@/lib/constants";
 
-
+ 
 const useCrudOperations = (baseUrl: string, endpoints: { delete: string; changeStatus: string; get: string }) => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -91,13 +91,15 @@ const useCrudOperations = (baseUrl: string, endpoints: { delete: string; changeS
         [baseUrl, endpoints.get]
     );
 
-    const showRowDataModal = (tableRows: { label: string; value: any; isImage?: boolean; isTable?: boolean }[]) => {
+    const showRowDataModal = (
+        tableRows: { label: string; value: any; isImage?: boolean; isTable?: boolean; isVideo?: boolean }[]
+    ) => {
         const modalContent = `
-            <div class="overflow-x-auto">
-                <table class="w-full border-collapse border text-sm text-left"
-                    style="background-color: var(--background, #fff); color: var(--foreground, #222);">
-                    <tbody>
-                        ${tableRows.map((row, index) => {
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse border text-sm text-left"
+        style="background-color: var(--background, #fff); color: var(--foreground, #222);">
+        <tbody>
+          ${tableRows.map((row, index) => {
             // Table rendering for arrays/objects
             if (row.isTable && (Array.isArray(row.value) || typeof row.value === "object")) {
                 let arr = Array.isArray(row.value) ? row.value : [row.value];
@@ -164,20 +166,62 @@ const useCrudOperations = (baseUrl: string, endpoints: { delete: string; changeS
             } else if (typeof row.value === "object" && row.value !== null) {
                 displayValue = JSON.stringify(row.value);
             }
-            return `
-                                <tr key=${index} style="background-color: var(--background, transparent);">
-                                    <td class="border px-4 py-2 font-bold" style="width:30%; background-color: var(--background, #f3f4f6);">${row.label}</td>
-                                    ${row.isImage
-                    ? `<td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);"><img style="border-radius: 8px; max-width: 120px; max-height: 120px;" src="${displayValue}" alt="${row.label}" /></td>`
-                    : `<td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);">${displayValue}</td>`
+            // --- Add video rendering ---
+            if (row.isVideo && displayValue) {
+                return `
+                <tr key=${index} style="background-color: var(--background, transparent);">
+                  <td class="border px-4 py-2 font-bold" style="width:30%; background-color: var(--background, #f3f4f6);">${row.label}</td>
+                  <td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);">
+                    <video controls style="max-width: 200px; max-height: 120px; border-radius: 8px;">
+                      <source src="${displayValue}" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </td>
+                </tr>
+              `;
+            }
+            // --- End video rendering ---
+            // --- Add image array rendering ---
+            if (row.isImage && row.value) {
+                if (Array.isArray(row.value)) {
+                    // Multiple images
+                    return `
+                        <tr key=${index} style="background-color: var(--background, transparent);">
+                            <td class="border px-4 py-2 font-bold" style="width:30%; background-color: var(--background, #f3f4f6);">${row.label}</td>
+                            <td class=" p-2 flex gap-3"  >
+                                ${row.value
+                                    .map(
+                                        (img: string, i: number) =>
+                                            `<img key="${i}" style="border-radius: 8px; max-width: 120px; max-height: 120px; margin-right: 8px;" src="${WEB_URL + img}" alt="${row.label} ${i + 1}" />`
+                                    )
+                                    .join("")}
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    // Single image
+                    return `
+                        <tr key=${index} style="background-color: var(--background, transparent);">
+                            <td class="border px-4 py-2 font-bold" style="width:30%; background-color: var(--background, #f3f4f6);">${row.label}</td>
+                            <td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);">
+                                <img style="border-radius: 8px; max-width: 120px; max-height: 120px;" src="${row.value}" alt="${row.label}" />
+                            </td>
+                        </tr>
+                    `;
                 }
-                                </tr>
-                            `;
-        }).join("")}
-                    </tbody>
-                </table>
-            </div>
-        `;
+            }
+            // --- End image array rendering ---
+            return `
+              <tr key=${index} style="background-color: var(--background, transparent);">
+                <td class="border px-4 py-2 font-bold" style="width:30%; background-color: var(--background, #f3f4f6);">${row.label}</td>
+                <td class="border px-4 py-2" style="width:70%; background-color: var(--background, #fff);">${displayValue}</td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
 
         Swal.fire({
             title: "Details",
