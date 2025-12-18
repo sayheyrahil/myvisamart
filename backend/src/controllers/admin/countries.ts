@@ -81,7 +81,7 @@ const get = async (req: Request, res: Response) => {
     const perPage = per_page == undefined ? 10 : Number(per_page);
 
     let where: any = {
-      id : 204
+      // id : 204
     };
 
     allFiled.forEach((field) => {
