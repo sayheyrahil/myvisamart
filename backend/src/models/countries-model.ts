@@ -6,7 +6,9 @@ interface CountriesAttributes {
   name: string;
   description: string;
   image: string;
-  icon: string;
+  flag: string;
+  avatar: string;
+  round_image: string;
   video?: string; // <-- add this line
   dail_code: string;
   detail: string;
@@ -91,7 +93,9 @@ class Countries
   public name!: string;
   public description!: string;
   public image!: string;
-  public icon!: string;
+  public flag!: string;
+  public avatar!: string;
+  public round_image!: string;
   public video!: string; // <-- add this line
   public dail_code!: string;
   public detail!: string;
@@ -151,7 +155,15 @@ Countries.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    icon: {
+    avatar: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    flag: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    round_image: {
       type: DataTypes.STRING,
       allowNull: false,
     },

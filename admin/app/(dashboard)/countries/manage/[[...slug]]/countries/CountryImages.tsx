@@ -17,6 +17,11 @@ type Props = {
   uploading: boolean;
   setUploading: (val: boolean) => void;
   errors?: string[];
+
+  roundImage: string;
+  roundImagePreview: string;
+  setRoundImage: (image: string) => void;
+  setRoundImagePreview: (preview: string) => void;
 };
 
 const CountryImages: React.FC<Props> = ({
@@ -35,6 +40,11 @@ const CountryImages: React.FC<Props> = ({
   uploading,
   setUploading,
   errors = [],
+
+  roundImage,
+  roundImagePreview,
+  setRoundImage,
+  setRoundImagePreview,
 }) => (
   <>
     <div className="mb-4">
@@ -97,6 +107,28 @@ const CountryImages: React.FC<Props> = ({
         />
       </label>
       {errors.filter(e => e.toLowerCase().includes("avatar")).map((e, i) => (
+        <div key={i} className="text-red-600 text-sm mt-1">{e}</div>
+      ))}
+    </div>
+
+        <div className="mb-4">
+      <label className="block font-medium mb-1">
+        Round Image:
+        <ImageUpload
+          value={roundImage}
+          preview={roundImagePreview}
+          onChange={(imgUrl, previewUrl) => {
+            const imageVal = Array.isArray(imgUrl) ? imgUrl[0] : imgUrl;
+            const previewVal = Array.isArray(previewUrl) ? previewUrl[0] : previewUrl;
+            setRoundImage(imageVal);
+            setRoundImagePreview(previewVal && previewVal.length > 0 ? previewVal : imageVal);
+          }}
+          uploading={uploading}
+          setUploading={setUploading}
+          type="countries/roundImage"
+        />
+      </label>
+      {errors.filter(e => e.toLowerCase().includes("roundImage")).map((e, i) => (
         <div key={i} className="text-red-600 text-sm mt-1">{e}</div>
       ))}
     </div>

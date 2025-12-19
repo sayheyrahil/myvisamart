@@ -12,7 +12,10 @@ type countriesData = {
   name: string;
   description: string;
   image: string;
-  icon: string;
+  flag: string;
+  round_image: string;
+  video: string;
+  avatar: string;
   dail_code: string;
   detail: string;
   visa_process_time: string;
@@ -38,8 +41,7 @@ type countriesData = {
   service_fee_now?: number;
   visa_fee_later?: number;
   service_fee_later?: number;
-  video?: string;
-  partners_we_work_with?: any;
+   partners_we_work_with?: any;
   rejection_reasons?: any;
   chances_of_approval_for_this?: number;
   chances_of_approval_for_other?: number;
@@ -66,8 +68,7 @@ const searchableFields = [
   "name",
   "description",
   "image",
-  "icon",
-  "dail_code",
+   "dail_code",
   "detail",
   "visa_process_time",
 ];
@@ -265,7 +266,9 @@ const store = async (req: Request, res: Response) => {
       name: req.body.name ?? "",
       description: req.body.description ?? "",
       image: req.body.image ?? "",
-      icon: req.body.icon ?? "",
+       round_image: req.body.round_image ?? "",
+      flag: req.body.flag ?? "",
+      avatar: req.body.avatar ?? "",
       video: req.body.video ?? "",
       dail_code: req.body.dail_code ?? "",
       detail: req.body.detail ?? "",

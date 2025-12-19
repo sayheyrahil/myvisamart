@@ -15,9 +15,10 @@ module.exports = {
                 "countries",
                 {
                     image: `/uploads/countries/image/${country.name.toLowerCase().replace(/ /g, "_")}.jpg`,
-                    flag: `/uploads/countries/flag/${country.name.toLowerCase().replace(/ /g, "_")}.jpg`,
+                    flag: `/uploads/countries/flag/${country.name.toLowerCase().replace(/ /g, "_")}.png`,
+                    round_image: `/uploads/countries/roundImage/${country.name.toLowerCase().replace(/ /g, "_")}.jpg`,
                     avatar: `/uploads/countries/avatar/${country.name.toLowerCase().replace(/ /g, "_")}.jpg`,
-                    video: `/uploads/countries/video/${country.name.toLowerCase().replace(/ /g, "_")}.jpg`,
+                    video: `/uploads/countries/video/${country.name.toLowerCase().replace(/ /g, "_")}.mp4`,
                     updatedAt: new Date(),
                 },
                 { id: country.id }

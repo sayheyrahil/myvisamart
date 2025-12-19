@@ -212,7 +212,10 @@ const Page = () => {
               { label: "Name", value: row.name },
               { label: "Description", value: row.description },
               { label: "Image", value: WEB_URL + row.image, isImage: true },
-              { label: "Icon", value: row.icon },
+              { label: "Flag", value: WEB_URL + row.flag, isImage: true },
+              { label: "Round Image", value: WEB_URL + row.round_image, isImage: true },
+               { label: "Avatar", value: WEB_URL + row.avatar, isImage: true },
+            
               { label: "Video", value: WEB_URL + row.video, isVideo: true },
               { label: "Dail Code", value: row.dail_code },
               { label: "Detail", value: row.detail },

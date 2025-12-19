@@ -31,6 +31,7 @@ type countriesForm = {
   image: string;
   flag: string;
   avatar: string;
+  round_image: string;
   video: string;
   dail_code: string;
   detail: string;
@@ -71,6 +72,7 @@ type countriesForm = {
   };
   what_you_get: any[];
   why: { icon: string; title: string; description: string }[];
+  
 };
 
 const steps = [
@@ -99,7 +101,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   const [imagePreview, setImagePreview] = useState<string>("");
   const [imageFlagPreview, setImageFlagPreview] = useState<string>("");
   const [avatarPreview, setAvatarPreview] = useState<string>("");
-
+  const [roundImagePreview, setRoundImagePreview] = useState<string>("");
   const [uploading, setUploading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
@@ -135,6 +137,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     name: "",
     description: "",
     image: "",
+    round_image: "",
     flag: "",
     avatar: "",
     video: "",
@@ -192,6 +195,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           image: data.image || "",
           flag: data.flag || "",
           avatar: data.avatar || "",
+          round_image: data.round_image || "",
           video: data.video || "",
           dail_code: data.dail_code || "",
           detail: data.detail || "",
@@ -622,6 +626,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       image: "",
       flag: "",
       avatar: "",
+      round_image: "",
       video: "",
       dail_code: "",
       detail: "",
@@ -1044,6 +1049,13 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                   errors={errors
                     .filter((e) => e.key === "image")
                     .map((e) => e.message)}
+
+
+                    roundImage={form.round_image}
+                 
+                    roundImagePreview={roundImagePreview}
+                    setRoundImage={(round_image) => setForm((prev) => ({ ...prev, round_image }))}
+                    setRoundImagePreview={setRoundImagePreview}
                 />
               </div>
             )}
