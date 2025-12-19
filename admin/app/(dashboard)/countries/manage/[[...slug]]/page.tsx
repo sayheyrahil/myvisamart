@@ -29,7 +29,8 @@ type countriesForm = {
   name: string;
   description: string;
   image: string;
-  icon: string;
+  flag: string;
+  avatar: string;
   video: string;
   dail_code: string;
   detail: string;
@@ -96,7 +97,9 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   const params = React.use(paramsPromise) as { slug?: string[] };
   const router = useRouter();
   const [imagePreview, setImagePreview] = useState<string>("");
-  const [imageIconPreview, setImageIconPreview] = useState<string>("");
+  const [imageFlagPreview, setImageFlagPreview] = useState<string>("");
+  const [avatarPreview, setAvatarPreview] = useState<string>("");
+
   const [uploading, setUploading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
@@ -132,7 +135,8 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     name: "",
     description: "",
     image: "",
-    icon: "",
+    flag: "",
+    avatar: "",
     video: "",
     dail_code: "",
     detail: "",
@@ -186,7 +190,8 @@ export default function Page({ params: paramsPromise }: { params: any }) {
           name: data.name || "",
           description: data.description || "",
           image: data.image || "",
-          icon: data.icon || "",
+          flag: data.flag || "",
+          avatar: data.avatar || "",
           video: data.video || "",
           dail_code: data.dail_code || "",
           detail: data.detail || "",
@@ -615,7 +620,8 @@ export default function Page({ params: paramsPromise }: { params: any }) {
       name: "",
       description: "",
       image: "",
-      icon: "",
+      flag: "",
+      avatar: "",
       video: "",
       dail_code: "",
       detail: "",
@@ -1021,13 +1027,17 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             {step === 1 && (
               <div className="mb-4">
                 <CountryImages
-                  icon={form.icon}
+                  flag={form.flag}
+                  avatar={form.avatar}
                   image={form.image}
-                  imageIconPreview={imageIconPreview}
+                  imageFlagPreview={imageFlagPreview}
+                  avatarPreview={avatarPreview}
                   imagePreview={imagePreview}
-                  setIcon={(icon) => setForm((prev) => ({ ...prev, icon }))}
+                  setFlag={(flag) => setForm((prev) => ({ ...prev, flag }))}
+                  setAvatar={(avatar) => setForm((prev) => ({ ...prev, avatar }))}
                   setImage={(image) => setForm((prev) => ({ ...prev, image }))}
-                  setImageIconPreview={setImageIconPreview}
+                  setImageFlagPreview={setImageFlagPreview}
+                  setAvatarPreview={setAvatarPreview}
                   setImagePreview={setImagePreview}
                   uploading={uploading}
                   setUploading={setUploading}
@@ -1050,7 +1060,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                     }}
                     uploading={uploading}
                     setUploading={setUploading}
-                    type="countries_video"
+                    type="countries/video"
                   />
                 </label>
                 <span className="text-xs text-gray-500">

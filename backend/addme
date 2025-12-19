@@ -10,9 +10,10 @@ To run a specific seeder (e.g. 20231223080954-countries.js), use:
 npx sequelize-cli db:seed:undo --seed 20231223080954-countries.js   # Undo this seeder
 npx sequelize-cli db:seed:all                                      # Run all seeders
 npx sequelize-cli db:seed --seed 20231223080954-countries.js    # Run only this seeder
+npx sequelize-cli db:seed --seed 20240610-update-countries-fields.js    # Run only this seeder
 
 go to seeder directory
 
 
-
+cdsrcseeders
 
