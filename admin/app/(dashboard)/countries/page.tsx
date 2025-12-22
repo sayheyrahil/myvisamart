@@ -10,6 +10,7 @@ import Link from "next/link";
 const pageTitleName = "countries";
 import Swal from "sweetalert2";
 import parse from "html-react-parser";
+import ImageWithPreview from "@/components/ImageWithPreview";
 
 // Main Page
 const Page = () => {
@@ -150,11 +151,9 @@ const Page = () => {
       align: "center",
       render: (text: any, row: any) => (
         <>
-          <img
-            src={WEB_URL + row.image}
+          <ImageWithPreview
+            src={row.image ? row.image : undefined}
             alt={row.name}
-            className="w-28 h-28 object-cover rounded-md m-auto   cursor-pointer"
-            onClick={() => setModalImage(WEB_URL + row.image)}
           />
         </>
       ),
@@ -213,9 +212,13 @@ const Page = () => {
               { label: "Description", value: row.description },
               { label: "Image", value: WEB_URL + row.image, isImage: true },
               { label: "Flag", value: WEB_URL + row.flag, isImage: true },
-              { label: "Round Image", value: WEB_URL + row.round_image, isImage: true },
-               { label: "Avatar", value: WEB_URL + row.avatar, isImage: true },
-            
+              {
+                label: "Round Image",
+                value: WEB_URL + row.round_image,
+                isImage: true,
+              },
+              { label: "Avatar", value: WEB_URL + row.avatar, isImage: true },
+
               { label: "Video", value: WEB_URL + row.video, isVideo: true },
               { label: "Dail Code", value: row.dail_code },
               { label: "Detail", value: row.detail },
@@ -356,7 +359,6 @@ const Page = () => {
         setFilterText={setFilterText}
         filterText={filterText}
         filterComponentHandleChange={filterComponentHandleChange}
-      
       />
     </div>
   );
