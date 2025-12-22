@@ -46,7 +46,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
           <div className="flex justify-center sm:justify-end w-full sm:w-auto">
             <Link
-              href="/"
+              href="/home"
               className="px-4 py-2 sm:px-6 sm:py-2 border border-[#0A509F] text-[#0A509F] rounded-full hover:bg-[#0A509F] hover:text-white transition text-base sm:text-lg"
             >
               Home
@@ -62,9 +62,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             className="object-contain h-full w-full"
           />
           <div className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center gap-5">
-            <span className="font-madefor font-semibold text-[#022538] text-xl sm:text-2xl md:text-4xl px-2 text-center">
+            <div className="ml-5 font-madefor font-semibold text-[#022538] text-xl sm:text-2xl md:text-4xl px-2 text-center">
               {countryDetail?.name || "Country Name"}
-            </span>
+            </div>
             <div>
               <ImageWithPreview
                 src={countryDetail?.flag ? countryDetail.flag : undefined}

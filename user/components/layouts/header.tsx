@@ -69,7 +69,7 @@ const Navbar = ({ title }: { title: string }) => {
             `}
           >
             <li className="font-medium text-[16px] leading-[24px] tracking-normal cursor-pointer text-brand">
-              <Link href="/" onClick={() => setMenuOpen(false)}>Home</Link>
+              <Link href="/home" onClick={() => setMenuOpen(false)}>Home</Link>
             </li>
             <li className="font-medium text-[16px] leading-[24px] tracking-normal text-[#1C1C1C] cursor-pointer hover:text-brand">
               <Link href="/discover" onClick={() => setMenuOpen(false)}>Discover</Link>

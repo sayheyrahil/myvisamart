@@ -15,7 +15,7 @@ export default function CalendarCard() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   return (
-    <div className="bg-white rounded-2xl p-5 shadow">
+    <div className="bg-white rounded-2xl p-5 shadow mt-5" >
       <div className="flex justify-between items-center">
         <p className="font-medium text-[#1A355A]">
           {formatDate(selectedDate)}

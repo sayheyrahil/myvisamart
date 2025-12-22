@@ -1,10 +1,10 @@
-import * as React from "react"
-import { useCallback, useEffect, useState } from "react"
+import * as React from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ArrowRight, ArrowLeft } from "lucide-react";
 import { WEB_URL } from "@/utils/constants";
-// Fix import: use named import if axiosInstance is not default export
 import { axiosInstance } from "@/utils/axios-instance";
 import { ENDPOINTS } from "@/utils/constants";
+import Link from "next/link";
 
 const PopularDestinations = () => {
   const [countryOptions, setCountryOptions] = useState<any[]>([]);
@@ -13,9 +13,10 @@ const PopularDestinations = () => {
 
   // Fetch country names for select options
   useEffect(() => {
-     axiosInstance.post(ENDPOINTS.countries_active , {
-      is_popular : true,
-     })
+    axiosInstance
+      .post(ENDPOINTS.countries_active, {
+        is_popular: true,
+      })
       .then((response: any) => {
         setCountryOptions(response.data.data || []);
       })
@@ -36,7 +37,10 @@ const PopularDestinations = () => {
   };
 
   // Slice countries for current "page"
-  const visibleCountries = countryOptions.slice(currentIndex, currentIndex + ITEMS_PER_PAGE);
+  const visibleCountries = countryOptions.slice(
+    currentIndex,
+    currentIndex + ITEMS_PER_PAGE
+  );
 
   return (
     <section className="min-h-screen bg-[#f5f9ff] flex flex-col items-center px-8 py-12">
@@ -66,30 +70,32 @@ const PopularDestinations = () => {
       {/* Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-8 w-full max-w-6xl">
         {visibleCountries.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
-          >
-            <img
-              src={WEB_URL + item.image}
-              alt={item.name}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-5 flex flex-col space-y-2">
-              <h3 className="text-lg font-semibold text-gray-900">
-                {item.name}
-              </h3>
-              <p className="text-sm text-gray-500">{item.subtitle}</p>
-              <p className="text-sm font-semibold text-gray-900">
-                {item.rating ? `Rating: ${item.rating}` : ""}
-              </p>
-              <div className="flex justify-end">
-                <button className="p-2 mt-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition">
-                  <ArrowRight className="w-4 h-4" />
-                </button>
+          <Link key={index} href={`/country-details-page/${item.slug}`}>
+            <div
+              key={index}
+              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+            >
+              <img
+                src={WEB_URL + item.image}
+                alt={item.name}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-5 flex flex-col space-y-2">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {item.name}
+                </h3>
+                <p className="text-sm text-gray-500">{item.subtitle}</p>
+                <p className="text-sm font-semibold text-gray-900">
+                  {item.rating ? `Rating: ${item.rating}` : ""}
+                </p>
+                <div className="flex justify-end">
+                  <button className="p-2 mt-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition">
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

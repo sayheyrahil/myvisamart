@@ -1,16 +1,18 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-
+import React from "react";
+import { useRouter } from "next/navigation";
 import ProceedButton from "@/components/user/ProceedButton";
 
 export default function Page() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
-  console.log("ID in layout:", id);
-
+  const router = useRouter();
+ 
   const handleProceed = () => {
+    router.push(`/application/step2`);
     // Your proceed logic here
   };
   return (

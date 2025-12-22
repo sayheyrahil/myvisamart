@@ -68,7 +68,7 @@ export default function Page() {
             />
           )}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            <div className="md:col-span-3  ">
+            <div className="md:col-span-3">
               {countryDetail?.visa_information &&
                 countryDetail?.visa_information && (
                   <InfoCard
@@ -76,127 +76,115 @@ export default function Page() {
                     visa={countryDetail?.visa_information}
                   />
                 )}
-              <div className="space-y-4 mt-5">
-                {countryDetail?.get_a_guaranteed_visa_on && (
-                  <>
-                    <SectionHeading>Get a Guaranteed Visa on</SectionHeading>
-                    <div>{countryDetail.get_a_guaranteed_visa_on}</div>
-                    <CalendarCard />
-                  </>
-                )}
-              </div>
+              {countryDetail?.get_a_guaranteed_visa_on && (
+                <div>
 
-              <div className="123">
-                {countryDetail?.required_documents &&
-                  countryDetail?.required_documents.length > 0 && (
-                    <RequiredDocumentsSection countryDetail={countryDetail} />
-                  )}
-                {countryDetail?.partners_we_work_with &&
-                  countryDetail?.partners_we_work_with.length > 0 && (
-                    <PartnersWeWorkWithSection
-                      partners={countryDetail.partners_we_work_with}
-                    />
-                  )}
-                {countryDetail?.rejection_reasons &&
-                  countryDetail?.rejection_reasons.length > 0 && (
-                    <RejectionReasonsSection
-                      reasons={countryDetail.rejection_reasons}
-                    />
-                  )}
+                  <SectionHeading>Get a Guaranteed Visa on</SectionHeading>
+                  {/* <div>{countryDetail.get_a_guaranteed_visa_on}</div> */}
+                  <CalendarCard />
+                </div>
+              )}
 
-                {countryDetail?.why && countryDetail?.why.length > 0 && (
-                  <WhySection why={countryDetail.why} />
+              {countryDetail?.required_documents &&
+                countryDetail?.required_documents.length > 0 && (
+                  <RequiredDocumentsSection countryDetail={countryDetail} />
                 )}
-                {countryDetail?.related_countries &&
-                  countryDetail?.related_countries.length > 0 && (
-                    <RelatedCountriesSection countryDetail={countryDetail} />
-                  )}
-                {countryDetail?.visa_fee_now ||
-                countryDetail?.service_fee_now ||
-                countryDetail?.visa_fee_later ||
-                countryDetail?.service_fee_later ? (
-                  <PaymentSection countryDetail={countryDetail} />
-                ) : null}
-              </div>
+              {countryDetail?.partners_we_work_with &&
+                countryDetail?.partners_we_work_with.length > 0 && (
+                  <PartnersWeWorkWithSection
+                    partners={countryDetail.partners_we_work_with}
+                  />
+                )}
+              {countryDetail?.rejection_reasons &&
+                countryDetail?.rejection_reasons.length > 0 && (
+                  <RejectionReasonsSection
+                    reasons={countryDetail.rejection_reasons}
+                  />
+                )}
+
+              {countryDetail?.why && countryDetail?.why.length > 0 && (
+                <WhySection why={countryDetail.why} />
+              )}
+              {countryDetail?.related_countries &&
+                countryDetail?.related_countries.length > 0 && (
+                  <RelatedCountriesSection countryDetail={countryDetail} />
+                )}
+              {countryDetail?.visa_fee_now ||
+              countryDetail?.service_fee_now ||
+              countryDetail?.visa_fee_later ||
+              countryDetail?.service_fee_later ? (
+                <PaymentSection countryDetail={countryDetail} />
+              ) : null}
               {faqs && faqs.length > 0 && (
                 <div className="mt-10">
                   <FAQ faqData={faqs} />
                 </div>
               )}
-              <div className="456">
-                {countryDetail?.documents_required_process &&
-                  countryDetail?.documents_required_process.length > 0 && (
-                    <DocumentsRequiredProcessSection
-                      documents_required_process={
-                        countryDetail?.documents_required_process
-                      }
-                    />
-                  )}
-                {countryDetail?.transit_timeline &&
-                  countryDetail?.transit_timeline.length > 0 && (
-                    <TransitTimelineSection countryDetail={countryDetail} />
-                  )}
-                {countryDetail?.statistics_on_visa_processing_time ? (
-                  <VisaStatisticsCard
-                    stats={{
-                      statistics_on_visa_processing_time:
-                        countryDetail?.statistics_on_visa_processing_time,
-                      statistics_on_visa_approval_rating:
-                        countryDetail?.statistics_on_visa_approval_rating,
-                    }}
-                    name={countryDetail?.name}
-                  />
-                ) : null}
-
-                <div className="456456">
-                  {countryDetail?.related_countries &&
-                    countryDetail?.related_countries.length > 0 && (
-                      <NearbyCountriesMap
-                        countries={countryDetail?.related_countries || []}
-                        name={countryDetail?.name}
-                      />
-                    )}
-                  {countryDetail?.what_you_get &&
-                    countryDetail?.what_you_get.length > 0 && (
-                      <WhatYouGetSection images={countryDetail.what_you_get} />
-                    )}
-                  {countryDetail?.visa_approval_comparison &&
-                    countryDetail?.visa_approval_comparison.rows?.length >
-                      0 ? (
-                      <VisaApprovalComparisonSection
-                        comparison={countryDetail.visa_approval_comparison}
-                      />
-                    ) : null}
-                </div>
-                <div className="lksdnnfsd">
-
-             
-                {/* How We Reviewed This Page Section */}
-                {countryDetail?.how_we_reviewed_this_page_sources ||
-                countryDetail?.how_we_reviewed_this_page_history ? (
-                  <HowWeReviewedSection
-                    sources={countryDetail?.how_we_reviewed_this_page_sources}
-                    history={countryDetail?.how_we_reviewed_this_page_history}
-                  />
-                ) : null}
-                   </div>
-                {/* Approval Chances Section */}
-                {(countryDetail?.chances_of_approval_for_this ||
-                  countryDetail?.chances_of_approval_for_other) ? (
-                  <ApprovalChancesSection
-                    countryName={countryDetail?.name}
-                    thisValue={countryDetail?.chances_of_approval_for_this}
-                    otherValue={countryDetail?.chances_of_approval_for_other}
-                  />
-                ) : null}
-                {/* Appointment Availability Section */}
-                {countryDetail?.check_appointment_availability && (
-                  <AppointmentAvailabilitySection
-                    data={countryDetail?.check_appointment_availability}
+              {countryDetail?.documents_required_process &&
+                countryDetail?.documents_required_process.length > 0 && (
+                  <DocumentsRequiredProcessSection
+                    documents_required_process={
+                      countryDetail?.documents_required_process
+                    }
                   />
                 )}
-                
-              </div>
+              {countryDetail?.transit_timeline &&
+                countryDetail?.transit_timeline.length > 0 && (
+                  <TransitTimelineSection countryDetail={countryDetail} />
+                )}
+              {countryDetail?.statistics_on_visa_processing_time ? (
+                <VisaStatisticsCard
+                  stats={{
+                    statistics_on_visa_processing_time:
+                      countryDetail?.statistics_on_visa_processing_time,
+                    statistics_on_visa_approval_rating:
+                      countryDetail?.statistics_on_visa_approval_rating,
+                  }}
+                  name={countryDetail?.name}
+                />
+              ) : null}
+
+              {countryDetail?.related_countries &&
+                countryDetail?.related_countries.length > 0 && (
+                  <NearbyCountriesMap
+                    countries={countryDetail?.related_countries || []}
+                    name={countryDetail?.name}
+                  />
+                )}
+              {countryDetail?.what_you_get &&
+                countryDetail?.what_you_get.length > 0 && (
+                  <WhatYouGetSection images={countryDetail.what_you_get} />
+                )}
+              {countryDetail?.visa_approval_comparison &&
+              countryDetail?.visa_approval_comparison.rows?.length > 0 ? (
+                <VisaApprovalComparisonSection
+                  comparison={countryDetail.visa_approval_comparison}
+                />
+              ) : null}
+
+              {/* How We Reviewed This Page Section */}
+              {countryDetail?.how_we_reviewed_this_page_sources ||
+              countryDetail?.how_we_reviewed_this_page_history ? (
+                <HowWeReviewedSection
+                  sources={countryDetail?.how_we_reviewed_this_page_sources}
+                  history={countryDetail?.how_we_reviewed_this_page_history}
+                />
+              ) : null}
+              {/* Approval Chances Section */}
+              {countryDetail?.chances_of_approval_for_this ||
+              countryDetail?.chances_of_approval_for_other ? (
+                <ApprovalChancesSection
+                  countryName={countryDetail?.name}
+                  thisValue={countryDetail?.chances_of_approval_for_this}
+                  otherValue={countryDetail?.chances_of_approval_for_other}
+                />
+              ) : null}
+              {/* Appointment Availability Section */}
+              {countryDetail?.check_appointment_availability && (
+                <AppointmentAvailabilitySection
+                  data={countryDetail?.check_appointment_availability}
+                />
+              )}
             </div>
 
             {countryDetail?.visa_fee_now ||
