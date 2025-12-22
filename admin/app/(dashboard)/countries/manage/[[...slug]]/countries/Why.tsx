@@ -34,7 +34,7 @@ const Why: React.FC<Props> = ({
             }}
             uploading={uploading}
             setUploading={setUploading}
-            type="transit_timeline_icon"
+            type="countries/extra/why"
           />
           <input
             type="text"

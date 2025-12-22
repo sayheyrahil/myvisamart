@@ -33,7 +33,7 @@ const TransitTimeline: React.FC<Props> = ({
             }}
             uploading={uploading}
             setUploading={setUploading}
-            type="transit_timeline_icon"
+            type="countries/extra/transit_timeline"
           />
           <input
             type="text"

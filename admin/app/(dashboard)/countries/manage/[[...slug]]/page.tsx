@@ -1242,7 +1242,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                     }}
                     uploading={uploading}
                     setUploading={setUploading}
-                    type="countries"
+                    type="countries/extra/what_you_get"
                   />
                 </label>
                 <span className="text-xs text-gray-500">
@@ -1272,7 +1272,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                     }}
                     uploading={uploading}
                     setUploading={setUploading}
-                    type="partners_we_work_with"
+                    type="countries/extra/partners_we_work_with"
                   />
                 </label>
                 <span className="text-xs text-gray-500">

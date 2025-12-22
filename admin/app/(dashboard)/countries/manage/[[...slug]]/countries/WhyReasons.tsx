@@ -39,7 +39,7 @@ const WhyReasons: React.FC<Props> = ({
             }}
             uploading={uploading}
             setUploading={setUploading}
-            type="why_reason_icon"
+            type="countries/extra/why_reasons"
           />
         </div>
         <div className="mb-2">

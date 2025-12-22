@@ -43,7 +43,7 @@ const RejectionReasons: React.FC<Props> = ({
             }}
             uploading={uploading}
             setUploading={setUploading}
-            type="rejection_reason_icon"
+            type="countries/extra/rejection_reasons"
           />
         </div>
         <div className="mb-2">

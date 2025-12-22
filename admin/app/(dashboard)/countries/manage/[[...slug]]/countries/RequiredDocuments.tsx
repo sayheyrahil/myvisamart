@@ -47,7 +47,7 @@ const RequiredDocuments: React.FC<Props> = ({
             }}
             uploading={uploading}
             setUploading={setUploading}
-            type="required_document_icon"
+            type="countries/extra/required_documents"
           />
         </div>
         <button
