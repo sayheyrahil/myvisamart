@@ -7,6 +7,7 @@ import { WEB_URL } from "@/utils/constants";
 import { axiosInstance } from "@/utils/axios-instance";
 import { ENDPOINTS } from "@/utils/constants";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import ImageWithPreview from "@/components/common/ImageWithPreview";
 
 const containerStyle = {
   width: "100%",
@@ -104,11 +105,10 @@ export default function Page() {
                   key={country.id}
                   className="bg-white rounded-xl shadow flex gap-4 p-4 items-center"
                 >
-                  <img
-                    src={WEB_URL + country.image}
+                  <ImageWithPreview
+                    src={country.image}
                     alt={country.name}
                     className="w-28 h-28 object-cover rounded-lg"
-                    loading="lazy"
                   />
                   <div className="flex-1">
                     <div className="font-bold text-lg">{country.name}</div>

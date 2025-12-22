@@ -1,4 +1,4 @@
- import { WEB_URL } from "@/utils/constants";
+import { WEB_URL } from "@/utils/constants";
 import React, { useEffect, useState } from "react";
 
 interface ImageWithPreviewProps {
@@ -38,6 +38,7 @@ const ImageWithPreview: React.FC<ImageWithPreviewProps> = ({
         src={getImageUrl(imgSrc)}
         alt={alt}
         className={className}
+        loading="lazy"
         onClick={() => imgSrc !== fallback && setShowModal(true)}
         onError={() => setImgSrc(fallback)}
         style={{ opacity: imgSrc === fallback ? 0.5 : 1 }}
@@ -64,6 +65,7 @@ const ImageWithPreview: React.FC<ImageWithPreviewProps> = ({
               src={getImageUrl(imgSrc)}
               alt={alt}
               className="max-w-[80vw] max-h-[80vh] object-contain"
+              loading="lazy"
             />
           </div>
         </div>

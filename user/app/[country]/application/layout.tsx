@@ -80,10 +80,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             {/* Arch Image */}
             <div className="flex justify-center  ">
               <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg h-[300px] sm:h-[400px] md:h-[500px] lg:h-[550px]">
-                <img
+                <ImageWithPreview
                   src={
-                    WEB_URL +
-                    (countryDetail?.round_image || "/extra/round_image.png")
+                     (countryDetail?.round_image || "/extra/round_image.png")
                   }
                   alt={countryDetail?.name || "Country Name"}
                   className="w-full h-full object-cover z-10 rounded-t-full"
