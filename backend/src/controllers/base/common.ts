@@ -77,7 +77,15 @@ const getActiveCountries = async (req: Request, res: Response) => {
 
     const countries: any = await CountryModel.findAll({
       where,
-      attributes: ["name", "id", "image", "rating", "subtitle", "slug",'visa_process_time'], // Only fetch the name field
+      attributes: [
+        "name",
+        "id",
+        "image",
+        "rating",
+        "subtitle",
+        "slug",
+        "visa_process_time",
+      ], // Only fetch the name field
     });
     const sendResponse: any = {
       data: countries,
@@ -119,21 +127,27 @@ const getActiveCountryNames = async (req: Request, res: Response) => {
 };
 const getCountryDetail = async (req: Request, res: Response) => {
   try {
-    const { slug } = req.body;
+    const { slug, type } = req.body;
     const where: any = {
       is_active: true,
     };
     if (slug !== undefined) {
       where.slug = slug;
     }
-    const countries: any = await CountryModel.findOne({
-      where,
-      attributes: [
+
+    // Define attribute sets based on type
+    let attributes: string[] = [
+      "id",
+    ];
+
+    if (type === "start_application") {
+      attributes = ["id", "image", "flag",'name', 'slug', 'round_image'];
+    } else if (type === "detail") {
+      attributes = [
         "id",
         "name",
         "image",
-        "icon",
-        "video",
+         "video",
         "description",
         "dail_code",
         "detail",
@@ -169,16 +183,23 @@ const getCountryDetail = async (req: Request, res: Response) => {
         "statistics_on_visa_approval_rating",
         "visa_approval_comparison",
         "what_you_get",
-        "why"
-      ],
-      raw: true, // ensure plain object
+        "why",
+      ];
+    }
+
+    const countries: any = await CountryModel.findOne({
+      where,
+      attributes,
+      raw: true,
     });
 
     let relatedCountries: any[] = [];
     if (countries && countries.countries) {
       let ids: string[] = [];
       if (Array.isArray(countries.countries)) {
-        ids = countries.countries.map((id: any) => String(id).trim()).filter((id: string) => id.length > 0);
+        ids = countries.countries
+          .map((id: any) => String(id).trim())
+          .filter((id: string) => id.length > 0);
       } else {
         ids = String(countries.countries)
           .split(",")
@@ -198,9 +219,11 @@ const getCountryDetail = async (req: Request, res: Response) => {
       }
     }
 
-     countries.related_countries = relatedCountries;
+    if (countries) {
+      countries.related_countries = relatedCountries;
+    }
 
-     const sendResponse: any = {
+    const sendResponse: any = {
       data: countries,
       message: "get successfully",
     };

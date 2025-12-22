@@ -34,7 +34,7 @@ export default function Page() {
   const slug = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
   const [countryDetail, setCountryDetail] = useState<any>({});
   useEffect(() => {
-    const payload: any = { slug: slug };
+    const payload: any = { slug: slug , type: 'detail'};
     axiosInstance
       .post(ENDPOINTS.country_detail, payload)
       .then((response: any) => {
@@ -55,8 +55,7 @@ export default function Page() {
     getFaqs();
   }, []);
 
-  console.log("countryDetail", countryDetail);
-
+ 
   return (
     <MasterPage
       title={`Country Details Page | Visamart - ${countryDetail?.name || ""}`}
@@ -196,6 +195,8 @@ export default function Page() {
                   detail={{
                     name: countryDetail?.name,
                     detail: countryDetail,
+                    id: countryDetail?.id,
+                    slug: countryDetail?.slug,
                     visa_fee_now: countryDetail?.visa_fee_now,
                     service_fee_now: countryDetail?.service_fee_now,
                     visa_fee_later: countryDetail?.visa_fee_later,

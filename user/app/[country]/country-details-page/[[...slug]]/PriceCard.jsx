@@ -2,6 +2,8 @@ import React from "react";
 import { RiSecurePaymentFill } from "react-icons/ri";
 import Link from "next/link";
 export default function PriceCard(deta) {
+  // Debug: Check what id is being passed
+ 
   return (
     <div className="bg-white rounded-2xl p-6 shadow">
       <h3 className="text-lg font-semibold text-[#1A355A]">
@@ -34,7 +36,15 @@ export default function PriceCard(deta) {
         </div>
       </div>
 
-      <Link href="/application/step1" passHref>
+      <Link
+        href={{
+          pathname: "/application/step1",
+          query: { id: deta.detail?.id,
+            slug: deta.detail?.slug
+           }
+        }}
+        passHref
+      >
         <button className="mt-5 w-full bg-brand text-white py-3 rounded-xl font-semibold">
           Start Application
         </button>

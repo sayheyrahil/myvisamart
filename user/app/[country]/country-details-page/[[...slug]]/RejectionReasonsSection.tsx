@@ -2,6 +2,7 @@
 import React from "react";
 import SectionHeading from "@/components/tools/SectionHeading";
 import { WEB_URL } from "@/utils/constants";
+import ImageWithPreview from "@/components/common/ImageWithPreview";
 
 type Reason = {
   icon?: string;
@@ -24,8 +25,8 @@ export default function RejectionReasonsSection({ reasons }: Props) {
               <div key={idx} className="bg-white rounded-xl p-5 shadow flex gap-5">
                 <div className="flex flex-col">
                   {reason.icon && (
-                    <img
-                      src={WEB_URL + reason.icon}
+                    <ImageWithPreview
+                      src={reason.icon}
                       alt={reason.title || `Reason ${idx + 1}`}
                       className="w-12 h-12 object-contain mb-3"
                     />

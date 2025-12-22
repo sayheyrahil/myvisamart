@@ -2,6 +2,7 @@
 import React from "react";
 import { WEB_URL } from "@/utils/constants";
 import SectionHeading from "@/components/tools/SectionHeading";
+import ImageWithPreview from "@/components/common/ImageWithPreview";
 
 // Accept array of strings (image URLs)
 type PartnersWeWorkWithSectionProps = {
@@ -22,10 +23,10 @@ export default function PartnersWeWorkWithSection({
             className="bg-white rounded-xl shadow p-1 flex items-center justify-center"
             style={{ width: 140, height: 140 }}
           >
-            <img
-              src={WEB_URL + image}
-              alt="Partner"
-              className="w-full h-full  object-contain  "
+            <ImageWithPreview
+              src={image}
+              alt={"partner-" + idx}
+              className="w-full h-full  object-containr"
             />
           </div>
         ))}

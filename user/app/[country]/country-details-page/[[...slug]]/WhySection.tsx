@@ -3,6 +3,7 @@
 import React from "react";
 import SectionHeading from "@/components/tools/SectionHeading";
 import { WEB_URL } from "@/utils/constants";
+import ImageWithPreview from "@/components/common/ImageWithPreview";
 
 type data = {
   icon?: string;
@@ -25,8 +26,8 @@ export default function WhySection({ why }: Props) {
               <div key={idx} className="bg-white rounded-xl p-5 shadow flex gap-5">
                 <div className="flex flex-col">
                   {item.icon && (
-                    <img
-                      src={WEB_URL + item.icon}
+                    <ImageWithPreview
+                      src={ item.icon}
                       alt={item.title || `item ${idx + 1}`}
                       className="w-12 h-12 object-contain mb-3"
                     />

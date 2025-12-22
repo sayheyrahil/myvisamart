@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import SectionHeading from "@/components/tools/SectionHeading";
 import { WEB_URL } from "@/utils/constants";
+import ImageWithPreview from "@/components/common/ImageWithPreview";
 
 type Props = {
   images: string[];
@@ -52,12 +53,12 @@ export default function WhatYouGetSection({ images }: Props) {
               />
             </svg>
           </button>
-          <img
-            src={WEB_URL + images[current]}
+          <ImageWithPreview
+            src={images[current]}
             alt={`What you get ${current + 1}`}
             className="rounded-xl shadow-lg object-contain"
-            style={{ maxHeight: 340, maxWidth: "90%" }}
           />
+
           <button
             className="absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-full shadow p-2 z-10"
             onClick={goNext}

@@ -72,7 +72,6 @@ type countriesForm = {
   };
   what_you_get: any[];
   why: { icon: string; title: string; description: string }[];
-  
 };
 
 const steps = [
@@ -181,6 +180,26 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     what_you_get: [],
     why: [],
   });
+  const normalizeCountries = (countries: any) => {
+    if (!countries) return [];
+
+    // If already an array
+    if (Array.isArray(countries)) {
+      return countries;
+    }
+
+    // If stringified JSON array
+    if (typeof countries === "string") {
+      try {
+        const parsed = JSON.parse(countries);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    return [];
+  };
 
   // Fetch data for edit
   const fetchData = useCallback((id: number) => {
@@ -304,7 +323,11 @@ export default function Page({ params: paramsPromise }: { params: any }) {
             : [data.what_you_get]
         );
 
-        setWhy(Array.isArray(data.why) ? data.why : [{ icon: "", title: "", description: "" }]);
+        setWhy(
+          Array.isArray(data.why)
+            ? data.why
+            : [{ icon: "", title: "", description: "" }]
+        );
       })
       .catch((error: any) => {
         if (error.response) {
@@ -342,6 +365,8 @@ export default function Page({ params: paramsPromise }: { params: any }) {
   }, [whatYouGetPreviews]);
 
   const onSubmit = async (data: countriesForm) => {
+    const normalizedCountries = normalizeCountries(data.countries);
+
     setIsLoading(true);
     const submitData: any = { ...data };
     submitData.rating = Number(data.rating) || 0;
@@ -364,7 +389,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
     submitData.service_fee_later = Number(data.service_fee_later) || 0;
     submitData.is_top_destination = !!data.is_top_destination;
     submitData.is_popular = !!data.is_popular;
-    submitData.countries = JSON.stringify(data.countries || []);
+    submitData.countries = JSON.stringify(normalizedCountries);
     submitData.transit_timeline = data.transit_timeline.map((item) => ({
       icon: item.icon,
       title: item.title,
@@ -1039,7 +1064,9 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                   avatarPreview={avatarPreview}
                   imagePreview={imagePreview}
                   setFlag={(flag) => setForm((prev) => ({ ...prev, flag }))}
-                  setAvatar={(avatar) => setForm((prev) => ({ ...prev, avatar }))}
+                  setAvatar={(avatar) =>
+                    setForm((prev) => ({ ...prev, avatar }))
+                  }
                   setImage={(image) => setForm((prev) => ({ ...prev, image }))}
                   setImageFlagPreview={setImageFlagPreview}
                   setAvatarPreview={setAvatarPreview}
@@ -1049,13 +1076,12 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                   errors={errors
                     .filter((e) => e.key === "image")
                     .map((e) => e.message)}
-
-
-                    roundImage={form.round_image}
-                 
-                    roundImagePreview={roundImagePreview}
-                    setRoundImage={(round_image) => setForm((prev) => ({ ...prev, round_image }))}
-                    setRoundImagePreview={setRoundImagePreview}
+                  roundImage={form.round_image}
+                  roundImagePreview={roundImagePreview}
+                  setRoundImage={(round_image) =>
+                    setForm((prev) => ({ ...prev, round_image }))
+                  }
+                  setRoundImagePreview={setRoundImagePreview}
                 />
               </div>
             )}
@@ -1306,7 +1332,7 @@ export default function Page({ params: paramsPromise }: { params: any }) {
                 />
               </div>
             )}
-          
+
             {/* Step 15: Why This */}
             {step === 15 && (
               <div className="mb-4">

@@ -42,7 +42,7 @@ const CountrySelectionSection: React.FC<Props> = ({
           value={countries}
           onChange={handleSelectChange}
           className="w-full mt-1 px-3 py-2 border rounded focus:outline-none focus:ring focus:border-brand"
-          size={5}
+          // size={5}
         >
           {countryOptions.map((country: any) => (
             <option
