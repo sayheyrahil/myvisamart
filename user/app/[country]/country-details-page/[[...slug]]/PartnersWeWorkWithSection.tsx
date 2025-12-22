@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { WEB_URL } from "@/utils/constants";
+ 
 import SectionHeading from "@/components/tools/SectionHeading";
 import ImageWithPreview from "@/components/common/ImageWithPreview";
 
@@ -20,7 +20,7 @@ export default function PartnersWeWorkWithSection({
         {partners.map((image, idx) => (
           <div
             key={idx}
-            className="bg-white rounded-xl shadow p-1 flex items-center justify-center"
+            className="bg-white rounded-xl shadow p-3 flex items-center justify-center"
             style={{ width: 140, height: 140 }}
           >
             <ImageWithPreview
