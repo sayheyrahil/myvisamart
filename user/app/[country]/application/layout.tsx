@@ -79,7 +79,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-20 items-center w-full">
             {/* Arch Image */}
             <div className="flex justify-center  ">
-              <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg h-[300px] sm:h-[400px] md:h-[500px] lg:h-[550px]">
+              <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg  ">
                 <ImageWithPreview
                   src={
                      (countryDetail?.round_image || "/extra/round_image.png")

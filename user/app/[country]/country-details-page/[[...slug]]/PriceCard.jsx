@@ -38,7 +38,7 @@ export default function PriceCard(deta) {
 
       <Link
         href={{
-          pathname: "/application/step1",
+          pathname: "/application/wizard",
           query: { id: deta.detail?.id,
             slug: deta.detail?.slug
            }

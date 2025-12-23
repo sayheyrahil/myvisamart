@@ -1,20 +1,13 @@
-"use client";
-
-import { useSearchParams } from "next/navigation";
 import React from "react";
-import { useRouter } from "next/navigation";
-import ProceedButton from "@/components/user/ProceedButton";
+import ProceedButton from "@/components/application/ProceedButton";
 
-export default function Page() {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+type Props = {
+  fullName: string;
+  setFullName: (v: string) => void;
+  onProceed: () => void;
+};
 
-  const router = useRouter();
- 
-  const handleProceed = () => {
-    router.push(`/application/step2`);
-    // Your proceed logic here
-  };
+export default function FullNameStep({ fullName, setFullName, onProceed }: Props) {
   return (
     <div className="flex flex-col items-center md:items-start w-full">
       <div className="font-madefor font-normal text-[32px] sm:text-[40px] md:text-[56px] lg:text-[64px] leading-[40px] sm:leading-[52px] md:leading-[70px] lg:leading-[80px] text-[#85ABDB] mb-0 text-center md:text-left">
@@ -25,9 +18,11 @@ export default function Page() {
         <input
           type="text"
           placeholder="Enter Your Full Name"
+          value={fullName}
+          onChange={e => setFullName(e.target.value)}
           className="flex-1 outline-none text-gray-700 text-base sm:text-lg md:text-xl bg-transparent"
         />
-        <ProceedButton onClick={handleProceed} />
+        <ProceedButton onClick={onProceed} />
       </div>
     </div>
   );

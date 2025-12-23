@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FiPlus } from "react-icons/fi";
+import NoOptionRow from "./NoOptionRow";
 
 type YesNo = "yes" | "no";
 type NoOption = { name: string; relation: string };
@@ -78,49 +79,16 @@ export default function YesNoToggle({ selected, setSelected }: Props) {
 
       {/* If "no" is selected, show options to add/manage "no" options */}
       {selected === "no" && (
-        <div className="flex gap-2">
+        <div className=" ">
           {noOptions.map((option, idx) => (
-            <div
+            <NoOptionRow
               key={idx}
-              className="flex items-center w-full mb-2 gap-4 rounded-lg"
-            >
-              <div className="flex flex-1">
-                <input
-                  type="text"
-                  value={option.name}
-                  onChange={(e) =>
-                    handleNoOptionChange(idx, "name", e.target.value)
-                  }
-                  placeholder="Enter Name"
-                  className="flex-1 border border-[#BFD1EA] px-6 py-4 text-lg outline-none bg-white rounded-l-full"
-                />
-                <select
-                  value={option.relation}
-                  onChange={(e) =>
-                    handleNoOptionChange(idx, "relation", e.target.value)
-                  }
-                  className="border border-[#BFD1EA] bg-[#F8FBFF] rounded-r-full rounded-l-none text-[#022538] px-3 py-4 text-lg outline-none"
-                >
-                  <option value="">Relation</option>
-                  <option value="father">Father</option>
-                  <option value="mother">Mother</option>
-                  <option value="spouse">Spouse</option>
-                  <option value="child">Child</option>
-                  <option value="friend">Friend</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              {noOptions.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => handleRemoveNoOption(idx)}
-                  className="text-red-500 px-2 text-2xl bg-brand rounded-full"
-                  tabIndex={-1}
-                >
-                  ×
-                </button>
-              )}
-            </div>
+              option={option}
+              idx={idx}
+              handleNoOptionChange={handleNoOptionChange}
+              handleRemoveNoOption={handleRemoveNoOption}
+              canRemove={noOptions.length > 1}
+            />
           ))}
           <div
             onClick={handleAddNoOption}
