@@ -1,5 +1,3 @@
-import { profile } from "console";
-
 // local
 export const WEB_URL = "http://localhost:2003";
 // export const WEB_URL = "https://www.admin.myvisamart.com/applicationinterface";

@@ -25,6 +25,7 @@ function decryptData(data: any): any {
 
 const BASE_URL = BASE_API_URL
 
+console.log("BASE_URL for axiosInstance:", BASE_URL); 
 let tokenPass = "";
 if (typeof window !== "undefined") {
   tokenPass = "Bearer " + localStorage.getItem("token");
