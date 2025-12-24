@@ -8,7 +8,7 @@ const Footer = () => {
     <>
       <footer className="bg-white border-t border-gray-200">
         {/* Top section */}
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 px-6 py-12">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 px-6 py-12">
           {/* Logo */}
           <div className="flex flex-col items-center md:items-start justify-center">
             <img
@@ -16,8 +16,25 @@ const Footer = () => {
               alt="My Visa Mart"
               className="w-28 h-28 mb-4"
             />
+              {/* Contact */}
+          <div className="flex flex-col justify-center">
+            <h3 className="text-[#0A509F] font-semibold text-sm mb-1 uppercase tracking-wide">
+              Contact
+            </h3>
+            <p className={allSubTitle + " mb-5"} >
+              Lorem Ipsum is simply dummy text the printing and typeset industry.
+              Lorem Ipsum has been the industry’s standard dummy text ever
+            </p>
+            <p className={allSubTitle + " mb-5"}>+91 98765 43210</p>
+            <a
+              href="mailto:example@gmail.com"
+              className={allSubTitle}>
+              example@gmail.com
+            </a>
           </div>
-          <div className="flex flex-col items-center md:items-start justify-center">
+
+          </div>
+          <div className="flex flex-col items-center md:items-start justify-start">
             <h3 className="text-[#0A509F] font-semibold text-sm mb-1 mt-4 uppercase tracking-wide">
                 Tools
               </h3>
@@ -73,10 +90,44 @@ const Footer = () => {
                   </Link>
                 </li>
               </ul>
+             
           </div>
 
+           <div className="flex flex-col justify-start">
+           {/* Product section added below Tools */}
+              <h3 className="text-[#0A509F] font-semibold text-sm mb-1 mt-4 uppercase tracking-wide">
+                Product
+              </h3>
+              <ul className="flex flex-col gap-y-1 mb-8">
+                <li>
+                  <Link className={allSubTitle} href="/product/enterprise" target="_blank" rel="noopener noreferrer">
+                    Enterprise
+                  </Link>
+                </li>
+                <li>
+                  <Link className={allSubTitle} href="/product/schengen-appointment-checker" target="_blank" rel="noopener noreferrer">
+                    Schengen Appointment Checker
+                  </Link>
+                </li>
+                <li>
+                  <Link className={allSubTitle} href="/product/visamart-security" target="_blank" rel="noopener noreferrer">
+                    Visamart Security
+                  </Link>
+                </li>
+                <li>
+                  <Link className={allSubTitle} href="/product/visamart-transparency-hub" target="_blank" rel="noopener noreferrer">
+                    Visamart Transparency Hub
+                  </Link>
+                </li>
+                <li>
+                  <Link className={allSubTitle} href="/product/visamart-us-visa-mock-interview" target="_blank" rel="noopener noreferrer">
+                    Visamart US Visa Mock Interview
+                  </Link>
+                </li>
+              </ul>
+          </div>
           {/* About, Products, Other */}
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col justify-start">
             <div>
               <h3 className="text-[#0A509F] font-semibold text-sm mb-1 uppercase tracking-wide ">
                 About
@@ -126,22 +177,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Contact */}
-          <div className="flex flex-col justify-center">
-            <h3 className="text-[#0A509F] font-semibold text-sm mb-1 uppercase tracking-wide">
-              Contact
-            </h3>
-            <p className={allSubTitle + " mb-5"} >
-              Lorem Ipsum is simply dummy text the printing and typeset industry.
-              Lorem Ipsum has been the industry’s standard dummy text ever
-            </p>
-            <p className={allSubTitle + " mb-5"}>+91 98765 43210</p>
-            <a
-              href="mailto:example@gmail.com"
-              className={allSubTitle}>
-              example@gmail.com
-            </a>
-          </div>
+        
         </div>
 
         {/* Divider line */}

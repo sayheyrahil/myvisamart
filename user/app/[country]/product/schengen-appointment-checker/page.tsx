@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import MasterPage from "@/components/layouts/master";
-import HeroSection from "@/components/common/HeroSection";
-import SectionHeading from "@/components/common/SectionHeading";
-import SectionDescription from "@/components/common/SectionDescription";
+import HeroSection from "@/components/tools/HeroSection";
+import SectionHeading from "@/components/tools/SectionHeading";
+import SectionDescription from "@/components/tools/SectionDescription";
 import Image from "next/image";
-import StepCard from "@/components/common/StepCard";
-import TestimonialsSlider from "@/components/common/TestimonialsSlider";
-import CTASection from "@/components/common/CTASection";
+import StepCard from "@/components/tools/StepCard";
+import TestimonialsSlider from "@/components/tools/TestimonialsSlider";
+import CTASection from "@/components/tools/CTASection";
 
 export default function Page() {
   // Testimonial data
@@ -49,7 +49,7 @@ export default function Page() {
           title={<div>Schengen Visa Appointment Availability From India</div>}
           description="Your dream destination is just an e-visa away. Let's make it happen."
           buttonText=""
-          imageSrc="/img/imageAppointment56.png"
+          imageSrc="/tools/imageAppointment56.png"
           imageAlt="Visa Preview"
         />
 

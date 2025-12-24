@@ -285,7 +285,7 @@ export default function Page() {
           />
           <div className="bg-[#E6F4EA] border border-[#BBF7D0] rounded-xl p-4 flex items-start gap-2 mt-4">
             <span className="text-[#15803D] text-[15px] leading-[22px]">
-              Worried about another visa rejection? <a href="#" className="text-[#2563eb] underline">Apply with Atlys</a>, and let our experts ensure that nothing stops you from getting a Vietnam visa this time!
+              Worried about another visa rejection? <a href="#" className="text-brand underline">Apply with Atlys</a>, and let our experts ensure that nothing stops you from getting a Vietnam visa this time!
             </span>
           </div>
         </div>

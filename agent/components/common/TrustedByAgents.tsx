@@ -11,7 +11,7 @@ export default function TrustedByAgents() {
     return (
         <section className="w-full   py-16 flex flex-col items-center">
             <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
-                <span className="text-[#2563eb]">5000+</span>{" "}
+                <span className="text-brand">5000+</span>{" "}
                 Travel Agents Trust Visamart for <br className="hidden md:block" />
                 On Time Visas
             </h2>

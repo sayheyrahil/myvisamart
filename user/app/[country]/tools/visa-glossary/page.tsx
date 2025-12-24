@@ -112,7 +112,7 @@ export default function Page() {
             {"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((char, idx) => (
               <span
                 key={char}
-                className={`text-[30px] font-medium cursor-pointer ${idx === 0 ? "text-brand" : "text-[#23272E] hover:text-[#2563eb]"}`}
+                className={`text-[30px] font-medium cursor-pointer ${idx === 0 ? "text-brand" : "text-[#23272E] hover:text-brand"}`}
               >
                 {char}
               </span>
