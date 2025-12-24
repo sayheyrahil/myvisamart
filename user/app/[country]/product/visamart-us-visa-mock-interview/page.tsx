@@ -45,7 +45,7 @@ We will assess you on all facets of a visa interview, and give you feedback on h
           }
           description="Your dream destination is just an e-visa away. Let's make it happen."
           buttonText=""
-          imageSrc="/tools/imageAppointment56.png"
+          imageSrc="/tools/Frame1991425682.png"
           imageAlt="Visa Preview"
         />
 

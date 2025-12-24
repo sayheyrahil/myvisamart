@@ -396,11 +396,11 @@ export default function Page() {
           </div>
         </div>
         <TestimonialsSlider />
-        {/* {faqs && faqs.length > 0 && ( */}
+        {faqs && faqs.length > 0 && (
         <div className="mt-10">
           <FAQ faqData={faqs} />
         </div>
-        {/* )}           */}
+        )}          
       </div>
     </MasterPage>
   );
