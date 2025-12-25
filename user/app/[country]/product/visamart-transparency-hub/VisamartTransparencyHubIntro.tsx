@@ -28,14 +28,14 @@ export default function VisamartTransparencyHubIntro() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-6">
           {/* Card 1 */}
           <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center">
-            <div className="bg-[#E9EAFD] rounded-full w-10 h-10 flex items-center justify-center mb-3">
-              <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+            <div className=" rounded-full w-10 h-10 flex items-center justify-center mb-3">
+              <svg width="45" height="45" fill="none" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="10" fill="#6C2BD7" />
                 <text
                   x="12"
                   y="17"
                   textAnchor="middle"
-                  fontSize="13"
+                  fontSize="8"
                   fill="#fff"
                   fontWeight="bold"
                 >
@@ -53,8 +53,8 @@ export default function VisamartTransparencyHubIntro() {
           </div>
           {/* Card 2 */}
           <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center">
-            <div className="bg-[#E9EAFD] rounded-full w-10 h-10 flex items-center justify-center mb-3">
-              <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+            <div className=" rounded-full w-10 h-10 flex items-center justify-center mb-3">
+              <svg width="45" height="45" fill="none" viewBox="0 0 24 24">
                 <rect width="22" height="22" rx="11" fill="#6C2BD7" />
                 <path
                   d="M7 11h8M7 15h8M9 7v4M15 7v4"
@@ -74,8 +74,8 @@ export default function VisamartTransparencyHubIntro() {
           </div>
           {/* Card 3 */}
           <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center">
-            <div className="bg-[#E9EAFD] rounded-full w-10 h-10 flex items-center justify-center mb-3">
-              <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+            <div className=" rounded-full w-10 h-10 flex items-center justify-center mb-3">
+              <svg width="45" height="45" fill="none" viewBox="0 0 24 24">
                 <rect width="22" height="22" rx="11" fill="#6C2BD7" />
                 <path
                   d="M12 7v5l3 3"
@@ -95,8 +95,8 @@ export default function VisamartTransparencyHubIntro() {
           </div>
           {/* Card 4 */}
           <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center md:col-span-1">
-            <div className="bg-[#E9EAFD] rounded-full w-10 h-10 flex items-center justify-center mb-3">
-              <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+            <div className=" rounded-full w-10 h-10 flex items-center justify-center mb-3">
+              <svg width="45" height="45" fill="none" viewBox="0 0 24 24">
                 <rect width="22" height="22" rx="11" fill="#6C2BD7" />
                 <path
                   d="M6 12l4 4 8-8"
@@ -116,8 +116,8 @@ export default function VisamartTransparencyHubIntro() {
           </div>
           {/* Card 5 */}
           <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center md:col-span-1">
-            <div className="bg-[#E9EAFD] rounded-full w-10 h-10 flex items-center justify-center mb-3">
-              <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+            <div className=" rounded-full w-10 h-10 flex items-center justify-center mb-3">
+              <svg width="45" height="45" fill="none" viewBox="0 0 24 24">
                 <rect width="22" height="22" rx="11" fill="#6C2BD7" />
                 <path
                   d="M8 12h8M8 16h8M8 8h8"

@@ -74,10 +74,10 @@ export default function TestimonialsSection() {
                   ))}
                 </span>
               </div>
-              <div className="text-gray-700 mb-4">
-                {item?.text ? `"${item.text}"` : ""}
+              <div className="text-gray-700 mb-4 h-10">
+                {item?.description ? `"${item.description}"` : ""}
               </div>
-              <div className="flex items-center mt-4">
+              <div className="flex items-center mt-4 justify-start  gap-10">
                 <ImageWithPreview
                   src={item.image}
                   alt={"hero"}
@@ -85,7 +85,7 @@ export default function TestimonialsSection() {
                 />
                 <div>
                   <div className="font-semibold text-sm text-[#18181B]">
-                    {item?.description}
+                    {item?.name}
                   </div>
                   <div className="text-xs text-gray-400">
                     {item?.designation || item?.location}
@@ -95,7 +95,7 @@ export default function TestimonialsSection() {
                   <ImageWithPreview
                     src={item.company_logo}
                     alt={"hero"}
-                    className="w-10 h-10 rounded-full mr-3"
+                    className="w-14 h-14 rounded-full mr-3"
                   />
                 )}
               </div>

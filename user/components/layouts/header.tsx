@@ -4,6 +4,20 @@ import Link from "next/link";
 
 const Navbar = ({ title }: { title: string }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentPath, setCurrentPath] = useState<string>("");
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCurrentPath(window.location.pathname);
+    }
+  }, []);
+
+  // Normalize path for active state
+  const isActive = (href: string) => {
+    if (!currentPath) return false;
+    // Check if currentPath ends with the href (handles /IN/aboutus, /aboutus, etc.)
+    return currentPath === href || currentPath.endsWith(href);
+  };
 
   return (
     <header className="w-full shadow-sm">
@@ -68,16 +82,16 @@ const Navbar = ({ title }: { title: string }) => {
               sm:translate-x-0
             `}
           >
-            <li className="font-medium text-[16px] leading-[24px] tracking-normal cursor-pointer text-brand">
+            <li className={`font-medium text-[16px] leading-[24px] tracking-normal cursor-pointer ${isActive("/home") ? "text-brand" : "text-[#1C1C1C] hover:text-brand"}`}>
               <Link href="/home" onClick={() => setMenuOpen(false)}>Home</Link>
             </li>
-            <li className="font-medium text-[16px] leading-[24px] tracking-normal text-[#1C1C1C] cursor-pointer hover:text-brand">
+            <li className={`font-medium text-[16px] leading-[24px] tracking-normal cursor-pointer ${isActive("/discover") ? "text-brand" : "text-[#1C1C1C] hover:text-brand"}`}>
               <Link href="/discover" onClick={() => setMenuOpen(false)}>Discover</Link>
             </li>
-            <li className="font-medium text-[16px] leading-[24px] tracking-normal text-[#1C1C1C] cursor-pointer hover:text-brand">
+            <li className={`font-medium text-[16px] leading-[24px] tracking-normal cursor-pointer ${isActive("/aboutus") ? "text-brand" : "text-[#1C1C1C] hover:text-brand"}`}>
               <Link href="/aboutus" onClick={() => setMenuOpen(false)}>About Us</Link>
             </li>
-            <li className="font-medium text-[16px] leading-[24px] tracking-normal text-[#1C1C1C] cursor-pointer hover:text-brand">
+            <li className={`font-medium text-[16px] leading-[24px] tracking-normal cursor-pointer ${isActive("/contactus") ? "text-brand" : "text-[#1C1C1C] hover:text-brand"}`}>
               <Link href="/contactus" onClick={() => setMenuOpen(false)}>Support</Link>
             </li>
             {/* Mobile only: Buttons */}

@@ -2,21 +2,55 @@ import React from "react";
 
 const videos = [
   {
-    thumbnail: "/videos/video1.jpg",
-    alt: "Video 1",
-    url: "https://youtube.com/watch?v=video1",
+    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+    alt: "Rick Astley - Never Gonna Give You Up",
+    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   },
   {
-    thumbnail: "/videos/video2.jpg",
-    alt: "Video 2",
-    url: "https://youtube.com/watch?v=video2",
+    thumbnail: "https://img.youtube.com/vi/9bZkp7q19f0/hqdefault.jpg",
+    alt: "PSY - GANGNAM STYLE",
+    url: "https://www.youtube.com/watch?v=9bZkp7q19f0",
   },
   {
-    thumbnail: "/videos/video3.jpg",
-    alt: "Video 3",
-    url: "https://youtube.com/watch?v=video3",
+    thumbnail: "https://img.youtube.com/vi/3JZ_D3ELwOQ/hqdefault.jpg",
+    alt: "Mark Ronson - Uptown Funk ft. Bruno Mars",
+    url: "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
   },
-  // Add more as needed
+  {
+    thumbnail: "https://img.youtube.com/vi/L_jWHffIx5E/hqdefault.jpg",
+    alt: "Coolio - Gangsta's Paradise",
+    url: "https://www.youtube.com/watch?v=L_jWHffIx5E",
+  },
+  {
+    thumbnail: "https://img.youtube.com/vi/fJ9rUzIMcZQ/hqdefault.jpg",
+    alt: "Queen – Bohemian Rhapsody",
+    url: "https://www.youtube.com/watch?v=fJ9rUzIMcZQ",
+  },
+  {
+    thumbnail: "https://img.youtube.com/vi/kJQP7kiw5Fk/hqdefault.jpg",
+    alt: "Luis Fonsi - Despacito ft. Daddy Yankee",
+    url: "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
+  },
+  {
+    thumbnail: "https://img.youtube.com/vi/OPf0YbXqDm0/hqdefault.jpg",
+    alt: "Mark Ronson - Uptown Funk ft. Bruno Mars",
+    url: "https://www.youtube.com/watch?v=OPf0YbXqDm0",
+  },
+  {
+    thumbnail: "https://img.youtube.com/vi/60ItHLz5WEA/hqdefault.jpg",
+    alt: "Alan Walker - Faded",
+    url: "https://www.youtube.com/watch?v=60ItHLz5WEA",
+  },
+  {
+    thumbnail: "https://img.youtube.com/vi/2Vv-BfVoq4g/hqdefault.jpg",
+    alt: "Ed Sheeran - Perfect",
+    url: "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
+  },
+  {
+    thumbnail: "https://img.youtube.com/vi/CevxZvSJLk8/hqdefault.jpg",
+    alt: "Katy Perry - Roar",
+    url: "https://www.youtube.com/watch?v=CevxZvSJLk8",
+  },
 ];
 
 export default function YouTubeVideosThisMonth() {

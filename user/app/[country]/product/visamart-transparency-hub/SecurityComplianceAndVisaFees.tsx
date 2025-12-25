@@ -1,12 +1,12 @@
 import React from "react";
 
 const certifications = [
-  { src: "/certs/aicpa-soc.png", alt: "AICPA SOC" },
-  { src: "/certs/iso-risk.png", alt: "ISO Risk Management" },
-  { src: "/certs/iso-27701.png", alt: "ISO 27701" },
-  { src: "/certs/gdpr.png", alt: "GDPR" },
-  { src: "/certs/iso-27001.png", alt: "ISO 27001" },
-  { src: "/certs/iso-9001.png", alt: "ISO 9001" },
+  { src: "/product/brand/image67.png", alt: "Brand Image 67" },
+  { src: "/product/brand/image68.png", alt: "Brand Image 68" },
+  { src: "/product/brand/image69.png", alt: "Brand Image 69" },
+  { src: "/product/brand/image70.png", alt: "Brand Image 70" },
+  { src: "/product/brand/image71.png", alt: "Brand Image 71" },
+  { src: "/product/brand/image72.png", alt: "Brand Image 72" },
 ];
 
 const visaFees = [

@@ -26,7 +26,7 @@ const reasons = [
 export default function CommonFrustrations() {
 	return (
 		<div className="bg-[#F7FAFC] min-h-[347px] flex flex-col md:flex-row px-4 py-10">
-			<div className="w-full md:w-1/3 mb-8 md:mb-0">
+			<div className="w-full md:w-1/2 mb-8 md:mb-0">
 				<h2 className="text-xl md:text-2xl font-semibold text-black mb-4">
 					Common Reasons behind
 					<br />
