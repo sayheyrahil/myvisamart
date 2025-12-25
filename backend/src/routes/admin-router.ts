@@ -8,6 +8,9 @@ import destinationValidation from "@validation/admin/destination-validation";
 import countriesController from "@controllers/admin/countries";
 import countriesValidation from "@validation/admin/countries-validation";
 
+import testimonialController from "@controllers/admin/testimonial";
+import testimonialValidation from "@validation/admin/testimonial-validation";
+
 import faqController from "@controllers/admin/faq";
 import faqValidation from "@validation/admin/faq-validation";
 
@@ -50,6 +53,14 @@ adminRouter.post(`/faq/store`, faqValidation.store, faqController.store);
 adminRouter.post(`/faq/edit_get`, commonValidation.idRequired, faqController.edit);
 adminRouter.post(`/faq/delete`, commonValidation.idRequired, faqController.destroy);
 adminRouter.post(`/faq/change_status`, commonValidation.idRequired, faqController.changeStatus);
+
+
+// FAQ routes
+adminRouter.post(`/testimonial/get`, testimonialController.get);
+adminRouter.post(`/testimonial/store`, testimonialValidation.store, testimonialController.store);
+adminRouter.post(`/testimonial/edit_get`, commonValidation.idRequired, testimonialController.edit);
+adminRouter.post(`/testimonial/delete`, commonValidation.idRequired, testimonialController.destroy);
+adminRouter.post(`/testimonial/change_status`, commonValidation.idRequired, testimonialController.changeStatus);
 
 
 

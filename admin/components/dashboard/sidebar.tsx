@@ -96,6 +96,11 @@ export function DashboardSidebar({ passData }: { passData?: boolean }) {
       icon: <FaQuestionCircle style={{ fontSize: 18 }} />,
     },
     {
+      title: "testimonials",
+      href: "/testimonials",
+      icon: <FaQuestionCircle style={{ fontSize: 18 }} />,
+    },
+    {
       title: "destinations",
       href: "/destination",
       icon: <FaMapMarkedAlt style={{ fontSize: 18 }} />,

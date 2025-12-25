@@ -53,6 +53,15 @@ export const ENDPOINTS = {
 
 
   country_names_active: "country-names-active",
+
+
+
+
+  testimonials_get:  adminKey +  "testimonial/get",
+  testimonials_delete:  adminKey +  "testimonial/delete",
+  testimonials_store:  adminKey +  "testimonial/store",
+  testimonials_edit:  adminKey +  "testimonial/edit_get",
+  testimonials_change_status:  adminKey +  "testimonial/change_status",
 }
 
 
