@@ -125,7 +125,7 @@ const Page = () => {
             overflowY: "auto",
             whiteSpace: "pre-line",
             wordBreak: "break-word",
-            width: "100%",
+            width: "400px",
           }}
         >
           {typeof text === "string"

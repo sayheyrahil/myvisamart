@@ -21,6 +21,8 @@ indexRouter.post(`/contact`, userCommonService.contactUsStore);
 // get here all router
 indexRouter.post(`/category-active`, commonService.getActiveCategory);
 indexRouter.post(`/faq-active`, commonService.getActiveFaq);
+indexRouter.post(`/testimonial-active`, commonService.getActiveTestimonial);
+
 indexRouter.post(`/countries-active`, commonService.getActiveCountries); // <-- Add this line
 indexRouter.post(`/country-names-active`, commonService.getActiveCountryNames); // <-- Add this line
 indexRouter.post(`/country-detail`, commonService.getCountryDetail); // <-- Add this line

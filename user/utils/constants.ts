@@ -27,6 +27,8 @@ export const ENDPOINTS = {
   category_active:  "category-active",
 
   faqActive: "faq-active",
+
+  testimonialActive: "testimonial-active",
   countries_active: "countries-active",
   country_detail: "country-detail",
 }
