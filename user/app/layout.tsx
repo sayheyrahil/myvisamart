@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
+import { FormDataProvider } from "@/context/FormDataContext";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -40,9 +41,11 @@ export default function RootLayout({
 
       </head>
       <body className={`${inter.className} font-wix. bg-[#f6fafd]`}>
+        <FormDataProvider>
+          {children}
+        </FormDataProvider>
         <ToastContainer />
-        {children}
-      </body>
+       </body>
     </html>
   );
 }

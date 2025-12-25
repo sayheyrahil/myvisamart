@@ -1,6 +1,6 @@
 import React from "react";
-import ProceedButton from "@/components/application/ProceedButton";
-
+import ProceedButton from "./ProceedButton";
+ 
 type Props = {
   fullName: string;
   setFullName: (v: string) => void;

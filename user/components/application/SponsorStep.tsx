@@ -7,11 +7,14 @@ type Props = {
   selectedSponsor: "self" | "other";
   setSelectedSponsor: (v: "self" | "other") => void;
   noOptions: { name: string; relation: string }[];
-  handleNoOptionChange: (idx: number, field: "name" | "relation", value: string) => void;
+  handleNoOptionChange: (
+    idx: number,
+    field: "name" | "relation",
+    value: string
+  ) => void;
   handleRemoveNoOption: (idx: number) => void;
   handleAddNoOption: () => void;
   handleProceed: () => void;
-  fullName: string; // <-- Add this prop
   onBack?: () => void;
 };
 
@@ -23,10 +26,10 @@ export default function SponsorStep({
   handleRemoveNoOption,
   handleAddNoOption,
   handleProceed,
-  fullName, // <-- Destructure here
   onBack,
 }: Props) {
- 
+
+  console.log("noOptions in SponsorStep:", noOptions);
   return (
     <div className="flex flex-col items-center md:items-start w-full">
       <div className="font-madefor font-normal text-[28px] sm:text-[32px] md:text-[40px] lg:text-[40px] leading-[36px] sm:leading-[44px] md:leading-[52px] lg:leading-[52px] text-[#85ABDB] mb-8 text-center md:text-left">
@@ -48,10 +51,32 @@ export default function SponsorStep({
             }
           `}
         >
-          <span className="w-8 h-8 rounded-full bg-[#E6F0FA] flex items-center justify-center mr-3 text-[#0A509F] font-bold text-base">
-            AD
-          </span>
-          {fullName || "You"}
+          {noOptions
+            .filter((option) => option.relation === "self")
+            .map((option, idx) => (
+              <>
+                {/* Print the name from option */}
+                {console.log("option in self:", option)}
+                <span className="w-8 h-8 rounded-full bg-[#E6F0FA] flex items-center justify-center mr-3 text-[#0A509F] font-bold text-base">
+                  {/* Show initials or fallback */}
+                  {option.name
+                    ? option.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .slice(0, 2)
+                    : "--"}
+                </span>
+                <span
+                  key={idx}
+                  className="font-madefor font-medium text-[#022538] text-lg"
+                >
+                  {/* Print the name */}
+                  {option.name}(You)
+                </span>
+              </>
+            ))}
+
           {selectedSponsor === "self" && (
             <span className="ml-3 w-6 h-6 flex items-center justify-center rounded-full bg-[#0A509F]">
               <FiCheck className="text-white w-4 h-4" />
@@ -79,7 +104,6 @@ export default function SponsorStep({
       {/* If "Someone Else" is selected, show input row(s) */}
       {selectedSponsor === "other" && (
         <div className="w-full max-w-xl mb-6">
-        
           <div
             onClick={handleAddNoOption}
             className="bg-[#0A509F] m-2 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl border-2 border-[#BFD1EA] cursor-pointer"
@@ -90,17 +114,19 @@ export default function SponsorStep({
         </div>
       )}
 
-        {noOptions.map((option, idx) => (
-            <NoOptionRow
-              key={idx}
-              option={option}
-              idx={idx}
-              handleNoOptionChange={handleNoOptionChange}
-              handleRemoveNoOption={handleRemoveNoOption}
-              // canRemove={noOptions.length > 1}
-            />
-          ))}
-      <ProceedButton onClick={handleProceed} onBack={onBack}/>
+      {noOptions
+        .filter((option) => option.relation !== "self")
+        .map((option, idx) => (
+          <NoOptionRow
+            key={idx}
+            option={option}
+            idx={idx}
+            handleNoOptionChange={handleNoOptionChange}
+            handleRemoveNoOption={handleRemoveNoOption}
+            // canRemove={noOptions.length > 1}
+          />
+        ))}
+      <ProceedButton onClick={handleProceed} onBack={onBack} />
     </div>
   );
 }

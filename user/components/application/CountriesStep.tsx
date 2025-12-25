@@ -29,7 +29,7 @@ export default function CountriesStep({ onProceed , onBack }: Props) {
   };
 
   return (
-    <div className="flex flex-col items-center md:items-start w-full min-h-[60vh] bg-gradient-to-br from-[#f8fbff] to-[#e6f0fa] p-4">
+    <div className="flex flex-col items-center md:items-start w-full min-h-[60vh]  p-4">
       {/* Title */}
       <div className="font-madefor font-normal text-[32px] sm:text-[40px] md:text-[56px] lg:text-[64px] leading-[40px] sm:leading-[52px] md:leading-[70px] lg:leading-[80px] text-[#85ABDB] mb-2 text-left">
         Which countries do you plan to <span className="text-[#0A509F]">visit tentatively?</span>

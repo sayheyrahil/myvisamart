@@ -1,6 +1,7 @@
 import React from "react";
 import { FiPlus } from "react-icons/fi";
 import NoOptionRow from "./NoOptionRow";
+import ProceedButton from "./ProceedButton";
 
 type YesNo = "yes" | "no";
 type NoOption = { name: string; relation: string };
@@ -15,6 +16,8 @@ type Props = {
   ) => void;
   handleRemoveNoOption: (idx: number) => void;
   handleAddNoOption: () => void;
+  handleProceed: () => void;
+  onBack: () => void;
 };
 
 function ArrowSign() {
@@ -40,10 +43,16 @@ export default function YesNoToggle({
   handleNoOptionChange,
   handleRemoveNoOption,
   handleAddNoOption,
+  handleProceed,
+  onBack,
 }: Props) {
   return (
     <div className="flex flex-col gap-4 mb-1">
       {/* Toggle buttons */}
+      <div className="font-madefor font-normal text-[32px] sm:text-[40px] md:text-[48px] lg:text-[48px] leading-[40px] sm:leading-[52px] md:leading-[60px] lg:leading-[60px] text-[#85ABDB] mb-6 text-center md:text-left">
+        Traveling with <br />
+        <span className="text-[#022538] font-semibold">others?</span>
+      </div>
       <div className="flex gap-4">
         <button
           type="button"
@@ -86,19 +95,40 @@ export default function YesNoToggle({
             <FiPlus />
           </div>
           <div className=" ">
-            {noOptions.map((option, idx) => (
-              <NoOptionRow
-                key={idx}
-                option={option}
-                idx={idx}
-                handleNoOptionChange={handleNoOptionChange}
-                handleRemoveNoOption={handleRemoveNoOption}
-                canRemove={noOptions.length > 1}
-              />
-            ))}
+            {noOptions
+              .filter((option) => option.relation !== "self")
+              .map((option, idx) => (
+                <NoOptionRow
+                  key={idx}
+                  option={option}
+                  idx={++idx}
+                  handleNoOptionChange={handleNoOptionChange}
+                  handleRemoveNoOption={handleRemoveNoOption}
+                  canRemove={noOptions.length > 1}
+                />
+              ))}
           </div>
         </>
       )}
+
+      {selected === "yes" &&
+        noOptions.some(
+          (opt) => !opt.relation || opt.relation.trim() === ""
+        ) && (
+          <div className="text-red-500 text-sm my-2">
+            Please add a relation for each person before proceeding.
+          </div>
+        )}
+      <div className="mt-10">
+        <ProceedButton
+          onBack={onBack}
+          onClick={handleProceed}
+          disabled={
+            selected === "yes" &&
+            noOptions.some((opt) => !opt.relation || opt.relation.trim() === "")
+          }
+        />
+      </div>
     </div>
   );
 }

@@ -9,12 +9,10 @@ const TAB_STATUS = [
 ];
 
 export default function Step5ReviewList({
-  fullName,
   noOptions,
   onBack,
   onProceed,
 }: {
-  fullName: string;
   noOptions: { name: string; relation: string }[];
   onBack: () => void;
   onProceed: () => void;
@@ -126,9 +124,6 @@ export default function Step5ReviewList({
       {/* Tab Status List */}
 
       <div className="flex flex-col gap-4 w-full max-w-md mb-8">
-        {/* Full Name (You) */}
-        {fullName && renderPerson(fullName, "", true, -1)}
-        {/* Friends/Other */}
         {noOptions.map((item, idx) =>
           renderPerson(
             item.name,

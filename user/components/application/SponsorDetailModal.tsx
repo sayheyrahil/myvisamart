@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { FormDataContext } from "@/context/FormDataContext";
+
 const TABS = [
   { key: "basic", label: "Basic Details" },
   { key: "employment", label: "Employment Status" },
@@ -12,13 +14,69 @@ export default function SponsorDetailModal({
   onClose,
   name,
   relation,
+  idx,
 }: {
   open: boolean;
   onClose: () => void;
   name: string;
   relation: string;
+  idx: number;
 }) {
+  const { formData, dispatch } = useContext(FormDataContext);
+
+  // Default sponsor data structure
+  const defaultSponsorData = {
+    phone: "",
+    email: "",
+    address1: "",
+    address2: "",
+    city: "",
+    state: "",
+    country: "",
+    zip: "",
+    schengenVisa: "",
+    maritalStatus: "",
+    employmentType: "",
+    companyName: "",
+    photo: null as File | null,
+    passportFile: null as File | null,
+    firstName: "",
+    lastName: "",
+    fatherName: "",
+    motherName: "",
+    dob: "",
+    gender: "",
+    passportNumber: "",
+    passportPlace: "",
+    passportValidTill: "",
+  };
+
+  const [sponsorData, setSponsorData] = useState(defaultSponsorData);
   const [activeTab, setActiveTab] = useState("basic");
+
+  useEffect(() => {
+    if (open) {
+      if (typeof idx === "number") {
+        dispatch({
+          type: "SET_NO_OPTION_AT_INDEX",
+          idx,
+          value: {
+            name,
+            relation,
+            ...sponsorData,
+          },
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sponsorData, open, name, relation, formData.noOptions]);
+
+  const handleChange = (field: keyof typeof sponsorData, value: any) => {
+    setSponsorData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   if (!open) return null;
 
@@ -33,7 +91,7 @@ export default function SponsorDetailModal({
         </button>
         {/* Header */}
         <div className="flex items-center gap-4 mb-6 ">
-          <span className="bg-[#E6F0FA] rounded-full flex items-center min-w-[180px] text-[#022538] font-medium text-base">
+          <span className="bg-[#E6F0FA] rounded-full flex items-center min-w-[280px] text-[#022538] font-medium text-base">
             <div className="w-12 h-12 rounded-full bg-brand flex items-center justify-center text-white font-bold text-lg text-center uppercase">
               {name
                 ? name
@@ -78,6 +136,8 @@ export default function SponsorDetailModal({
                     <input
                       className="w-full outline-none bg-transparent"
                       placeholder="Phone Number"
+                      value={sponsorData.phone}
+                      onChange={(e) => handleChange("phone", e.target.value)}
                     />
                   </div>
                 </div>
@@ -88,6 +148,8 @@ export default function SponsorDetailModal({
                   <input
                     className="w-full border rounded px-2 py-1"
                     placeholder="Email"
+                    value={sponsorData.email}
+                    onChange={(e) => handleChange("email", e.target.value)}
                   />
                 </div>
                 <div>
@@ -97,6 +159,8 @@ export default function SponsorDetailModal({
                   <input
                     className="w-full border rounded px-2 py-1"
                     placeholder="Address Line 1"
+                    value={sponsorData.address1}
+                    onChange={(e) => handleChange("address1", e.target.value)}
                   />
                 </div>
                 <div>
@@ -106,30 +170,47 @@ export default function SponsorDetailModal({
                   <input
                     className="w-full border rounded px-2 py-1"
                     placeholder="Address Line 2"
+                    value={sponsorData.address2}
+                    onChange={(e) => handleChange("address2", e.target.value)}
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-medium mb-1">
                     City*
                   </label>
-                  <select className="w-full border rounded px-2 py-1">
-                    <option>Select</option>
+                  <select
+                    className="w-full border rounded px-2 py-1"
+                    value={sponsorData.city}
+                    onChange={(e) => handleChange("city", e.target.value)}
+                  >
+                    <option value="">Select</option>
+                    {/* Add city options here */}
                   </select>
                 </div>
                 <div>
                   <label className="block text-xs font-medium mb-1">
                     State*
                   </label>
-                  <select className="w-full border rounded px-2 py-1">
-                    <option>Select</option>
+                  <select
+                    className="w-full border rounded px-2 py-1"
+                    value={sponsorData.state}
+                    onChange={(e) => handleChange("state", e.target.value)}
+                  >
+                    <option value="">Select</option>
+                    {/* Add state options here */}
                   </select>
                 </div>
                 <div>
                   <label className="block text-xs font-medium mb-1">
                     Country*
                   </label>
-                  <select className="w-full border rounded px-2 py-1">
-                    <option>Select</option>
+                  <select
+                    className="w-full border rounded px-2 py-1"
+                    value={sponsorData.country}
+                    onChange={(e) => handleChange("country", e.target.value)}
+                  >
+                    <option value="">Select</option>
+                    {/* Add country options here */}
                   </select>
                 </div>
                 <div>
@@ -139,22 +220,40 @@ export default function SponsorDetailModal({
                   <input
                     className="w-full border rounded px-2 py-1"
                     placeholder="Zip Code"
+                    value={sponsorData.zip}
+                    onChange={(e) => handleChange("zip", e.target.value)}
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-medium mb-1">
                     Have Schengen Visa?
                   </label>
-                  <select className="w-full border rounded px-2 py-1">
-                    <option>Select</option>
+                  <select
+                    className="w-full border rounded px-2 py-1"
+                    value={sponsorData.schengenVisa}
+                    onChange={(e) =>
+                      handleChange("schengenVisa", e.target.value)
+                    }
+                  >
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
                   </select>
                 </div>
                 <div>
                   <label className="block text-xs font-medium mb-1">
                     Marital Status
                   </label>
-                  <select className="w-full border rounded px-2 py-1">
-                    <option>Select</option>
+                  <select
+                    className="w-full border rounded px-2 py-1"
+                    value={sponsorData.maritalStatus}
+                    onChange={(e) =>
+                      handleChange("maritalStatus", e.target.value)
+                    }
+                  >
+                    <option value="">Select</option>
+                    <option value="single">Single</option>
+                    <option value="married">Married</option>
                   </select>
                 </div>
               </form>
@@ -162,17 +261,32 @@ export default function SponsorDetailModal({
             {activeTab === "employment" && (
               <div className="py-4">
                 <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  
                   <div>
                     <label className="block text-xs font-medium mb-1">
                       Employment Type*
                     </label>
                     <input
                       className="w-full border rounded px-2 py-1"
-                      placeholder="Company Name"
+                      placeholder="Employment Type"
+                      value={sponsorData.employmentType}
+                      onChange={(e) =>
+                        handleChange("employmentType", e.target.value)
+                      }
                     />
                   </div>
-                 
+                  <div>
+                    <label className="block text-xs font-medium mb-1">
+                      Company Name
+                    </label>
+                    <input
+                      className="w-full border rounded px-2 py-1"
+                      placeholder="Company Name"
+                      value={sponsorData.companyName}
+                      onChange={(e) =>
+                        handleChange("companyName", e.target.value)
+                      }
+                    />
+                  </div>
                 </form>
               </div>
             )}
@@ -185,7 +299,14 @@ export default function SponsorDetailModal({
                       Photo
                     </label>
                     <div className="border rounded-lg bg-[#F7FAFC] flex items-center px-4 py-3">
-                      <input type="file" className="hidden" id="photo-upload" />
+                      <input
+                        type="file"
+                        className="hidden"
+                        id="photo-upload"
+                        onChange={(e) =>
+                          handleChange("photo", e.target.files?.[0] || null)
+                        }
+                      />
                       <label
                         htmlFor="photo-upload"
                         className="flex-1 cursor-pointer text-gray-400"
@@ -215,6 +336,12 @@ export default function SponsorDetailModal({
                         type="file"
                         className="hidden"
                         id="passport-upload"
+                        onChange={(e) =>
+                          handleChange(
+                            "passportFile",
+                            e.target.files?.[0] || null
+                          )
+                        }
                       />
                       <label
                         htmlFor="passport-upload"
@@ -248,6 +375,10 @@ export default function SponsorDetailModal({
                     <input
                       className="w-full border rounded px-2 py-1"
                       placeholder="First Name"
+                      value={sponsorData.firstName}
+                      onChange={(e) =>
+                        handleChange("firstName", e.target.value)
+                      }
                     />
                   </div>
                   <div>
@@ -257,6 +388,8 @@ export default function SponsorDetailModal({
                     <input
                       className="w-full border rounded px-2 py-1"
                       placeholder="Last Name"
+                      value={sponsorData.lastName}
+                      onChange={(e) => handleChange("lastName", e.target.value)}
                     />
                   </div>
                   <div>
@@ -266,6 +399,10 @@ export default function SponsorDetailModal({
                     <input
                       className="w-full border rounded px-2 py-1"
                       placeholder="Father's Name"
+                      value={sponsorData.fatherName}
+                      onChange={(e) =>
+                        handleChange("fatherName", e.target.value)
+                      }
                     />
                   </div>
                   <div>
@@ -275,6 +412,10 @@ export default function SponsorDetailModal({
                     <input
                       className="w-full border rounded px-2 py-1"
                       placeholder="Mother's Name"
+                      value={sponsorData.motherName}
+                      onChange={(e) =>
+                        handleChange("motherName", e.target.value)
+                      }
                     />
                   </div>
                   <div>
@@ -285,13 +426,19 @@ export default function SponsorDetailModal({
                       type="date"
                       className="w-full border rounded px-2 py-1"
                       placeholder="Date of Birth"
+                      value={sponsorData.dob}
+                      onChange={(e) => handleChange("dob", e.target.value)}
                     />
                   </div>
                   <div>
                     <label className="block text-xs font-medium mb-1">
                       Gender*
                     </label>
-                    <select className="w-full border rounded px-2 py-1">
+                    <select
+                      className="w-full border rounded px-2 py-1"
+                      value={sponsorData.gender}
+                      onChange={(e) => handleChange("gender", e.target.value)}
+                    >
                       <option value="">Select</option>
                       <option value="MALE">MALE</option>
                       <option value="FEMALE">FEMALE</option>
@@ -305,6 +452,10 @@ export default function SponsorDetailModal({
                     <input
                       className="w-full border rounded px-2 py-1"
                       placeholder="Passport Number"
+                      value={sponsorData.passportNumber}
+                      onChange={(e) =>
+                        handleChange("passportNumber", e.target.value)
+                      }
                     />
                   </div>
                   <div>
@@ -314,6 +465,10 @@ export default function SponsorDetailModal({
                     <input
                       className="w-full border rounded px-2 py-1"
                       placeholder="Passport place of issue"
+                      value={sponsorData.passportPlace}
+                      onChange={(e) =>
+                        handleChange("passportPlace", e.target.value)
+                      }
                     />
                   </div>
                   <div>
@@ -324,6 +479,10 @@ export default function SponsorDetailModal({
                       type="date"
                       className="w-full border rounded px-2 py-1"
                       placeholder="Passport valid till"
+                      value={sponsorData.passportValidTill}
+                      onChange={(e) =>
+                        handleChange("passportValidTill", e.target.value)
+                      }
                     />
                   </div>
                 </form>
