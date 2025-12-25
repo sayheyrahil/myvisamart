@@ -12,9 +12,10 @@ type Props = {
   };
   setAddress: (addr: Props["address"]) => void;
   onProceed: () => void;
+  onBack?: () => void;
 };
 
-export default function AddressStep({ address, setAddress, onProceed }: Props) {
+export default function AddressStep({ address, setAddress, onProceed, onBack }: Props) {
   const [showMap, setShowMap] = useState(false);
 
   return (
@@ -95,7 +96,7 @@ export default function AddressStep({ address, setAddress, onProceed }: Props) {
         </div>
       </div>
       <div className="w-full max-w-xl mt-8 flex justify-start">
-        <ProceedButton onClick={onProceed} />
+        <ProceedButton onClick={onProceed} onBack={onBack} />
       </div>
     </div>
   );

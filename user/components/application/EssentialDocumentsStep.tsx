@@ -4,9 +4,10 @@ import { FiCheck } from "react-icons/fi";
 
 type Props = {
   onProceed: () => void;
+  onBack?: () => void;
 };
 
-export default function EssentialDocumentsStep({ onProceed }: Props) {
+export default function EssentialDocumentsStep({ onProceed, onBack }: Props) {
   const [showPassportForm, setShowPassportForm] = useState(false);
 
   return (
@@ -166,7 +167,7 @@ export default function EssentialDocumentsStep({ onProceed }: Props) {
       </div>
       {/* Proceed Button */}
       <div className="w-full max-w-xl flex justify-start">
-        <ProceedButton onClick={onProceed} />
+        <ProceedButton onClick={onProceed} onBack={onBack} />
       </div>
     </div>
   );

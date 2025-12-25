@@ -11,6 +11,8 @@ type Props = {
   handleRemoveNoOption: (idx: number) => void;
   handleAddNoOption: () => void;
   handleProceed: () => void;
+  fullName: string; // <-- Add this prop
+  onBack?: () => void;
 };
 
 export default function SponsorStep({
@@ -21,6 +23,8 @@ export default function SponsorStep({
   handleRemoveNoOption,
   handleAddNoOption,
   handleProceed,
+  fullName, // <-- Destructure here
+  onBack,
 }: Props) {
   return (
     <div className="flex flex-col items-center md:items-start w-full">
@@ -46,7 +50,7 @@ export default function SponsorStep({
           <span className="w-8 h-8 rounded-full bg-[#E6F0FA] flex items-center justify-center mr-3 text-[#0A509F] font-bold text-base">
             AD
           </span>
-          Anjum Desai(You)
+          {fullName || "You"}
           {selectedSponsor === "self" && (
             <span className="ml-3 w-6 h-6 flex items-center justify-center rounded-full bg-[#0A509F]">
               <FiCheck className="text-white w-4 h-4" />
@@ -93,7 +97,7 @@ export default function SponsorStep({
           </div>
         </div>
       )}
-      <ProceedButton onClick={handleProceed} />
+      <ProceedButton onClick={handleProceed} onBack={onBack}/>
     </div>
   );
 }

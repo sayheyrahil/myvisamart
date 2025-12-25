@@ -78,7 +78,7 @@ export default function YesNoToggle({ selected, setSelected }: Props) {
       </div>
 
       {/* If "no" is selected, show options to add/manage "no" options */}
-      {selected === "no" && (
+      {selected === "yes" && (
         <div className=" ">
           {noOptions.map((option, idx) => (
             <NoOptionRow

@@ -131,7 +131,7 @@ export default function WizardPage() {
                         selected={formData.selected}
                         setSelected={(val: "yes" | "no" | null) => handleFormDataChange("selected", val)}
                     />
-                    <ProceedButton onClick={handleProceed} />
+                    <ProceedButton onBack={() => setStep(1)} onClick={handleProceed} />
                 </div>
             )}
 
@@ -144,6 +144,8 @@ export default function WizardPage() {
                     handleRemoveNoOption={handleRemoveNoOption}
                     handleAddNoOption={handleAddNoOption}
                     handleProceed={handleProceed}
+                    fullName={formData.fullName}
+                    onBack={() => setStep(2)}
                 />
             )}
 
@@ -159,6 +161,7 @@ export default function WizardPage() {
                     setEmploymentSub={(val: string) => handleFormDataChange("employmentSub", val)}
                     employmentSubOptions={employmentSubOptions}
                     onProceed={handleProceed}
+                    onBack={() => setStep(3)}
                 />
             )}
 
@@ -167,13 +170,14 @@ export default function WizardPage() {
                     address={formData.address}
                     setAddress={(addr: typeof formData.address) => handleFormDataChange("address", addr)}
                     onProceed={handleProceed}
+                    onBack={() => setStep(4)}
                 />
             )}
-            {step === 6 && <EssentialDocumentsStep onProceed={handleProceed} />}
-            {step === 7 && <ReviewStep onProceed={handleProceed} />}
-            {step === 8 && <TravelDatesStep onProceed={handleProceed} />}
-            {step === 9 && <CountriesStep onProceed={handleProceed} />}
-            {step === 10 && <PaymentStep onProceed={handleProceed} />}
+            {step === 6 && <EssentialDocumentsStep onProceed={handleProceed} onBack={() => setStep(5)} />}
+            {step === 7 && <ReviewStep onProceed={handleProceed} onBack={() => setStep(6)} />}
+            {step === 8 && <TravelDatesStep onProceed={handleProceed}   />}
+            {step === 9 && <CountriesStep onProceed={handleProceed} onBack={() => setStep(8)} />}
+            {step === 10 && <PaymentStep onProceed={handleProceed}   />}
         </div>
     );
 }

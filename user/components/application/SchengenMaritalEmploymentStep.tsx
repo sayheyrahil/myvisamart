@@ -22,6 +22,7 @@ type Props = {
   setEmploymentSub: (v: string) => void;
   employmentSubOptions: Record<string, string[]>;
   onProceed: () => void;
+  onBack?: () => void;
 };
 
 export default function SchengenMaritalEmploymentStep({
@@ -35,6 +36,7 @@ export default function SchengenMaritalEmploymentStep({
   setEmploymentSub,
   employmentSubOptions,
   onProceed,
+  onBack,
 }: Props) {
   return (
     <div className="flex flex-col items-center md:items-start w-full ">
@@ -305,7 +307,7 @@ export default function SchengenMaritalEmploymentStep({
         )}
       </div>
 
-      <ProceedButton onClick={onProceed} />
+      <ProceedButton onClick={onProceed} onBack={onBack} />
     </div>
   );
 }

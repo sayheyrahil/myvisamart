@@ -4,6 +4,7 @@ import { FiEdit2 } from "react-icons/fi";
 
 type Props = {
   onProceed: () => void;
+  onBack?: () => void;
 };
 
 const popularCountries = [
@@ -14,7 +15,7 @@ const otherCountries = [
   "Croatia", "Denmark", "Finland", "Hungary"
 ];
 
-export default function CountriesStep({ onProceed }: Props) {
+export default function CountriesStep({ onProceed , onBack }: Props) {
   const [selectedCountries, setSelectedCountries] = useState<string[]>(["Denmark"]);
 
   const toggleCountry = (country: string) => {
@@ -91,7 +92,7 @@ export default function CountriesStep({ onProceed }: Props) {
         </div>
       </div>
       <div className="w-full max-w-xl flex justify-start">
-        <ProceedButton onClick={onProceed} />
+        <ProceedButton onClick={onProceed} onBack={onBack} />
       </div>
     </div>
   );

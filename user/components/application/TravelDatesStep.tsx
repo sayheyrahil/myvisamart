@@ -3,6 +3,7 @@ import ProceedButton from "@/components/application/ProceedButton";
 
 type Props = {
   onProceed: () => void;
+  
 };
 
 const travelOptions = [

@@ -4,6 +4,7 @@ import { FiCheck } from "react-icons/fi";
 
 type Props = {
   onProceed: () => void;
+  onBack?: () => void;
 };
 
 const slots = [
@@ -27,7 +28,7 @@ const slots = [
   },
 ];
 
-export default function ReviewStep({ onProceed }: Props) {
+export default function ReviewStep({ onProceed, onBack }: Props) {
   const [selectedSlot, setSelectedSlot] = useState(1); // Default to 26 Dec
 
   return (

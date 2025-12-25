@@ -19,8 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (!slug) return;
     const payload: any = { slug: slug, type: "start_application" };
 
-    console.log("Fetching country detail with payload:", payload);
-    axiosInstance
+     axiosInstance
       .post(ENDPOINTS.country_detail, payload)
       .then((response: any) => {
         console.log("Received country detail response:", response);
