@@ -65,7 +65,7 @@ export default function Page() {
               style={{ borderColor: "#D6E0EA" }}
             >
               <button
-                className="flex items-center gap-2 text-[#1566C0] font-semibold border-b-2 border-[#1566C0] px-2 py-1 focus:outline-none"
+                className="flex items-center gap-2 text-brand font-semibold border-b-2 border-brand px-2 py-1 focus:outline-none"
                 style={{ background: "transparent" }}
                 disabled
               >
@@ -102,7 +102,7 @@ export default function Page() {
               <div className="flex justify-center pt-2">
                 <button
                   type="submit"
-                  className="px-8 py-2.5 bg-[#1566C0] text-white rounded-full text-base font-semibold shadow hover:bg-[#0d4e9c] transition"
+                  className="px-8 py-2.5 bg-brand text-white rounded-full text-base font-semibold shadow hover:bg-[#0d4e9c] transition"
                 >
                   Search Appointments
                 </button>

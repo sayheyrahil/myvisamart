@@ -22,8 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
      axiosInstance
       .post(ENDPOINTS.country_detail, payload)
       .then((response: any) => {
-        console.log("Received country detail response:", response);
-        setCountryDetail(response.data.data);
+         setCountryDetail(response.data.data);
       })
       .catch((error: any) => {
         console.error("Error fetching country detail:", error);
@@ -46,7 +45,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex justify-center sm:justify-end w-full sm:w-auto">
             <Link
               href="/home"
-              className="px-4 py-2 sm:px-6 sm:py-2 border border-[#0A509F] text-[#0A509F] rounded-full hover:bg-[#0A509F] hover:text-white transition text-base sm:text-lg"
+              className="px-4 py-2 sm:px-6 sm:py-2 border border-brand text-brand rounded-full hover:bg-brand hover:text-white transition text-base sm:text-lg"
             >
               Home
             </Link>

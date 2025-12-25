@@ -34,8 +34,6 @@ export default function Page() {
   const slug = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
   const [countryDetail, setCountryDetail] = useState<any>({});
   useEffect(() => {
-
-    console.log("Fetching country details for slug:", slug);
     const payload: any = { slug: slug, type: "detail" };
     axiosInstance
       .post(ENDPOINTS.country_detail, payload)

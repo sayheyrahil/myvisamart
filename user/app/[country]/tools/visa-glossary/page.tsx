@@ -143,7 +143,7 @@ export default function Page() {
           <div className="max-w-6xl mx-auto flex mt-8">
             {/* Timeline column */}
             <div className="w-2/12 relative flex flex-col items-center">
-              <div className="absolute left-1/2 top-0 -translate-x-1/2 h-full w-px bg-[#0A509F] opacity-20 z-0" />
+              <div className="absolute left-1/2 top-0 -translate-x-1/2 h-full w-px bg-brand opacity-20 z-0" />
               {glossaryData.map(({ letter }, idx) => (
                 <div
                   key={letter}

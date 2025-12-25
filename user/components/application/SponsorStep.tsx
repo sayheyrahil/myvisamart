@@ -26,6 +26,7 @@ export default function SponsorStep({
   fullName, // <-- Destructure here
   onBack,
 }: Props) {
+ 
   return (
     <div className="flex flex-col items-center md:items-start w-full">
       <div className="font-madefor font-normal text-[28px] sm:text-[32px] md:text-[40px] lg:text-[40px] leading-[36px] sm:leading-[44px] md:leading-[52px] lg:leading-[52px] text-[#85ABDB] mb-8 text-center md:text-left">
@@ -78,16 +79,7 @@ export default function SponsorStep({
       {/* If "Someone Else" is selected, show input row(s) */}
       {selectedSponsor === "other" && (
         <div className="w-full max-w-xl mb-6">
-          {noOptions.map((option, idx) => (
-            <NoOptionRow
-              key={idx}
-              option={option}
-              idx={idx}
-              handleNoOptionChange={handleNoOptionChange}
-              handleRemoveNoOption={handleRemoveNoOption}
-              canRemove={noOptions.length > 1}
-            />
-          ))}
+        
           <div
             onClick={handleAddNoOption}
             className="bg-[#0A509F] m-2 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl border-2 border-[#BFD1EA] cursor-pointer"
@@ -97,6 +89,17 @@ export default function SponsorStep({
           </div>
         </div>
       )}
+
+        {noOptions.map((option, idx) => (
+            <NoOptionRow
+              key={idx}
+              option={option}
+              idx={idx}
+              handleNoOptionChange={handleNoOptionChange}
+              handleRemoveNoOption={handleRemoveNoOption}
+              // canRemove={noOptions.length > 1}
+            />
+          ))}
       <ProceedButton onClick={handleProceed} onBack={onBack}/>
     </div>
   );

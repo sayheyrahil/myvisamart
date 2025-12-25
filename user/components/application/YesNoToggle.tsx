@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FiPlus } from "react-icons/fi";
 import NoOptionRow from "./NoOptionRow";
 
@@ -7,6 +7,14 @@ type NoOption = { name: string; relation: string };
 type Props = {
   selected: YesNo | null;
   setSelected: (v: YesNo) => void;
+  noOptions: NoOption[];
+  handleNoOptionChange: (
+    idx: number,
+    field: "name" | "relation",
+    value: string
+  ) => void;
+  handleRemoveNoOption: (idx: number) => void;
+  handleAddNoOption: () => void;
 };
 
 function ArrowSign() {
@@ -25,26 +33,16 @@ function ArrowSign() {
   );
 }
 
-export default function YesNoToggle({ selected, setSelected }: Props) {
-  const [noOptions, setNoOptions] = useState<NoOption[]>([
-    { name: "", relation: "" },
-  ]);
-
-  const handleAddNoOption = () =>
-    setNoOptions([...noOptions, { name: "", relation: "" }]);
-  const handleRemoveNoOption = (idx: number) =>
-    setNoOptions(noOptions.filter((_, i) => i !== idx));
-  const handleNoOptionChange = (
-    idx: number,
-    field: "name" | "relation",
-    value: string
-  ) =>
-    setNoOptions(
-      noOptions.map((opt, i) => (i === idx ? { ...opt, [field]: value } : opt))
-    );
-
+export default function YesNoToggle({
+  selected,
+  setSelected,
+  noOptions,
+  handleNoOptionChange,
+  handleRemoveNoOption,
+  handleAddNoOption,
+}: Props) {
   return (
-    <div className="flex flex-col gap-4 mb-8">
+    <div className="flex flex-col gap-4 mb-1">
       {/* Toggle buttons */}
       <div className="flex gap-4">
         <button
@@ -77,19 +75,9 @@ export default function YesNoToggle({ selected, setSelected }: Props) {
         </button>
       </div>
 
-      {/* If "no" is selected, show options to add/manage "no" options */}
+      {/* If "yes" is selected, show options to add/manage "no" options */}
       {selected === "yes" && (
-        <div className=" ">
-          {noOptions.map((option, idx) => (
-            <NoOptionRow
-              key={idx}
-              option={option}
-              idx={idx}
-              handleNoOptionChange={handleNoOptionChange}
-              handleRemoveNoOption={handleRemoveNoOption}
-              canRemove={noOptions.length > 1}
-            />
-          ))}
+        <>
           <div
             onClick={handleAddNoOption}
             className="bg-[#0A509F] m-2 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl border-2 border-[#BFD1EA]"
@@ -97,7 +85,19 @@ export default function YesNoToggle({ selected, setSelected }: Props) {
           >
             <FiPlus />
           </div>
-        </div>
+          <div className=" ">
+            {noOptions.map((option, idx) => (
+              <NoOptionRow
+                key={idx}
+                option={option}
+                idx={idx}
+                handleNoOptionChange={handleNoOptionChange}
+                handleRemoveNoOption={handleRemoveNoOption}
+                canRemove={noOptions.length > 1}
+              />
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

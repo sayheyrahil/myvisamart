@@ -4,9 +4,11 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 export default function ProceedButton({
   onClick,
   onBack,
+  disabled = false,
 }: {
   onClick: () => void;
   onBack?: () => void;
+  disabled?: boolean;
 }) {
   return (
     <div className="flex gap-4">
@@ -20,9 +22,10 @@ export default function ProceedButton({
         </button>
       )}
       <button
-        className="bg-[#022538] text-[#578BCC] px-10 py-4 rounded-full flex items-center gap-2 hover:bg-[#083d7a] transition text-lg font-medium shadow"
+        className="bg-[#022538] text-[#578BCC] px-10 py-4 rounded-full flex items-center gap-2 hover:bg-[#083d7a] transition text-lg font-medium shadow disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={onClick}
         type="button"
+        disabled={disabled}
       >
         Proceed
         <MdKeyboardDoubleArrowRight size={33} />

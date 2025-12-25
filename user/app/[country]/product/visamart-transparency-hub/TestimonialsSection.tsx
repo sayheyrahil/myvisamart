@@ -109,7 +109,7 @@ export default function TestimonialsSection() {
         {/* Pagination */}
         <div className="flex justify-start mt-6 gap-2">
           <button
-            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white text-[#2563eb] font-bold"
+            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white text-brand font-bold"
             onClick={prevTestimonial}
             aria-label="Previous testimonials"
             type="button"
@@ -117,7 +117,7 @@ export default function TestimonialsSection() {
             &lt;
           </button>
           <button
-            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white text-[#2563eb] font-bold"
+            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center bg-white text-brand font-bold"
             onClick={nextTestimonial}
             aria-label="Next testimonials"
             type="button"

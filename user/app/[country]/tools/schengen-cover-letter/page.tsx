@@ -274,19 +274,19 @@ export default function Page() {
               </div>
               <ul className="space-y-2 text-[#23272E] text-base">
                 <li className="flex items-start gap-2">
-                  <TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
+                  <TbArrowBadgeRightFilled className="text-brand text-[20px] mt-[2px]" />
                   <span>
                     Create your Schengen visa cover letter in just minutes; no need to worry about writing it yourself!
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
+                  <TbArrowBadgeRightFilled className="text-brand text-[20px] mt-[2px]" />
                   <span>
                     Our tool is constantly updated to ensure your letter is accurate and fully compliant with Schengen visa requirements.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <TbArrowBadgeRightFilled className="text-[#0A509F] text-[20px] mt-[2px]" />
+                  <TbArrowBadgeRightFilled className="text-brand text-[20px] mt-[2px]" />
                   <span>
                     The use of advanced technology ensures data protection and prevents unauthorised access.
                   </span>

@@ -78,7 +78,7 @@ export default function Page() {
               {/* Tab Navigation */}
               <div className="flex gap-8 border-b pb-2 mb-8 items-center" style={{ borderColor: "#D6E0EA" }}>
                 <button
-                  className="flex items-center gap-2 text-[#1566C0] font-semibold border-b-2 border-[#1566C0] px-2 py-1 focus:outline-none"
+                  className="flex items-center gap-2 text-brand font-semibold border-b-2 border-brand px-2 py-1 focus:outline-none"
                   style={{ background: "transparent" }}
                   disabled
                 >
@@ -148,7 +148,7 @@ export default function Page() {
                 <div className="flex justify-center pt-2">
                   <button
                     type="submit"
-                    className="px-8 py-2.5 bg-[#1566C0] text-white rounded-full text-base font-semibold shadow hover:bg-[#0d4e9c] transition"
+                    className="px-8 py-2.5 bg-brand text-white rounded-full text-base font-semibold shadow hover:bg-[#0d4e9c] transition"
                   >
                     Check Status
                   </button>
@@ -198,7 +198,7 @@ export default function Page() {
                 <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
                 <span>
                   Go to <a href="https://smartservices.icp.gov.ae/echannels/web/client/default.html#/fileValidity"
-                    target="_blank" rel="noopener noreferrer" className="text-[#1566C0] underline">
+                    target="_blank" rel="noopener noreferrer" className="text-brand underline">
                     https://smartservices.icp.gov.ae/echannels/web/client/default.html#/fileValidity</a>
                 </span>
               </li>
@@ -235,7 +235,7 @@ export default function Page() {
                 <TbArrowBadgeRightFilled color="#0A509F" size={22} className="mt-1" />
                 <span>
                   Go to <a href="https://smart.gdrfad.gov.ae/Public_Th/StatusInquiry_New.aspx" target="_blank" rel="noopener noreferrer"
-                    className="text-[#1566C0] underline">https://smart.gdrfad.gov.ae/Public_Th/StatusInquiry_New.aspx</a>
+                    className="text-brand underline">https://smart.gdrfad.gov.ae/Public_Th/StatusInquiry_New.aspx</a>
                 </span>
               </li>
               <li className="flex items-start gap-2">

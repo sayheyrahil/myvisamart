@@ -7,7 +7,7 @@ type NoOptionRowProps = {
   idx: number;
   handleNoOptionChange: (idx: number, field: "name" | "relation", value: string) => void;
   handleRemoveNoOption: (idx: number) => void;
-  canRemove: boolean;
+  canRemove?: boolean;
 };
 
 export default function NoOptionRow({
