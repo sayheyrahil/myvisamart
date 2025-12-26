@@ -161,7 +161,7 @@ export default function SponsorDetailModal({
 
   if (!open) return null;
 
-  console.log("Rendering SponsorDetailModal for:", isTabComplete(activeTab));
+  // console.log("Rendering SponsorDetailModal for:", isTabComplete(activeTab));
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 h-screen">
       <div className="bg-white rounded-xl shadow-lg p-8 min-w-[50%] min-h-[80%] max-w-[90vw] relative">

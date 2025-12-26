@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import axios from "axios"
+import { ENDPOINTS } from "@/utils/constants";
 
- 
 function DocumentModal({
   open,
   onClose,
@@ -49,9 +50,42 @@ export default function SponsorDocumentsForm({
   handleChange,
 }: {
   sponsorData: any;
-  handleChange: (field: string, value: any) => void;
+  handleChange: (field: string, value: any, imageUrl?: string) => void;
 }) {
   const [modal, setModal] = useState<null | "photo" | "passport">(null);
+  const [uploading, setUploading] = useState<null | "photo" | "passport">(null);
+  const [uploadedImages, setUploadedImages] = useState<{ photo?: string; passport?: string }>({});
+  const photoInputRef = useRef<HTMLInputElement>(null);
+  const passportInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: "photo" | "passport"
+  ) => {  
+    const files = e.target.files;
+    if (!files || !files[0]) return;
+    setUploading(type);
+    try {
+      const formData = new FormData();
+      formData.append("files", files[0]);
+      const response = await axios.post(
+        `${ENDPOINTS.image_upload}?type=${type}`,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+      const store_url = response.data.data.store_url;
+      const image_url = response.data.data.image_url;
+      handleChange(type === "photo" ? "photo" : "passportFile", store_url, image_url);
+      setUploadedImages((prev) => ({
+        ...prev,
+        [type]: image_url,
+      }));
+      setModal(type); // Open modal to preview uploaded image
+    } catch (err) {
+      // Optionally handle error
+    }
+    setUploading(null);
+  };
 
   return (
     <div className="py-4">
@@ -62,22 +96,31 @@ export default function SponsorDocumentsForm({
             Photo
           </label>
           <div className="border rounded-lg bg-[#F7FAFC] flex items-center px-4 py-3">
-            {/* Hidden input for real upload */}
             <input
               type="file"
               className="hidden"
               id="photo-upload"
-              onChange={(e) =>
-                handleChange("photo", e.target.files?.[0] || null)
-              }
+              ref={photoInputRef}
+              onChange={(e) => handleFileUpload(e, "photo")}
             />
             <button
               type="button"
               className="flex-1 cursor-pointer text-gray-400 text-left"
-              onClick={() => setModal("photo")}
+              onClick={() => photoInputRef.current?.click()}
+              disabled={uploading === "photo"}
             >
-              Upload
+              {uploading === "photo" ? "Uploading..." : "Upload"}
             </button>
+            {/* Preview button if photo exists */}
+            {uploadedImages.photo && (
+              <button
+                type="button"
+                className="ml-2 text-brand underline text-xs"
+                onClick={() => setModal("photo")}
+              >
+                Preview
+              </button>
+            )}
             <span className="ml-2">
               <svg width="24" height="24" fill="none">
                 <path
@@ -101,17 +144,27 @@ export default function SponsorDocumentsForm({
               type="file"
               className="hidden"
               id="passport-upload"
-              onChange={(e) =>
-                handleChange("passportFile", e.target.files?.[0] || null)
-              }
+              ref={passportInputRef}
+              onChange={(e) => handleFileUpload(e, "passport")}
             />
             <button
               type="button"
               className="flex-1 cursor-pointer text-gray-400 text-left"
-              onClick={() => setModal("passport")}
+              onClick={() => passportInputRef.current?.click()}
+              disabled={uploading === "passport"}
             >
-              Upload
+              {uploading === "passport" ? "Uploading..." : "Upload"}
             </button>
+            {/* Preview button if passport exists */}
+            {uploadedImages.passport && (
+              <button
+                type="button"
+                className="ml-2 text-brand underline text-xs"
+                onClick={() => setModal("passport")}
+              >
+                Preview
+              </button>
+            )}
             <span className="ml-2">
               <svg width="24" height="24" fill="none">
                 <path
@@ -131,13 +184,13 @@ export default function SponsorDocumentsForm({
         open={modal === "photo"}
         onClose={() => setModal(null)}
         title="Photo"
-        image={'/application/Avatarprofilephoto.png'}
+        image={uploadedImages.photo || '/application/Avatarprofilephoto.png'}
       />
       <DocumentModal
         open={modal === "passport"}
         onClose={() => setModal(null)}
         title="Passport"
-        image={'/application/Passport.png'}
+        image={uploadedImages.passport || '/application/Passport.png'}
       />
     </div>
   );
