@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 import { FormDataProvider } from "@/context/FormDataContext";
+import ReduxProvider from "@/store/ReduxProvider";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -41,10 +42,12 @@ export default function RootLayout({
 
       </head>
       <body className={`${inter.className} font-wix. bg-[#f6fafd]`}>
+        <ReduxProvider>
         <FormDataProvider>
           {children}
         </FormDataProvider>
         <ToastContainer />
+        </ReduxProvider>
        </body>
     </html>
   );

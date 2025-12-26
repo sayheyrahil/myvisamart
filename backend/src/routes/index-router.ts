@@ -2,6 +2,7 @@ import { Router } from "express";
 import adminController from "@controllers/admin/base/auth";
 import baseController from "@controllers/base/auth";
 import userCommonService from "@controllers/user/base";
+import visaService from "@controllers/user/visa";
 import commonService from "@controllers/base/common";
 import { decryptBody, encryptJsonResponse } from "@middleware/crypto-middleware"; // <-- Add this import
 
@@ -40,6 +41,16 @@ encryptedRouter.post(`/signup`, baseController.signUp);
 encryptedRouter.post(`/verify`, baseController.verify);
 encryptedRouter.post(`/forget-password-otp-verify`, baseController.forgetPasswordOtpVerify);
 encryptedRouter.post(`/set-password`, baseController.setPassword);
+
+
+
+encryptedRouter.post(`/visa-process`, visaService.visaProcess);
+
+
+
+
+
+
 
 // Mount the encrypted router
 indexRouter.use("/", encryptedRouter);

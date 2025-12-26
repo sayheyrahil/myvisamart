@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import ProceedButton from "@/components/application/ProceedButton";
-import { FiCheck } from "react-icons/fi";
+import React, { useState, useContext } from "react";
+import { FormDataContext } from "@/context/FormDataContext";
+import ProceedButton from "./ProceedButton";
 
 type Props = {
   onProceed: () => void;
@@ -31,6 +31,9 @@ const slots = [
 export default function ReviewStep({ onProceed, onBack }: Props) {
   const [selectedSlot, setSelectedSlot] = useState(1); // Default to 26 Dec
 
+  const { formData } = useContext(FormDataContext);
+
+  console.log("formData from reducer:", formData);
   return (
     <div className="flex flex-col items-center md:items-start w-full min-h-[60vh]">
       {/* Title */}
@@ -140,15 +143,15 @@ export default function ReviewStep({ onProceed, onBack }: Props) {
           </div>
         </div>
         <div className="mt-8">
-          <button
-            className="w-full md:w-auto bg-[#022538] hover:bg-[#0A509F] text-white font-medium rounded-full px-8 py-4 text-lg flex items-center justify-center gap-2 transition"
+          <ProceedButton
             onClick={onProceed}
-          >
-            Reserve appointment for {slots[selectedSlot].date.split(", ")[1]}{" "}
-            <span className="text-2xl">››</span>
-          </button>
+            onBack={onBack}
+            text={` Reserve appointment for ${
+              slots[selectedSlot].date.split(", ")[1]
+            } `}
+          />
         </div>
-       </div>
+      </div>
     </div>
   );
 }

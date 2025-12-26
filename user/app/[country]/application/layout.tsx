@@ -7,6 +7,8 @@ import { ENDPOINTS } from "@/utils/constants";
 import { WEB_URL } from "@/utils/constants";
 import ImageWithPreview from "@/components/common/ImageWithPreview";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { setCountryDetail as setCountryDetailAction } from "@/store/countryDetailSlice";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
@@ -14,22 +16,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const slug = searchParams.get("slug");
 
   const [countryDetail, setCountryDetail] = useState<any>({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!slug) return;
     const payload: any = { slug: slug, type: "start_application" };
 
-     axiosInstance
+    axiosInstance
       .post(ENDPOINTS.country_detail, payload)
       .then((response: any) => {
-         setCountryDetail(response.data.data);
+        setCountryDetail(response.data.data);
+         dispatch(setCountryDetailAction(response.data.data)); // Store in redux
       })
       .catch((error: any) => {
         console.error("Error fetching country detail:", error);
       });
-  }, []);
+  }, [slug, dispatch]);
 
- 
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-[#FFFFFF] to-[#E1EBF6] flex flex-col">
       <div className="max-w-7xl mx-auto w-full px-2 sm:px-4 md:px-8">

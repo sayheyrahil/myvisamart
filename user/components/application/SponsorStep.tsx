@@ -2,7 +2,7 @@ import React from "react";
 import { FiCheck, FiPlus } from "react-icons/fi";
 import ProceedButton from "@/components/application/ProceedButton";
 import NoOptionRow from "@/components/application/NoOptionRow";
-
+import { useSelector } from "react-redux";
 type Props = {
   selectedSponsor: "self" | "other";
   setSelectedSponsor: (v: "self" | "other") => void;
@@ -28,14 +28,17 @@ export default function SponsorStep({
   handleProceed,
   onBack,
 }: Props) {
+  const countryDetailName = useSelector(
+    (state: any) => state.countryDetail?.countryDetail?.name
+  );
 
-  console.log("noOptions in SponsorStep:", noOptions);
+  console.log("noOptions in SponsorStep:", countryDetailName);
   return (
     <div className="flex flex-col items-center md:items-start w-full">
       <div className="font-madefor font-normal text-[28px] sm:text-[32px] md:text-[40px] lg:text-[40px] leading-[36px] sm:leading-[44px] md:leading-[52px] lg:leading-[52px] text-[#85ABDB] mb-8 text-center md:text-left">
         Who’s Sponsoring this <br />
         <span className="text-[#022538] font-semibold">
-          Trip to Switzerland
+          Trip to {countryDetailName || "the Country"}?
         </span>
       </div>
       <div className="flex gap-4 mb-10 w-full max-w-xl justify-center md:justify-start">
@@ -54,9 +57,7 @@ export default function SponsorStep({
           {noOptions
             .filter((option) => option.relation === "self")
             .map((option, idx) => (
-              <>
-                {/* Print the name from option */}
-                {console.log("option in self:", option)}
+              <div key={option.name + idx} className="flex items-center">
                 <span className="w-8 h-8 rounded-full bg-[#E6F0FA] flex items-center justify-center mr-3 text-[#0A509F] font-bold text-base">
                   {/* Show initials or fallback */}
                   {option.name
@@ -74,7 +75,7 @@ export default function SponsorStep({
                   {/* Print the name */}
                   {option.name}(You)
                 </span>
-              </>
+              </div>
             ))}
 
           {selectedSponsor === "self" && (

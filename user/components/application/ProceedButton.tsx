@@ -5,10 +5,12 @@ export default function ProceedButton({
   onClick,
   onBack,
   disabled = false,
+  text, // Optional text prop
 }: {
   onClick: () => void;
   onBack?: () => void;
   disabled?: boolean;
+  text?: string;
 }) {
   return (
     <div className="flex gap-4">
@@ -27,7 +29,8 @@ export default function ProceedButton({
         type="button"
         disabled={disabled}
       >
-        Proceed
+        {/* Show text if provided, otherwise default to "Proceed" */}
+        {text ? text : "Proceed"}
         <MdKeyboardDoubleArrowRight size={33} />
       </button>
     </div>

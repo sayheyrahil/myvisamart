@@ -13,7 +13,7 @@ export default function Step5ReviewList({
   onBack,
   onProceed,
 }: {
-  noOptions: { name: string; relation: string }[];
+  noOptions: { name: string; relation: string; tabStatus?: { label: string; status: "success" | "error" }[] }[];
   onBack: () => void;
   onProceed: () => void;
 }) {
@@ -73,40 +73,48 @@ export default function Step5ReviewList({
       {/* Dropdown on hover */}
       {hoveredIdx === idx && (
         <div className="absolute left-1/2 top-full z-50 mt-2 -translate-x-1/2 bg-white border border-gray-200 rounded-xl shadow-lg w-64 p-4">
-          {TAB_STATUS.map((tab, i) => (
-            <div key={i} className="flex items-center justify-between py-1">
-              <span className="font-medium text-sm">{tab.label}</span>
-              {tab.status === "success" ? (
-                <span className="w-5 h-5 flex items-center justify-center rounded-full bg-green-500">
-                  <svg width="16" height="16" fill="none">
-                    <circle cx="8" cy="8" r="8" fill="#22C55E" />
-                    <path
-                      d="M4.5 8.5l2 2 4-4"
-                      stroke="#fff"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
-              ) : (
-                <span className="w-5 h-5 flex items-center justify-center rounded-full bg-red-500">
-                  <svg width="16" height="16" fill="none">
-                    <circle cx="8" cy="8" r="8" fill="#F87171" />
-                    <text
-                      x="8"
-                      y="12"
-                      textAnchor="middle"
-                      fontSize="10"
-                      fill="#fff"
-                    >
-                      i
-                    </text>
-                  </svg>
-                </span>
-              )}
-            </div>
-          ))}
+          {(noOptions[idx]?.tabStatus || TAB_STATUS).map((tab, i) => {
+            // Check if all fields in tabStatus are "success"
+            const allSuccess =
+              (noOptions[idx]?.tabStatus || TAB_STATUS).every(
+                (t) => t.status === "success"
+              );
+            const status = allSuccess ? "success" : tab.status;
+            return (
+              <div key={i} className="flex items-center justify-between py-1">
+                <span className="font-medium text-sm">{tab.label}</span>
+                {status === "success" ? (
+                  <span className="w-5 h-5 flex items-center justify-center rounded-full bg-green-500">
+                    <svg width="16" height="16" fill="none">
+                      <circle cx="8" cy="8" r="8" fill="#22C55E" />
+                      <path
+                        d="M4.5 8.5l2 2 4-4"
+                        stroke="#fff"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                ) : (
+                  <span className="w-5 h-5 flex items-center justify-center rounded-full bg-red-500">
+                    <svg width="16" height="16" fill="none">
+                      <circle cx="8" cy="8" r="8" fill="#F87171" />
+                      <text
+                        x="8"
+                        y="12"
+                        textAnchor="middle"
+                        fontSize="10"
+                        fill="#fff"
+                      >
+                        i
+                      </text>
+                    </svg>
+                  </span>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
@@ -125,12 +133,15 @@ export default function Step5ReviewList({
 
       <div className="flex flex-col gap-4 w-full max-w-md mb-8">
         {noOptions.map((item, idx) =>
-          renderPerson(
-            item.name,
-            item.relation.charAt(0).toUpperCase() + item.relation.slice(1),
-            false,
-            idx
-          )
+          // Add a unique key prop using name+relation+idx
+          <React.Fragment key={`${item.name}-${item.relation}-${idx}`}>
+            {renderPerson(
+              item.name,
+              item.relation.charAt(0).toUpperCase() + item.relation.slice(1),
+              false,
+              idx
+            )}
+          </React.Fragment>
         )}
       </div>
       <ProceedButton onClick={onProceed} onBack={onBack} />

@@ -33,19 +33,28 @@ type FormData = {
   selectedSponsor: "self" | "other";
   noOptions: NoOption[];
   selected: "yes" | "no" | null;
+  user_id?: number;
+  country_id?: number;
 };
 
 type Action =
   | { type: "SET_FIELD"; key: keyof FormData; value: any }
   | { type: "ADD_NO_OPTION" }
   | { type: "REMOVE_NO_OPTION"; idx: number }
-  | { type: "UPDATE_NO_OPTION"; idx: number; field: "name" | "relation"; value: string }
+  | {
+      type: "UPDATE_NO_OPTION";
+      idx: number;
+      field: "name" | "relation";
+      value: string;
+    }
   | { type: "SET_NO_OPTION_AT_INDEX"; idx: number; value: NoOption };
 
 const initialState: FormData = {
   selectedSponsor: "self",
   noOptions: [{ name: "", relation: "self" }],
   selected: null,
+  user_id: 45,
+  country_id: 1,
 };
 
 function reducer(state: FormData, action: Action): FormData {
@@ -53,9 +62,15 @@ function reducer(state: FormData, action: Action): FormData {
     case "SET_FIELD":
       return { ...state, [action.key]: action.value };
     case "ADD_NO_OPTION":
-      return { ...state, noOptions: [...state.noOptions, { name: "", relation: "" }] };
+      return {
+        ...state,
+        noOptions: [...state.noOptions, { name: "", relation: "" }],
+      };
     case "REMOVE_NO_OPTION":
-      return { ...state, noOptions: state.noOptions.filter((_, i) => i !== action.idx) };
+      return {
+        ...state,
+        noOptions: state.noOptions.filter((_, i) => i !== action.idx),
+      };
     case "UPDATE_NO_OPTION":
       return {
         ...state,

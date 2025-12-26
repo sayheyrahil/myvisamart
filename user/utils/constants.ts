@@ -31,6 +31,9 @@ export const ENDPOINTS = {
   testimonialActive: "testimonial-active",
   countries_active: "countries-active",
   country_detail: "country-detail",
+
+  
+  visa_process: "visa-process",
 }
 
 

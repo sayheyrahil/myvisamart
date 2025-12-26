@@ -14,7 +14,7 @@ import morgan from "morgan";
 
 
 import '@models/associations';
-// import "@models/async";
+import "@models/async";
 import userRouter from "@routes/user-router";
 
 import { decryptBody, encryptJsonResponse } from "@middleware/crypto-middleware"; // <-- Add this

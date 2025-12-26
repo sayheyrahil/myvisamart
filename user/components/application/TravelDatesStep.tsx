@@ -3,14 +3,15 @@ import ProceedButton from "@/components/application/ProceedButton";
 
 type Props = {
   onProceed: () => void;
-  
+  onBack: () => void;
 };
 
 const travelOptions = [
   {
     label: "4 Week",
     range: "8 Jan - 5 Feb",
-    warning: "Please note that you will have to provide financials that support a 4 week stay in Europe",
+    warning:
+      "Please note that you will have to provide financials that support a 4 week stay in Europe",
   },
   {
     label: "2 Week",
@@ -19,7 +20,7 @@ const travelOptions = [
   },
 ];
 
-export default function TravelDatesStep({ onProceed }: Props) {
+export default function TravelDatesStep({ onProceed, onBack }: Props) {
   const [selectedTab, setSelectedTab] = useState(1); // Default to 2 Week
 
   return (
@@ -61,7 +62,10 @@ export default function TravelDatesStep({ onProceed }: Props) {
           <div className="w-full flex flex-col items-center">
             <div className="relative w-full max-w-lg h-12 flex items-center">
               {/* Timeline line */}
-              <div className="absolute left-0 right-0 top-1/2 h-1 bg-[#E1EBF6] rounded" style={{ zIndex: 0 }} />
+              <div
+                className="absolute left-0 right-0 top-1/2 h-1 bg-[#E1EBF6] rounded"
+                style={{ zIndex: 0 }}
+              />
               {/* Timeline marker */}
               <div
                 className="absolute left-[8%] top-1/2 -translate-y-1/2 w-2 h-8 bg-[#0A509F] rounded-full"
@@ -88,12 +92,11 @@ export default function TravelDatesStep({ onProceed }: Props) {
       </div>
       {/* Confirm Button */}
       <div className="w-full max-w-xl flex justify-start">
-        <button
-          className="bg-[#022538] hover:bg-[#0A509F] text-white font-medium rounded-full px-8 py-4 text-lg flex items-center gap-2 transition"
+        <ProceedButton
           onClick={onProceed}
-        >
-          Confirm Travel Dates <span className="text-2xl">››</span>
-        </button>
+          onBack={onBack}
+          text=" Confirm Travel Dates "
+        />
       </div>
     </div>
   );

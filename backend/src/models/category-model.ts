@@ -12,9 +12,9 @@ interface CategoryAttributes {
   is_deleted?: boolean;
 }
 
-type HappyClientCreationAttributes = Optional<CategoryAttributes, "id" | "createdAt" | "updatedAt" | "is_active" | "is_deleted">;
+type CategoryCreationAttributes = Optional<CategoryAttributes, "id" | "createdAt" | "updatedAt" | "is_active" | "is_deleted">;
 
-class HappyClient extends Model<CategoryAttributes, HappyClientCreationAttributes> implements CategoryAttributes {
+class Category extends Model<CategoryAttributes, CategoryCreationAttributes> implements CategoryAttributes {
   public id!: number;
   public name!: string;
   public description!: string;
@@ -25,7 +25,7 @@ class HappyClient extends Model<CategoryAttributes, HappyClientCreationAttribute
   public is_deleted!: boolean;
 }
 
-HappyClient.init(
+Category.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -81,4 +81,4 @@ HappyClient.init(
   }
 );
 
-export default HappyClient;
+export default Category;

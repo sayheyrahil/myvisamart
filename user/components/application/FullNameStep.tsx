@@ -14,7 +14,7 @@ export default function FullNameStep({ fullName, setFullName, onProceed }: Props
         Let’s Start With Your <br />
         <span className="text-[#0A509F]">Full Name</span>
       </div>
-      <div className="mt-6 sm:mt-8 md:mt-10 flex items-center bg-white shadow-xl rounded-full px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl">
+      <div className="mt-6 sm:mt-8 md:mt-10 flex items-center bg-white shadow-xl rounded-full px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-3 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl">
         <input
           type="text"
           placeholder="Enter Your Full Name"

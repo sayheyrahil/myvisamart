@@ -65,11 +65,13 @@ export default function SponsorReviewStep({
           noOptions
             // .filter((option) => option.relation !== "self")
             .map((item, idx) =>
-              renderPerson(
-                idx,
-                item.name,
-                item.relation.charAt(0).toUpperCase() + item.relation.slice(1)
-              )
+              <React.Fragment key={item.name + item.relation + idx}>
+                {renderPerson(
+                  idx,
+                  item.name,
+                  item.relation.charAt(0).toUpperCase() + item.relation.slice(1)
+                )}
+              </React.Fragment>
             )}
       </div>
       <ProceedButton onBack={onBack} onClick={onProceed} />
