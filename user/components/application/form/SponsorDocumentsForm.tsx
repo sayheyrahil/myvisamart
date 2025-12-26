@@ -1,4 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
+
+ 
+function DocumentModal({
+  open,
+  onClose,
+  title,
+  image,
+}: {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  image: string;
+}) {
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+      <div className="bg-white rounded-xl shadow-lg p-6 w-[320px] relative flex flex-col items-center">
+        <button
+          className="absolute top-4 right-4 text-gray-500 text-xl font-bold"
+          onClick={onClose}
+        >
+          ×
+        </button>
+    
+        <div className="w-full text-left mb-2 text-base font-medium text-gray-700">
+          {title}
+        </div>
+        <div className="flex justify-center items-center w-full my-4">
+          <img
+            src={image}
+            alt={title}
+            className="rounded object-contain"
+           />
+        </div>
+        <button
+          className="w-full bg-brand text-white py-2 rounded-lg mt-2"
+          onClick={onClose}
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function SponsorDocumentsForm({
   sponsorData,
@@ -7,6 +51,8 @@ export default function SponsorDocumentsForm({
   sponsorData: any;
   handleChange: (field: string, value: any) => void;
 }) {
+  const [modal, setModal] = useState<null | "photo" | "passport">(null);
+
   return (
     <div className="py-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -16,6 +62,7 @@ export default function SponsorDocumentsForm({
             Photo
           </label>
           <div className="border rounded-lg bg-[#F7FAFC] flex items-center px-4 py-3">
+            {/* Hidden input for real upload */}
             <input
               type="file"
               className="hidden"
@@ -24,12 +71,13 @@ export default function SponsorDocumentsForm({
                 handleChange("photo", e.target.files?.[0] || null)
               }
             />
-            <label
-              htmlFor="photo-upload"
-              className="flex-1 cursor-pointer text-gray-400"
+            <button
+              type="button"
+              className="flex-1 cursor-pointer text-gray-400 text-left"
+              onClick={() => setModal("photo")}
             >
               Upload
-            </label>
+            </button>
             <span className="ml-2">
               <svg width="24" height="24" fill="none">
                 <path
@@ -57,12 +105,13 @@ export default function SponsorDocumentsForm({
                 handleChange("passportFile", e.target.files?.[0] || null)
               }
             />
-            <label
-              htmlFor="passport-upload"
-              className="flex-1 cursor-pointer text-gray-400"
+            <button
+              type="button"
+              className="flex-1 cursor-pointer text-gray-400 text-left"
+              onClick={() => setModal("passport")}
             >
               Upload
-            </label>
+            </button>
             <span className="ml-2">
               <svg width="24" height="24" fill="none">
                 <path
@@ -77,6 +126,19 @@ export default function SponsorDocumentsForm({
           </div>
         </div>
       </div>
+      {/* Modals */}
+      <DocumentModal
+        open={modal === "photo"}
+        onClose={() => setModal(null)}
+        title="Photo"
+        image={'/application/Avatarprofilephoto.png'}
+      />
+      <DocumentModal
+        open={modal === "passport"}
+        onClose={() => setModal(null)}
+        title="Passport"
+        image={'/application/Passport.png'}
+      />
     </div>
   );
 }

@@ -3,12 +3,91 @@ import React from "react";
 export default function SponsorBasicDetailsForm({
   sponsorData,
   handleChange,
+  countryOptions,
+  stateOptions,
+  cityOptions,
+  useDropdowns,
 }: {
   sponsorData: any;
   handleChange: (field: string, value: any) => void;
+  countryOptions?: { value: string; label: string }[];
+  stateOptions?: { value: string; label: string }[];
+  cityOptions?: { value: string; label: string }[];
+  useDropdowns?: boolean;
 }) {
   return (
     <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Added fields */}
+      <div>
+        <label className="block text-xs font-medium mb-1">
+          First Name*
+        </label>
+        <input
+          className="w-full border rounded px-2 py-1"
+          placeholder="First Name"
+          value={sponsorData.firstName}
+          onChange={(e) => handleChange("firstName", e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-xs font-medium mb-1">
+          Last Name*
+        </label>
+        <input
+          className="w-full border rounded px-2 py-1"
+          placeholder="Last Name"
+          value={sponsorData.lastName}
+          onChange={(e) => handleChange("lastName", e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-xs font-medium mb-1">
+          Father's Name*
+        </label>
+        <input
+          className="w-full border rounded px-2 py-1"
+          placeholder="Father's Name"
+          value={sponsorData.fatherName}
+          onChange={(e) => handleChange("fatherName", e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-xs font-medium mb-1">
+          Mother's Name*
+        </label>
+        <input
+          className="w-full border rounded px-2 py-1"
+          placeholder="Mother's Name"
+          value={sponsorData.motherName}
+          onChange={(e) => handleChange("motherName", e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-xs font-medium mb-1">
+          Date of Birth*
+        </label>
+        <input
+          type="date"
+          className="w-full border rounded px-2 py-1"
+          value={sponsorData.dob}
+          onChange={(e) => handleChange("dob", e.target.value)}
+        />
+      </div>
+      <div>
+        <label className="block text-xs font-medium mb-1">
+          Gender*
+        </label>
+        <select
+          className="w-full border rounded px-2 py-1"
+          value={sponsorData.gender}
+          onChange={(e) => handleChange("gender", e.target.value)}
+        >
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
       <div>
         <label className="block text-xs font-medium mb-1">
           Phone Number
@@ -59,43 +138,79 @@ export default function SponsorBasicDetailsForm({
         <label className="block text-xs font-medium mb-1">
           City*
         </label>
-        <select
-          className="w-full border rounded px-2 py-1"
-          value={sponsorData.city}
-          onChange={(e) => handleChange("city", e.target.value)}
-          disabled={typeof sponsorData.city === "undefined"}
-        >
-          <option value="">Select</option>
-          {/* Add city options here */}
-        </select>
+        {useDropdowns && cityOptions ? (
+          <select
+            className="w-full border rounded px-2 py-1"
+            value={sponsorData.city}
+            onChange={(e) => handleChange("city", e.target.value)}
+          >
+            <option value="">Select City</option>
+            {cityOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <input
+            className="w-full border rounded px-2 py-1"
+            value={sponsorData.city}
+            onChange={(e) => handleChange("city", e.target.value)}
+            placeholder="City"
+          />
+        )}
       </div>
       <div>
         <label className="block text-xs font-medium mb-1">
           State*
         </label>
-        <select
-          className="w-full border rounded px-2 py-1"
-          value={sponsorData.state}
-          onChange={(e) => handleChange("state", e.target.value)}
-          disabled={typeof sponsorData.state === "undefined"}
-        >
-          <option value="">Select</option>
-          {/* Add state options here */}
-        </select>
+        {useDropdowns && stateOptions ? (
+          <select
+            className="w-full border rounded px-2 py-1"
+            value={sponsorData.state}
+            onChange={(e) => handleChange("state", e.target.value)}
+          >
+            <option value="">Select State</option>
+            {stateOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <input
+            className="w-full border rounded px-2 py-1"
+            value={sponsorData.state}
+            onChange={(e) => handleChange("state", e.target.value)}
+            placeholder="State"
+          />
+        )}
       </div>
       <div>
         <label className="block text-xs font-medium mb-1">
           Country*
         </label>
-        <select
-          className="w-full border rounded px-2 py-1"
-          value={sponsorData.country}
-          onChange={(e) => handleChange("country", e.target.value)}
-          disabled={typeof sponsorData.country === "undefined"}
-        >
-          <option value="">Select</option>
-          {/* Add country options here */}
-        </select>
+        {useDropdowns && countryOptions ? (
+          <select
+            className="w-full border rounded px-2 py-1"
+            value={sponsorData.country}
+            onChange={(e) => handleChange("country", e.target.value)}
+          >
+            <option value="">Select Country</option>
+            {countryOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <input
+            className="w-full border rounded px-2 py-1"
+            value={sponsorData.country}
+            onChange={(e) => handleChange("country", e.target.value)}
+            placeholder="Country"
+          />
+        )}
       </div>
       <div>
         <label className="block text-xs font-medium mb-1">

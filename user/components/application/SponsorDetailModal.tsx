@@ -13,6 +13,57 @@ const TABS = [
   { key: "passport", label: "Passport details" },
 ];
 
+// Define required fields for each tab
+const TAB_REQUIRED_FIELDS: Record<string, string[]> = {
+  basic: [
+    "firstName",
+    "lastName",
+    "fatherName",
+    "motherName",
+    "dob",
+    "gender",
+    "phone",
+    "email",
+    "address1",
+    "city",
+    "state",
+    "country",
+    "zip",
+    "maritalStatus",
+  ],
+  employment: ["employmentType"], // <-- Only require employmentType
+  documents: ["photo"],
+  passport: [
+    "passportNumber",
+    "passportPlace",
+    "passportValidTill",
+    "passportFile",
+  ],
+};
+
+// Add sample options for country, state, and city
+const COUNTRY_OPTIONS = [
+  { value: "India", label: "India" },
+  { value: "USA", label: "USA" },
+  { value: "Canada", label: "Canada" },
+  { value: "Australia", label: "Australia" },
+  { value: "Germany", label: "Germany" },
+];
+const STATE_OPTIONS = [
+  { value: "Maharashtra", label: "Maharashtra" },
+  { value: "California", label: "California" },
+  { value: "Ontario", label: "Ontario" },
+  { value: "New South Wales", label: "New South Wales" },
+  { value: "Bavaria", label: "Bavaria" },
+];
+const CITY_OPTIONS = [
+  { value: "Mumbai", label: "Mumbai" },
+  { value: "Los Angeles", label: "Los Angeles" },
+  { value: "Toronto", label: "Toronto" },
+  { value: "Sydney", label: "Sydney" },
+  { value: "Munich", label: "Munich" },
+];
+
 export default function SponsorDetailModal({
   open,
   onClose,
@@ -40,10 +91,7 @@ export default function SponsorDetailModal({
     zip: "",
     schengenVisa: "",
     maritalStatus: "",
-    employmentType: "",
-    companyName: "",
-    photo: null as File | null,
-    passportFile: null as File | null,
+
     firstName: "",
     lastName: "",
     fatherName: "",
@@ -51,7 +99,6 @@ export default function SponsorDetailModal({
     dob: "",
     gender: "",
     passportNumber: "",
-    passportPlace: "",
     passportValidTill: "",
   };
 
@@ -83,8 +130,38 @@ export default function SponsorDetailModal({
     }));
   };
 
+  // Helper to check if a tab is complete
+  const isTabComplete = (tabKey: string) => {
+    const required = TAB_REQUIRED_FIELDS[tabKey] || [];
+    return required.every((field) => {
+      const value = sponsorData[field as keyof typeof sponsorData];
+      if (value === null || value === undefined) return false;
+      if (typeof value === "string") return value.trim() !== "";
+      if (value instanceof File) return true;
+      return !!value;
+    });
+  };
+
+  // Helper to get next tab key
+  const getNextTabKey = (currentKey: string) => {
+    const idx = TABS.findIndex((t) => t.key === currentKey);
+    if (idx >= 0 && idx < TABS.length - 1) return TABS[idx + 1].key;
+    return null;
+  };
+
+  // Next button handler
+  const handleNext = () => {
+    const nextTab = getNextTabKey(activeTab);
+    if (nextTab) {
+      setActiveTab(nextTab);
+    } else {
+      onClose();
+    }
+  };
+
   if (!open) return null;
 
+  console.log("Rendering SponsorDetailModal for:", isTabComplete(activeTab));
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 h-screen">
       <div className="bg-white rounded-xl shadow-lg p-8 min-w-[50%] min-h-[80%] max-w-[90vw] relative">
@@ -117,7 +194,7 @@ export default function SponsorDetailModal({
             {TABS.map((tab) => (
               <button
                 key={tab.key}
-                className={`px-4 py-2 font-medium text-sm border-b-2 ${
+                className={`px-4 py-2 font-medium text-sm border-b-2 flex items-center gap-2 ${
                   activeTab === tab.key
                     ? "border-brand text-brand bg-white"
                     : "border-transparent "
@@ -126,14 +203,32 @@ export default function SponsorDetailModal({
                 type="button"
               >
                 {tab.label}
+                {isTabComplete(tab.key) && (
+                  <span
+                    className="ml-1 text-green-600 text-lg"
+                    title="Completed"
+                  >
+                    ✔️
+                  </span>
+                )}
               </button>
             ))}
           </div>
-          <div className="mt-2">
+          <div className="mt-2"  style={{
+        backgroundImage: "url('/application/BG.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: '400px',
+        // overflowX: 'auto',
+      }}>
             {activeTab === "basic" && (
               <SponsorBasicDetailsForm
                 sponsorData={sponsorData}
                 handleChange={handleChange}
+                countryOptions={COUNTRY_OPTIONS}
+                stateOptions={STATE_OPTIONS}
+                cityOptions={CITY_OPTIONS}
+                useDropdowns={true}
               />
             )}
             {activeTab === "employment" && (
@@ -156,14 +251,39 @@ export default function SponsorDetailModal({
             )}
           </div>
         </div>
+        
+        {/* Step Indicator */}
+        <div className="flex justify-center mt-8 mb-2">
+          {TABS.map((tab, i) => (
+            <div key={tab.key} className="flex items-center">
+              <span
+                className={`w-8 h-8 flex items-center justify-center rounded-full font-bold text-sm ${
+                  activeTab === tab.key
+                    ? "bg-brand text-white"
+                    : isTabComplete(tab.key)
+                    ? "bg-green-500 text-white"
+                    : "bg-gray-200 text-gray-500"
+                }`}
+              >
+                {i + 1}
+              </span>
+              {i < TABS.length - 1 && (
+                <span className="mx-2 text-gray-400">→</span>
+              )}
+            </div>
+          ))}
+        </div>
         {/* Next Button */}
-        <div className="flex justify-end mt-8">
+        <div className="flex justify-end mt-2">
           <button
-            className="bg-brand text-white px-8 py-2 rounded-full flex items-center gap-2 hover:bg-[#174ea6] transition font-medium"
+            className={`bg-brand text-white px-8 py-2 rounded-full flex items-center gap-2 hover:bg-[#174ea6] transition font-medium ${
+              !isTabComplete(activeTab) ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             type="button"
-            onClick={onClose}
+            onClick={handleNext}
+            disabled={!isTabComplete(activeTab)}
           >
-            Next
+            {getNextTabKey(activeTab) ? "Next" : "Finish"}
             <MdKeyboardDoubleArrowRight size={33} />
           </button>
         </div>

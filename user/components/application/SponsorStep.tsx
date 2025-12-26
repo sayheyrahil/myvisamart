@@ -32,7 +32,6 @@ export default function SponsorStep({
     (state: any) => state.countryDetail?.countryDetail?.name
   );
 
-  console.log("noOptions in SponsorStep:", countryDetailName);
   return (
     <div className="flex flex-col items-center md:items-start w-full">
       <div className="font-madefor font-normal text-[28px] sm:text-[32px] md:text-[40px] lg:text-[40px] leading-[36px] sm:leading-[44px] md:leading-[52px] lg:leading-[52px] text-[#85ABDB] mb-8 text-center md:text-left">
